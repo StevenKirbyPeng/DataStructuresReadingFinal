@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 4 Linked Lists 考古題練習與完整詳解</title>
+<style>
+:root{
+  --bg:#f5f7fb;--card:#ffffff;--ink:#172033;--muted:#64748b;
+  --main:#2563eb;--main2:#0f766e;--warn:#b45309;--ok:#15803d;
+  --soft:#e8f0ff;--line:#d8e0ef;--code:#101827;--hi:#facc15;
+  --bad:#fee2e2;--good:#dcfce7;--orange:#fff7ed;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Noto Sans TC","Microsoft JhengHei",Arial,sans-serif;background:linear-gradient(180deg,#eef4ff,var(--bg));color:var(--ink);line-height:1.75}
+header{padding:36px 22px;background:linear-gradient(135deg,#1d4ed8,#0f766e);color:white}
+.wrap{max-width:1180px;margin:0 auto;padding:22px}
+header h1{margin:0;font-size:31px;line-height:1.25}
+header p{max-width:1050px;margin:10px 0 0;color:#e7f2ff}
+.toolbar,.toc,.exam-box{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;margin:18px 0;box-shadow:0 8px 20px #1e293b12}
+button{border:0;border-radius:10px;padding:9px 14px;background:var(--main);color:white;cursor:pointer;font-weight:700;margin:4px}
+button.secondary{background:#475569}
+button.ghost{background:#e2e8f0;color:#1e293b}
+button:hover{filter:brightness(.96)}
+.toc a{display:inline-block;margin:5px 6px;padding:7px 10px;border-radius:999px;background:var(--soft);color:#1d4ed8;text-decoration:none;font-weight:700}
+.accordion{margin:16px 0;border-radius:18px;overflow:hidden;border:1px solid var(--line);background:var(--card);box-shadow:0 10px 22px #1e293b12}
+.acc-head{width:100%;text-align:left;padding:18px 22px;background:#fff;color:var(--ink);display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);font-size:19px}
+.acc-head span:first-child{font-weight:900}
+.acc-body{display:none;padding:22px}
+.accordion.open .acc-body{display:block}
+.tag{display:inline-block;background:#dcfce7;color:#166534;border-radius:999px;padding:2px 9px;margin:2px;font-size:13px;font-weight:800}
+.box{background:#f8fafc;border:1px solid var(--line);border-radius:14px;padding:14px;margin:12px 0}
+.answer{border-left:5px solid var(--ok);background:#f0fdf4}
+.warning{border-left:5px solid var(--warn);background:#fff7ed}
+h2,h3,h4{line-height:1.35}
+h3{margin-top:22px;color:#0f3f7a}
+pre{white-space:pre-wrap;word-break:break-word}
+.code-wrap{position:relative;margin:12px 0}
+.copy-btn{position:absolute;right:10px;top:10px;background:#334155;font-size:13px}
+code,pre.code{font-family:Consolas,"Courier New",monospace}
+pre.code{background:var(--code);color:#dbeafe;padding:48px 16px 16px;border-radius:14px;overflow:auto;line-height:1.55}
+.svgbox{background:white;border:1px solid var(--line);border-radius:14px;padding:8px;margin:10px 0;overflow:auto}
+svg{max-width:100%;height:auto}
+.node rect,.node circle{fill:#ffffff;stroke:#334155;stroke-width:2}
+.node.active rect,.node.active circle{fill:var(--hi);stroke:#b45309;stroke-width:3}
+.node.done rect,.node.done circle{fill:#bbf7d0;stroke:#15803d}
+.node.bad rect{fill:#fee2e2;stroke:#dc2626}
+.edge{stroke:#475569;stroke-width:2;fill:none}
+.edge.active{stroke:#dc2626;stroke-width:3;stroke-dasharray:8 5}
+.edge.new{stroke:#16a34a;stroke-width:3}
+.label{font-size:15px;font-weight:800;text-anchor:middle;dominant-baseline:middle;fill:#172033}
+.small{font-size:13px;fill:#64748b}
+.stepper{display:grid;grid-template-columns:minmax(330px,1fr) 350px;gap:16px;align-items:start}
+@media(max-width:850px){.stepper{grid-template-columns:1fr}}
+.step-text{font-weight:800;background:#fff7ed;border:1px solid #fed7aa;border-radius:12px;padding:12px;color:#7c2d12}
+.kv{display:grid;grid-template-columns:190px 1fr;gap:8px}
+.kv div{padding:8px;border-bottom:1px dashed #cbd5e1}
+.table{width:100%;border-collapse:collapse;margin:12px 0;background:white}
+.table th,.table td{border:1px solid #cbd5e1;padding:8px;text-align:left}
+.table th{background:#e8f0ff;color:#1d4ed8}
+.array{display:flex;flex-wrap:wrap;gap:4px;margin:8px 0}
+.cell{min-width:42px;text-align:center;border:1px solid #64748b;background:white;border-radius:6px;padding:6px;font-weight:800}
+.cell.active{background:var(--hi)}
+.flow svg text{font-size:13px;font-weight:700}
+.footer-note{color:var(--muted);font-size:14px}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1>Lesson 4 Linked Lists 考古題練習與完整詳解</h1>
+    <p>依照老師考古題風格設計：題目短、要求明確、重視指標狀態變化與程式碼追蹤。每題包含英文題目、中文解析、核心觀念、圖解／動畫、完整解答，必要處提供 C++ 程式碼、中文註解與函式說明。</p>
+  </div>
+</header>
+<main class="wrap">
+  <section class="toolbar">
+    <button onclick="openAll()">全部展開</button>
+    <button class="secondary" onclick="closeAll()">全部收合</button>
+    <button class="ghost" onclick="window.print()">列印 / 另存 PDF</button>
+  </section>
+
+  <section class="toc">
+    <h2>首頁目錄</h2>
+    <a href="#q1">1 Sequential vs Linked</a>
+    <a href="#q2">2 Singly Linked List</a>
+    <a href="#q3">3 Chain Class / HAS-A</a>
+    <a href="#q4">4 Insert / Delete</a>
+    <a href="#q5">5 Template / Iterator</a>
+    <a href="#q6">6 Reverse / Concatenate</a>
+    <a href="#q7">7 Circular List / Header</a>
+    <a href="#q8">8 Linked Stack / Queue</a>
+    <a href="#q9">9 Available Space List</a>
+    <a href="#q10">10 Polynomial Addition</a>
+    <a href="#q11">11 Sparse Matrix</a>
+    <a href="#q12">12 Doubly Linked List</a>
+  </section>
+
+  <section class="exam-box">
+    <h2>老師出題習慣對應</h2>
+    <p>這份練習刻意模仿老師常見題型：一題會分成 a、b、c 小題；先問基本觀念，再要求畫出狀態，最後追蹤程式或說明時間複雜度。Chapter 4 最容易考的是 <b>pointer 更新順序、insert/delete 後的 linked list 狀態、iterator 的 ++ 差異、polynomial addition、sparse matrix linked representation、doubly linked list insert/delete</b>。</p>
+  </section>
+
+  <article class="accordion open" id="q1">
+    <button class="acc-head"><span>第 1 題：Sequential vs. Linked Representation</span><span>＋/－</span></button>
+    <div class="acc-body">
+      <h3>題目原文</h3>
+      <div class="box">
+        <pre>Given an ordered list stored by an array and by a singly linked list:
+EAT, FAT, HAT, WAT
+
+a. Insert "GAT" between FAT and HAT.
+b. Delete "GAT" after insertion.
+c. Compare the time complexity of insertion and deletion in the middle of an array and a linked list, assuming the target position is already known.</pre>
+      </div>
+      <h3>中文翻譯</h3>
+      <p>給定一個 ordered list，分別用陣列與單向 linked list 表示。請插入 GAT、刪除 GAT，並比較在「已知目標位置」時，array 與 linked list 的中間插入、刪除時間複雜度。</p>
+      <h3>核心觀念</h3>
+      <p><span class="tag">array shifting</span><span class="tag">linked insertion</span><span class="tag">linked deletion</span><span class="tag">O(n)</span><span class="tag">O(1)</span></p>
+      <h3>動態圖解</h3>
+      <div class="stepper">
+        <div id="anim-q1" class="svgbox"></div>
+        <div>
+          <div id="text-q1" class="step-text"></div>
+          <button onclick="prevStep('q1')">上一步</button>
+          <button onclick="nextStep('q1')">下一步</button>
+          <button onclick="replay('q1')">重播</button>
+        </div>
+      </div>
+      <h3>解題步驟</h3>
+      <ol>
+        <li>Array 插入中間時，HAT 與後面的元素需要右移，所以插入本身需要 O(n)。</li>
+        <li>Array 刪除中間元素時，後面元素需要左移，所以刪除需要 O(n)。</li>
+        <li>Linked list 若已知 FAT 的節點位置，只要改兩條 link 就可插入 GAT，所以 O(1)。</li>
+        <li>Linked list 若已知 GAT 前一個節點 FAT，也只要把 FAT 的 link 改到 HAT，所以 O(1)。</li>
+      </ol>
+      <table class="table">
+        <tr><th>表示法</th><th>插入中間</th><th>刪除中間</th><th>原因</th></tr>
+        <tr><td>Array</td><td>O(n)</td><td>O(n)</td><td>需要搬移元素</td></tr>
+        <tr><td>Linked list</td><td>O(1)</td><td>O(1)</td><td>只改 pointer/link</td></tr>
+      </table>
+      <div class="box answer"><b>完整答案：</b>Array 在中間插入與刪除需要搬移元素，因此是 O(n)。Linked list 在已知目標位置或前一節點時，只需改 link，因此插入與刪除都是 O(1)。</div>
+      <div class="box warning"><b>考試容易錯：</b>如果「不知道目標位置」，linked list 仍需從 first 找到該位置，搜尋本身是 O(n)。本題已假設 target position known，所以只比較插入／刪除動作。</div>
+    </div>
+  </article>
+
+  <article class="accordion" id="q2">
+    <button class="acc-head"><span>第 2 題：Singly Linked List Node Structure</span><span>＋/－</span></button>
+    <div class="acc-body">
+      <h3>題目原文</h3>
+      <div class="box">
+        <pre>Define a C++ node class for a singly linked list of integers.
+Then draw a linked list containing 10 -> 20 -> 30 -> NULL.</pre>
+      </div>
+      <h3>中文翻譯</h3>
+      <p>請定義一個整數單向 linked list 的節點類別，並畫出 10 → 20 → 30 → NULL 的 linked list。</p>
+      <h3>核心觀念</h3>
+      <p><span class="tag">node</span><span class="tag">data</span><span class="tag">link</span><span class="tag">NULL</span><span class="tag">first pointer</span></p>
+      <h3>圖解</h3>
+      <div class="svgbox" id="q2static"></div>
+      <h3>完整 C++ 程式碼</h3>
+      <div class="code-wrap"><button class="copy-btn" onclick="copyCode('code-q2')">複製程式碼</button>
+<pre class="code"><code id="code-q2">#include &lt;iostream&gt;
+using namespace std;
+
+/*
+ * ChainNode：單向 linked list 的節點
+ * data：存放節點資料
+ * link：指向下一個節點；若為 nullptr，代表串列結尾
+ */
+class ChainNode {
+public:
+    int data;             // 節點資料
+    ChainNode* link;      // 下一個節點的指標
+
+    // 建構子：建立節點時可同時設定資料與下一個節點
+    ChainNode(int element = 0, ChainNode* next = nullptr) {
+        data = element;
+        link = next;
+    }
+};
+
+int main() {
+    // 建立 10 -> 20 -> 30 -> NULL
+    ChainNode* third = new ChainNode(30, nullptr);
+    ChainNode* second = new ChainNode(20, third);
+    ChainNode* first = new ChainNode(10, second);
+
+    // 輸出 linked list
+    for (ChainNode* p = first; p != nullptr; p = p->link) {
+        cout << p->data << " ";
+    }
+
+    // 釋放記憶體
+    delete third;
+    delete second;
+    delete first;
+    return 0;
+}</code></pre></div>
+      <h3>函式與語法說明</h3>
+      <div class="box kv">
+        <div>ChainNode</div><div>表示 linked list 的一個節點。</div>
+        <div>data</div><div>存放節點中的資料。</div>
+        <div>link</div><div>指向下一個節點，形成鏈結。</div>
+        <div>nullptr</div><div>表示沒有下一個節點，也就是 linked list 結尾。</div>
+        <div>new</div><div>在 heap memory 中動態建立節點。</div>
+      </div>
+      <div class="box answer"><b>完整答案：</b>一個 singly linked list node 至少包含 data 與 link。first 指向第一個節點，最後一個節點的 link 指向 NULL/nullptr。</div>
+      <div class="box warning"><b>考試容易錯：</b>不要只寫 int data；linked list 的重點是節點必須有 link pointer 才能串起下一個節點。</div>
+    </div>
+  </article>
+
+  <article class="accordion" id="q3">
+    <button class="acc-head"><span>第 3 題：Chain Class, Friend Class, and HAS-A Relationship</span><span>＋/－</span></button>
+    <div class="acc-body">
+      <h3>題目原文</h3>
+      <div class="box">
+        <pre>Explain why ChainNode is usually declared as a friend of Chain.
+Also explain the meaning of "Chain HAS-A ChainNode".</pre>
+      </div>
+      <h3>中文翻譯</h3>
+      <p>請解釋為什麼 ChainNode 通常會讓 Chain 成為 friend class，並說明「Chain HAS-A ChainNode」的意思。</p>
+      <h3>核心觀念</h3>
+      <p><span class="tag">friend class</span><span class="tag">private data</span><span class="tag">encapsulation</span><span class="tag">HAS-A</span></p>
+      <h3>圖解說明</h3>
+      <div class="svgbox">
+        <svg viewBox="0 0 760 280">
+          <rect x="60" y="50" width="250" height="160" rx="18" fill="#e8f0ff" stroke="#2563eb" stroke-width="2"/>
+          <text x="185" y="85" class="label">class Chain</text>
+          <text x="185" y="125" class="small">private: ChainNode* first</text>
+          <text x="185" y="160" class="small">public: Insert(), Delete()</text>
+          <text x="185" y="195" class="small">操作整條 list</text>
+          <rect x="460" y="50" width="220" height="160" rx="18" fill="#f0fdf4" stroke="#15803d" stroke-width="2"/>
+          <text x="570" y="85" class="label">class ChainNode</text>
+          <text x="570" y="125" class="small">private: data</text>
+          <text x="570" y="160" class="small">private: link</text>
+          <text x="570" y="195" class="small">表示單一節點</text>
+          <path class="edge active" d="M310 130 C370 90,400 90,460 130"/>
+          <text x="385" y="75" class="small">friend class Chain</text>
+          <path class="edge new" d="M185 210 C250 250,500 250,570 210"/>
+          <text x="380" y="260" class="small">Chain HAS-A ChainNode pointer</text>
+        </svg>
+      </div>
+      <h3>解題步驟</h3>
+      <ol>
+        <li>ChainNode 的 data/link 通常設為 private，避免外部隨便改壞 linked list。</li>
+        <li>Chain 需要執行 insert/delete 等 list 操作，因此必須存取 ChainNode 的 data/link。</li>
+        <li>使用 friend class Chain，可以讓 Chain 存取 ChainNode 的 private members，但一般外部程式仍不能任意存取。</li>
+        <li>HAS-A 表示 Chain 概念上包含很多 ChainNode；實作上通常是 Chain 內有一個 first pointer 指向第一個 ChainNode。</li>
+      </ol>
+      <div class="box answer"><b>完整答案：</b>ChainNode 使用 friend class Chain，是為了讓 Chain 的成員函式能直接操作節點的 private data 與 link，同時維持封裝性。Chain HAS-A ChainNode 表示 Chain 是由節點組成的資料結構，實作上 Chain 會有 ChainNode* first 指向第一個節點。</div>
+      <div class="box warning"><b>考試容易錯：</b>friend 不是繼承，不是 IS-A；Chain 與 ChainNode 是 HAS-A / composite 關係。</div>
+    </div>
+  </article>
+
+  <article class="accordion" id="q4">
+    <button class="acc-head"><span>第 4 題：Pointer Manipulation, Insert and Delete</span><span>＋/－</span></button>
+    <div class="acc-body">
+      <h3>題目原文</h3>
+      <div class="box">
+        <pre>Given a linked list:
+first -> 10 -> 20 -> 30 -> NULL
+
+a. Insert a new node with data 50 after the node containing 20.
+b. Delete the node containing 20.
+c. Show the linked list after each operation and write the key pointer assignments.</pre>
+      </div>
+      <h3>中文翻譯</h3>
+      <p>給定 linked list：first → 10 → 20 → 30 → NULL。請在 20 後插入 50，接著刪除 20，並寫出重要的 pointer assignment。</p>
+      <h3>核心觀念</h3>
+      <p><span class="tag">insert after x</span><span class="tag">delete node</span><span class="tag">predecessor</span><span class="tag">pointer assignment</span></p>
+      <h3>動態圖解</h3>
+      <div class="stepper">
+        <div id="anim-q4" class="svgbox"></div>
+        <div>
+          <div id="text-q4" class="step-text"></div>
+          <button onclick="prevStep('q4')">上一步</button>
+          <button onclick="nextStep('q4')">下一步</button>
+          <button onclick="replay('q4')">重播</button>
+        </div>
+      </div>
+      <h3>完整 C++ 程式碼</h3>
+      <div class="code-wrap"><button class="copy-btn" onclick="copyCode('code-q4')">複製程式碼</button>
+<pre class="code"><code id="code-q4">/*
+ * insertAfter(x, value)
+ * 功能：在節點 x 後面插入一個新節點。
+ * 關鍵：新節點先指向 x 原本的下一個節點，再讓 x 指向新節點。
+ */
+void insertAfter(ChainNode* x, int value) {
+    if (x == nullptr) return;
+    ChainNode* newNode = new ChainNode(value, x->link);
+    x->link = newNode;
+}
+
+/*
+ * deleteAfter(prev)
+ * 功能：刪除 prev 後面的節點。
+ * 關鍵：先保存要刪除的節點，再讓 prev 跳過它，最後 delete。
+ */
+void deleteAfter(ChainNode* prev) {
+    if (prev == nullptr || prev->link == nullptr) return;
+    ChainNode* delNode = prev->link;
+    prev->link = delNode->link;
+    delete delNode;
+}</code></pre></div>
+      <h3>解題步驟</h3>
+      <ol>
+        <li>插入 50 after 20：先讓 50 指向 20 原本的下一個節點 30。</li>
+        <li>再讓 20 的 link 指向 50。</li>
+        <li>刪除 20 時，必須知道 20 的前一個節點 10。</li>
+        <li>讓 10 的 link 指向 20 的下一個節點 50，再 delete 20。</li>
+      </ol>
+      <div class="box answer"><b>完整答案：</b>插入後：10 → 20 → 50 → 30 → NULL。刪除 20 後：10 → 50 → 30 → NULL。重要指令：newNode->link = x->link; x->link = newNode; 刪除時 y->link = x->link; delete x。</div>
+      <div class="box warning"><b>考試容易錯：</b>插入時順序不能反。如果先做 x->link = newNode，會遺失原本的下一個節點 30。</div>
+    </div>
+  </article>
+
+  <article class="accordion" id="q5">
+    <button class="acc-head"><span>第 5 題：Template Chain and Iterator</span><span>＋/－</span></button>
+    <div class="acc-body">
+      <h3>題目原文</h3>
+      <div class="box">
+        <pre>Assume an iterator p points to the node containing 10 in the chain:
+10 -> 20 -> 30 -> NULL
+
+a. What is the value returned by *p?
+b. After executing ++p, which node does p point to?
+c. Explain the difference between preincrement (++p) and postincrement (p++).</pre>
+      </div>
+      <h3>中文翻譯</h3>
+      <p>假設 iterator p 指向 10。請回答 *p 的值、++p 後 p 指向哪裡，並解釋 preincrement 與 postincrement 差異。</p>
+      <h3>核心觀念</h3>
+      <p><span class="tag">iterator</span><span class="tag">operator*</span><span class="tag">++p</span><span class="tag">p++</span><span class="tag">return by reference/value</span></p>
+      <h3>動態圖解</h3>
+      <div class="stepper">
+        <div id="anim-q5" class="svgbox"></div>
+        <div>
+          <div id="text-q5" class="step-text"></div>
+          <button onclick="prevStep('q5')">上一步</button>
+          <button onclick="nextStep('q5')">下一步</button>
+          <button onclick="replay('q5')">重播</button>
+        </div>
+      </div>
+      <h3>完整 C++ 程式碼</h3>
+      <div class="code-wrap"><button class="copy-btn" onclick="copyCode('code-q5')">複製程式碼</button>
+<pre class="code"><code id="code-q5">template &lt;class T&gt;
+class ChainIterator {
+public:
+    // 建構子：讓 iterator 指向某一個節點
+    ChainIterator(ChainNode&lt;T&gt;* startNode = nullptr) {
+        current = startNode;
+    }
+
+    // 解參照：取得目前節點中的資料
+    T& operator*() const {
+        return current-&gt;data;
+    }
+
+    // preincrement：先移動，再回傳移動後的自己
+    ChainIterator& operator++() {
+        current = current-&gt;link;
+        return *this;
+    }
+
+    // postincrement：先保留舊狀態，再移動，最後回傳舊狀態
+    ChainIterator operator++(int) {
+        ChainIterator old = *this;
+        current = current-&gt;link;
+        return old;
+    }
+
+private:
+    ChainNode&lt;T&gt;* current; // iterator 目前指向的節點
+};</code></pre></div>
+      <h3>解題步驟</h3>
+      <ol>
+        <li>*p 表示取得目前 iterator 指向節點的 data，所以是 10。</li>
+        <li>++p 會先移動到下一個節點，因此 p 指向 20。</li>
+        <li>p++ 會回傳移動前的舊 iterator，但 p 本身最後仍會移到下一個節點。</li>
+      </ol>
+      <div class="box answer"><b>完整答案：</b>a. *p = 10。b. ++p 後 p 指向 20。c. ++p 先遞增再回傳目前物件；p++ 先保存舊物件，遞增後回傳舊物件。</div>
+      <div class="box warning"><b>考試容易錯：</b>p++ 與 ++p 最後 p 都會往下一個節點移動；差別在「回傳的是舊狀態還是新狀態」。</div>
+    </div>
+  </article>
+
+  <article class="accordion" id="q6">
+    <button class="acc-head"><span>第 6 題：InsertBack, Concatenate, and Reverse</span><span>＋/－</span></button>
+    <div class="acc-body">
+      <h3>題目原文</h3>
+      <div class="box">
+        <pre>Given a chain:
+first -> 1 -> 2 -> 3 -> 4 -> NULL
+
+a. Show the result after reversing the chain in-place.
+b. During reverse, explain the roles of current, previous, and r.
+c. What is the time complexity?</pre>
+      </div>
+      <h3>中文翻譯</h3>
+      <p>給定 linked list：1 → 2 → 3 → 4 → NULL。請做 in-place reverse，說明 current、previous、r 的角色，並回答時間複雜度。</p>
+      <h3>核心觀念</h3>
+      <p><span class="tag">reverse</span><span class="tag">in-place</span><span class="tag">current</span><span class="tag">previous</span><span class="tag">O(n)</span></p>
+      <h3>Reverse 動態圖解</h3>
+      <div class="stepper">
+        <div id="anim-q6" class="svgbox"></div>
+        <div>
+          <div id="text-q6" class="step-text"></div>
+          <button onclick="prevStep('q6')">上一步</button>
+          <button onclick="nextStep('q6')">下一步</button>
+          <button onclick="replay('q6')">重播</button>
+        </div>
+      </div>
+      <h3>完整 C++ 程式碼</h3>
+      <div class="code-wrap"><button class="copy-btn" onclick="copyCode('code-q6')">複製程式碼</button>
+<pre class="code"><code id="code-q6">/*
+ * Reverse()
+ * 功能：將 linked list 原地反轉。
+ * current：目前正在處理的節點
+ * previous：已反轉區段的第一個節點
+ * r：暫存 previous 的舊值，用來讓 current 反向連回去
+ */
+void Chain::Reverse() {
+    ChainNode* current = first;
+    ChainNode* previous = nullptr;
+
+    while (current != nullptr) {
+        ChainNode* nextNode = current-&gt;link; // 先保存下一個節點，避免斷鏈
+        current-&gt;link = previous;            // 將目前節點的 link 反向
+        previous = current;                  // previous 往前推進
+        current = nextNode;                  // current 移到下一個未處理節點
+    }
+
+    first = previous; // previous 最後會指向新的第一個節點
+}</code></pre></div>
+      <h3>解題步驟</h3>
+      <ol>
+        <li>一開始 previous = NULL，current 指向 1。</li>
+        <li>每次把 current 的 link 改成 previous，形成反向連結。</li>
+        <li>current 繼續往原本下一個節點移動。</li>
+        <li>最後 first 指向 previous，也就是原本最後一個節點 4。</li>
+      </ol>
+      <div class="box answer"><b>完整答案：</b>反轉後為 4 → 3 → 2 → 1 → NULL。current 表示目前處理節點，previous 表示已反轉部分的開頭，r 或 nextNode 用來暫存指標避免斷鏈。時間複雜度 O(n)，額外空間 O(1)。</div>
+      <div class="box warning"><b>考試容易錯：</b>一定要先保存下一個節點，不然 current->link 一反向後，原本後面的 list 會遺失。</div>
+    </div>
+  </article>
+
+  <article class="accordion" id="q7">
+    <button class="acc-head"><span>第 7 題：Circular List and Header Node</span><span>＋/－</span></button>
+    <div class="acc-body">
+      <h3>題目原文</h3>
+      <div class="box">
+        <pre>Assume a circular list uses a pointer last pointing to the last node.
+The list is:
+last -> C, and C.link points to A
+A -> B -> C -> A
+
+a. Insert X at the front of the circular list.
+b. Explain why using last is more convenient than using first.
+c. What is the purpose of a header node?</pre>
+      </div>
+      <h3>中文翻譯</h3>
+      <p>假設 circular list 使用 last pointer 指向最後一個節點。請將 X 插入前端，說明為什麼用 last 比 first 方便，以及 header node 的用途。</p>
+      <h3>核心觀念</h3>
+      <p><span class="tag">circular list</span><span class="tag">last pointer</span><span class="tag">InsertFront</span><span class="tag">header node</span></p>
+      <h3>動態圖解</h3>
+      <div class="stepper">
+        <div id="anim-q7" class="svgbox"></div>
+        <div>
+          <div id="text-q7" class="step-text"></div>
+          <button onclick="prevStep('q7')">上一步</button>
+          <button onclick="nextStep('q7')">下一步</button>
+          <button onclick="replay('q7')">重播</button>
+        </div>
+      </div>
+      <h3>完整 C++ 程式碼</h3>
+      <div class="code-wrap"><button class="copy-btn" onclick="copyCode('code-q7')">複製程式碼</button>
+<pre class="code"><code id="code-q7">/*
+ * InsertFront(e)
+ * 功能：在 circular list 的前端插入節點。
+ * 假設 last 指向最後一個節點，last->link 就是第一個節點。
+ */
+void CircularList::InsertFront(int e) {
+    ChainNode* newNode = new ChainNode(e);
+
+    if (last != nullptr) {
+        // newNode 先指向原本第一個節點
+        newNode-&gt;link = last-&gt;link;
+
+        // last 的 link 改成 newNode，使 newNode 成為新的 first
+        last-&gt;link = newNode;
+    } else {
+        // 空串列：新節點自己指向自己
+        last = newNode;
+        newNode-&gt;link = newNode;
+    }
+}</code></pre></div>
+      <h3>解題步驟</h3>
+      <ol>
+        <li>在 circular list 中，last->link 就是 first。</li>
+        <li>插入 X 到 front 時，先令 X->link = last->link。</li>
+        <li>再令 last->link = X。</li>
+        <li>last 不需要改，因為最後一個節點仍是 C。</li>
+        <li>Header node 可以統一空串列與非空串列的處理，減少特殊情況。</li>
+      </ol>
+      <div class="box answer"><b>完整答案：</b>插入後為 X → A → B → C → X。使用 last 方便是因為 last->link 直接就是 first，所以可 O(1) 在前端插入。Header node 是 dummy node，可簡化 empty list 的邊界處理。</div>
+      <div class="box warning"><b>考試容易錯：</b>InsertFront 不需要改 last；InsertBack 才需要把 last 更新成 newNode。</div>
+    </div>
+  </article>
+
+  <article class="accordion" id="q8">
+    <button class="acc-head"><span>第 8 題：Linked Stack and Linked Queue</span><span>＋/－</span></button>
+    <div class="acc-body">
+      <h3>題目原文</h3>
+      <div class="box">
+        <pre>a. Use a linked stack to perform Push(10), Push(20), Pop().
+b. Use a linked queue to perform Push(10), Push(20), Pop().
+c. Show the final structures and explain the difference.</pre>
+      </div>
+      <h3>中文翻譯</h3>
+      <p>請分別用 linked stack 與 linked queue 執行 Push(10)、Push(20)、Pop()，畫出最後結果並說明差異。</p>
+      <h3>核心觀念</h3>
+      <p><span class="tag">stack LIFO</span><span class="tag">queue FIFO</span><span class="tag">top</span><span class="tag">front</span><span class="tag">rear</span></p>
+      <h3>動態圖解</h3>
+      <div class="stepper">
+        <div id="anim-q8" class="svgbox"></div>
+        <div>
+          <div id="text-q8" class="step-text"></div>
+          <button onclick="prevStep('q8')">上一步</button>
+          <button onclick="nextStep('q8')">下一步</button>
+          <button onclick="replay('q8')">重播</button>
+        </div>
+      </div>
+      <h3>完整 C++ 程式碼</h3>
+      <div class="code-wrap"><button class="copy-btn" onclick="copyCode('code-q8')">複製程式碼</button>
+<pre class="code"><code id="code-q8">/*
+ * LinkedStack::Push
+ * 新節點插入 top 前面，讓 top 指向新節點。
+ */
+void LinkedStack::Push(int e) {
+    top = new ChainNode(e, top);
+}
+
+/*
+ * LinkedStack::Pop
+ * 刪除 top 節點，top 往下一個節點移動。
+ */
+void LinkedStack::Pop() {
+    if (top == nullptr) throw "Stack is empty";
+    ChainNode* delNode = top;
+    top = top-&gt;link;
+    delete delNode;
+}
+
+/*
+ * LinkedQueue::Push
+ * 新節點接在 rear 後面。
+ */
+void LinkedQueue::Push(int e) {
+    if (front == nullptr) {
+        front = rear = new ChainNode(e, nullptr);
+    } else {
+        rear-&gt;link = new ChainNode(e, nullptr);
+        rear = rear-&gt;link;
+    }
+}
+
+/*
+ * LinkedQueue::Pop
+ * 刪除 front 節點。
+ */
+void LinkedQueue::Pop() {
+    if (front == nullptr) throw "Queue is empty";
+    ChainNode* delNode = front;
+    front = front-&gt;link;
+    if (front == nullptr) rear = nullptr;
+    delete delNode;
+}</code></pre></div>
+      <h3>解題步驟</h3>
+      <ol>
+        <li>Stack：Push(10) 後 top=10；Push(20) 後 top=20→10；Pop() 刪除 20，剩 10。</li>
+        <li>Queue：Push(10) 後 front=rear=10；Push(20) 後 10→20；Pop() 刪除 front 10，剩 20。</li>
+        <li>Stack 是 LIFO，後進先出；Queue 是 FIFO，先進先出。</li>
+      </ol>
+      <div class="box answer"><b>完整答案：</b>Linked stack 最後剩 10。Linked queue 最後剩 20。差異是 stack 刪除最新加入的節點，queue 刪除最早加入的節點。</div>
+      <div class="box warning"><b>考試容易錯：</b>Queue 在刪除最後一個節點時，front 與 rear 都要變成 NULL；否則 rear 會變成 dangling pointer。</div>
+    </div>
+  </article>
+
+  <article class="accordion" id="q9">
+    <button class="acc-head"><span>第 9 題：Available Space List</span><span>＋/－</span></button>
+    <div class="acc-body">
+      <h3>題目原文</h3>
+      <div class="box">
+        <pre>Explain the purpose of an available space list (av list).
+Assume av points to a chain of deleted nodes.
+a. What does GetNode() do?
+b. What does RetNode(x) do?
+c. Why can deleting a whole circular list be done in O(1) if both first and last are known?</pre>
+      </div>
+      <h3>中文翻譯</h3>
+      <p>請解釋 available space list 的用途。av 指向已刪除節點串列，請說明 GetNode()、RetNode(x)，以及為什麼 circular list 若知道 first 與 last 可 O(1) 刪除整串。</p>
+      <h3>核心觀念</h3>
+      <p><span class="tag">av list</span><span class="tag">recycle nodes</span><span class="tag">GetNode</span><span class="tag">RetNode</span><span class="tag">O(1)</span></p>
+      <h3>動態圖解</h3>
+      <div class="stepper">
+        <div id="anim-q9" class="svgbox"></div>
+        <div>
+          <div id="text-q9" class="step-text"></div>
+          <button onclick="prevStep('q9')">上一步</button>
+          <button onclick="nextStep('q9')">下一步</button>
+          <button onclick="replay('q9')">重播</button>
+        </div>
+      </div>
+      <h3>完整 C++ 程式碼</h3>
+      <div class="code-wrap"><button class="copy-btn" onclick="copyCode('code-q9')">複製程式碼</button>
+<pre class="code"><code id="code-q9">/*
+ * av：available space list 的開頭指標
+ * 用來保存已刪除但可重複使用的節點。
+ */
+static ChainNode* av = nullptr;
+
+/*
+ * GetNode()
+ * 功能：取得一個可用節點。
+ * 若 av 不空，從 av list 拿一個舊節點；否則才 new 新節點。
+ */
+ChainNode* GetNode() {
+    ChainNode* x;
+    if (av != nullptr) {
+        x = av;
+        av = av-&gt;link;
+    } else {
+        x = new ChainNode();
+    }
+    return x;
+}
+
+/*
+ * RetNode(x)
+ * 功能：把不再使用的節點 x 放回 av list。
+ */
+void RetNode(ChainNode*& x) {
+    x-&gt;link = av;
+    av = x;
+    x = nullptr;
+}</code></pre></div>
+      <h3>解題步驟</h3>
+      <ol>
+        <li>Available space list 把刪除後的節點串起來，之後可重複使用。</li>
+        <li>GetNode() 優先從 av 拿節點，減少 new 的成本。</li>
+        <li>RetNode(x) 把 x 接到 av 前端。</li>
+        <li>若 circular list 知道 first 與 last，可直接 last->link = av; av = first; last = NULL，把整串接到 av list 前面，不用逐一 delete。</li>
+      </ol>
+      <div class="box answer"><b>完整答案：</b>av list 是一條回收節點串列。GetNode() 從 av 取出可用節點或 new 新節點；RetNode(x) 把 x 放回 av。若 circular list 的 first、last 已知，可用常數次 pointer assignment 把整串接到 av，因此 O(1)。</div>
+      <div class="box warning"><b>考試容易錯：</b>av list 不是垃圾回收器；它是程式自己維護的節點重用機制。</div>
+    </div>
+  </article>
+
+  <article class="accordion" id="q10">
+    <button class="acc-head"><span>第 10 題：Polynomial Addition with Linked List</span><span>＋/－</span></button>
+    <div class="acc-body">
+      <h3>題目原文</h3>
+      <div class="box">
+        <pre>Two polynomials are represented by linked lists in descending order of exponent.
+
+A(x) = 3x^14 + 2x^8 + 1
+B(x) = 8x^14 - 3x^10 + 10x^6
+
+a. Draw the linked-list representation.
+b. Compute C(x) = A(x) + B(x).
+c. What is the time complexity if A has m terms and B has n terms?</pre>
+      </div>
+      <h3>中文翻譯</h3>
+      <p>兩個多項式用 linked list 依指數由大到小儲存。請畫出表示法、計算 A+B，並回答時間複雜度。</p>
+      <h3>核心觀念</h3>
+      <p><span class="tag">polynomial</span><span class="tag">coef</span><span class="tag">exp</span><span class="tag">merge</span><span class="tag">O(m+n)</span></p>
+      <h3>Polynomial Addition 動態圖解</h3>
+      <div class="stepper">
+        <div id="anim-q10" class="svgbox"></div>
+        <div>
+          <div id="text-q10" class="step-text"></div>
+          <button onclick="prevStep('q10')">上一步</button>
+          <button onclick="nextStep('q10')">下一步</button>
+          <button onclick="replay('q10')">重播</button>
+        </div>
+      </div>
+      <h3>完整 C++ 程式碼</h3>
+      <div class="code-wrap"><button class="copy-btn" onclick="copyCode('code-q10')">複製程式碼</button>
+<pre class="code"><code id="code-q10">struct Term {
+    int coef; // 係數
+    int exp;  // 指數
+};
+
+/*
+ * Polynomial::Add
+ * 功能：將兩個已依 exp 由大到小排序的多項式相加。
+ * ai：指向 A 的目前項
+ * bi：指向 B 的目前項
+ * c：結果多項式
+ */
+Polynomial Polynomial::Add(const Polynomial& b) const {
+    Iterator ai = poly.begin();
+    Iterator bi = b.poly.begin();
+    Polynomial c;
+
+    while (ai != poly.end() && bi != b.poly.end()) {
+        if (ai-&gt;exp == bi-&gt;exp) {
+            // 指數相同：係數相加
+            int sum = ai-&gt;coef + bi-&gt;coef;
+            if (sum != 0) c.InsertBack({sum, ai-&gt;exp});
+            ++ai;
+            ++bi;
+        } else if (ai-&gt;exp &lt; bi-&gt;exp) {
+            // B 的指數較大，先複製 B 的目前項
+            c.InsertBack(*bi);
+            ++bi;
+        } else {
+            // A 的指數較大，先複製 A 的目前項
+            c.InsertBack(*ai);
+            ++ai;
+        }
+    }
+
+    // 複製 A 剩餘項
+    while (ai != poly.end()) {
+        c.InsertBack(*ai);
+        ++ai;
+    }
+
+    // 複製 B 剩餘項
+    while (bi != b.poly.end()) {
+        c.InsertBack(*bi);
+        ++bi;
+    }
+
+    return c;
+}</code></pre></div>
+      <h3>解題步驟</h3>
+      <ol>
+        <li>A 的節點為 (3,14) → (2,8) → (1,0)。</li>
+        <li>B 的節點為 (8,14) → (-3,10) → (10,6)。</li>
+        <li>14 與 14 相同，係數相加：3+8=11，所以得到 11x^14。</li>
+        <li>B 的 10 比 A 的 8 大，copy -3x^10。</li>
+        <li>A 的 8 比 B 的 6 大，copy 2x^8。</li>
+        <li>B 剩下 10x^6，A 剩下 1，依序 copy。</li>
+      </ol>
+      <div class="box answer"><b>完整答案：</b>C(x)=11x^14−3x^10+2x^8+10x^6+1。若 A 有 m 項、B 有 n 項，每個節點最多走訪一次，所以時間複雜度 O(m+n)。</div>
+      <div class="box warning"><b>考試容易錯：</b>比較的是 exponent，不是 coefficient；指數相同才做係數相加。</div>
+    </div>
+  </article>
+
+  <article class="accordion" id="q11">
+    <button class="acc-head"><span>第 11 題：Sparse Matrix Linked Representation</span><span>＋/－</span></button>
+    <div class="acc-body">
+      <h3>題目原文</h3>
+      <div class="box">
+        <pre>Represent the following 5 x 4 sparse matrix using the linked representation with header nodes.
+
+[ 2 0 0 0
+  4 0 0 3
+  0 0 0 0
+  8 0 0 1
+  0 0 6 0 ]
+
+a. List all nonzero triples.
+b. How many nodes are needed in total?
+c. Explain the difference between a header node and an element node.</pre>
+      </div>
+      <h3>中文翻譯</h3>
+      <p>請用含 header node 的 linked representation 表示 5×4 稀疏矩陣。列出非零三元組、總節點數，並說明 header node 與 element node 差異。</p>
+      <h3>核心觀念</h3>
+      <p><span class="tag">sparse matrix</span><span class="tag">triple</span><span class="tag">header node</span><span class="tag">element node</span><span class="tag">max(n,m)+r+1</span></p>
+      <h3>圖解說明</h3>
+      <div class="svgbox">
+        <svg viewBox="0 0 900 520">
+          <text x="120" y="35" class="label">Sparse Matrix</text>
+          <g transform="translate(40,60)">
+            <rect x="0" y="0" width="200" height="250" fill="#fff" stroke="#dc2626" stroke-width="2"/>
+            <script type="application/ecmascript"><![CDATA[]]></script>
+            <text x="20" y="30" class="label">2</text><text x="70" y="30" class="label">0</text><text x="120" y="30" class="label">0</text><text x="170" y="30" class="label">0</text>
+            <text x="20" y="80" class="label">4</text><text x="70" y="80" class="label">0</text><text x="120" y="80" class="label">0</text><text x="170" y="80" class="label">3</text>
+            <text x="20" y="130" class="label">0</text><text x="70" y="130" class="label">0</text><text x="120" y="130" class="label">0</text><text x="170" y="130" class="label">0</text>
+            <text x="20" y="180" class="label">8</text><text x="70" y="180" class="label">0</text><text x="120" y="180" class="label">0</text><text x="170" y="180" class="label">1</text>
+            <text x="20" y="230" class="label">0</text><text x="70" y="230" class="label">0</text><text x="120" y="230" class="label">6</text><text x="170" y="230" class="label">0</text>
+          </g>
+          <text x="480" y="35" class="label">Nonzero triples</text>
+          <g transform="translate(340,70)">
+            <rect x="0" y="0" width="420" height="260" rx="16" fill="#f8fafc" stroke="#cbd5e1"/>
+            <text x="60" y="35" class="small">row</text><text x="150" y="35" class="small">col</text><text x="250" y="35" class="small">value</text>
+            <text x="60" y="75" class="label">0</text><text x="150" y="75" class="label">0</text><text x="250" y="75" class="label">2</text>
+            <text x="60" y="115" class="label">1</text><text x="150" y="115" class="label">0</text><text x="250" y="115" class="label">4</text>
+            <text x="60" y="155" class="label">1</text><text x="150" y="155" class="label">3</text><text x="250" y="155" class="label">3</text>
+            <text x="60" y="195" class="label">3</text><text x="150" y="195" class="label">0</text><text x="250" y="195" class="label">8</text>
+            <text x="60" y="235" class="label">3</text><text x="150" y="235" class="label">3</text><text x="250" y="235" class="label">1</text>
+            <text x="60" y="275" class="label">4</text><text x="150" y="275" class="label">2</text><text x="250" y="275" class="label">6</text>
+          </g>
+          <text x="450" y="410" class="label">Total nodes = max(5,4) + 6 + 1 = 12</text>
+        </svg>
+      </div>
+      <h3>解題步驟</h3>
+      <ol>
+        <li>先列出所有非零元素的 row、col、value。</li>
+        <li>非零項共有 r=6。</li>
+        <li>矩陣大小是 5×4，所以 header nodes 數量是 max(5,4)=5。</li>
+        <li>還有一個總 header node H，所以總節點數是 max(n,m)+r+1。</li>
+      </ol>
+      <table class="table">
+        <tr><th>Node type</th><th>欄位</th><th>用途</th></tr>
+        <tr><td>Header node</td><td>head, down, right, next</td><td>管理 row list、column list 與 header list</td></tr>
+        <tr><td>Element node</td><td>head, row, col, value, down, right</td><td>表示一個非零元素，並同時串在 row 與 column 中</td></tr>
+      </table>
+      <div class="box answer"><b>完整答案：</b>非零 triples 為 (0,0,2)、(1,0,4)、(1,3,3)、(3,0,8)、(3,3,1)、(4,2,6)。總節點數=max(5,4)+6+1=12。</div>
+      <div class="box warning"><b>考試容易錯：</b>總節點數不是 n×m，也不是 r；linked sparse matrix 還需要 header nodes 與總 head node。</div>
+    </div>
+  </article>
+
+  <article class="accordion" id="q12">
+    <button class="acc-head"><span>第 12 題：Doubly Linked List Operations</span><span>＋/－</span></button>
+    <div class="acc-body">
+      <h3>題目原文</h3>
+      <div class="box">
+        <pre>Given a doubly linked circular list with a header node:
+head <-> 10 <-> 20 <-> head
+
+a. Insert node 15 to the right of node 10.
+b. Delete node 20.
+c. Show the pointer assignments for insertion and deletion.</pre>
+      </div>
+      <h3>中文翻譯</h3>
+      <p>給定含 header node 的雙向環狀串列 head ↔ 10 ↔ 20 ↔ head。請在 10 右邊插入 15，然後刪除 20，並寫出指標更新。</p>
+      <h3>核心觀念</h3>
+      <p><span class="tag">doubly linked list</span><span class="tag">left link</span><span class="tag">right link</span><span class="tag">header node</span><span class="tag">pointer order</span></p>
+      <h3>動態圖解</h3>
+      <div class="stepper">
+        <div id="anim-q12" class="svgbox"></div>
+        <div>
+          <div id="text-q12" class="step-text"></div>
+          <button onclick="prevStep('q12')">上一步</button>
+          <button onclick="nextStep('q12')">下一步</button>
+          <button onclick="replay('q12')">重播</button>
+        </div>
+      </div>
+      <h3>完整 C++ 程式碼</h3>
+      <div class="code-wrap"><button class="copy-btn" onclick="copyCode('code-q12')">複製程式碼</button>
+<pre class="code"><code id="code-q12">class DblListNode {
+public:
+    int data;
+    DblListNode* left;
+    DblListNode* right;
+};
+
+/*
+ * Insert(p, x)
+ * 功能：將節點 p 插入到節點 x 的右邊。
+ */
+void DblList::Insert(DblListNode* p, DblListNode* x) {
+    p-&gt;left = x;             // p 的左邊是 x
+    p-&gt;right = x-&gt;right;     // p 的右邊是 x 原本的右節點
+    x-&gt;right-&gt;left = p;      // 原本右節點的 left 改成 p
+    x-&gt;right = p;            // x 的 right 改成 p
+}
+
+/*
+ * Delete(x)
+ * 功能：刪除節點 x。
+ * 注意：通常不能刪除 header node。
+ */
+void DblList::Delete(DblListNode* x) {
+    if (x == first) throw "Please do not delete the header node";
+
+    x-&gt;left-&gt;right = x-&gt;right;  // 左邊節點跳過 x
+    x-&gt;right-&gt;left = x-&gt;left;   // 右邊節點跳過 x
+    delete x;
+}</code></pre></div>
+      <h3>解題步驟</h3>
+      <ol>
+        <li>插入 15 到 10 右邊時，15 的 left 指向 10。</li>
+        <li>15 的 right 指向 10 原本的 right，也就是 20。</li>
+        <li>20 的 left 改成 15。</li>
+        <li>10 的 right 改成 15。</li>
+        <li>刪除 20 時，讓 15 的 right 指向 head，head 的 left 指向 15。</li>
+      </ol>
+      <div class="box answer"><b>完整答案：</b>插入後：head ↔ 10 ↔ 15 ↔ 20 ↔ head。刪除 20 後：head ↔ 10 ↔ 15 ↔ head。插入需 4 個 pointer assignments，刪除需 2 個 pointer assignments。</div>
+      <div class="box warning"><b>考試容易錯：</b>雙向串列插入時左右兩邊都要接好；只改 right 不改 left，串列會壞掉。</div>
+    </div>
+  </article>
+
+  <section class="exam-box">
+    <h2>考前速讀版</h2>
+    <p>Chapter 4 最常變成考題的方式是「給圖或程式碼，請你畫出 pointer 改變後的狀態」。因此準備時請特別練：InsertAfter、Delete、Reverse、Circular InsertFront、LinkedQueue Push/Pop、av list GetNode/RetNode、Polynomial Add、Doubly Insert/Delete。</p>
+    <p class="footer-note">建議考前把每一題的動畫至少手畫一次，因為老師常考的不是背誦，而是狀態變化。</p>
+  </section>
+</main>
+
+<script>
+document.querySelectorAll('.acc-head').forEach(btn=>btn.addEventListener('click',()=>btn.parentElement.classList.toggle('open')));
+function openAll(){document.querySelectorAll('.accordion').forEach(a=>a.classList.add('open'));}
+function closeAll(){document.querySelectorAll('.accordion').forEach(a=>a.classList.remove('open'));}
+function copyCode(id){navigator.clipboard.writeText(document.getElementById(id).innerText).then(()=>alert('已複製程式碼'));}
+
+const state = {};
+
+function svgNode(x,y,text,cls='node',w=74){
+  return `<g class="${cls}"><rect x="${x-w/2}" y="${y-23}" width="${w}" height="46" rx="9"/><text class="label" x="${x}" y="${y}">${text}</text></g>`;
+}
+function arrow(x1,y1,x2,y2,cls='edge'){
+  return `<defs><marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#475569"/></marker><marker id="arr2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#16a34a"/></marker></defs><line class="${cls}" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" marker-end="${cls.includes('new')?'url(#arr2)':'url(#arr)'}"/>`;
+}
+function listSvg(values, active=[], title='Linked list', opts={}){
+  let s=`<svg viewBox="0 0 760 250"><text x="25" y="30" class="label">${title}</text>`;
+  let y=120, x0=100, gap=125;
+  if(opts.first!==false) s+=`<text x="40" y="${y}" class="small">first</text>${arrow(70,y,x0-45,y)}`;
+  values.forEach((v,i)=>{
+    let x=x0+i*gap, cls=active.includes(v)||active.includes(i)?'node active':'node';
+    s+=svgNode(x,y,v,cls,70);
+    if(i<values.length-1) s+=arrow(x+35,y,x0+(i+1)*gap-45,y, opts.newEdge===i?'edge new':'edge');
+    else s+=arrow(x+35,y,x+90,y);
+  });
+  s+=`<text x="${x0+values.length*gap+5}" y="${y+5}" class="small">NULL</text></svg>`;
+  return s;
+}
+function arrayVsListSvg(step){
+  if(step===0) return `<svg viewBox="0 0 780 360">
+    <text x="80" y="35" class="label">Array：EAT FAT HAT WAT</text>
+    ${['EAT','FAT','HAT','WAT',''].map((v,i)=>`<rect x="70" y="${70+i*45}" width="95" height="42" fill="${i===2?'#fef3c7':'#fff'}" stroke="#334155"/><text x="118" y="${96+i*45}" class="label">${v}</text><text x="42" y="${96+i*45}" class="small">[${i}]</text>`).join('')}
+    <text x="380" y="35" class="label">Linked：EAT → FAT → HAT → WAT</text>
+    ${listSvg(['EAT','FAT','HAT','WAT'],[], '', {first:true}).replace('<svg viewBox="0 0 760 250">','<g transform="translate(250,55) scale(.68)">').replace('</svg>','</g>')}
+    <text x="380" y="310" class="small">目標：在 FAT 與 HAT 中間插入 GAT</text>
+  </svg>`;
+  if(step===1) return `<svg viewBox="0 0 780 360">
+    <text x="80" y="35" class="label">Array 插入：HAT、WAT 右移</text>
+    ${['EAT','FAT','','HAT','WAT'].map((v,i)=>`<rect x="70" y="${70+i*45}" width="95" height="42" fill="${i>=2?'#fef3c7':'#fff'}" stroke="#334155"/><text x="118" y="${96+i*45}" class="label">${v}</text><text x="42" y="${96+i*45}" class="small">[${i}]</text>`).join('')}
+    <text x="240" y="160" class="small">需要搬移元素，所以 O(n)</text>
+    <text x="440" y="35" class="label">Linked 插入：只改 link</text>
+    ${listSvg(['EAT','FAT','GAT','HAT','WAT'],['GAT'], '', {first:true,newEdge:1}).replace('<svg viewBox="0 0 760 250">','<g transform="translate(310,60) scale(.58)">').replace('</svg>','</g>')}
+    <text x="430" y="305" class="small">FAT.link 指向 GAT；GAT.link 指向 HAT</text>
+  </svg>`;
+  return `<svg viewBox="0 0 780 360">
+    <text x="80" y="35" class="label">刪除 GAT 後</text>
+    <text x="80" y="70" class="small">Array：後面元素左移 → O(n)</text>
+    ${['EAT','FAT','HAT','WAT',''].map((v,i)=>`<rect x="70" y="${100+i*42}" width="95" height="38" fill="${i>=2?'#fef3c7':'#fff'}" stroke="#334155"/><text x="118" y="${124+i*42}" class="label">${v}</text><text x="42" y="${124+i*42}" class="small">[${i}]</text>`).join('')}
+    <text x="400" y="70" class="small">Linked：FAT.link 直接跳到 HAT → O(1)</text>
+    ${listSvg(['EAT','FAT','HAT','WAT'],[], '', {first:true,newEdge:1}).replace('<svg viewBox="0 0 760 250">','<g transform="translate(310,100) scale(.62)">').replace('</svg>','</g>')}
+  </svg>`;
+}
+function q2Static(){
+  return listSvg(['10','20','30'],[], 'first → 10 → 20 → 30 → NULL');
+}
+function insertDeleteSvg(step){
+  if(step===0) return listSvg(['10','20','30'],['20'],'Initial list：x 指向 20');
+  if(step===1) return `<svg viewBox="0 0 760 260"><text x="30" y="30" class="label">Step 1：newNode = 50，先讓 50.link 指向 30</text>${listSvg(['10','20','30'],['20'],'').replace('<svg viewBox="0 0 760 250">','<g transform="translate(0,20)">').replace('</svg>','</g>')} ${svgNode(340,210,'50','node active',70)} ${arrow(375,210,385,160,'edge new')}</svg>`;
+  if(step===2) return listSvg(['10','20','50','30'],['50'],'Step 2：20.link 指向 50，插入完成',{newEdge:1});
+  if(step===3) return listSvg(['10','20','50','30'],['20'],'Step 3：準備刪除 20，必須知道前一節點 10');
+  return listSvg(['10','50','30'],['50'],'Step 4：10.link = 20.link，刪除 20 完成',{newEdge:0});
+}
+function iteratorSvg(step){
+  let vals=['10','20','30'];
+  let active=step===0?['10']:step===1?['20']:['20'];
+  let note=step===0?'p 指向 10，因此 *p = 10':step===1?'++p：先移動到 20，再回傳新的 p':'p++：回傳舊的 10，但 p 本身最後仍移到 20';
+  return listSvg(vals,active,note);
+}
+function reverseSvg(step){
+  const data=[
+    {v:['1','2','3','4'],hi:['1'],t:'current=1, previous=NULL'},
+    {v:['1'],hi:['1'],t:'把 1.link 指向 NULL，已反轉區：1'},
+    {v:['2','1'],hi:['2'],t:'current=2，讓 2.link 指向 previous(1)'},
+    {v:['3','2','1'],hi:['3'],t:'current=3，讓 3.link 指向 previous(2)'},
+    {v:['4','3','2','1'],hi:['4'],t:'current=4，讓 4.link 指向 previous(3)'},
+    {v:['4','3','2','1'],hi:[],t:'first=previous，反轉完成：4 → 3 → 2 → 1'}
+  ][step];
+  return listSvg(data.v,data.hi,data.t);
+}
+function circularSvg(step){
+  if(step===0) return `<svg viewBox="0 0 760 280"><text x="30" y="35" class="label">原本 circular list：A → B → C → A，last=C</text>
+    ${svgNode(140,140,'A')}${svgNode(300,140,'B')}${svgNode(460,140,'C','node active')}
+    ${arrow(175,140,255,140)}${arrow(335,140,415,140)}<path class="edge" d="M495 140 C620 70,80 70,105 140" marker-end="url(#arr)"/><text x="460" y="200" class="small">last</text></svg>`;
+  if(step===1) return `<svg viewBox="0 0 760 280"><text x="30" y="35" class="label">Step 1：X.link = last.link，也就是 X.link = A</text>
+    ${svgNode(110,140,'X','node active')}${svgNode(260,140,'A')}${svgNode(420,140,'B')}${svgNode(580,140,'C','node active')}
+    ${arrow(145,140,215,140,'edge new')}${arrow(295,140,375,140)}${arrow(455,140,535,140)}
+    <path class="edge" d="M615 140 C660 70,230 70,225 140" marker-end="url(#arr)"/></svg>`;
+  return `<svg viewBox="0 0 760 280"><text x="30" y="35" class="label">Step 2：last.link = X，X 成為新的 first</text>
+    ${svgNode(110,140,'X','node active')}${svgNode(260,140,'A')}${svgNode(420,140,'B')}${svgNode(580,140,'C','node active')}
+    ${arrow(145,140,215,140)}${arrow(295,140,375,140)}${arrow(455,140,535,140)}<path class="edge new" d="M615 140 C660 70,70 70,75 140" marker-end="url(#arr2)"/>
+    <text x="580" y="205" class="small">last 仍是 C</text></svg>`;
+}
+function stackQueueSvg(step){
+  if(step===0) return listSvg(['10'],['10'],'Stack Push(10)：top → 10');
+  if(step===1) return listSvg(['20','10'],['20'],'Stack Push(20)：20 放在 top');
+  if(step===2) return listSvg(['10'],['10'],'Stack Pop()：刪掉 20，剩 10');
+  if(step===3) return listSvg(['10'],['10'],'Queue Push(10)：front=rear=10');
+  if(step===4) return listSvg(['10','20'],['20'],'Queue Push(20)：20 接在 rear 後面');
+  return listSvg(['20'],['20'],'Queue Pop()：刪掉 front 10，剩 20');
+}
+function avSvg(step){
+  if(step===0) return listSvg(['D1','D2'],['D1'],'av list：已刪除節點串列，av 指向 D1',{first:false}).replace('first','av');
+  if(step===1) return listSvg(['D2'],['D2'],'GetNode()：取出 D1，av 改指向 D2',{first:false});
+  if(step===2) return `<svg viewBox="0 0 760 250"><text x="25" y="30" class="label">RetNode(X)：把 X 接回 av 前端</text>${svgNode(100,120,'X','node active')}${svgNode(260,120,'D2')}${arrow(135,120,215,120,'edge new')}<text x="48" y="125" class="small">av</text></svg>`;
+  return `<svg viewBox="0 0 760 250"><text x="25" y="30" class="label">整條 circular list 可直接接到 av：last.link = av; av = first</text>${svgNode(100,120,'A','node active')}${svgNode(240,120,'B','node active')}${svgNode(380,120,'C','node active')}${svgNode(560,120,'av')}${arrow(135,120,195,120)}${arrow(275,120,335,120)}${arrow(415,120,515,120,'edge new')}</svg>`;
+}
+function polySvg(step){
+  const labels=[
+    'A 與 B 都依 exponent 由大到小排列。',
+    '14 相同：3+8=11，產生 11x^14。',
+    'B 的 10 比 A 的 8 大，copy -3x^10。',
+    'A 的 8 比 B 的 6 大，copy 2x^8。',
+    'copy B 的 10x^6 與 A 的常數 1，完成 C。'
+  ];
+  const c=[
+    [],
+    ['11|14'],
+    ['11|14','-3|10'],
+    ['11|14','-3|10','2|8'],
+    ['11|14','-3|10','2|8','10|6','1|0']
+  ][step];
+  function termList(vals,y,name,hiIndex=-1){
+    let s=`<text x="35" y="${y}" class="label">${name}</text>`;
+    vals.forEach((v,i)=>{
+      let [coef,exp]=v.split('|'), x=110+i*105;
+      s+=`<g class="node ${i===hiIndex?'active':''}"><rect x="${x}" y="${y-25}" width="80" height="50" rx="8"/><text x="${x+25}" y="${y}" class="label">${coef}</text><text x="${x+58}" y="${y}" class="small">${exp}</text></g>`;
+      if(i<vals.length-1)s+=arrow(x+80,y,x+105,y);
+    });
+    return s;
+  }
+  let hiA = step===0?0:step===1?0:step===2?1:step===3?1:2;
+  let hiB = step===0?0:step===1?0:step===2?1:step===3?2:2;
+  return `<svg viewBox="0 0 820 360"><text x="30" y="28" class="label">${labels[step]}</text>
+    ${termList(['3|14','2|8','1|0'],90,'A',hiA)}
+    ${termList(['8|14','-3|10','10|6'],170,'B',hiB)}
+    ${termList(c,270,'C')}
+    <text x="650" y="330" class="small">node=(coef, exp)</text></svg>`;
+}
+function dblSvg(step){
+  if(step===0) return `<svg viewBox="0 0 780 260"><text x="30" y="35" class="label">原本：head ↔ 10 ↔ 20 ↔ head</text>${svgNode(90,130,'head','node active',82)}${svgNode(260,130,'10')}${svgNode(430,130,'20')}${arrow(131,120,220,120)}${arrow(220,140,131,140)}${arrow(295,120,390,120)}${arrow(390,140,295,140)}<path class="edge" d="M470 130 C600 70,10 70,50 130" marker-end="url(#arr)"/></svg>`;
+  if(step===1) return `<svg viewBox="0 0 780 260"><text x="30" y="35" class="label">插入 15 到 10 右邊：先接 15.left=10, 15.right=20</text>${svgNode(90,130,'head', 'node active',82)}${svgNode(240,130,'10')}${svgNode(390,130,'15','node active')}${svgNode(540,130,'20')}${arrow(275,120,350,120,'edge new')}${arrow(425,120,500,120,'edge new')}</svg>`;
+  if(step===2) return `<svg viewBox="0 0 780 260"><text x="30" y="35" class="label">完成插入：head ↔ 10 ↔ 15 ↔ 20 ↔ head</text>${svgNode(80,130,'head','node active',82)}${svgNode(220,130,'10')}${svgNode(360,130,'15','node active')}${svgNode(500,130,'20')}${arrow(121,120,180,120)}${arrow(180,140,121,140)}${arrow(255,120,320,120)}${arrow(320,140,255,140)}${arrow(395,120,460,120)}${arrow(460,140,395,140)}</svg>`;
+  return `<svg viewBox="0 0 780 260"><text x="30" y="35" class="label">刪除 20：15.right=head，head.left=15</text>${svgNode(90,130,'head','node active',82)}${svgNode(260,130,'10')}${svgNode(430,130,'15','node active')}${arrow(131,120,220,120)}${arrow(220,140,131,140)}${arrow(295,120,390,120)}${arrow(390,140,295,140)}<path class="edge new" d="M468 130 C590 70,20 70,49 130" marker-end="url(#arr2)"/></svg>`;
+}
+function renderStep(id){
+  const st=state[id], item=st.steps[st.idx];
+  document.getElementById('text-'+id).innerHTML=`第 ${st.idx+1} / ${st.steps.length} 步：${item.text}`;
+  document.getElementById('anim-'+id).innerHTML=item.svg();
+}
+function nextStep(id){state[id].idx=Math.min(state[id].idx+1,state[id].steps.length-1);renderStep(id);}
+function prevStep(id){state[id].idx=Math.max(state[id].idx-1,0);renderStep(id);}
+function replay(id){state[id].idx=0;renderStep(id);}
+
+function init(){
+  document.getElementById('q2static').innerHTML=q2Static();
+  state.q1={idx:0,steps:[
+    {text:'先觀察 array 與 linked list 的原始狀態。',svg:()=>arrayVsListSvg(0)},
+    {text:'插入 GAT：array 需要搬移；linked list 只改 link。',svg:()=>arrayVsListSvg(1)},
+    {text:'刪除 GAT：array 仍要搬移；linked list 只讓 FAT 跳過 GAT。',svg:()=>arrayVsListSvg(2)}
+  ]};
+  state.q4={idx:0,steps:[
+    {text:'初始狀態：first → 10 → 20 → 30 → NULL。',svg:()=>insertDeleteSvg(0)},
+    {text:'插入 50：先讓 50.link 指向 30，避免遺失後半段。',svg:()=>insertDeleteSvg(1)},
+    {text:'再讓 20.link 指向 50，插入完成。',svg:()=>insertDeleteSvg(2)},
+    {text:'刪除 20：先找到 20 的前一個節點 10。',svg:()=>insertDeleteSvg(3)},
+    {text:'10.link = 20.link，跳過 20，再 delete 20。',svg:()=>insertDeleteSvg(4)}
+  ]};
+  state.q5={idx:0,steps:[
+    {text:'p 指向第一個節點 10，所以 *p 取得 10。',svg:()=>iteratorSvg(0)},
+    {text:'++p 是 preincrement：先移動到下一個節點 20，再回傳 p。',svg:()=>iteratorSvg(1)},
+    {text:'p++ 是 postincrement：回傳舊的 10，但 p 本身最後仍移到 20。',svg:()=>iteratorSvg(2)}
+  ]};
+  state.q6={idx:0,steps:[
+    {text:'初始化：current 指向 1，previous 為 NULL。',svg:()=>reverseSvg(0)},
+    {text:'處理 1：讓 1.link 指向 previous(NULL)。',svg:()=>reverseSvg(1)},
+    {text:'處理 2：讓 2.link 指向 1。',svg:()=>reverseSvg(2)},
+    {text:'處理 3：讓 3.link 指向 2。',svg:()=>reverseSvg(3)},
+    {text:'處理 4：讓 4.link 指向 3。',svg:()=>reverseSvg(4)},
+    {text:'first 改成 previous，也就是 4，完成反轉。',svg:()=>reverseSvg(5)}
+  ]};
+  state.q7={idx:0,steps:[
+    {text:'原本 circular list：last 指向 C，C.link 指回 A。',svg:()=>circularSvg(0)},
+    {text:'建立 X，先讓 X.link 指向原本 first，也就是 last.link=A。',svg:()=>circularSvg(1)},
+    {text:'再讓 last.link 指向 X，X 成為新的 first。',svg:()=>circularSvg(2)}
+  ]};
+  state.q8={idx:0,steps:[
+    {text:'Stack Push(10)：top 指向 10。',svg:()=>stackQueueSvg(0)},
+    {text:'Stack Push(20)：新節點放在 top，20 指向 10。',svg:()=>stackQueueSvg(1)},
+    {text:'Stack Pop()：刪除 top 20，所以剩 10。',svg:()=>stackQueueSvg(2)},
+    {text:'Queue Push(10)：front 與 rear 都指向 10。',svg:()=>stackQueueSvg(3)},
+    {text:'Queue Push(20)：20 接在 rear 後面，rear 更新為 20。',svg:()=>stackQueueSvg(4)},
+    {text:'Queue Pop()：刪除 front 10，所以剩 20。',svg:()=>stackQueueSvg(5)}
+  ]};
+  state.q9={idx:0,steps:[
+    {text:'av 指向一串可回收節點。',svg:()=>avSvg(0)},
+    {text:'GetNode() 從 av 拿走第一個節點，av 往後移。',svg:()=>avSvg(1)},
+    {text:'RetNode(X) 把 X 接回 av 前端。',svg:()=>avSvg(2)},
+    {text:'刪除整個 circular list 時，可把整串直接接到 av 前端。',svg:()=>avSvg(3)}
+  ]};
+  state.q10={idx:0,steps:[
+    {text:'A 與 B 都用 linked list 儲存，每個節點包含 coef 與 exp。',svg:()=>polySvg(0)},
+    {text:'exp 14 相同，所以係數相加 3+8=11。',svg:()=>polySvg(1)},
+    {text:'B 的 exp 10 大於 A 的 exp 8，因此 copy B 的 -3x^10。',svg:()=>polySvg(2)},
+    {text:'A 的 exp 8 大於 B 的 exp 6，因此 copy A 的 2x^8。',svg:()=>polySvg(3)},
+    {text:'最後 copy 剩餘項，得到完整 C(x)。',svg:()=>polySvg(4)}
+  ]};
+  state.q12={idx:0,steps:[
+    {text:'原本 list：head ↔ 10 ↔ 20 ↔ head。',svg:()=>dblSvg(0)},
+    {text:'插入 15：設定 15.left=10 與 15.right=20。',svg:()=>dblSvg(1)},
+    {text:'再修改 20.left=15 與 10.right=15，插入完成。',svg:()=>dblSvg(2)},
+    {text:'刪除 20：讓 15 與 head 互相連接，跳過 20。',svg:()=>dblSvg(3)}
+  ]};
+  Object.keys(state).forEach(renderStep);
+}
+init();
+</script>
+</body>
+</html>
