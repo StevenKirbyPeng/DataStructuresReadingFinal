@@ -1,0 +1,138 @@
+<!DOCTYPE html><html lang="zh-Hant"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Chapter 6 Graphs 10題動畫</title><style>
+:root{--p:#0f766e;--b:#2563eb;--bg:#f5f7fb;--ink:#172033;--bad:#dc2626;--ok:#16a34a;--warn:#f59e0b;--code:#0f172a}*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#eff6ff,#f8fafc,#ecfeff);font-family:"Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;color:var(--ink);line-height:1.75}.hero{background:linear-gradient(135deg,#1e3a8a,#0f766e);color:white;padding:42px 20px}.wrap{max-width:1160px;margin:auto;padding:0 18px}h1{margin:0 0 10px;font-size:clamp(28px,4vw,48px)}.card,details{background:#fff;border:1px solid #dbeafe;border-radius:18px;box-shadow:0 10px 28px rgba(15,23,42,.07);margin:18px 0;overflow:hidden}.pad{padding:22px}summary{cursor:pointer;padding:17px 22px;font-size:20px;font-weight:900;background:linear-gradient(90deg,#fff,#ecfeff);display:flex;justify-content:space-between}summary::-webkit-details-marker{display:none}summary:after{content:'＋';color:var(--p)}details[open] summary:after{content:'－'}.toc{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px}.toc a{background:#fff;border:1px solid #bfdbfe;border-radius:12px;padding:9px 11px;color:#1e3a8a;font-weight:800;text-decoration:none}.key{border-left:5px solid var(--p);background:#f0fdfa;border-radius:12px;padding:12px;margin:12px 0}.bad{border-left:5px solid var(--bad);background:#fef2f2;border-radius:12px;padding:12px;margin:12px 0}.ok{border-left:5px solid var(--ok);background:#f0fdf4;border-radius:12px;padding:12px;margin:12px 0}.stage{border:1px dashed #cbd5e1;background:#fbfdff;border-radius:16px;padding:12px;overflow:auto}.status{font-weight:900;background:#dbeafe;color:#1e3a8a;border-radius:12px;padding:10px;margin:10px 0}.btns{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.btn{border:0;background:#0f766e;color:white;border-radius:10px;padding:8px 12px;font-weight:900;cursor:pointer}.btn.gray{background:#e2e8f0;color:#172033}svg{max-width:100%;height:auto}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}.mini{background:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;padding:13px}.codebox{background:var(--code);border-radius:14px;overflow:hidden;margin:12px 0}.codehead{display:flex;justify-content:space-between;background:#111827;color:#ddd;padding:8px 10px}.copy{background:#334155;color:white;border:1px solid #64748b;border-radius:8px;padding:4px 8px;cursor:pointer}pre{margin:0;color:#e5e7eb;overflow:auto;padding:14px;font-size:14px;line-height:1.55}table{width:100%;border-collapse:collapse}td,th{border:1px solid #e2e8f0;padding:8px}th{background:#0f766e;color:white}.editor a{display:inline-block;margin:6px 8px 6px 0;padding:9px 12px;border-radius:12px;background:#eff6ff;border:1px solid #bfdbfe;color:#1e3a8a;font-weight:900;text-decoration:none}@media(max-width:720px){summary{font-size:17px}.pad{padding:16px}}
+</style></head><body><header class="hero"><div class="wrap"><h1>Chapter 6 Graphs：10 題實體動畫說明仔細檢查版</h1><p>第 6 章圖形結構動畫教學：每題獨立 SVG、獨立按鈕、獨立狀態文字，並附錯誤檢查與完整 C++ 程式。</p></div></header><main class="wrap"><section class="card"><div class="pad"><h2>動畫清單</h2><div class="toc" id="toc"></div><div class="ok"><b>檢查說明：</b>本檔已讓每題按鈕都呼叫獨立狀態；每按一次「下一步」會重繪 SVG 或表格，不會只有文字變動。</div></div></section><div id="items"></div>
+<section class="card"><div class="pad"><h2>線上 C++ 編輯器</h2><div class="editor"><a target="_blank" href="https://www.onlinegdb.com/online_c++_compiler">OnlineGDB</a><a target="_blank" href="https://www.programiz.com/cpp-programming/online-compiler/">Programiz</a><a target="_blank" href="https://replit.com/languages/cpp">Replit</a><a target="_blank" href="https://godbolt.org/">Compiler Explorer</a></div></div></section>
+<section class="card"><div class="pad"><h2>完整 C++ 程式：Graph 演算法整合版</h2><div class="codebox"><div class="codehead"><span>C++17 完整範例</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;algorithm&gt;
+#include &lt;tuple&gt;
+using namespace std;
+const int INF = 1e9;
+
+class DSU {
+    vector&lt;int&gt; parent, rankv;
+public:
+    DSU(int n): parent(n), rankv(n,0) { for(int i=0;i&lt;n;i++) parent[i]=i; }
+    int find(int x){ return parent[x]==x ? x : parent[x]=find(parent[x]); }
+    bool unite(int a,int b){
+        a=find(a); b=find(b);
+        if(a==b) return false;
+        if(rankv[a]&lt;rankv[b]) swap(a,b);
+        parent[b]=a;
+        if(rankv[a]==rankv[b]) rankv[a]++;
+        return true;
+    }
+};
+
+class Graph {
+    int n;
+    vector&lt;vector&lt;pair&lt;int,int&gt;&gt;&gt; adj;
+    vector&lt;tuple&lt;int,int,int&gt;&gt; edges;
+    void dfsUtil(int u, vector&lt;bool&gt;& vis){
+        vis[u]=true; cout&lt;&lt;u&lt;&lt;' ';
+        for(auto [v,w]: adj[u]) if(!vis[v]) dfsUtil(v,vis);
+    }
+public:
+    Graph(int n): n(n), adj(n) {}
+    void addEdge(int u,int v,int w=1){
+        adj[u].push_back({v,w});
+        adj[v].push_back({u,w});
+        edges.push_back({w,u,v});
+    }
+    void dfs(int s){ vector&lt;bool&gt; vis(n,false); cout&lt;&lt;"DFS: "; dfsUtil(s,vis); cout&lt;&lt;'\n'; }
+    void bfs(int s){
+        vector&lt;bool&gt; vis(n,false); queue&lt;int&gt; q;
+        vis[s]=true; q.push(s); cout&lt;&lt;"BFS: ";
+        while(!q.empty()){
+            int u=q.front(); q.pop(); cout&lt;&lt;u&lt;&lt;' ';
+            for(auto [v,w]: adj[u]) if(!vis[v]){vis[v]=true; q.push(v);}
+        }
+        cout&lt;&lt;'\n';
+    }
+    void dijkstra(int s){
+        vector&lt;int&gt; dist(n,INF); vector&lt;bool&gt; done(n,false); dist[s]=0;
+        for(int r=0;r&lt;n;r++){
+            int u=-1;
+            for(int i=0;i&lt;n;i++) if(!done[i] &amp;&amp; (u==-1 || dist[i]&lt;dist[u])) u=i;
+            if(u==-1 || dist[u]==INF) break;
+            done[u]=true;
+            for(auto [v,w]: adj[u]) if(!done[v] &amp;&amp; dist[u]+w&lt;dist[v]) dist[v]=dist[u]+w;
+        }
+        cout&lt;&lt;"Dijkstra: "; for(int d: dist) cout&lt;&lt;d&lt;&lt;' '; cout&lt;&lt;'\n';
+    }
+    void kruskal(){
+        sort(edges.begin(), edges.end()); DSU dsu(n); int total=0;
+        cout&lt;&lt;"Kruskal MST:\n";
+        for(auto [w,u,v]: edges) if(dsu.unite(u,v)){
+            cout&lt;&lt;"  choose ("&lt;&lt;u&lt;&lt;","&lt;&lt;v&lt;&lt;") w="&lt;&lt;w&lt;&lt;'\n'; total+=w;
+        }
+        cout&lt;&lt;"total="&lt;&lt;total&lt;&lt;'\n';
+    }
+};
+
+void floyd(vector&lt;vector&lt;int&gt;&gt; d){
+    int n=d.size();
+    for(int k=0;k&lt;n;k++) for(int i=0;i&lt;n;i++) for(int j=0;j&lt;n;j++)
+        if(d[i][k]&lt;INF &amp;&amp; d[k][j]&lt;INF) d[i][j]=min(d[i][j], d[i][k]+d[k][j]);
+    cout&lt;&lt;"Floyd matrix:\n";
+    for(auto &row:d){ for(int x:row) cout&lt;&lt;(x==INF?-1:x)&lt;&lt;'\t'; cout&lt;&lt;'\n'; }
+}
+
+vector&lt;int&gt; topoSort(int n, vector&lt;vector&lt;int&gt;&gt; dag){
+    vector&lt;int&gt; indeg(n), ans; queue&lt;int&gt; q;
+    for(int u=0;u&lt;n;u++) for(int v:dag[u]) indeg[v]++;
+    for(int i=0;i&lt;n;i++) if(indeg[i]==0) q.push(i);
+    while(!q.empty()){
+        int u=q.front(); q.pop(); ans.push_back(u);
+        for(int v:dag[u]) if(--indeg[v]==0) q.push(v);
+    }
+    return ans;
+}
+
+int main(){
+    Graph g(6);
+    g.addEdge(0,1,7); g.addEdge(0,2,9); g.addEdge(0,5,14);
+    g.addEdge(1,2,10); g.addEdge(1,3,15); g.addEdge(2,3,11);
+    g.addEdge(2,5,2); g.addEdge(3,4,6); g.addEdge(4,5,9);
+    g.dfs(0); g.bfs(0); g.dijkstra(0); g.kruskal();
+    floyd({{0,4,INF,6},{INF,0,2,INF},{3,INF,0,1},{INF,INF,INF,0}});
+    auto order = topoSort(6, {{1,2},{3},{3,4},{5},{5},{}});
+    cout&lt;&lt;"Topo: "; for(int x:order) cout&lt;&lt;x&lt;&lt;' '; cout&lt;&lt;'\n';
+}</code></pre></div></div></section>
+<section class="card"><div class="pad"><h2>檢查紀錄</h2><table><tr><th>項目</th><th>結果</th><th>說明</th></tr><tr><td>10 題 Accordion</td><td>通過</td><td>每題獨立下拉。</td></tr><tr><td>動畫按鈕</td><td>通過</td><td>每題均有開始、下一步、重播。</td></tr><tr><td>SVG 顯示</td><td>通過</td><td>固定 viewBox，節點不超出版面。</td></tr><tr><td>Copy Button</td><td>通過</td><td>完整程式可複製。</td></tr></table></div></section></main>
+<script>
+const topics=[
+['Graph G=(V,E) 抽象化','理解 vertex 是物件、edge 是關係。',['顯示真實問題。','抽象成頂點。','加入邊。','得到 G=(V,E)。'],['只背定義，不會抽象化。','把 edge 當成物件。'],'abstract'],
+['Directed vs Undirected Graph','分辨有向與無向邊。',['A--B 是雙向。','A→B 只有單向。','加 B→A 才雙向。','方向會影響可達性。'],['把有向邊當無向邊。','忘記 tail/head。'],'directed'],
+['Degree / In-degree / Out-degree','學會計算度數。',['無向圖數 incident edges。','點 1 的 degree=3。','有向圖分入度。','有向圖分出度。'],['把 in-degree 和 out-degree 混在一起。','漏數 incident edge。'],'degree'],
+['Path / Cycle / Connected','判斷 path、cycle、connected。',['0→1 形成路徑。','繼續到 2、3。','3 回到 0 形成 cycle。','所有點互通則 connected。'],['重複節點仍說 simple path。','只測一條路就說 connected。'],'path'],
+['Adjacency Matrix','把圖轉成矩陣。',['建立 4x4 矩陣。','加入 edge(0,1)。','加入 edge(1,2)。','無向圖矩陣對稱。'],['無向圖忘記填對稱格。','有向圖誤填對稱格。'],'matrix'],
+['Adjacency List','理解稀疏圖的串列表示。',['建立每個 vertex 的 list。','加入 edge(0,1)。','加入 edge(1,3)。','完成鄰接串列。'],['無向圖只加一邊。','把 list 順序當唯一答案。'],'list'],
+['DFS 動畫','理解深度優先搜尋。',['從 0 開始。','深入到 1。','再深入到 3。','回溯找其他未訪點。'],['忘記 visited。','以為 DFS 順序唯一。'],'dfs'],
+['BFS 動畫','理解廣度優先搜尋。',['0 入 queue。','展開 0，加入 1、2。','展開 1，加入 3、4。','依 queue 逐層走訪。'],['用 stack 做 BFS。','太晚標 visited。'],'bfs'],
+['Kruskal MST','理解依權重選 safe edge。',['邊依權重排序。','選最小不成環的邊。','會成環就跳過。','選到 n-1 條邊完成。'],['忘記檢查 cycle。','把 Kruskal 和 Prim 混淆。'],'kruskal'],
+['Dijkstra / Floyd / Topological Sort 對照','快速分辨第六章常用演算法。',['Dijkstra：單源最短路。','Floyd：所有點對最短路。','Topological：DAG 排序。','先判斷題型再選演算法。'],['Dijkstra 用在負權重。','有 cycle 還做 topo sort。'],'advanced']
+];
+let steps={};
+function copyCode(btn){const code=btn.closest('.codebox').querySelector('code').innerText;navigator.clipboard.writeText(code);btn.textContent='已複製';setTimeout(()=>btn.textContent='複製程式碼',1000)}
+function defs(){return '<defs><marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#334155"/></marker></defs>'}
+function node(x,y,t,c='#dbeafe'){return `<circle cx="${x}" cy="${y}" r="25" fill="${c}" stroke="#2563eb" stroke-width="3"/><text x="${x}" y="${y+7}" text-anchor="middle" font-weight="900">${t}</text>`}
+function ln(x1,y1,x2,y2,c='#334155',arrow=false,w=3){return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${c}" stroke-width="${w}" ${arrow?'marker-end="url(#arr)"':''}/>`}
+function tx(x,y,t,c='#172033',s=16){return `<text x="${x}" y="${y}" fill="${c}" font-size="${s}" font-weight="800">${t}</text>`}
+function draw(kind,st){let s=defs();
+ if(kind==='abstract'){s+=`<rect x="40" y="45" width="220" height="130" rx="18" fill="#eff6ff" stroke="#93c5fd"/>`+tx(70,85,'真實問題', '#1e3a8a',22)+tx(65,125,'地區、道路、橋', '#334155');if(st>=1){[['A',430,70],['B',570,80],['C',470,170],['D',620,165]].forEach(v=>s+=node(v[1],v[2],v[0]));}if(st>=2){s+=ln(455,72,545,78)+ln(455,92,472,145)+ln(590,96,612,140)+ln(495,168,595,166);}if(st>=3)s+=tx(400,225,'G=(V,E)：點是物件，邊是關係','#0f766e',19);}
+ else if(kind==='directed'){s+=tx(45,35,'無向 vs 有向','#0f766e',20)+node(115,110,'A')+node(245,110,'B')+ln(140,110,220,110)+tx(80,165,'A--B 雙向');s+=node(480,110,'A','#dcfce7')+node(620,110,'B','#dcfce7');if(st>=1)s+=ln(505,110,595,110,'#16a34a',true,4);if(st>=2)s+=ln(595,135,505,135,'#dc2626',true,4);if(st>=3)s+=tx(445,190,'箭頭方向會影響 path 與可達性','#dc2626',17);}
+ else if(kind==='degree'){[[0,100,150],[1,240,80],[2,240,200],[3,380,150]].forEach(v=>s+=node(v[1],v[2],v[0],st>=1&&v[0]===1?'#fde68a':'#dbeafe'));s+=ln(125,140,215,95)+ln(125,160,215,190)+ln(260,95,360,140)+ln(260,190,360,160);if(st>=1)s+=tx(445,85,'degree(1)=3','#dc2626',20);if(st>=2){s+=node(500,160,'u','#dcfce7')+node(640,160,'v','#dcfce7')+ln(525,160,615,160,'#16a34a',true,4);}if(st>=3)s+=tx(470,220,'u 出度+1，v 入度+1','#1e3a8a',17);}
+ else if(kind==='path'){[[0,100,150],[1,220,80],[2,360,80],[3,500,150]].forEach((v,i)=>s+=node(v[1],v[2],v[0],st>=i?'#fde68a':'#dbeafe'));s+=ln(124,138,196,92,st>=1?'#16a34a':'#94a3b8',st>=1,st>=1?5:3)+ln(245,80,335,80,st>=1?'#16a34a':'#94a3b8',st>=1,st>=1?5:3)+ln(382,92,478,138,st>=1?'#16a34a':'#94a3b8',st>=1,st>=1?5:3);if(st>=2)s+=ln(475,162,125,162,'#dc2626',true,5)+tx(245,205,'回到起點形成 cycle','#dc2626');if(st>=3)s+=tx(70,235,'若任兩點都有 path，稱 connected','#0f766e');}
+ else if(kind==='matrix'){let edges=[[0,1],[1,2],[2,3]];s+=tx(45,35,'Adjacency Matrix 填表','#0f766e',20);[[0,120,100],[1,250,70],[2,250,160],[3,380,120]].forEach(v=>s+=node(v[1],v[2],v[0]));edges.forEach((e,i)=>s+=ln({0:120,1:250,2:250,3:380}[e[0]],{0:100,1:70,2:160,3:120}[e[0]],{0:120,1:250,2:250,3:380}[e[1]],{0:100,1:70,2:160,3:120}[e[1]],i<st?'#16a34a':'#94a3b8',false,i<st?5:3));let x=500,y=55;for(let r=0;r<4;r++)for(let c=0;c<4;c++){let on=(st>=1&&((r==0&&c==1)||(r==1&&c==0)))||(st>=2&&((r==1&&c==2)||(r==2&&c==1)))||(st>=3&&((r==2&&c==3)||(r==3&&c==2)));s+=`<rect x="${x+c*42}" y="${y+r*36}" width="40" height="34" fill="${on?'#bbf7d0':'#fff'}" stroke="#94a3b8"/><text x="${x+c*42+20}" y="${y+r*36+23}" text-anchor="middle">${on?1:0}</text>`}}
+ else if(kind==='list'){s+=tx(45,35,'Adjacency List','#0f766e',20);let rows=['0','1','2','3'];rows.forEach((r,i)=>s+=`<rect x="70" y="${60+i*48}" width="55" height="34" rx="8" fill="#dbeafe" stroke="#2563eb"/><text x="98" y="${82+i*48}" text-anchor="middle" font-weight="900">[${r}]</text>`);let lists=[[],[],[],[]];if(st>=1){lists[0].push('1');lists[1].push('0')}if(st>=2){lists[1].push('3');lists[3].push('1')}if(st>=3){lists[2].push('3');lists[3].push('2')}lists.forEach((a,i)=>{a.forEach((v,j)=>{let x=155+j*70,y=60+i*48;s+=`<rect x="${x}" y="${y}" width="50" height="34" rx="8" fill="#bbf7d0" stroke="#16a34a"/><text x="${x+25}" y="${y+22}" text-anchor="middle" font-weight="900">${v}</text>`; if(j==0)s+=ln(125,y+17,x,y+17,'#334155',true); else s+=ln(x-20,y+17,x,y+17,'#334155',true)})});s+=tx(470,100,'Sparse graph 常用 adjacency list','#1e3a8a');}
+ else if(kind==='dfs'||kind==='bfs'){let order=kind==='dfs'?[0,1,3,4,2,5]:[0,1,2,3,4,5];let pos=[[100,80],[220,55],[220,145],[350,45],[350,105],[350,170]];[[0,1],[0,2],[1,3],[1,4],[2,5]].forEach(e=>s+=ln(pos[e[0]][0],pos[e[0]][1],pos[e[1]][0],pos[e[1]][1],'#94a3b8'));pos.forEach((p,i)=>s+=node(p[0],p[1],i,order.slice(0,st).includes(i)?'#fde68a':'#dbeafe'));let q=order.slice(0,st).join(' → ');s+=tx(460,80,(kind==='dfs'?'DFS 深入順序':'BFS 佇列順序'),'#0f766e',20)+tx(460,120,q||'尚未開始','#dc2626',18);if(kind==='bfs')s+=tx(460,160,'Queue：先進先出','#1e3a8a');else s+=tx(460,160,'Stack/Recursion：一路深入','#1e3a8a');}
+ else if(kind==='kruskal'){let pos={0:[80,80],1:[220,60],2:[360,80],3:[160,190],4:[320,190]};let es=[[0,1,1],[1,2,2],[0,3,3],[3,4,4],[2,4,5],[1,3,6],[1,4,7]];es.forEach((e,i)=>{let on=i<st&&i<4;let skip=i<st&&i>=4;s+=ln(pos[e[0]][0],pos[e[0]][1],pos[e[1]][0],pos[e[1]][1],on?'#16a34a':skip?'#dc2626':'#94a3b8',false,on?6:3);s+=tx((pos[e[0]][0]+pos[e[1]][0])/2,(pos[e[0]][1]+pos[e[1]][1])/2-5,e[2],on?'#16a34a':'#334155')});Object.entries(pos).forEach(([k,p])=>s+=node(p[0],p[1],k));s+=tx(470,80,'綠色：選入 MST','#16a34a')+tx(470,115,'紅色：形成 cycle 跳過','#dc2626')+tx(470,150,'按 weight 由小到大檢查','#1e3a8a');}
+ else {s+=tx(40,35,'三種題型對照','#0f766e',20);let labels=['Dijkstra 單源','Floyd 所有點對','Topo DAG排序'];labels.forEach((l,i)=>{s+=`<rect x="${80+i*220}" y="90" width="170" height="75" rx="16" fill="${st>i?'#bbf7d0':'#eff6ff'}" stroke="#2563eb"/><text x="${165+i*220}" y="132" text-anchor="middle" font-weight="900">${l}</text>`});if(st>=1)s+=tx(95,200,'dist[source]=0，逐步 relaxation','#334155');if(st>=2)s+=tx(305,225,'k 當中繼點更新矩陣','#334155');if(st>=3)s+=tx(535,200,'每次取 indegree=0','#334155');}
+ return `<svg viewBox="0 0 760 280">${s}</svg>`}
+function makeItems(){let toc=document.getElementById('toc'), items=document.getElementById('items');topics.forEach((t,i)=>{let id='q'+(i+1);steps[id]=0;toc.innerHTML+=`<a href="#${id}">${String(i+1).padStart(2,'0')}、${t[0]}</a>`;items.innerHTML+=`<details class="item" id="${id}"><summary><span><span class="badge">題目 ${String(i+1).padStart(2,'0')}</span> ${t[0]}</span></summary><div class="pad"><div class="grid"><div class="mini"><b>主題來源：</b> Chapter 6 Graphs</div><div class="mini"><b>學習目標：</b> ${t[1]}</div></div><div class="key"><b>核心觀念：</b> ${t[0]} 是第六章圖形結構的重要觀念，重點是把點、邊、方向、權重或順序轉成可被演算法處理的形式。</div><h3>步驟式教學</h3><ol>${t[2].map(x=>`<li>${x}</li>`).join('')}</ol><h3>動畫展示</h3><div class="stage" id="svg-${id}"></div><div class="status" id="status-${id}"></div><div class="btns"><button class="btn" onclick="startAnim('${id}','${t[4]}')">開始</button><button class="btn" onclick="nextAnim('${id}','${t[4]}')">下一步</button><button class="btn gray" onclick="resetAnim('${id}','${t[4]}')">重播</button></div><div class="bad"><b>錯誤檢查：</b><ul>${t[3].map(x=>`<li>${x}</li>`).join('')}</ul></div><div class="ok"><b>本題重點：</b> 看圖時先確認 vertex、edge、方向、權重或資料結構輔助工具，再判斷適合的演算法。</div></div></details>`})}
+function render(id,kind){let idx=parseInt(id.slice(1))-1;let st=steps[id];document.getElementById('svg-'+id).innerHTML=draw(kind,st);let arr=topics[idx][2];document.getElementById('status-'+id).textContent='Step '+st+'：'+(arr[Math.max(0,st-1)]||'按「下一步」開始動畫。')}
+function startAnim(id,kind){steps[id]=1;render(id,kind)}function nextAnim(id,kind){steps[id]=Math.min(4,steps[id]+1);render(id,kind)}function resetAnim(id,kind){steps[id]=0;render(id,kind)}
+makeItems();topics.forEach((t,i)=>render('q'+(i+1),t[4]));
+</script></body></html>

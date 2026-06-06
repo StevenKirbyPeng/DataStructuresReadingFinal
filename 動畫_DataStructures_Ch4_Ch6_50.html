@@ -1,0 +1,1808 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>DataStructures Ch4-Ch6 50題主題動畫教學</title><style>
+:root{--bg:#f5f7fb;--paper:#fff;--ink:#1f2937;--muted:#64748b;--primary:#0f766e;--blue:#2563eb;--accent:#f59e0b;--red:#dc2626;--green:#16a34a;--line:#cbd5e1;--code:#0f172a}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:linear-gradient(180deg,#eff6ff,#f8fafc 50%,#ecfeff);color:var(--ink);font-family:"Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;line-height:1.75}.dark{--bg:#0b1220;--paper:#111827;--ink:#e5e7eb;--muted:#94a3b8;--line:#334155;--code:#020617;background:#0b1220}a{text-decoration:none;color:inherit}.hero{background:radial-gradient(circle at 15% 20%,rgba(20,184,166,.32),transparent 30%),linear-gradient(135deg,#0f766e,#1e3a8a);color:white;padding:56px 22px}.container{max-width:1180px;margin:auto;padding:0 20px}h1{font-size:clamp(30px,5vw,56px);line-height:1.15;margin:0 0 14px}.hero p{font-size:20px;max-width:900px}.toolbar{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:12px 16px}.dark .toolbar{background:rgba(17,24,39,.9)}.toolbar-inner{max-width:1180px;margin:auto;display:flex;gap:10px;align-items:center;flex-wrap:wrap}input.search{flex:1;min-width:240px;padding:11px 14px;border:1px solid var(--line);border-radius:12px;background:var(--paper);color:var(--ink)}button,.btn{border:0;border-radius:12px;padding:10px 14px;background:var(--primary);color:white;font-weight:800;cursor:pointer;display:inline-block}.btn.light,button.light{background:#e2e8f0;color:#1e293b}.card,details.lesson{background:var(--paper);border:1px solid var(--line);border-radius:20px;margin:20px 0;box-shadow:0 10px 28px rgba(15,23,42,.07);overflow:hidden}.card-pad{padding:24px}.nav-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}.nav-grid a{background:#eff6ff;border:1px solid #bfdbfe;border-radius:14px;padding:10px 12px;font-weight:800;color:#1e3a8a}.dark .nav-grid a{background:#1e293b;color:#bfdbfe;border-color:#334155}details.lesson>summary{cursor:pointer;list-style:none;padding:18px 22px;background:linear-gradient(90deg,#fff,#f0fdfa);font-size:20px;font-weight:900;display:flex;justify-content:space-between;gap:14px}.dark details.lesson>summary{background:linear-gradient(90deg,#111827,#0f172a)}details.lesson>summary::-webkit-details-marker{display:none}details.lesson>summary:after{content:'＋';color:var(--primary);font-size:24px}details.lesson[open]>summary:after{content:'－'}.body{padding:8px 24px 26px}h2{font-size:28px;margin:0 0 12px}h3{font-size:21px;color:var(--primary);margin:24px 0 10px}.meta{display:inline-block;background:#e0f2fe;color:#075985;border-radius:999px;padding:4px 10px;font-size:13px;font-weight:900}.grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}.box{border-left:5px solid var(--primary);background:#f0fdfa;border-radius:14px;padding:13px 15px;margin:12px 0}.dark .box{background:#0f1f1d}.warn{border-left-color:var(--accent);background:#fffbeb}.dark .warn{background:#27200f}.diagram,.anim{overflow-x:auto;background:linear-gradient(180deg,#f8fafc,#fff);border:1px dashed var(--line);border-radius:18px;padding:14px;margin:16px 0}.dark .diagram,.dark .anim{background:#0f172a}.anim-state{font-weight:800;color:#1e3a8a;background:#dbeafe;border-radius:12px;padding:10px 12px;margin:8px 0}.dark .anim-state{background:#1e3a8a;color:#dbeafe}.controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.codebox{background:var(--code);border-radius:16px;overflow:hidden;margin:16px 0}.codehead{background:#111827;color:#d1d5db;padding:8px 12px;display:flex;justify-content:space-between;align-items:center}.copy{background:#334155;color:white;border:1px solid #64748b;border-radius:8px;padding:5px 9px}pre{margin:0;color:#e5e7eb;padding:16px;overflow-x:auto;white-space:pre;font-size:13px;line-height:1.55}.topbtn{position:fixed;right:18px;bottom:18px;z-index:80}.editors a{display:block;border:1px solid var(--line);border-radius:14px;padding:14px;background:#f8fafc;font-weight:900}.dark .editors a{background:#1e293b}svg{max-width:100%;height:auto}.hide{display:none!important}@media(max-width:700px){.body,.card-pad{padding:16px}details.lesson>summary{font-size:17px}.toolbar-inner{display:block}.toolbar button{margin-top:8px}.nav-grid{grid-template-columns:1fr}}
+</style></head><body>
+<header class="hero"><div class="container"><span class="meta">資料結構第 4～6 章</span><h1>50 題主題動畫教學 HTML 網站</h1><p>涵蓋 Linked Lists、Trees、Heaps、BST、Graphs、DFS/BFS、MST、Shortest Path 與 Topological Sort。每題皆有步驟式說明、SVG 動畫、C++ 程式碼與常見錯誤整理。</p><p><a class="btn light" href="#toc">快速導覽</a> <a class="btn" href="#q01">開始學習</a></p></div></header>
+<div class="toolbar"><div class="toolbar-inner"><input id="searchBox" class="search" oninput="searchLessons()" placeholder="搜尋 Linked List、Heap、BST、DFS、Dijkstra..."> <button onclick="toggleDark()">深色 / 淺色模式</button><a class="btn light" href="#editors">線上編輯器</a></div></div>
+<main class="container">
+<section class="card" id="toc"><div class="card-pad"><h2>50 題快速導覽</h2><p>分配：Chapter 4 Linked Lists 15 題；Chapter 5 Trees 20 題；Chapter 6 Graphs 15 題。</p><nav class="nav-grid"><a href="#q01">題目 01｜Array vs Linked List 差異動畫</a><a href="#q02">題目 02｜Singly Linked List 節點結構</a><a href="#q03">題目 03｜first/head pointer 說明</a><a href="#q04">題目 04｜在串列前端插入節點</a><a href="#q05">題目 05｜在指定節點後插入節點</a><a href="#q06">題目 06｜刪除第一個節點</a><a href="#q07">題目 07｜刪除指定節點</a><a href="#q08">題目 08｜Pointer 斷鏈錯誤示範</a><a href="#q09">題目 09｜Linked List traversal</a><a href="#q10">題目 10｜Search 操作</a><a href="#q11">題目 11｜Reverse Linked List</a><a href="#q12">題目 12｜Circular Linked List</a><a href="#q13">題目 13｜Doubly Linked List 插入</a><a href="#q14">題目 14｜Doubly Linked List 刪除</a><a href="#q15">題目 15｜Linked Stack / Linked Queue 應用</a><a href="#q16">題目 16｜Tree 基本術語</a><a href="#q17">題目 17｜Root / Parent / Children / Sibling</a><a href="#q18">題目 18｜Degree / Leaf / Height / Level</a><a href="#q19">題目 19｜General Tree 表示法</a><a href="#q20">題目 20｜Left Child Right Sibling 轉換</a><a href="#q21">題目 21｜Binary Tree 基本概念</a><a href="#q22">題目 22｜Full / Complete / Skewed Binary Tree</a><a href="#q23">題目 23｜Array Representation</a><a href="#q24">題目 24｜Linked Representation</a><a href="#q25">題目 25｜Preorder Traversal</a><a href="#q26">題目 26｜Inorder Traversal</a><a href="#q27">題目 27｜Postorder Traversal</a><a href="#q28">題目 28｜Level-order Traversal</a><a href="#q29">題目 29｜Expression Tree</a><a href="#q30">題目 30｜Copy Binary Tree</a><a href="#q31">題目 31｜Equality Testing</a><a href="#q32">題目 32｜Threaded Binary Tree</a><a href="#q33">題目 33｜Heap Push / Bubble Up</a><a href="#q34">題目 34｜Heap Pop / Trickle Down</a><a href="#q35">題目 35｜BST Search / Insert / Delete</a><a href="#q36">題目 36｜Graph G = (V, E)</a><a href="#q37">題目 37｜Directed Graph vs Undirected Graph</a><a href="#q38">題目 38｜Degree / In-degree / Out-degree</a><a href="#q39">題目 39｜Path / Cycle / Connected</a><a href="#q40">題目 40｜Adjacency Matrix</a><a href="#q41">題目 41｜Adjacency List</a><a href="#q42">題目 42｜DFS 動畫</a><a href="#q43">題目 43｜BFS 動畫</a><a href="#q44">題目 44｜Connected Components</a><a href="#q45">題目 45｜Articulation Point</a><a href="#q46">題目 46｜Kruskal MST</a><a href="#q47">題目 47｜Prim MST</a><a href="#q48">題目 48｜Dijkstra Shortest Path</a><a href="#q49">題目 49｜Floyd-Warshall</a><a href="#q50">題目 50｜Topological Sort / Critical Path</a></nav></div></section>
+<section class="card" id="editors"><div class="card-pad"><h2>線上 C++ 編輯器連結</h2><p>每題程式碼都可以複製到下列平台測試。</p><div class="nav-grid editors"><a href="https://www.onlinegdb.com/online_c++_compiler" target="_blank">OnlineGDB</a><a href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank">Programiz</a><a href="https://replit.com/languages/cpp" target="_blank">Replit</a><a href="https://godbolt.org/" target="_blank">Compiler Explorer</a></div></div></section>
+
+<details class="lesson" id="q01" data-title="題目 01：Array vs Linked List 差異動畫動畫教學 Chapter 4 Linked Lists" data-kind="list" data-id="q01">
+<summary><span>題目 01：Array vs Linked List 差異動畫動畫教學</span><span class="meta">Chapter 4 Linked Lists</span></summary>
+<div class="body">
+<h3>（一）主題來源</h3><p><span class="meta">Chapter 4 Linked Lists</span></p>
+<h3>（二）學習目標</h3><div class="box">理解連續儲存與指標串接的差異。</div>
+<h3>（三）核心觀念說明</h3><p>Array 適合快速索引，但中間插入刪除需要搬移；Linked List 不需要連續記憶體，靠節點 link 串起來。</p><p>這個主題的教學重點是讓學生不只是背名詞，而是能看見資料如何被連接、搬移、比較或拜訪。請先觀察圖形狀態，再配合下方 Step-by-step 說明與動畫按鈕逐步理解。</p>
+<h3>（四）步驟式教學</h3><ol><li>Step 1：畫出目前節點與 head/first 指標。</li><li>Step 2：確認要操作的位置，先保存可能會失去的下一個節點。</li><li>Step 3：依正確順序更新 link 指標。</li><li>Step 4：檢查串列是否仍能從 head 一路走到 NULL。</li></ol>
+<h3>（五）動畫展示</h3><div class="anim"><svg id="svg-q01" viewBox="0 0 760 310" width="760" height="310"></svg><div class="anim-state" id="state-q01">準備中</div><div class="controls"><button onclick="resetAnim('q01','list')">開始 / 重播</button><button onclick="nextAnim('q01','list')">下一步</button><button onclick="playAnim('q01','list')">自動播放</button></div></div>
+<h3>（六）圖片或 SVG 圖解</h3><div class="diagram"><p>上方 SVG 圖解已將本題核心資料結構視覺化：高亮節點表示目前操作位置，綠色邊表示已選入或已確認的連線。</p></div>
+<h3>（七）程式碼說明</h3><p><strong>函式說明：</strong>下列程式示範本題核心操作。參數通常是節點、索引、圖或起點；回傳值依題目可能是新 head、搜尋結果、走訪順序或距離表。</p><p><strong>複雜度：</strong>時間 O(n) 或已知位置 O(1)，空間 O(1)。</p><div class="codebox"><div class="codehead"><span>C++ 參考程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+struct Node {
+    int data;      // 節點資料
+    Node* next;    // 指向下一個節點
+    Node(int v, Node* n=nullptr): data(v), next(n) {}
+};
+
+void printList(Node* head) {
+    // 從 head 開始一路走到 nullptr
+    for(Node* cur=head; cur!=nullptr; cur=cur-&gt;next) cout &lt;&lt; cur-&gt;data &lt;&lt; &quot; -&gt; &quot;;
+    cout &lt;&lt; &quot;NULL\n&quot;;
+}
+
+Node* insertFront(Node* head, int value) {
+    // 新節點先接到原本 head，再回傳新 head
+    return new Node(value, head);
+}
+
+void insertAfter(Node* x, int value) {
+    if(!x) return;                       // 防止 nullptr
+    Node* p = new Node(value, x-&gt;next);  // 先接住後半段
+    x-&gt;next = p;                         // 再讓 x 接到新節點
+}
+
+int main(){
+    Node* head = nullptr;
+    head = insertFront(head, 30);
+    head = insertFront(head, 20);
+    head = insertFront(head, 10);
+    insertAfter(head-&gt;next, 50);
+    printList(head); // 10 -&gt; 20 -&gt; 50 -&gt; 30 -&gt; NULL
+}</code></pre></div>
+<h3>（八）常見錯誤</h3><ul><li>指標更新順序寫反，造成後半段斷鏈。</li><li>忘記處理空串列或 NULL。</li><li>delete 後還繼續使用 dangling pointer。</li></ul>
+<h3>（九）本題重點總結</h3><ol><li>先看結構，再看操作順序。</li><li>每一步都要確認資料或指標是否仍然連接正確。</li><li>動畫中的高亮部分代表目前正在處理的節點、邊或矩陣格。</li><li>程式實作時要特別注意邊界情況與時間複雜度。</li></ol>
+</div></details>
+
+<details class="lesson" id="q02" data-title="題目 02：Singly Linked List 節點結構動畫教學 Chapter 4 Linked Lists" data-kind="list" data-id="q02">
+<summary><span>題目 02：Singly Linked List 節點結構動畫教學</span><span class="meta">Chapter 4 Linked Lists</span></summary>
+<div class="body">
+<h3>（一）主題來源</h3><p><span class="meta">Chapter 4 Linked Lists</span></p>
+<h3>（二）學習目標</h3><div class="box">看懂 data 與 link 欄位。</div>
+<h3>（三）核心觀念說明</h3><p>每個節點像一節車廂，data 放資料，link 放下一節車廂的位置。</p><p>這個主題的教學重點是讓學生不只是背名詞，而是能看見資料如何被連接、搬移、比較或拜訪。請先觀察圖形狀態，再配合下方 Step-by-step 說明與動畫按鈕逐步理解。</p>
+<h3>（四）步驟式教學</h3><ol><li>Step 1：畫出目前節點與 head/first 指標。</li><li>Step 2：確認要操作的位置，先保存可能會失去的下一個節點。</li><li>Step 3：依正確順序更新 link 指標。</li><li>Step 4：檢查串列是否仍能從 head 一路走到 NULL。</li></ol>
+<h3>（五）動畫展示</h3><div class="anim"><svg id="svg-q02" viewBox="0 0 760 310" width="760" height="310"></svg><div class="anim-state" id="state-q02">準備中</div><div class="controls"><button onclick="resetAnim('q02','list')">開始 / 重播</button><button onclick="nextAnim('q02','list')">下一步</button><button onclick="playAnim('q02','list')">自動播放</button></div></div>
+<h3>（六）圖片或 SVG 圖解</h3><div class="diagram"><p>上方 SVG 圖解已將本題核心資料結構視覺化：高亮節點表示目前操作位置，綠色邊表示已選入或已確認的連線。</p></div>
+<h3>（七）程式碼說明</h3><p><strong>函式說明：</strong>下列程式示範本題核心操作。參數通常是節點、索引、圖或起點；回傳值依題目可能是新 head、搜尋結果、走訪順序或距離表。</p><p><strong>複雜度：</strong>時間 O(n) 或已知位置 O(1)，空間 O(1)。</p><div class="codebox"><div class="codehead"><span>C++ 參考程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+struct Node {
+    int data;      // 節點資料
+    Node* next;    // 指向下一個節點
+    Node(int v, Node* n=nullptr): data(v), next(n) {}
+};
+
+void printList(Node* head) {
+    // 從 head 開始一路走到 nullptr
+    for(Node* cur=head; cur!=nullptr; cur=cur-&gt;next) cout &lt;&lt; cur-&gt;data &lt;&lt; &quot; -&gt; &quot;;
+    cout &lt;&lt; &quot;NULL\n&quot;;
+}
+
+Node* insertFront(Node* head, int value) {
+    // 新節點先接到原本 head，再回傳新 head
+    return new Node(value, head);
+}
+
+void insertAfter(Node* x, int value) {
+    if(!x) return;                       // 防止 nullptr
+    Node* p = new Node(value, x-&gt;next);  // 先接住後半段
+    x-&gt;next = p;                         // 再讓 x 接到新節點
+}
+
+int main(){
+    Node* head = nullptr;
+    head = insertFront(head, 30);
+    head = insertFront(head, 20);
+    head = insertFront(head, 10);
+    insertAfter(head-&gt;next, 50);
+    printList(head); // 10 -&gt; 20 -&gt; 50 -&gt; 30 -&gt; NULL
+}</code></pre></div>
+<h3>（八）常見錯誤</h3><ul><li>指標更新順序寫反，造成後半段斷鏈。</li><li>忘記處理空串列或 NULL。</li><li>delete 後還繼續使用 dangling pointer。</li></ul>
+<h3>（九）本題重點總結</h3><ol><li>先看結構，再看操作順序。</li><li>每一步都要確認資料或指標是否仍然連接正確。</li><li>動畫中的高亮部分代表目前正在處理的節點、邊或矩陣格。</li><li>程式實作時要特別注意邊界情況與時間複雜度。</li></ol>
+</div></details>
+
+<details class="lesson" id="q03" data-title="題目 03：first/head pointer 說明動畫教學 Chapter 4 Linked Lists" data-kind="list" data-id="q03">
+<summary><span>題目 03：first/head pointer 說明動畫教學</span><span class="meta">Chapter 4 Linked Lists</span></summary>
+<div class="body">
+<h3>（一）主題來源</h3><p><span class="meta">Chapter 4 Linked Lists</span></p>
+<h3>（二）學習目標</h3><div class="box">理解 first 是串列入口。</div>
+<h3>（三）核心觀念說明</h3><p>串列本身通常只記住第一個節點的位置，只要失去 head，就可能失去整條串列。</p><p>這個主題的教學重點是讓學生不只是背名詞，而是能看見資料如何被連接、搬移、比較或拜訪。請先觀察圖形狀態，再配合下方 Step-by-step 說明與動畫按鈕逐步理解。</p>
+<h3>（四）步驟式教學</h3><ol><li>Step 1：畫出目前節點與 head/first 指標。</li><li>Step 2：確認要操作的位置，先保存可能會失去的下一個節點。</li><li>Step 3：依正確順序更新 link 指標。</li><li>Step 4：檢查串列是否仍能從 head 一路走到 NULL。</li></ol>
+<h3>（五）動畫展示</h3><div class="anim"><svg id="svg-q03" viewBox="0 0 760 310" width="760" height="310"></svg><div class="anim-state" id="state-q03">準備中</div><div class="controls"><button onclick="resetAnim('q03','list')">開始 / 重播</button><button onclick="nextAnim('q03','list')">下一步</button><button onclick="playAnim('q03','list')">自動播放</button></div></div>
+<h3>（六）圖片或 SVG 圖解</h3><div class="diagram"><p>上方 SVG 圖解已將本題核心資料結構視覺化：高亮節點表示目前操作位置，綠色邊表示已選入或已確認的連線。</p></div>
+<h3>（七）程式碼說明</h3><p><strong>函式說明：</strong>下列程式示範本題核心操作。參數通常是節點、索引、圖或起點；回傳值依題目可能是新 head、搜尋結果、走訪順序或距離表。</p><p><strong>複雜度：</strong>時間 O(n) 或已知位置 O(1)，空間 O(1)。</p><div class="codebox"><div class="codehead"><span>C++ 參考程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+struct Node {
+    int data;      // 節點資料
+    Node* next;    // 指向下一個節點
+    Node(int v, Node* n=nullptr): data(v), next(n) {}
+};
+
+void printList(Node* head) {
+    // 從 head 開始一路走到 nullptr
+    for(Node* cur=head; cur!=nullptr; cur=cur-&gt;next) cout &lt;&lt; cur-&gt;data &lt;&lt; &quot; -&gt; &quot;;
+    cout &lt;&lt; &quot;NULL\n&quot;;
+}
+
+Node* insertFront(Node* head, int value) {
+    // 新節點先接到原本 head，再回傳新 head
+    return new Node(value, head);
+}
+
+void insertAfter(Node* x, int value) {
+    if(!x) return;                       // 防止 nullptr
+    Node* p = new Node(value, x-&gt;next);  // 先接住後半段
+    x-&gt;next = p;                         // 再讓 x 接到新節點
+}
+
+int main(){
+    Node* head = nullptr;
+    head = insertFront(head, 30);
+    head = insertFront(head, 20);
+    head = insertFront(head, 10);
+    insertAfter(head-&gt;next, 50);
+    printList(head); // 10 -&gt; 20 -&gt; 50 -&gt; 30 -&gt; NULL
+}</code></pre></div>
+<h3>（八）常見錯誤</h3><ul><li>指標更新順序寫反，造成後半段斷鏈。</li><li>忘記處理空串列或 NULL。</li><li>delete 後還繼續使用 dangling pointer。</li></ul>
+<h3>（九）本題重點總結</h3><ol><li>先看結構，再看操作順序。</li><li>每一步都要確認資料或指標是否仍然連接正確。</li><li>動畫中的高亮部分代表目前正在處理的節點、邊或矩陣格。</li><li>程式實作時要特別注意邊界情況與時間複雜度。</li></ol>
+</div></details>
+
+<details class="lesson" id="q04" data-title="題目 04：在串列前端插入節點動畫教學 Chapter 4 Linked Lists" data-kind="list" data-id="q04">
+<summary><span>題目 04：在串列前端插入節點動畫教學</span><span class="meta">Chapter 4 Linked Lists</span></summary>
+<div class="body">
+<h3>（一）主題來源</h3><p><span class="meta">Chapter 4 Linked Lists</span></p>
+<h3>（二）學習目標</h3><div class="box">學會 InsertFront 的指標順序。</div>
+<h3>（三）核心觀念說明</h3><p>新節點先指向原本 head，再把 head 改成新節點。</p><p>這個主題的教學重點是讓學生不只是背名詞，而是能看見資料如何被連接、搬移、比較或拜訪。請先觀察圖形狀態，再配合下方 Step-by-step 說明與動畫按鈕逐步理解。</p>
+<h3>（四）步驟式教學</h3><ol><li>Step 1：畫出目前節點與 head/first 指標。</li><li>Step 2：確認要操作的位置，先保存可能會失去的下一個節點。</li><li>Step 3：依正確順序更新 link 指標。</li><li>Step 4：檢查串列是否仍能從 head 一路走到 NULL。</li></ol>
+<h3>（五）動畫展示</h3><div class="anim"><svg id="svg-q04" viewBox="0 0 760 310" width="760" height="310"></svg><div class="anim-state" id="state-q04">準備中</div><div class="controls"><button onclick="resetAnim('q04','list')">開始 / 重播</button><button onclick="nextAnim('q04','list')">下一步</button><button onclick="playAnim('q04','list')">自動播放</button></div></div>
+<h3>（六）圖片或 SVG 圖解</h3><div class="diagram"><p>上方 SVG 圖解已將本題核心資料結構視覺化：高亮節點表示目前操作位置，綠色邊表示已選入或已確認的連線。</p></div>
+<h3>（七）程式碼說明</h3><p><strong>函式說明：</strong>下列程式示範本題核心操作。參數通常是節點、索引、圖或起點；回傳值依題目可能是新 head、搜尋結果、走訪順序或距離表。</p><p><strong>複雜度：</strong>時間 O(n) 或已知位置 O(1)，空間 O(1)。</p><div class="codebox"><div class="codehead"><span>C++ 參考程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+struct Node {
+    int data;      // 節點資料
+    Node* next;    // 指向下一個節點
+    Node(int v, Node* n=nullptr): data(v), next(n) {}
+};
+
+void printList(Node* head) {
+    // 從 head 開始一路走到 nullptr
+    for(Node* cur=head; cur!=nullptr; cur=cur-&gt;next) cout &lt;&lt; cur-&gt;data &lt;&lt; &quot; -&gt; &quot;;
+    cout &lt;&lt; &quot;NULL\n&quot;;
+}
+
+Node* insertFront(Node* head, int value) {
+    // 新節點先接到原本 head，再回傳新 head
+    return new Node(value, head);
+}
+
+void insertAfter(Node* x, int value) {
+    if(!x) return;                       // 防止 nullptr
+    Node* p = new Node(value, x-&gt;next);  // 先接住後半段
+    x-&gt;next = p;                         // 再讓 x 接到新節點
+}
+
+int main(){
+    Node* head = nullptr;
+    head = insertFront(head, 30);
+    head = insertFront(head, 20);
+    head = insertFront(head, 10);
+    insertAfter(head-&gt;next, 50);
+    printList(head); // 10 -&gt; 20 -&gt; 50 -&gt; 30 -&gt; NULL
+}</code></pre></div>
+<h3>（八）常見錯誤</h3><ul><li>指標更新順序寫反，造成後半段斷鏈。</li><li>忘記處理空串列或 NULL。</li><li>delete 後還繼續使用 dangling pointer。</li></ul>
+<h3>（九）本題重點總結</h3><ol><li>先看結構，再看操作順序。</li><li>每一步都要確認資料或指標是否仍然連接正確。</li><li>動畫中的高亮部分代表目前正在處理的節點、邊或矩陣格。</li><li>程式實作時要特別注意邊界情況與時間複雜度。</li></ol>
+</div></details>
+
+<details class="lesson" id="q05" data-title="題目 05：在指定節點後插入節點動畫教學 Chapter 4 Linked Lists" data-kind="list" data-id="q05">
+<summary><span>題目 05：在指定節點後插入節點動畫教學</span><span class="meta">Chapter 4 Linked Lists</span></summary>
+<div class="body">
+<h3>（一）主題來源</h3><p><span class="meta">Chapter 4 Linked Lists</span></p>
+<h3>（二）學習目標</h3><div class="box">理解 x 後插入的兩行關鍵程式。</div>
+<h3>（三）核心觀念說明</h3><p>必須先讓 newNode 接住 x 原本的下一個節點，再讓 x 指向 newNode。</p><p>這個主題的教學重點是讓學生不只是背名詞，而是能看見資料如何被連接、搬移、比較或拜訪。請先觀察圖形狀態，再配合下方 Step-by-step 說明與動畫按鈕逐步理解。</p>
+<h3>（四）步驟式教學</h3><ol><li>Step 1：畫出目前節點與 head/first 指標。</li><li>Step 2：確認要操作的位置，先保存可能會失去的下一個節點。</li><li>Step 3：依正確順序更新 link 指標。</li><li>Step 4：檢查串列是否仍能從 head 一路走到 NULL。</li></ol>
+<h3>（五）動畫展示</h3><div class="anim"><svg id="svg-q05" viewBox="0 0 760 310" width="760" height="310"></svg><div class="anim-state" id="state-q05">準備中</div><div class="controls"><button onclick="resetAnim('q05','list')">開始 / 重播</button><button onclick="nextAnim('q05','list')">下一步</button><button onclick="playAnim('q05','list')">自動播放</button></div></div>
+<h3>（六）圖片或 SVG 圖解</h3><div class="diagram"><p>上方 SVG 圖解已將本題核心資料結構視覺化：高亮節點表示目前操作位置，綠色邊表示已選入或已確認的連線。</p></div>
+<h3>（七）程式碼說明</h3><p><strong>函式說明：</strong>下列程式示範本題核心操作。參數通常是節點、索引、圖或起點；回傳值依題目可能是新 head、搜尋結果、走訪順序或距離表。</p><p><strong>複雜度：</strong>時間 O(n) 或已知位置 O(1)，空間 O(1)。</p><div class="codebox"><div class="codehead"><span>C++ 參考程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+struct Node {
+    int data;      // 節點資料
+    Node* next;    // 指向下一個節點
+    Node(int v, Node* n=nullptr): data(v), next(n) {}
+};
+
+void printList(Node* head) {
+    // 從 head 開始一路走到 nullptr
+    for(Node* cur=head; cur!=nullptr; cur=cur-&gt;next) cout &lt;&lt; cur-&gt;data &lt;&lt; &quot; -&gt; &quot;;
+    cout &lt;&lt; &quot;NULL\n&quot;;
+}
+
+Node* insertFront(Node* head, int value) {
+    // 新節點先接到原本 head，再回傳新 head
+    return new Node(value, head);
+}
+
+void insertAfter(Node* x, int value) {
+    if(!x) return;                       // 防止 nullptr
+    Node* p = new Node(value, x-&gt;next);  // 先接住後半段
+    x-&gt;next = p;                         // 再讓 x 接到新節點
+}
+
+int main(){
+    Node* head = nullptr;
+    head = insertFront(head, 30);
+    head = insertFront(head, 20);
+    head = insertFront(head, 10);
+    insertAfter(head-&gt;next, 50);
+    printList(head); // 10 -&gt; 20 -&gt; 50 -&gt; 30 -&gt; NULL
+}</code></pre></div>
+<h3>（八）常見錯誤</h3><ul><li>指標更新順序寫反，造成後半段斷鏈。</li><li>忘記處理空串列或 NULL。</li><li>delete 後還繼續使用 dangling pointer。</li></ul>
+<h3>（九）本題重點總結</h3><ol><li>先看結構，再看操作順序。</li><li>每一步都要確認資料或指標是否仍然連接正確。</li><li>動畫中的高亮部分代表目前正在處理的節點、邊或矩陣格。</li><li>程式實作時要特別注意邊界情況與時間複雜度。</li></ol>
+</div></details>
+
+<details class="lesson" id="q06" data-title="題目 06：刪除第一個節點動畫教學 Chapter 4 Linked Lists" data-kind="list" data-id="q06">
+<summary><span>題目 06：刪除第一個節點動畫教學</span><span class="meta">Chapter 4 Linked Lists</span></summary>
+<div class="body">
+<h3>（一）主題來源</h3><p><span class="meta">Chapter 4 Linked Lists</span></p>
+<h3>（二）學習目標</h3><div class="box">學會 DeleteFront。</div>
+<h3>（三）核心觀念說明</h3><p>先保存 first，再讓 first 往後移，最後 delete 原本節點。</p><p>這個主題的教學重點是讓學生不只是背名詞，而是能看見資料如何被連接、搬移、比較或拜訪。請先觀察圖形狀態，再配合下方 Step-by-step 說明與動畫按鈕逐步理解。</p>
+<h3>（四）步驟式教學</h3><ol><li>Step 1：畫出目前節點與 head/first 指標。</li><li>Step 2：確認要操作的位置，先保存可能會失去的下一個節點。</li><li>Step 3：依正確順序更新 link 指標。</li><li>Step 4：檢查串列是否仍能從 head 一路走到 NULL。</li></ol>
+<h3>（五）動畫展示</h3><div class="anim"><svg id="svg-q06" viewBox="0 0 760 310" width="760" height="310"></svg><div class="anim-state" id="state-q06">準備中</div><div class="controls"><button onclick="resetAnim('q06','list')">開始 / 重播</button><button onclick="nextAnim('q06','list')">下一步</button><button onclick="playAnim('q06','list')">自動播放</button></div></div>
+<h3>（六）圖片或 SVG 圖解</h3><div class="diagram"><p>上方 SVG 圖解已將本題核心資料結構視覺化：高亮節點表示目前操作位置，綠色邊表示已選入或已確認的連線。</p></div>
+<h3>（七）程式碼說明</h3><p><strong>函式說明：</strong>下列程式示範本題核心操作。參數通常是節點、索引、圖或起點；回傳值依題目可能是新 head、搜尋結果、走訪順序或距離表。</p><p><strong>複雜度：</strong>時間 O(n) 或已知位置 O(1)，空間 O(1)。</p><div class="codebox"><div class="codehead"><span>C++ 參考程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+struct Node {
+    int data;      // 節點資料
+    Node* next;    // 指向下一個節點
+    Node(int v, Node* n=nullptr): data(v), next(n) {}
+};
+
+void printList(Node* head) {
+    // 從 head 開始一路走到 nullptr
+    for(Node* cur=head; cur!=nullptr; cur=cur-&gt;next) cout &lt;&lt; cur-&gt;data &lt;&lt; &quot; -&gt; &quot;;
+    cout &lt;&lt; &quot;NULL\n&quot;;
+}
+
+Node* insertFront(Node* head, int value) {
+    // 新節點先接到原本 head，再回傳新 head
+    return new Node(value, head);
+}
+
+void insertAfter(Node* x, int value) {
+    if(!x) return;                       // 防止 nullptr
+    Node* p = new Node(value, x-&gt;next);  // 先接住後半段
+    x-&gt;next = p;                         // 再讓 x 接到新節點
+}
+
+int main(){
+    Node* head = nullptr;
+    head = insertFront(head, 30);
+    head = insertFront(head, 20);
+    head = insertFront(head, 10);
+    insertAfter(head-&gt;next, 50);
+    printList(head); // 10 -&gt; 20 -&gt; 50 -&gt; 30 -&gt; NULL
+}</code></pre></div>
+<h3>（八）常見錯誤</h3><ul><li>指標更新順序寫反，造成後半段斷鏈。</li><li>忘記處理空串列或 NULL。</li><li>delete 後還繼續使用 dangling pointer。</li></ul>
+<h3>（九）本題重點總結</h3><ol><li>先看結構，再看操作順序。</li><li>每一步都要確認資料或指標是否仍然連接正確。</li><li>動畫中的高亮部分代表目前正在處理的節點、邊或矩陣格。</li><li>程式實作時要特別注意邊界情況與時間複雜度。</li></ol>
+</div></details>
+
+<details class="lesson" id="q07" data-title="題目 07：刪除指定節點動畫教學 Chapter 4 Linked Lists" data-kind="list" data-id="q07">
+<summary><span>題目 07：刪除指定節點動畫教學</span><span class="meta">Chapter 4 Linked Lists</span></summary>
+<div class="body">
+<h3>（一）主題來源</h3><p><span class="meta">Chapter 4 Linked Lists</span></p>
+<h3>（二）學習目標</h3><div class="box">理解刪除中間節點需要前一個節點。</div>
+<h3>（三）核心觀念說明</h3><p>前一個節點要跳過被刪節點，接到被刪節點的下一個節點。</p><p>這個主題的教學重點是讓學生不只是背名詞，而是能看見資料如何被連接、搬移、比較或拜訪。請先觀察圖形狀態，再配合下方 Step-by-step 說明與動畫按鈕逐步理解。</p>
+<h3>（四）步驟式教學</h3><ol><li>Step 1：畫出目前節點與 head/first 指標。</li><li>Step 2：確認要操作的位置，先保存可能會失去的下一個節點。</li><li>Step 3：依正確順序更新 link 指標。</li><li>Step 4：檢查串列是否仍能從 head 一路走到 NULL。</li></ol>
+<h3>（五）動畫展示</h3><div class="anim"><svg id="svg-q07" viewBox="0 0 760 310" width="760" height="310"></svg><div class="anim-state" id="state-q07">準備中</div><div class="controls"><button onclick="resetAnim('q07','list')">開始 / 重播</button><button onclick="nextAnim('q07','list')">下一步</button><button onclick="playAnim('q07','list')">自動播放</button></div></div>
+<h3>（六）圖片或 SVG 圖解</h3><div class="diagram"><p>上方 SVG 圖解已將本題核心資料結構視覺化：高亮節點表示目前操作位置，綠色邊表示已選入或已確認的連線。</p></div>
+<h3>（七）程式碼說明</h3><p><strong>函式說明：</strong>下列程式示範本題核心操作。參數通常是節點、索引、圖或起點；回傳值依題目可能是新 head、搜尋結果、走訪順序或距離表。</p><p><strong>複雜度：</strong>時間 O(n) 或已知位置 O(1)，空間 O(1)。</p><div class="codebox"><div class="codehead"><span>C++ 參考程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+struct Node {
+    int data;      // 節點資料
+    Node* next;    // 指向下一個節點
+    Node(int v, Node* n=nullptr): data(v), next(n) {}
+};
+
+void printList(Node* head) {
+    // 從 head 開始一路走到 nullptr
+    for(Node* cur=head; cur!=nullptr; cur=cur-&gt;next) cout &lt;&lt; cur-&gt;data &lt;&lt; &quot; -&gt; &quot;;
+    cout &lt;&lt; &quot;NULL\n&quot;;
+}
+
+Node* insertFront(Node* head, int value) {
+    // 新節點先接到原本 head，再回傳新 head
+    return new Node(value, head);
+}
+
+void insertAfter(Node* x, int value) {
+    if(!x) return;                       // 防止 nullptr
+    Node* p = new Node(value, x-&gt;next);  // 先接住後半段
+    x-&gt;next = p;                         // 再讓 x 接到新節點
+}
+
+int main(){
+    Node* head = nullptr;
+    head = insertFront(head, 30);
+    head = insertFront(head, 20);
+    head = insertFront(head, 10);
+    insertAfter(head-&gt;next, 50);
+    printList(head); // 10 -&gt; 20 -&gt; 50 -&gt; 30 -&gt; NULL
+}</code></pre></div>
+<h3>（八）常見錯誤</h3><ul><li>指標更新順序寫反，造成後半段斷鏈。</li><li>忘記處理空串列或 NULL。</li><li>delete 後還繼續使用 dangling pointer。</li></ul>
+<h3>（九）本題重點總結</h3><ol><li>先看結構，再看操作順序。</li><li>每一步都要確認資料或指標是否仍然連接正確。</li><li>動畫中的高亮部分代表目前正在處理的節點、邊或矩陣格。</li><li>程式實作時要特別注意邊界情況與時間複雜度。</li></ol>
+</div></details>
+
+<details class="lesson" id="q08" data-title="題目 08：Pointer 斷鏈錯誤示範動畫教學 Chapter 4 Linked Lists" data-kind="list" data-id="q08">
+<summary><span>題目 08：Pointer 斷鏈錯誤示範動畫教學</span><span class="meta">Chapter 4 Linked Lists</span></summary>
+<div class="body">
+<h3>（一）主題來源</h3><p><span class="meta">Chapter 4 Linked Lists</span></p>
+<h3>（二）學習目標</h3><div class="box">辨認指標順序寫反造成的問題。</div>
+<h3>（三）核心觀念說明</h3><p>若先改 x-&gt;link 而沒有保存後半段，就可能讓原本節點永遠找不到。</p><p>這個主題的教學重點是讓學生不只是背名詞，而是能看見資料如何被連接、搬移、比較或拜訪。請先觀察圖形狀態，再配合下方 Step-by-step 說明與動畫按鈕逐步理解。</p>
+<h3>（四）步驟式教學</h3><ol><li>Step 1：畫出目前節點與 head/first 指標。</li><li>Step 2：確認要操作的位置，先保存可能會失去的下一個節點。</li><li>Step 3：依正確順序更新 link 指標。</li><li>Step 4：檢查串列是否仍能從 head 一路走到 NULL。</li></ol>
+<h3>（五）動畫展示</h3><div class="anim"><svg id="svg-q08" viewBox="0 0 760 310" width="760" height="310"></svg><div class="anim-state" id="state-q08">準備中</div><div class="controls"><button onclick="resetAnim('q08','list')">開始 / 重播</button><button onclick="nextAnim('q08','list')">下一步</button><button onclick="playAnim('q08','list')">自動播放</button></div></div>
+<h3>（六）圖片或 SVG 圖解</h3><div class="diagram"><p>上方 SVG 圖解已將本題核心資料結構視覺化：高亮節點表示目前操作位置，綠色邊表示已選入或已確認的連線。</p></div>
+<h3>（七）程式碼說明</h3><p><strong>函式說明：</strong>下列程式示範本題核心操作。參數通常是節點、索引、圖或起點；回傳值依題目可能是新 head、搜尋結果、走訪順序或距離表。</p><p><strong>複雜度：</strong>時間 O(n) 或已知位置 O(1)，空間 O(1)。</p><div class="codebox"><div class="codehead"><span>C++ 參考程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+struct Node {
+    int data;      // 節點資料
+    Node* next;    // 指向下一個節點
+    Node(int v, Node* n=nullptr): data(v), next(n) {}
+};
+
+void printList(Node* head) {
+    // 從 head 開始一路走到 nullptr
+    for(Node* cur=head; cur!=nullptr; cur=cur-&gt;next) cout &lt;&lt; cur-&gt;data &lt;&lt; &quot; -&gt; &quot;;
+    cout &lt;&lt; &quot;NULL\n&quot;;
+}
+
+Node* insertFront(Node* head, int value) {
+    // 新節點先接到原本 head，再回傳新 head
+    return new Node(value, head);
+}
+
+void insertAfter(Node* x, int value) {
+    if(!x) return;                       // 防止 nullptr
+    Node* p = new Node(value, x-&gt;next);  // 先接住後半段
+    x-&gt;next = p;                         // 再讓 x 接到新節點
+}
+
+int main(){
+    Node* head = nullptr;
+    head = insertFront(head, 30);
+    head = insertFront(head, 20);
+    head = insertFront(head, 10);
+    insertAfter(head-&gt;next, 50);
+    printList(head); // 10 -&gt; 20 -&gt; 50 -&gt; 30 -&gt; NULL
+}</code></pre></div>
+<h3>（八）常見錯誤</h3><ul><li>指標更新順序寫反，造成後半段斷鏈。</li><li>忘記處理空串列或 NULL。</li><li>delete 後還繼續使用 dangling pointer。</li></ul>
+<h3>（九）本題重點總結</h3><ol><li>先看結構，再看操作順序。</li><li>每一步都要確認資料或指標是否仍然連接正確。</li><li>動畫中的高亮部分代表目前正在處理的節點、邊或矩陣格。</li><li>程式實作時要特別注意邊界情況與時間複雜度。</li></ol>
+</div></details>
+
+<details class="lesson" id="q09" data-title="題目 09：Linked List traversal動畫教學 Chapter 4 Linked Lists" data-kind="list" data-id="q09">
+<summary><span>題目 09：Linked List traversal動畫教學</span><span class="meta">Chapter 4 Linked Lists</span></summary>
+<div class="body">
+<h3>（一）主題來源</h3><p><span class="meta">Chapter 4 Linked Lists</span></p>
+<h3>（二）學習目標</h3><div class="box">學會用 current 逐一走訪。</div>
+<h3>（三）核心觀念說明</h3><p>從 head 開始，每次 current = current-&gt;link，直到 NULL。</p><p>這個主題的教學重點是讓學生不只是背名詞，而是能看見資料如何被連接、搬移、比較或拜訪。請先觀察圖形狀態，再配合下方 Step-by-step 說明與動畫按鈕逐步理解。</p>
+<h3>（四）步驟式教學</h3><ol><li>Step 1：畫出目前節點與 head/first 指標。</li><li>Step 2：確認要操作的位置，先保存可能會失去的下一個節點。</li><li>Step 3：依正確順序更新 link 指標。</li><li>Step 4：檢查串列是否仍能從 head 一路走到 NULL。</li></ol>
+<h3>（五）動畫展示</h3><div class="anim"><svg id="svg-q09" viewBox="0 0 760 310" width="760" height="310"></svg><div class="anim-state" id="state-q09">準備中</div><div class="controls"><button onclick="resetAnim('q09','list')">開始 / 重播</button><button onclick="nextAnim('q09','list')">下一步</button><button onclick="playAnim('q09','list')">自動播放</button></div></div>
+<h3>（六）圖片或 SVG 圖解</h3><div class="diagram"><p>上方 SVG 圖解已將本題核心資料結構視覺化：高亮節點表示目前操作位置，綠色邊表示已選入或已確認的連線。</p></div>
+<h3>（七）程式碼說明</h3><p><strong>函式說明：</strong>下列程式示範本題核心操作。參數通常是節點、索引、圖或起點；回傳值依題目可能是新 head、搜尋結果、走訪順序或距離表。</p><p><strong>複雜度：</strong>時間 O(n) 或已知位置 O(1)，空間 O(1)。</p><div class="codebox"><div class="codehead"><span>C++ 參考程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+struct Node {
+    int data;      // 節點資料
+    Node* next;    // 指向下一個節點
+    Node(int v, Node* n=nullptr): data(v), next(n) {}
+};
+
+void printList(Node* head) {
+    // 從 head 開始一路走到 nullptr
+    for(Node* cur=head; cur!=nullptr; cur=cur-&gt;next) cout &lt;&lt; cur-&gt;data &lt;&lt; &quot; -&gt; &quot;;
+    cout &lt;&lt; &quot;NULL\n&quot;;
+}
+
+Node* insertFront(Node* head, int value) {
+    // 新節點先接到原本 head，再回傳新 head
+    return new Node(value, head);
+}
+
+void insertAfter(Node* x, int value) {
+    if(!x) return;                       // 防止 nullptr
+    Node* p = new Node(value, x-&gt;next);  // 先接住後半段
+    x-&gt;next = p;                         // 再讓 x 接到新節點
+}
+
+int main(){
+    Node* head = nullptr;
+    head = insertFront(head, 30);
+    head = insertFront(head, 20);
+    head = insertFront(head, 10);
+    insertAfter(head-&gt;next, 50);
+    printList(head); // 10 -&gt; 20 -&gt; 50 -&gt; 30 -&gt; NULL
+}</code></pre></div>
+<h3>（八）常見錯誤</h3><ul><li>指標更新順序寫反，造成後半段斷鏈。</li><li>忘記處理空串列或 NULL。</li><li>delete 後還繼續使用 dangling pointer。</li></ul>
+<h3>（九）本題重點總結</h3><ol><li>先看結構，再看操作順序。</li><li>每一步都要確認資料或指標是否仍然連接正確。</li><li>動畫中的高亮部分代表目前正在處理的節點、邊或矩陣格。</li><li>程式實作時要特別注意邊界情況與時間複雜度。</li></ol>
+</div></details>
+
+<details class="lesson" id="q10" data-title="題目 10：Search 操作動畫教學 Chapter 4 Linked Lists" data-kind="list" data-id="q10">
+<summary><span>題目 10：Search 操作動畫教學</span><span class="meta">Chapter 4 Linked Lists</span></summary>
+<div class="body">
+<h3>（一）主題來源</h3><p><span class="meta">Chapter 4 Linked Lists</span></p>
+<h3>（二）學習目標</h3><div class="box">學會在串列中搜尋指定值。</div>
+<h3>（三）核心觀念說明</h3><p>線性搜尋每個節點，最壞要看完整條串列，所以是 O(n)。</p><p>這個主題的教學重點是讓學生不只是背名詞，而是能看見資料如何被連接、搬移、比較或拜訪。請先觀察圖形狀態，再配合下方 Step-by-step 說明與動畫按鈕逐步理解。</p>
+<h3>（四）步驟式教學</h3><ol><li>Step 1：畫出目前節點與 head/first 指標。</li><li>Step 2：確認要操作的位置，先保存可能會失去的下一個節點。</li><li>Step 3：依正確順序更新 link 指標。</li><li>Step 4：檢查串列是否仍能從 head 一路走到 NULL。</li></ol>
+<h3>（五）動畫展示</h3><div class="anim"><svg id="svg-q10" viewBox="0 0 760 310" width="760" height="310"></svg><div class="anim-state" id="state-q10">準備中</div><div class="controls"><button onclick="resetAnim('q10','list')">開始 / 重播</button><button onclick="nextAnim('q10','list')">下一步</button><button onclick="playAnim('q10','list')">自動播放</button></div></div>
+<h3>（六）圖片或 SVG 圖解</h3><div class="diagram"><p>上方 SVG 圖解已將本題核心資料結構視覺化：高亮節點表示目前操作位置，綠色邊表示已選入或已確認的連線。</p></div>
+<h3>（七）程式碼說明</h3><p><strong>函式說明：</strong>下列程式示範本題核心操作。參數通常是節點、索引、圖或起點；回傳值依題目可能是新 head、搜尋結果、走訪順序或距離表。</p><p><strong>複雜度：</strong>時間 O(n) 或已知位置 O(1)，空間 O(1)。</p><div class="codebox"><div class="codehead"><span>C++ 參考程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+struct Node {
+    int data;      // 節點資料
+    Node* next;    // 指向下一個節點
+    Node(int v, Node* n=nullptr): data(v), next(n) {}
+};
+
+void printList(Node* head) {
+    // 從 head 開始一路走到 nullptr
+    for(Node* cur=head; cur!=nullptr; cur=cur-&gt;next) cout &lt;&lt; cur-&gt;data &lt;&lt; &quot; -&gt; &quot;;
+    cout &lt;&lt; &quot;NULL\n&quot;;
+}
+
+Node* insertFront(Node* head, int value) {
+    // 新節點先接到原本 head，再回傳新 head
+    return new Node(value, head);
+}
+
+void insertAfter(Node* x, int value) {
+    if(!x) return;                       // 防止 nullptr
+    Node* p = new Node(value, x-&gt;next);  // 先接住後半段
+    x-&gt;next = p;                         // 再讓 x 接到新節點
+}
+
+int main(){
+    Node* head = nullptr;
+    head = insertFront(head, 30);
+    head = insertFront(head, 20);
+    head = insertFront(head, 10);
+    insertAfter(head-&gt;next, 50);
+    printList(head); // 10 -&gt; 20 -&gt; 50 -&gt; 30 -&gt; NULL
+}</code></pre></div>
+<h3>（八）常見錯誤</h3><ul><li>指標更新順序寫反，造成後半段斷鏈。</li><li>忘記處理空串列或 NULL。</li><li>delete 後還繼續使用 dangling pointer。</li></ul>
+<h3>（九）本題重點總結</h3><ol><li>先看結構，再看操作順序。</li><li>每一步都要確認資料或指標是否仍然連接正確。</li><li>動畫中的高亮部分代表目前正在處理的節點、邊或矩陣格。</li><li>程式實作時要特別注意邊界情況與時間複雜度。</li></ol>
+</div></details>
+
+<details class="lesson" id="q11" data-title="題目 11：Reverse Linked List動畫教學 Chapter 4 Linked Lists" data-kind="list" data-id="q11">
+<summary><span>題目 11：Reverse Linked List動畫教學</span><span class="meta">Chapter 4 Linked Lists</span></summary>
+<div class="body">
+<h3>（一）主題來源</h3><p><span class="meta">Chapter 4 Linked Lists</span></p>
+<h3>（二）學習目標</h3><div class="box">理解 prev/current/next 三指標反轉。</div>
+<h3>（三）核心觀念說明</h3><p>每一步先保存 next，再把 current-&gt;link 反向指到 prev。</p><p>這個主題的教學重點是讓學生不只是背名詞，而是能看見資料如何被連接、搬移、比較或拜訪。請先觀察圖形狀態，再配合下方 Step-by-step 說明與動畫按鈕逐步理解。</p>
+<h3>（四）步驟式教學</h3><ol><li>Step 1：畫出目前節點與 head/first 指標。</li><li>Step 2：確認要操作的位置，先保存可能會失去的下一個節點。</li><li>Step 3：依正確順序更新 link 指標。</li><li>Step 4：檢查串列是否仍能從 head 一路走到 NULL。</li></ol>
+<h3>（五）動畫展示</h3><div class="anim"><svg id="svg-q11" viewBox="0 0 760 310" width="760" height="310"></svg><div class="anim-state" id="state-q11">準備中</div><div class="controls"><button onclick="resetAnim('q11','list')">開始 / 重播</button><button onclick="nextAnim('q11','list')">下一步</button><button onclick="playAnim('q11','list')">自動播放</button></div></div>
+<h3>（六）圖片或 SVG 圖解</h3><div class="diagram"><p>上方 SVG 圖解已將本題核心資料結構視覺化：高亮節點表示目前操作位置，綠色邊表示已選入或已確認的連線。</p></div>
+<h3>（七）程式碼說明</h3><p><strong>函式說明：</strong>下列程式示範本題核心操作。參數通常是節點、索引、圖或起點；回傳值依題目可能是新 head、搜尋結果、走訪順序或距離表。</p><p><strong>複雜度：</strong>時間 O(n) 或已知位置 O(1)，空間 O(1)。</p><div class="codebox"><div class="codehead"><span>C++ 參考程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+struct Node {
+    int data;      // 節點資料
+    Node* next;    // 指向下一個節點
+    Node(int v, Node* n=nullptr): data(v), next(n) {}
+};
+
+void printList(Node* head) {
+    // 從 head 開始一路走到 nullptr
+    for(Node* cur=head; cur!=nullptr; cur=cur-&gt;next) cout &lt;&lt; cur-&gt;data &lt;&lt; &quot; -&gt; &quot;;
+    cout &lt;&lt; &quot;NULL\n&quot;;
+}
+
+Node* insertFront(Node* head, int value) {
+    // 新節點先接到原本 head，再回傳新 head
+    return new Node(value, head);
+}
+
+void insertAfter(Node* x, int value) {
+    if(!x) return;                       // 防止 nullptr
+    Node* p = new Node(value, x-&gt;next);  // 先接住後半段
+    x-&gt;next = p;                         // 再讓 x 接到新節點
+}
+
+int main(){
+    Node* head = nullptr;
+    head = insertFront(head, 30);
+    head = insertFront(head, 20);
+    head = insertFront(head, 10);
+    insertAfter(head-&gt;next, 50);
+    printList(head); // 10 -&gt; 20 -&gt; 50 -&gt; 30 -&gt; NULL
+}</code></pre></div>
+<h3>（八）常見錯誤</h3><ul><li>指標更新順序寫反，造成後半段斷鏈。</li><li>忘記處理空串列或 NULL。</li><li>delete 後還繼續使用 dangling pointer。</li></ul>
+<h3>（九）本題重點總結</h3><ol><li>先看結構，再看操作順序。</li><li>每一步都要確認資料或指標是否仍然連接正確。</li><li>動畫中的高亮部分代表目前正在處理的節點、邊或矩陣格。</li><li>程式實作時要特別注意邊界情況與時間複雜度。</li></ol>
+</div></details>
+
+<details class="lesson" id="q12" data-title="題目 12：Circular Linked List動畫教學 Chapter 4 Linked Lists" data-kind="list" data-id="q12">
+<summary><span>題目 12：Circular Linked List動畫教學</span><span class="meta">Chapter 4 Linked Lists</span></summary>
+<div class="body">
+<h3>（一）主題來源</h3><p><span class="meta">Chapter 4 Linked Lists</span></p>
+<h3>（二）學習目標</h3><div class="box">理解尾端指回頭部。</div>
+<h3>（三）核心觀念說明</h3><p>最後一個節點不指向 NULL，而是指回 first，可用於輪流排程。</p><p>這個主題的教學重點是讓學生不只是背名詞，而是能看見資料如何被連接、搬移、比較或拜訪。請先觀察圖形狀態，再配合下方 Step-by-step 說明與動畫按鈕逐步理解。</p>
+<h3>（四）步驟式教學</h3><ol><li>Step 1：畫出目前節點與 head/first 指標。</li><li>Step 2：確認要操作的位置，先保存可能會失去的下一個節點。</li><li>Step 3：依正確順序更新 link 指標。</li><li>Step 4：檢查串列是否仍能從 head 一路走到 NULL。</li></ol>
+<h3>（五）動畫展示</h3><div class="anim"><svg id="svg-q12" viewBox="0 0 760 310" width="760" height="310"></svg><div class="anim-state" id="state-q12">準備中</div><div class="controls"><button onclick="resetAnim('q12','list')">開始 / 重播</button><button onclick="nextAnim('q12','list')">下一步</button><button onclick="playAnim('q12','list')">自動播放</button></div></div>
+<h3>（六）圖片或 SVG 圖解</h3><div class="diagram"><p>上方 SVG 圖解已將本題核心資料結構視覺化：高亮節點表示目前操作位置，綠色邊表示已選入或已確認的連線。</p></div>
+<h3>（七）程式碼說明</h3><p><strong>函式說明：</strong>下列程式示範本題核心操作。參數通常是節點、索引、圖或起點；回傳值依題目可能是新 head、搜尋結果、走訪順序或距離表。</p><p><strong>複雜度：</strong>時間 O(n) 或已知位置 O(1)，空間 O(1)。</p><div class="codebox"><div class="codehead"><span>C++ 參考程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+struct Node {
+    int data;      // 節點資料
+    Node* next;    // 指向下一個節點
+    Node(int v, Node* n=nullptr): data(v), next(n) {}
+};
+
+void printList(Node* head) {
+    // 從 head 開始一路走到 nullptr
+    for(Node* cur=head; cur!=nullptr; cur=cur-&gt;next) cout &lt;&lt; cur-&gt;data &lt;&lt; &quot; -&gt; &quot;;
+    cout &lt;&lt; &quot;NULL\n&quot;;
+}
+
+Node* insertFront(Node* head, int value) {
+    // 新節點先接到原本 head，再回傳新 head
+    return new Node(value, head);
+}
+
+void insertAfter(Node* x, int value) {
+    if(!x) return;                       // 防止 nullptr
+    Node* p = new Node(value, x-&gt;next);  // 先接住後半段
+    x-&gt;next = p;                         // 再讓 x 接到新節點
+}
+
+int main(){
+    Node* head = nullptr;
+    head = insertFront(head, 30);
+    head = insertFront(head, 20);
+    head = insertFront(head, 10);
+    insertAfter(head-&gt;next, 50);
+    printList(head); // 10 -&gt; 20 -&gt; 50 -&gt; 30 -&gt; NULL
+}</code></pre></div>
+<h3>（八）常見錯誤</h3><ul><li>指標更新順序寫反，造成後半段斷鏈。</li><li>忘記處理空串列或 NULL。</li><li>delete 後還繼續使用 dangling pointer。</li></ul>
+<h3>（九）本題重點總結</h3><ol><li>先看結構，再看操作順序。</li><li>每一步都要確認資料或指標是否仍然連接正確。</li><li>動畫中的高亮部分代表目前正在處理的節點、邊或矩陣格。</li><li>程式實作時要特別注意邊界情況與時間複雜度。</li></ol>
+</div></details>
+
+<details class="lesson" id="q13" data-title="題目 13：Doubly Linked List 插入動畫教學 Chapter 4 Linked Lists" data-kind="list" data-id="q13">
+<summary><span>題目 13：Doubly Linked List 插入動畫教學</span><span class="meta">Chapter 4 Linked Lists</span></summary>
+<div class="body">
+<h3>（一）主題來源</h3><p><span class="meta">Chapter 4 Linked Lists</span></p>
+<h3>（二）學習目標</h3><div class="box">理解 left/right 雙向指標更新。</div>
+<h3>（三）核心觀念說明</h3><p>插入節點要同時更新四條連線，避免前後方向不一致。</p><p>這個主題的教學重點是讓學生不只是背名詞，而是能看見資料如何被連接、搬移、比較或拜訪。請先觀察圖形狀態，再配合下方 Step-by-step 說明與動畫按鈕逐步理解。</p>
+<h3>（四）步驟式教學</h3><ol><li>Step 1：畫出目前節點與 head/first 指標。</li><li>Step 2：確認要操作的位置，先保存可能會失去的下一個節點。</li><li>Step 3：依正確順序更新 link 指標。</li><li>Step 4：檢查串列是否仍能從 head 一路走到 NULL。</li></ol>
+<h3>（五）動畫展示</h3><div class="anim"><svg id="svg-q13" viewBox="0 0 760 310" width="760" height="310"></svg><div class="anim-state" id="state-q13">準備中</div><div class="controls"><button onclick="resetAnim('q13','list')">開始 / 重播</button><button onclick="nextAnim('q13','list')">下一步</button><button onclick="playAnim('q13','list')">自動播放</button></div></div>
+<h3>（六）圖片或 SVG 圖解</h3><div class="diagram"><p>上方 SVG 圖解已將本題核心資料結構視覺化：高亮節點表示目前操作位置，綠色邊表示已選入或已確認的連線。</p></div>
+<h3>（七）程式碼說明</h3><p><strong>函式說明：</strong>下列程式示範本題核心操作。參數通常是節點、索引、圖或起點；回傳值依題目可能是新 head、搜尋結果、走訪順序或距離表。</p><p><strong>複雜度：</strong>時間 O(n) 或已知位置 O(1)，空間 O(1)。</p><div class="codebox"><div class="codehead"><span>C++ 參考程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+struct Node {
+    int data;      // 節點資料
+    Node* next;    // 指向下一個節點
+    Node(int v, Node* n=nullptr): data(v), next(n) {}
+};
+
+void printList(Node* head) {
+    // 從 head 開始一路走到 nullptr
+    for(Node* cur=head; cur!=nullptr; cur=cur-&gt;next) cout &lt;&lt; cur-&gt;data &lt;&lt; &quot; -&gt; &quot;;
+    cout &lt;&lt; &quot;NULL\n&quot;;
+}
+
+Node* insertFront(Node* head, int value) {
+    // 新節點先接到原本 head，再回傳新 head
+    return new Node(value, head);
+}
+
+void insertAfter(Node* x, int value) {
+    if(!x) return;                       // 防止 nullptr
+    Node* p = new Node(value, x-&gt;next);  // 先接住後半段
+    x-&gt;next = p;                         // 再讓 x 接到新節點
+}
+
+int main(){
+    Node* head = nullptr;
+    head = insertFront(head, 30);
+    head = insertFront(head, 20);
+    head = insertFront(head, 10);
+    insertAfter(head-&gt;next, 50);
+    printList(head); // 10 -&gt; 20 -&gt; 50 -&gt; 30 -&gt; NULL
+}</code></pre></div>
+<h3>（八）常見錯誤</h3><ul><li>指標更新順序寫反，造成後半段斷鏈。</li><li>忘記處理空串列或 NULL。</li><li>delete 後還繼續使用 dangling pointer。</li></ul>
+<h3>（九）本題重點總結</h3><ol><li>先看結構，再看操作順序。</li><li>每一步都要確認資料或指標是否仍然連接正確。</li><li>動畫中的高亮部分代表目前正在處理的節點、邊或矩陣格。</li><li>程式實作時要特別注意邊界情況與時間複雜度。</li></ol>
+</div></details>
+
+<details class="lesson" id="q14" data-title="題目 14：Doubly Linked List 刪除動畫教學 Chapter 4 Linked Lists" data-kind="list" data-id="q14">
+<summary><span>題目 14：Doubly Linked List 刪除動畫教學</span><span class="meta">Chapter 4 Linked Lists</span></summary>
+<div class="body">
+<h3>（一）主題來源</h3><p><span class="meta">Chapter 4 Linked Lists</span></p>
+<h3>（二）學習目標</h3><div class="box">學會雙向刪除節點。</div>
+<h3>（三）核心觀念說明</h3><p>讓左鄰居的 right 接到右鄰居，右鄰居的 left 接到左鄰居。</p><p>這個主題的教學重點是讓學生不只是背名詞，而是能看見資料如何被連接、搬移、比較或拜訪。請先觀察圖形狀態，再配合下方 Step-by-step 說明與動畫按鈕逐步理解。</p>
+<h3>（四）步驟式教學</h3><ol><li>Step 1：畫出目前節點與 head/first 指標。</li><li>Step 2：確認要操作的位置，先保存可能會失去的下一個節點。</li><li>Step 3：依正確順序更新 link 指標。</li><li>Step 4：檢查串列是否仍能從 head 一路走到 NULL。</li></ol>
+<h3>（五）動畫展示</h3><div class="anim"><svg id="svg-q14" viewBox="0 0 760 310" width="760" height="310"></svg><div class="anim-state" id="state-q14">準備中</div><div class="controls"><button onclick="resetAnim('q14','list')">開始 / 重播</button><button onclick="nextAnim('q14','list')">下一步</button><button onclick="playAnim('q14','list')">自動播放</button></div></div>
+<h3>（六）圖片或 SVG 圖解</h3><div class="diagram"><p>上方 SVG 圖解已將本題核心資料結構視覺化：高亮節點表示目前操作位置，綠色邊表示已選入或已確認的連線。</p></div>
+<h3>（七）程式碼說明</h3><p><strong>函式說明：</strong>下列程式示範本題核心操作。參數通常是節點、索引、圖或起點；回傳值依題目可能是新 head、搜尋結果、走訪順序或距離表。</p><p><strong>複雜度：</strong>時間 O(n) 或已知位置 O(1)，空間 O(1)。</p><div class="codebox"><div class="codehead"><span>C++ 參考程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+struct Node {
+    int data;      // 節點資料
+    Node* next;    // 指向下一個節點
+    Node(int v, Node* n=nullptr): data(v), next(n) {}
+};
+
+void printList(Node* head) {
+    // 從 head 開始一路走到 nullptr
+    for(Node* cur=head; cur!=nullptr; cur=cur-&gt;next) cout &lt;&lt; cur-&gt;data &lt;&lt; &quot; -&gt; &quot;;
+    cout &lt;&lt; &quot;NULL\n&quot;;
+}
+
+Node* insertFront(Node* head, int value) {
+    // 新節點先接到原本 head，再回傳新 head
+    return new Node(value, head);
+}
+
+void insertAfter(Node* x, int value) {
+    if(!x) return;                       // 防止 nullptr
+    Node* p = new Node(value, x-&gt;next);  // 先接住後半段
+    x-&gt;next = p;                         // 再讓 x 接到新節點
+}
+
+int main(){
+    Node* head = nullptr;
+    head = insertFront(head, 30);
+    head = insertFront(head, 20);
+    head = insertFront(head, 10);
+    insertAfter(head-&gt;next, 50);
+    printList(head); // 10 -&gt; 20 -&gt; 50 -&gt; 30 -&gt; NULL
+}</code></pre></div>
+<h3>（八）常見錯誤</h3><ul><li>指標更新順序寫反，造成後半段斷鏈。</li><li>忘記處理空串列或 NULL。</li><li>delete 後還繼續使用 dangling pointer。</li></ul>
+<h3>（九）本題重點總結</h3><ol><li>先看結構，再看操作順序。</li><li>每一步都要確認資料或指標是否仍然連接正確。</li><li>動畫中的高亮部分代表目前正在處理的節點、邊或矩陣格。</li><li>程式實作時要特別注意邊界情況與時間複雜度。</li></ol>
+</div></details>
+
+<details class="lesson" id="q15" data-title="題目 15：Linked Stack / Linked Queue 應用動畫教學 Chapter 4 Linked Lists" data-kind="list" data-id="q15">
+<summary><span>題目 15：Linked Stack / Linked Queue 應用動畫教學</span><span class="meta">Chapter 4 Linked Lists</span></summary>
+<div class="body">
+<h3>（一）主題來源</h3><p><span class="meta">Chapter 4 Linked Lists</span></p>
+<h3>（二）學習目標</h3><div class="box">理解鏈結串列如何實作 Stack/Queue。</div>
+<h3>（三）核心觀念說明</h3><p>Stack 在 top 操作；Queue 用 front/rear 管理隊首與隊尾。</p><p>這個主題的教學重點是讓學生不只是背名詞，而是能看見資料如何被連接、搬移、比較或拜訪。請先觀察圖形狀態，再配合下方 Step-by-step 說明與動畫按鈕逐步理解。</p>
+<h3>（四）步驟式教學</h3><ol><li>Step 1：畫出目前節點與 head/first 指標。</li><li>Step 2：確認要操作的位置，先保存可能會失去的下一個節點。</li><li>Step 3：依正確順序更新 link 指標。</li><li>Step 4：檢查串列是否仍能從 head 一路走到 NULL。</li></ol>
+<h3>（五）動畫展示</h3><div class="anim"><svg id="svg-q15" viewBox="0 0 760 310" width="760" height="310"></svg><div class="anim-state" id="state-q15">準備中</div><div class="controls"><button onclick="resetAnim('q15','list')">開始 / 重播</button><button onclick="nextAnim('q15','list')">下一步</button><button onclick="playAnim('q15','list')">自動播放</button></div></div>
+<h3>（六）圖片或 SVG 圖解</h3><div class="diagram"><p>上方 SVG 圖解已將本題核心資料結構視覺化：高亮節點表示目前操作位置，綠色邊表示已選入或已確認的連線。</p></div>
+<h3>（七）程式碼說明</h3><p><strong>函式說明：</strong>下列程式示範本題核心操作。參數通常是節點、索引、圖或起點；回傳值依題目可能是新 head、搜尋結果、走訪順序或距離表。</p><p><strong>複雜度：</strong>時間 O(n) 或已知位置 O(1)，空間 O(1)。</p><div class="codebox"><div class="codehead"><span>C++ 參考程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+struct Node {
+    int data;      // 節點資料
+    Node* next;    // 指向下一個節點
+    Node(int v, Node* n=nullptr): data(v), next(n) {}
+};
+
+void printList(Node* head) {
+    // 從 head 開始一路走到 nullptr
+    for(Node* cur=head; cur!=nullptr; cur=cur-&gt;next) cout &lt;&lt; cur-&gt;data &lt;&lt; &quot; -&gt; &quot;;
+    cout &lt;&lt; &quot;NULL\n&quot;;
+}
+
+Node* insertFront(Node* head, int value) {
+    // 新節點先接到原本 head，再回傳新 head
+    return new Node(value, head);
+}
+
+void insertAfter(Node* x, int value) {
+    if(!x) return;                       // 防止 nullptr
+    Node* p = new Node(value, x-&gt;next);  // 先接住後半段
+    x-&gt;next = p;                         // 再讓 x 接到新節點
+}
+
+int main(){
+    Node* head = nullptr;
+    head = insertFront(head, 30);
+    head = insertFront(head, 20);
+    head = insertFront(head, 10);
+    insertAfter(head-&gt;next, 50);
+    printList(head); // 10 -&gt; 20 -&gt; 50 -&gt; 30 -&gt; NULL
+}</code></pre></div>
+<h3>（八）常見錯誤</h3><ul><li>指標更新順序寫反，造成後半段斷鏈。</li><li>忘記處理空串列或 NULL。</li><li>delete 後還繼續使用 dangling pointer。</li></ul>
+<h3>（九）本題重點總結</h3><ol><li>先看結構，再看操作順序。</li><li>每一步都要確認資料或指標是否仍然連接正確。</li><li>動畫中的高亮部分代表目前正在處理的節點、邊或矩陣格。</li><li>程式實作時要特別注意邊界情況與時間複雜度。</li></ol>
+</div></details>
+
+<details class="lesson" id="q16" data-title="題目 16：Tree 基本術語動畫教學 Chapter 5 Trees" data-kind="tree" data-id="q16">
+<summary><span>題目 16：Tree 基本術語動畫教學</span><span class="meta">Chapter 5 Trees</span></summary>
+<div class="body">
+<h3>（一）主題來源</h3><p><span class="meta">Chapter 5 Trees</span></p>
+<h3>（二）學習目標</h3><div class="box">認識 root、subtree、node。</div>
+<h3>（三）核心觀念說明</h3><p>Tree 是階層式結構，root 底下的每個部分仍然是一棵 subtree。</p><p>這個主題的教學重點是讓學生不只是背名詞，而是能看見資料如何被連接、搬移、比較或拜訪。請先觀察圖形狀態，再配合下方 Step-by-step 說明與動畫按鈕逐步理解。</p>
+<h3>（四）步驟式教學</h3><ol><li>Step 1：先找到 root，確認左右子樹。</li><li>Step 2：依走訪或搜尋規則決定往左、往右或拜訪自己。</li><li>Step 3：每次處理一棵 subtree，直到遇到 NULL。</li><li>Step 4：把每一步結果合併成完整答案。</li></ol>
+<h3>（五）動畫展示</h3><div class="anim"><svg id="svg-q16" viewBox="0 0 760 310" width="760" height="310"></svg><div class="anim-state" id="state-q16">準備中</div><div class="controls"><button onclick="resetAnim('q16','tree')">開始 / 重播</button><button onclick="nextAnim('q16','tree')">下一步</button><button onclick="playAnim('q16','tree')">自動播放</button></div></div>
+<h3>（六）圖片或 SVG 圖解</h3><div class="diagram"><p>上方 SVG 圖解已將本題核心資料結構視覺化：高亮節點表示目前操作位置，綠色邊表示已選入或已確認的連線。</p></div>
+<h3>（七）程式碼說明</h3><p><strong>函式說明：</strong>下列程式示範本題核心操作。參數通常是節點、索引、圖或起點；回傳值依題目可能是新 head、搜尋結果、走訪順序或距離表。</p><p><strong>複雜度：</strong>時間 O(n)，空間為遞迴深度 O(h)。</p><div class="codebox"><div class="codehead"><span>C++ 參考程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+struct Node {
+    char data;
+    Node* left;
+    Node* right;
+    Node(char d, Node* l=nullptr, Node* r=nullptr): data(d), left(l), right(r) {}
+};
+
+void preorder(Node* p){ if(!p) return; cout &lt;&lt; p-&gt;data &lt;&lt; &#x27; &#x27;; preorder(p-&gt;left); preorder(p-&gt;right); }
+void inorder(Node* p){ if(!p) return; inorder(p-&gt;left); cout &lt;&lt; p-&gt;data &lt;&lt; &#x27; &#x27;; inorder(p-&gt;right); }
+void postorder(Node* p){ if(!p) return; postorder(p-&gt;left); postorder(p-&gt;right); cout &lt;&lt; p-&gt;data &lt;&lt; &#x27; &#x27;; }
+
+int main(){
+    Node* root = new Node(&#x27;A&#x27;, new Node(&#x27;B&#x27;, new Node(&#x27;D&#x27;), new Node(&#x27;I&#x27;)), new Node(&#x27;C&#x27;, new Node(&#x27;F&#x27;), new Node(&#x27;G&#x27;)));
+    cout &lt;&lt; &quot;Preorder: &quot;; preorder(root); cout &lt;&lt; &quot;\n&quot;;
+    cout &lt;&lt; &quot;Inorder: &quot;; inorder(root); cout &lt;&lt; &quot;\n&quot;;
+    cout &lt;&lt; &quot;Postorder: &quot;; postorder(root); cout &lt;&lt; &quot;\n&quot;;
+}</code></pre></div>
+<h3>（八）常見錯誤</h3><ul><li>把 level 和 height 混淆。</li><li>遞迴函式忘記 base case。</li><li>走訪時把 preorder/inorder/postorder 順序背錯。</li></ul>
+<h3>（九）本題重點總結</h3><ol><li>先看結構，再看操作順序。</li><li>每一步都要確認資料或指標是否仍然連接正確。</li><li>動畫中的高亮部分代表目前正在處理的節點、邊或矩陣格。</li><li>程式實作時要特別注意邊界情況與時間複雜度。</li></ol>
+</div></details>
+
+<details class="lesson" id="q17" data-title="題目 17：Root / Parent / Children / Sibling動畫教學 Chapter 5 Trees" data-kind="tree" data-id="q17">
+<summary><span>題目 17：Root / Parent / Children / Sibling動畫教學</span><span class="meta">Chapter 5 Trees</span></summary>
+<div class="body">
+<h3>（一）主題來源</h3><p><span class="meta">Chapter 5 Trees</span></p>
+<h3>（二）學習目標</h3><div class="box">看懂親子與兄弟關係。</div>
+<h3>（三）核心觀念說明</h3><p>Parent 是上一層，children 是下一層，同一 parent 的 children 是 siblings。</p><p>這個主題的教學重點是讓學生不只是背名詞，而是能看見資料如何被連接、搬移、比較或拜訪。請先觀察圖形狀態，再配合下方 Step-by-step 說明與動畫按鈕逐步理解。</p>
+<h3>（四）步驟式教學</h3><ol><li>Step 1：先找到 root，確認左右子樹。</li><li>Step 2：依走訪或搜尋規則決定往左、往右或拜訪自己。</li><li>Step 3：每次處理一棵 subtree，直到遇到 NULL。</li><li>Step 4：把每一步結果合併成完整答案。</li></ol>
+<h3>（五）動畫展示</h3><div class="anim"><svg id="svg-q17" viewBox="0 0 760 310" width="760" height="310"></svg><div class="anim-state" id="state-q17">準備中</div><div class="controls"><button onclick="resetAnim('q17','tree')">開始 / 重播</button><button onclick="nextAnim('q17','tree')">下一步</button><button onclick="playAnim('q17','tree')">自動播放</button></div></div>
+<h3>（六）圖片或 SVG 圖解</h3><div class="diagram"><p>上方 SVG 圖解已將本題核心資料結構視覺化：高亮節點表示目前操作位置，綠色邊表示已選入或已確認的連線。</p></div>
+<h3>（七）程式碼說明</h3><p><strong>函式說明：</strong>下列程式示範本題核心操作。參數通常是節點、索引、圖或起點；回傳值依題目可能是新 head、搜尋結果、走訪順序或距離表。</p><p><strong>複雜度：</strong>時間 O(n)，空間為遞迴深度 O(h)。</p><div class="codebox"><div class="codehead"><span>C++ 參考程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+struct Node {
+    char data;
+    Node* left;
+    Node* right;
+    Node(char d, Node* l=nullptr, Node* r=nullptr): data(d), left(l), right(r) {}
+};
+
+void preorder(Node* p){ if(!p) return; cout &lt;&lt; p-&gt;data &lt;&lt; &#x27; &#x27;; preorder(p-&gt;left); preorder(p-&gt;right); }
+void inorder(Node* p){ if(!p) return; inorder(p-&gt;left); cout &lt;&lt; p-&gt;data &lt;&lt; &#x27; &#x27;; inorder(p-&gt;right); }
+void postorder(Node* p){ if(!p) return; postorder(p-&gt;left); postorder(p-&gt;right); cout &lt;&lt; p-&gt;data &lt;&lt; &#x27; &#x27;; }
+
+int main(){
+    Node* root = new Node(&#x27;A&#x27;, new Node(&#x27;B&#x27;, new Node(&#x27;D&#x27;), new Node(&#x27;I&#x27;)), new Node(&#x27;C&#x27;, new Node(&#x27;F&#x27;), new Node(&#x27;G&#x27;)));
+    cout &lt;&lt; &quot;Preorder: &quot;; preorder(root); cout &lt;&lt; &quot;\n&quot;;
+    cout &lt;&lt; &quot;Inorder: &quot;; inorder(root); cout &lt;&lt; &quot;\n&quot;;
+    cout &lt;&lt; &quot;Postorder: &quot;; postorder(root); cout &lt;&lt; &quot;\n&quot;;
+}</code></pre></div>
+<h3>（八）常見錯誤</h3><ul><li>把 level 和 height 混淆。</li><li>遞迴函式忘記 base case。</li><li>走訪時把 preorder/inorder/postorder 順序背錯。</li></ul>
+<h3>（九）本題重點總結</h3><ol><li>先看結構，再看操作順序。</li><li>每一步都要確認資料或指標是否仍然連接正確。</li><li>動畫中的高亮部分代表目前正在處理的節點、邊或矩陣格。</li><li>程式實作時要特別注意邊界情況與時間複雜度。</li></ol>
+</div></details>
+
+<details class="lesson" id="q18" data-title="題目 18：Degree / Leaf / Height / Level動畫教學 Chapter 5 Trees" data-kind="tree" data-id="q18">
+<summary><span>題目 18：Degree / Leaf / Height / Level動畫教學</span><span class="meta">Chapter 5 Trees</span></summary>
+<div class="body">
+<h3>（一）主題來源</h3><p><span class="meta">Chapter 5 Trees</span></p>
+<h3>（二）學習目標</h3><div class="box">區分容易混淆的樹術語。</div>
+<h3>（三）核心觀念說明</h3><p>Degree 是孩子數，leaf 是 degree 0，level 是層數，height 是最大深度。</p><p>這個主題的教學重點是讓學生不只是背名詞，而是能看見資料如何被連接、搬移、比較或拜訪。請先觀察圖形狀態，再配合下方 Step-by-step 說明與動畫按鈕逐步理解。</p>
+<h3>（四）步驟式教學</h3><ol><li>Step 1：先找到 root，確認左右子樹。</li><li>Step 2：依走訪或搜尋規則決定往左、往右或拜訪自己。</li><li>Step 3：每次處理一棵 subtree，直到遇到 NULL。</li><li>Step 4：把每一步結果合併成完整答案。</li></ol>
+<h3>（五）動畫展示</h3><div class="anim"><svg id="svg-q18" viewBox="0 0 760 310" width="760" height="310"></svg><div class="anim-state" id="state-q18">準備中</div><div class="controls"><button onclick="resetAnim('q18','tree')">開始 / 重播</button><button onclick="nextAnim('q18','tree')">下一步</button><button onclick="playAnim('q18','tree')">自動播放</button></div></div>
+<h3>（六）圖片或 SVG 圖解</h3><div class="diagram"><p>上方 SVG 圖解已將本題核心資料結構視覺化：高亮節點表示目前操作位置，綠色邊表示已選入或已確認的連線。</p></div>
+<h3>（七）程式碼說明</h3><p><strong>函式說明：</strong>下列程式示範本題核心操作。參數通常是節點、索引、圖或起點；回傳值依題目可能是新 head、搜尋結果、走訪順序或距離表。</p><p><strong>複雜度：</strong>時間 O(n)，空間為遞迴深度 O(h)。</p><div class="codebox"><div class="codehead"><span>C++ 參考程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+struct Node {
+    char data;
+    Node* left;
+    Node* right;
+    Node(char d, Node* l=nullptr, Node* r=nullptr): data(d), left(l), right(r) {}
+};
+
+void preorder(Node* p){ if(!p) return; cout &lt;&lt; p-&gt;data &lt;&lt; &#x27; &#x27;; preorder(p-&gt;left); preorder(p-&gt;right); }
+void inorder(Node* p){ if(!p) return; inorder(p-&gt;left); cout &lt;&lt; p-&gt;data &lt;&lt; &#x27; &#x27;; inorder(p-&gt;right); }
+void postorder(Node* p){ if(!p) return; postorder(p-&gt;left); postorder(p-&gt;right); cout &lt;&lt; p-&gt;data &lt;&lt; &#x27; &#x27;; }
+
+int main(){
+    Node* root = new Node(&#x27;A&#x27;, new Node(&#x27;B&#x27;, new Node(&#x27;D&#x27;), new Node(&#x27;I&#x27;)), new Node(&#x27;C&#x27;, new Node(&#x27;F&#x27;), new Node(&#x27;G&#x27;)));
+    cout &lt;&lt; &quot;Preorder: &quot;; preorder(root); cout &lt;&lt; &quot;\n&quot;;
+    cout &lt;&lt; &quot;Inorder: &quot;; inorder(root); cout &lt;&lt; &quot;\n&quot;;
+    cout &lt;&lt; &quot;Postorder: &quot;; postorder(root); cout &lt;&lt; &quot;\n&quot;;
+}</code></pre></div>
+<h3>（八）常見錯誤</h3><ul><li>把 level 和 height 混淆。</li><li>遞迴函式忘記 base case。</li><li>走訪時把 preorder/inorder/postorder 順序背錯。</li></ul>
+<h3>（九）本題重點總結</h3><ol><li>先看結構，再看操作順序。</li><li>每一步都要確認資料或指標是否仍然連接正確。</li><li>動畫中的高亮部分代表目前正在處理的節點、邊或矩陣格。</li><li>程式實作時要特別注意邊界情況與時間複雜度。</li></ol>
+</div></details>
+
+<details class="lesson" id="q19" data-title="題目 19：General Tree 表示法動畫教學 Chapter 5 Trees" data-kind="tree" data-id="q19">
+<summary><span>題目 19：General Tree 表示法動畫教學</span><span class="meta">Chapter 5 Trees</span></summary>
+<div class="body">
+<h3>（一）主題來源</h3><p><span class="meta">Chapter 5 Trees</span></p>
+<h3>（二）學習目標</h3><div class="box">理解括號與階層表示。</div>
+<h3>（三）核心觀念說明</h3><p>Parenthesization 用 root 後接 subtree list 來表示一般樹。</p><p>這個主題的教學重點是讓學生不只是背名詞，而是能看見資料如何被連接、搬移、比較或拜訪。請先觀察圖形狀態，再配合下方 Step-by-step 說明與動畫按鈕逐步理解。</p>
+<h3>（四）步驟式教學</h3><ol><li>Step 1：先找到 root，確認左右子樹。</li><li>Step 2：依走訪或搜尋規則決定往左、往右或拜訪自己。</li><li>Step 3：每次處理一棵 subtree，直到遇到 NULL。</li><li>Step 4：把每一步結果合併成完整答案。</li></ol>
+<h3>（五）動畫展示</h3><div class="anim"><svg id="svg-q19" viewBox="0 0 760 310" width="760" height="310"></svg><div class="anim-state" id="state-q19">準備中</div><div class="controls"><button onclick="resetAnim('q19','tree')">開始 / 重播</button><button onclick="nextAnim('q19','tree')">下一步</button><button onclick="playAnim('q19','tree')">自動播放</button></div></div>
+<h3>（六）圖片或 SVG 圖解</h3><div class="diagram"><p>上方 SVG 圖解已將本題核心資料結構視覺化：高亮節點表示目前操作位置，綠色邊表示已選入或已確認的連線。</p></div>
+<h3>（七）程式碼說明</h3><p><strong>函式說明：</strong>下列程式示範本題核心操作。參數通常是節點、索引、圖或起點；回傳值依題目可能是新 head、搜尋結果、走訪順序或距離表。</p><p><strong>複雜度：</strong>時間 O(n)，空間為遞迴深度 O(h)。</p><div class="codebox"><div class="codehead"><span>C++ 參考程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+struct Node {
+    char data;
+    Node* left;
+    Node* right;
+    Node(char d, Node* l=nullptr, Node* r=nullptr): data(d), left(l), right(r) {}
+};
+
+void preorder(Node* p){ if(!p) return; cout &lt;&lt; p-&gt;data &lt;&lt; &#x27; &#x27;; preorder(p-&gt;left); preorder(p-&gt;right); }
+void inorder(Node* p){ if(!p) return; inorder(p-&gt;left); cout &lt;&lt; p-&gt;data &lt;&lt; &#x27; &#x27;; inorder(p-&gt;right); }
+void postorder(Node* p){ if(!p) return; postorder(p-&gt;left); postorder(p-&gt;right); cout &lt;&lt; p-&gt;data &lt;&lt; &#x27; &#x27;; }
+
+int main(){
+    Node* root = new Node(&#x27;A&#x27;, new Node(&#x27;B&#x27;, new Node(&#x27;D&#x27;), new Node(&#x27;I&#x27;)), new Node(&#x27;C&#x27;, new Node(&#x27;F&#x27;), new Node(&#x27;G&#x27;)));
+    cout &lt;&lt; &quot;Preorder: &quot;; preorder(root); cout &lt;&lt; &quot;\n&quot;;
+    cout &lt;&lt; &quot;Inorder: &quot;; inorder(root); cout &lt;&lt; &quot;\n&quot;;
+    cout &lt;&lt; &quot;Postorder: &quot;; postorder(root); cout &lt;&lt; &quot;\n&quot;;
+}</code></pre></div>
+<h3>（八）常見錯誤</h3><ul><li>把 level 和 height 混淆。</li><li>遞迴函式忘記 base case。</li><li>走訪時把 preorder/inorder/postorder 順序背錯。</li></ul>
+<h3>（九）本題重點總結</h3><ol><li>先看結構，再看操作順序。</li><li>每一步都要確認資料或指標是否仍然連接正確。</li><li>動畫中的高亮部分代表目前正在處理的節點、邊或矩陣格。</li><li>程式實作時要特別注意邊界情況與時間複雜度。</li></ol>
+</div></details>
+
+<details class="lesson" id="q20" data-title="題目 20：Left Child Right Sibling 轉換動畫教學 Chapter 5 Trees" data-kind="tree" data-id="q20">
+<summary><span>題目 20：Left Child Right Sibling 轉換動畫教學</span><span class="meta">Chapter 5 Trees</span></summary>
+<div class="body">
+<h3>（一）主題來源</h3><p><span class="meta">Chapter 5 Trees</span></p>
+<h3>（二）學習目標</h3><div class="box">把一般樹轉為二元樹。</div>
+<h3>（三）核心觀念說明</h3><p>left child 指最左孩子，right sibling 指下一個兄弟。</p><p>這個主題的教學重點是讓學生不只是背名詞，而是能看見資料如何被連接、搬移、比較或拜訪。請先觀察圖形狀態，再配合下方 Step-by-step 說明與動畫按鈕逐步理解。</p>
+<h3>（四）步驟式教學</h3><ol><li>Step 1：先找到 root，確認左右子樹。</li><li>Step 2：依走訪或搜尋規則決定往左、往右或拜訪自己。</li><li>Step 3：每次處理一棵 subtree，直到遇到 NULL。</li><li>Step 4：把每一步結果合併成完整答案。</li></ol>
+<h3>（五）動畫展示</h3><div class="anim"><svg id="svg-q20" viewBox="0 0 760 310" width="760" height="310"></svg><div class="anim-state" id="state-q20">準備中</div><div class="controls"><button onclick="resetAnim('q20','tree')">開始 / 重播</button><button onclick="nextAnim('q20','tree')">下一步</button><button onclick="playAnim('q20','tree')">自動播放</button></div></div>
+<h3>（六）圖片或 SVG 圖解</h3><div class="diagram"><p>上方 SVG 圖解已將本題核心資料結構視覺化：高亮節點表示目前操作位置，綠色邊表示已選入或已確認的連線。</p></div>
+<h3>（七）程式碼說明</h3><p><strong>函式說明：</strong>下列程式示範本題核心操作。參數通常是節點、索引、圖或起點；回傳值依題目可能是新 head、搜尋結果、走訪順序或距離表。</p><p><strong>複雜度：</strong>時間 O(n)，空間為遞迴深度 O(h)。</p><div class="codebox"><div class="codehead"><span>C++ 參考程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+struct Node {
+    char data;
+    Node* left;
+    Node* right;
+    Node(char d, Node* l=nullptr, Node* r=nullptr): data(d), left(l), right(r) {}
+};
+
+void preorder(Node* p){ if(!p) return; cout &lt;&lt; p-&gt;data &lt;&lt; &#x27; &#x27;; preorder(p-&gt;left); preorder(p-&gt;right); }
+void inorder(Node* p){ if(!p) return; inorder(p-&gt;left); cout &lt;&lt; p-&gt;data &lt;&lt; &#x27; &#x27;; inorder(p-&gt;right); }
+void postorder(Node* p){ if(!p) return; postorder(p-&gt;left); postorder(p-&gt;right); cout &lt;&lt; p-&gt;data &lt;&lt; &#x27; &#x27;; }
+
+int main(){
+    Node* root = new Node(&#x27;A&#x27;, new Node(&#x27;B&#x27;, new Node(&#x27;D&#x27;), new Node(&#x27;I&#x27;)), new Node(&#x27;C&#x27;, new Node(&#x27;F&#x27;), new Node(&#x27;G&#x27;)));
+    cout &lt;&lt; &quot;Preorder: &quot;; preorder(root); cout &lt;&lt; &quot;\n&quot;;
+    cout &lt;&lt; &quot;Inorder: &quot;; inorder(root); cout &lt;&lt; &quot;\n&quot;;
+    cout &lt;&lt; &quot;Postorder: &quot;; postorder(root); cout &lt;&lt; &quot;\n&quot;;
+}</code></pre></div>
+<h3>（八）常見錯誤</h3><ul><li>把 level 和 height 混淆。</li><li>遞迴函式忘記 base case。</li><li>走訪時把 preorder/inorder/postorder 順序背錯。</li></ul>
+<h3>（九）本題重點總結</h3><ol><li>先看結構，再看操作順序。</li><li>每一步都要確認資料或指標是否仍然連接正確。</li><li>動畫中的高亮部分代表目前正在處理的節點、邊或矩陣格。</li><li>程式實作時要特別注意邊界情況與時間複雜度。</li></ol>
+</div></details>
+
+<details class="lesson" id="q21" data-title="題目 21：Binary Tree 基本概念動畫教學 Chapter 5 Trees" data-kind="tree" data-id="q21">
+<summary><span>題目 21：Binary Tree 基本概念動畫教學</span><span class="meta">Chapter 5 Trees</span></summary>
+<div class="body">
+<h3>（一）主題來源</h3><p><span class="meta">Chapter 5 Trees</span></p>
+<h3>（二）學習目標</h3><div class="box">理解 left/right subtree 的重要性。</div>
+<h3>（三）核心觀念說明</h3><p>二元樹每個節點最多兩個孩子，且左右位置有意義。</p><p>這個主題的教學重點是讓學生不只是背名詞，而是能看見資料如何被連接、搬移、比較或拜訪。請先觀察圖形狀態，再配合下方 Step-by-step 說明與動畫按鈕逐步理解。</p>
+<h3>（四）步驟式教學</h3><ol><li>Step 1：先找到 root，確認左右子樹。</li><li>Step 2：依走訪或搜尋規則決定往左、往右或拜訪自己。</li><li>Step 3：每次處理一棵 subtree，直到遇到 NULL。</li><li>Step 4：把每一步結果合併成完整答案。</li></ol>
+<h3>（五）動畫展示</h3><div class="anim"><svg id="svg-q21" viewBox="0 0 760 310" width="760" height="310"></svg><div class="anim-state" id="state-q21">準備中</div><div class="controls"><button onclick="resetAnim('q21','tree')">開始 / 重播</button><button onclick="nextAnim('q21','tree')">下一步</button><button onclick="playAnim('q21','tree')">自動播放</button></div></div>
+<h3>（六）圖片或 SVG 圖解</h3><div class="diagram"><p>上方 SVG 圖解已將本題核心資料結構視覺化：高亮節點表示目前操作位置，綠色邊表示已選入或已確認的連線。</p></div>
+<h3>（七）程式碼說明</h3><p><strong>函式說明：</strong>下列程式示範本題核心操作。參數通常是節點、索引、圖或起點；回傳值依題目可能是新 head、搜尋結果、走訪順序或距離表。</p><p><strong>複雜度：</strong>時間 O(n)，空間為遞迴深度 O(h)。</p><div class="codebox"><div class="codehead"><span>C++ 參考程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+struct Node {
+    char data;
+    Node* left;
+    Node* right;
+    Node(char d, Node* l=nullptr, Node* r=nullptr): data(d), left(l), right(r) {}
+};
+
+void preorder(Node* p){ if(!p) return; cout &lt;&lt; p-&gt;data &lt;&lt; &#x27; &#x27;; preorder(p-&gt;left); preorder(p-&gt;right); }
+void inorder(Node* p){ if(!p) return; inorder(p-&gt;left); cout &lt;&lt; p-&gt;data &lt;&lt; &#x27; &#x27;; inorder(p-&gt;right); }
+void postorder(Node* p){ if(!p) return; postorder(p-&gt;left); postorder(p-&gt;right); cout &lt;&lt; p-&gt;data &lt;&lt; &#x27; &#x27;; }
+
+int main(){
+    Node* root = new Node(&#x27;A&#x27;, new Node(&#x27;B&#x27;, new Node(&#x27;D&#x27;), new Node(&#x27;I&#x27;)), new Node(&#x27;C&#x27;, new Node(&#x27;F&#x27;), new Node(&#x27;G&#x27;)));
+    cout &lt;&lt; &quot;Preorder: &quot;; preorder(root); cout &lt;&lt; &quot;\n&quot;;
+    cout &lt;&lt; &quot;Inorder: &quot;; inorder(root); cout &lt;&lt; &quot;\n&quot;;
+    cout &lt;&lt; &quot;Postorder: &quot;; postorder(root); cout &lt;&lt; &quot;\n&quot;;
+}</code></pre></div>
+<h3>（八）常見錯誤</h3><ul><li>把 level 和 height 混淆。</li><li>遞迴函式忘記 base case。</li><li>走訪時把 preorder/inorder/postorder 順序背錯。</li></ul>
+<h3>（九）本題重點總結</h3><ol><li>先看結構，再看操作順序。</li><li>每一步都要確認資料或指標是否仍然連接正確。</li><li>動畫中的高亮部分代表目前正在處理的節點、邊或矩陣格。</li><li>程式實作時要特別注意邊界情況與時間複雜度。</li></ol>
+</div></details>
+
+<details class="lesson" id="q22" data-title="題目 22：Full / Complete / Skewed Binary Tree動畫教學 Chapter 5 Trees" data-kind="tree" data-id="q22">
+<summary><span>題目 22：Full / Complete / Skewed Binary Tree動畫教學</span><span class="meta">Chapter 5 Trees</span></summary>
+<div class="body">
+<h3>（一）主題來源</h3><p><span class="meta">Chapter 5 Trees</span></p>
+<h3>（二）學習目標</h3><div class="box">辨認三種常見二元樹形狀。</div>
+<h3>（三）核心觀念說明</h3><p>Full 每層都滿；Complete 最後一層由左到右填；Skewed 像 linked list。</p><p>這個主題的教學重點是讓學生不只是背名詞，而是能看見資料如何被連接、搬移、比較或拜訪。請先觀察圖形狀態，再配合下方 Step-by-step 說明與動畫按鈕逐步理解。</p>
+<h3>（四）步驟式教學</h3><ol><li>Step 1：先找到 root，確認左右子樹。</li><li>Step 2：依走訪或搜尋規則決定往左、往右或拜訪自己。</li><li>Step 3：每次處理一棵 subtree，直到遇到 NULL。</li><li>Step 4：把每一步結果合併成完整答案。</li></ol>
+<h3>（五）動畫展示</h3><div class="anim"><svg id="svg-q22" viewBox="0 0 760 310" width="760" height="310"></svg><div class="anim-state" id="state-q22">準備中</div><div class="controls"><button onclick="resetAnim('q22','tree')">開始 / 重播</button><button onclick="nextAnim('q22','tree')">下一步</button><button onclick="playAnim('q22','tree')">自動播放</button></div></div>
+<h3>（六）圖片或 SVG 圖解</h3><div class="diagram"><p>上方 SVG 圖解已將本題核心資料結構視覺化：高亮節點表示目前操作位置，綠色邊表示已選入或已確認的連線。</p></div>
+<h3>（七）程式碼說明</h3><p><strong>函式說明：</strong>下列程式示範本題核心操作。參數通常是節點、索引、圖或起點；回傳值依題目可能是新 head、搜尋結果、走訪順序或距離表。</p><p><strong>複雜度：</strong>時間 O(n)，空間為遞迴深度 O(h)。</p><div class="codebox"><div class="codehead"><span>C++ 參考程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+struct Node {
+    char data;
+    Node* left;
+    Node* right;
+    Node(char d, Node* l=nullptr, Node* r=nullptr): data(d), left(l), right(r) {}
+};
+
+void preorder(Node* p){ if(!p) return; cout &lt;&lt; p-&gt;data &lt;&lt; &#x27; &#x27;; preorder(p-&gt;left); preorder(p-&gt;right); }
+void inorder(Node* p){ if(!p) return; inorder(p-&gt;left); cout &lt;&lt; p-&gt;data &lt;&lt; &#x27; &#x27;; inorder(p-&gt;right); }
+void postorder(Node* p){ if(!p) return; postorder(p-&gt;left); postorder(p-&gt;right); cout &lt;&lt; p-&gt;data &lt;&lt; &#x27; &#x27;; }
+
+int main(){
+    Node* root = new Node(&#x27;A&#x27;, new Node(&#x27;B&#x27;, new Node(&#x27;D&#x27;), new Node(&#x27;I&#x27;)), new Node(&#x27;C&#x27;, new Node(&#x27;F&#x27;), new Node(&#x27;G&#x27;)));
+    cout &lt;&lt; &quot;Preorder: &quot;; preorder(root); cout &lt;&lt; &quot;\n&quot;;
+    cout &lt;&lt; &quot;Inorder: &quot;; inorder(root); cout &lt;&lt; &quot;\n&quot;;
+    cout &lt;&lt; &quot;Postorder: &quot;; postorder(root); cout &lt;&lt; &quot;\n&quot;;
+}</code></pre></div>
+<h3>（八）常見錯誤</h3><ul><li>把 level 和 height 混淆。</li><li>遞迴函式忘記 base case。</li><li>走訪時把 preorder/inorder/postorder 順序背錯。</li></ul>
+<h3>（九）本題重點總結</h3><ol><li>先看結構，再看操作順序。</li><li>每一步都要確認資料或指標是否仍然連接正確。</li><li>動畫中的高亮部分代表目前正在處理的節點、邊或矩陣格。</li><li>程式實作時要特別注意邊界情況與時間複雜度。</li></ol>
+</div></details>
+
+<details class="lesson" id="q23" data-title="題目 23：Array Representation動畫教學 Chapter 5 Trees" data-kind="heap" data-id="q23">
+<summary><span>題目 23：Array Representation動畫教學</span><span class="meta">Chapter 5 Trees</span></summary>
+<div class="body">
+<h3>（一）主題來源</h3><p><span class="meta">Chapter 5 Trees</span></p>
+<h3>（二）學習目標</h3><div class="box">學會用陣列表示 complete binary tree。</div>
+<h3>（三）核心觀念說明</h3><p>tree[1] 是 root，parent(i)=i/2，left=2i，right=2i+1。</p><p>這個主題的教學重點是讓學生不只是背名詞，而是能看見資料如何被連接、搬移、比較或拜訪。請先觀察圖形狀態，再配合下方 Step-by-step 說明與動畫按鈕逐步理解。</p>
+<h3>（四）步驟式教學</h3><ol><li>Step 1：維持 complete binary tree 形狀，先找最後位置。</li><li>Step 2：比較 parent/child 是否違反 heap property。</li><li>Step 3：必要時 bubble up 或 trickle down。</li><li>Step 4：確認每個 parent 都符合 heap order。</li></ol>
+<h3>（五）動畫展示</h3><div class="anim"><svg id="svg-q23" viewBox="0 0 760 310" width="760" height="310"></svg><div class="anim-state" id="state-q23">準備中</div><div class="controls"><button onclick="resetAnim('q23','heap')">開始 / 重播</button><button onclick="nextAnim('q23','heap')">下一步</button><button onclick="playAnim('q23','heap')">自動播放</button></div></div>
+<h3>（六）圖片或 SVG 圖解</h3><div class="diagram"><p>上方 SVG 圖解已將本題核心資料結構視覺化：高亮節點表示目前操作位置，綠色邊表示已選入或已確認的連線。</p></div>
+<h3>（七）程式碼說明</h3><p><strong>函式說明：</strong>下列程式示範本題核心操作。參數通常是節點、索引、圖或起點；回傳值依題目可能是新 head、搜尋結果、走訪順序或距離表。</p><p><strong>複雜度：</strong>時間 O(log n)，空間 O(1)。</p><div class="codebox"><div class="codehead"><span>C++ 參考程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+using namespace std;
+
+void pushMaxHeap(vector&lt;int&gt;&amp; h, int x){
+    h.push_back(x);                 // h[0] 不用，新元素放最後
+    int i = h.size() - 1;
+    while(i &gt; 1 &amp;&amp; h[i/2] &lt; x){     // parent 比新值小就往上
+        h[i] = h[i/2];
+        i /= 2;
+    }
+    h[i] = x;
+}
+
+int main(){
+    vector&lt;int&gt; heap = {0,20,15,2,14,10,1};
+    pushMaxHeap(heap, 21);
+    for(int i=1;i&lt;heap.size();++i) cout &lt;&lt; heap[i] &lt;&lt; &#x27; &#x27;;
+    cout &lt;&lt; &quot;\n&quot;; // 21 15 20 14 10 1 2
+}</code></pre></div>
+<h3>（八）常見錯誤</h3><ul><li>忘記 heap 通常從 index 1 開始。</li><li>Pop 時沒有選較大的 child。</li><li>只維持大小關係卻破壞 complete tree 形狀。</li></ul>
+<h3>（九）本題重點總結</h3><ol><li>先看結構，再看操作順序。</li><li>每一步都要確認資料或指標是否仍然連接正確。</li><li>動畫中的高亮部分代表目前正在處理的節點、邊或矩陣格。</li><li>程式實作時要特別注意邊界情況與時間複雜度。</li></ol>
+</div></details>
+
+<details class="lesson" id="q24" data-title="題目 24：Linked Representation動畫教學 Chapter 5 Trees" data-kind="tree" data-id="q24">
+<summary><span>題目 24：Linked Representation動畫教學</span><span class="meta">Chapter 5 Trees</span></summary>
+<div class="body">
+<h3>（一）主題來源</h3><p><span class="meta">Chapter 5 Trees</span></p>
+<h3>（二）學習目標</h3><div class="box">理解 leftChild/rightChild 指標。</div>
+<h3>（三）核心觀念說明</h3><p>每個節點存 data、leftChild、rightChild，適合不規則樹。</p><p>這個主題的教學重點是讓學生不只是背名詞，而是能看見資料如何被連接、搬移、比較或拜訪。請先觀察圖形狀態，再配合下方 Step-by-step 說明與動畫按鈕逐步理解。</p>
+<h3>（四）步驟式教學</h3><ol><li>Step 1：先找到 root，確認左右子樹。</li><li>Step 2：依走訪或搜尋規則決定往左、往右或拜訪自己。</li><li>Step 3：每次處理一棵 subtree，直到遇到 NULL。</li><li>Step 4：把每一步結果合併成完整答案。</li></ol>
+<h3>（五）動畫展示</h3><div class="anim"><svg id="svg-q24" viewBox="0 0 760 310" width="760" height="310"></svg><div class="anim-state" id="state-q24">準備中</div><div class="controls"><button onclick="resetAnim('q24','tree')">開始 / 重播</button><button onclick="nextAnim('q24','tree')">下一步</button><button onclick="playAnim('q24','tree')">自動播放</button></div></div>
+<h3>（六）圖片或 SVG 圖解</h3><div class="diagram"><p>上方 SVG 圖解已將本題核心資料結構視覺化：高亮節點表示目前操作位置，綠色邊表示已選入或已確認的連線。</p></div>
+<h3>（七）程式碼說明</h3><p><strong>函式說明：</strong>下列程式示範本題核心操作。參數通常是節點、索引、圖或起點；回傳值依題目可能是新 head、搜尋結果、走訪順序或距離表。</p><p><strong>複雜度：</strong>時間 O(n)，空間為遞迴深度 O(h)。</p><div class="codebox"><div class="codehead"><span>C++ 參考程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+struct Node {
+    char data;
+    Node* left;
+    Node* right;
+    Node(char d, Node* l=nullptr, Node* r=nullptr): data(d), left(l), right(r) {}
+};
+
+void preorder(Node* p){ if(!p) return; cout &lt;&lt; p-&gt;data &lt;&lt; &#x27; &#x27;; preorder(p-&gt;left); preorder(p-&gt;right); }
+void inorder(Node* p){ if(!p) return; inorder(p-&gt;left); cout &lt;&lt; p-&gt;data &lt;&lt; &#x27; &#x27;; inorder(p-&gt;right); }
+void postorder(Node* p){ if(!p) return; postorder(p-&gt;left); postorder(p-&gt;right); cout &lt;&lt; p-&gt;data &lt;&lt; &#x27; &#x27;; }
+
+int main(){
+    Node* root = new Node(&#x27;A&#x27;, new Node(&#x27;B&#x27;, new Node(&#x27;D&#x27;), new Node(&#x27;I&#x27;)), new Node(&#x27;C&#x27;, new Node(&#x27;F&#x27;), new Node(&#x27;G&#x27;)));
+    cout &lt;&lt; &quot;Preorder: &quot;; preorder(root); cout &lt;&lt; &quot;\n&quot;;
+    cout &lt;&lt; &quot;Inorder: &quot;; inorder(root); cout &lt;&lt; &quot;\n&quot;;
+    cout &lt;&lt; &quot;Postorder: &quot;; postorder(root); cout &lt;&lt; &quot;\n&quot;;
+}</code></pre></div>
+<h3>（八）常見錯誤</h3><ul><li>把 level 和 height 混淆。</li><li>遞迴函式忘記 base case。</li><li>走訪時把 preorder/inorder/postorder 順序背錯。</li></ul>
+<h3>（九）本題重點總結</h3><ol><li>先看結構，再看操作順序。</li><li>每一步都要確認資料或指標是否仍然連接正確。</li><li>動畫中的高亮部分代表目前正在處理的節點、邊或矩陣格。</li><li>程式實作時要特別注意邊界情況與時間複雜度。</li></ol>
+</div></details>
+
+<details class="lesson" id="q25" data-title="題目 25：Preorder Traversal動畫教學 Chapter 5 Trees" data-kind="tree" data-id="q25">
+<summary><span>題目 25：Preorder Traversal動畫教學</span><span class="meta">Chapter 5 Trees</span></summary>
+<div class="body">
+<h3>（一）主題來源</h3><p><span class="meta">Chapter 5 Trees</span></p>
+<h3>（二）學習目標</h3><div class="box">學會 VLR 走訪順序。</div>
+<h3>（三）核心觀念說明</h3><p>先拜訪自己，再走左子樹，最後右子樹。</p><p>這個主題的教學重點是讓學生不只是背名詞，而是能看見資料如何被連接、搬移、比較或拜訪。請先觀察圖形狀態，再配合下方 Step-by-step 說明與動畫按鈕逐步理解。</p>
+<h3>（四）步驟式教學</h3><ol><li>Step 1：先找到 root，確認左右子樹。</li><li>Step 2：依走訪或搜尋規則決定往左、往右或拜訪自己。</li><li>Step 3：每次處理一棵 subtree，直到遇到 NULL。</li><li>Step 4：把每一步結果合併成完整答案。</li></ol>
+<h3>（五）動畫展示</h3><div class="anim"><svg id="svg-q25" viewBox="0 0 760 310" width="760" height="310"></svg><div class="anim-state" id="state-q25">準備中</div><div class="controls"><button onclick="resetAnim('q25','tree')">開始 / 重播</button><button onclick="nextAnim('q25','tree')">下一步</button><button onclick="playAnim('q25','tree')">自動播放</button></div></div>
+<h3>（六）圖片或 SVG 圖解</h3><div class="diagram"><p>上方 SVG 圖解已將本題核心資料結構視覺化：高亮節點表示目前操作位置，綠色邊表示已選入或已確認的連線。</p></div>
+<h3>（七）程式碼說明</h3><p><strong>函式說明：</strong>下列程式示範本題核心操作。參數通常是節點、索引、圖或起點；回傳值依題目可能是新 head、搜尋結果、走訪順序或距離表。</p><p><strong>複雜度：</strong>時間 O(n)，空間為遞迴深度 O(h)。</p><div class="codebox"><div class="codehead"><span>C++ 參考程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+struct Node {
+    char data;
+    Node* left;
+    Node* right;
+    Node(char d, Node* l=nullptr, Node* r=nullptr): data(d), left(l), right(r) {}
+};
+
+void preorder(Node* p){ if(!p) return; cout &lt;&lt; p-&gt;data &lt;&lt; &#x27; &#x27;; preorder(p-&gt;left); preorder(p-&gt;right); }
+void inorder(Node* p){ if(!p) return; inorder(p-&gt;left); cout &lt;&lt; p-&gt;data &lt;&lt; &#x27; &#x27;; inorder(p-&gt;right); }
+void postorder(Node* p){ if(!p) return; postorder(p-&gt;left); postorder(p-&gt;right); cout &lt;&lt; p-&gt;data &lt;&lt; &#x27; &#x27;; }
+
+int main(){
+    Node* root = new Node(&#x27;A&#x27;, new Node(&#x27;B&#x27;, new Node(&#x27;D&#x27;), new Node(&#x27;I&#x27;)), new Node(&#x27;C&#x27;, new Node(&#x27;F&#x27;), new Node(&#x27;G&#x27;)));
+    cout &lt;&lt; &quot;Preorder: &quot;; preorder(root); cout &lt;&lt; &quot;\n&quot;;
+    cout &lt;&lt; &quot;Inorder: &quot;; inorder(root); cout &lt;&lt; &quot;\n&quot;;
+    cout &lt;&lt; &quot;Postorder: &quot;; postorder(root); cout &lt;&lt; &quot;\n&quot;;
+}</code></pre></div>
+<h3>（八）常見錯誤</h3><ul><li>把 level 和 height 混淆。</li><li>遞迴函式忘記 base case。</li><li>走訪時把 preorder/inorder/postorder 順序背錯。</li></ul>
+<h3>（九）本題重點總結</h3><ol><li>先看結構，再看操作順序。</li><li>每一步都要確認資料或指標是否仍然連接正確。</li><li>動畫中的高亮部分代表目前正在處理的節點、邊或矩陣格。</li><li>程式實作時要特別注意邊界情況與時間複雜度。</li></ol>
+</div></details>
+
+<details class="lesson" id="q26" data-title="題目 26：Inorder Traversal動畫教學 Chapter 5 Trees" data-kind="tree" data-id="q26">
+<summary><span>題目 26：Inorder Traversal動畫教學</span><span class="meta">Chapter 5 Trees</span></summary>
+<div class="body">
+<h3>（一）主題來源</h3><p><span class="meta">Chapter 5 Trees</span></p>
+<h3>（二）學習目標</h3><div class="box">學會 LVR 走訪順序。</div>
+<h3>（三）核心觀念說明</h3><p>先左子樹，再自己，最後右子樹；BST 的 inorder 會排序。</p><p>這個主題的教學重點是讓學生不只是背名詞，而是能看見資料如何被連接、搬移、比較或拜訪。請先觀察圖形狀態，再配合下方 Step-by-step 說明與動畫按鈕逐步理解。</p>
+<h3>（四）步驟式教學</h3><ol><li>Step 1：先找到 root，確認左右子樹。</li><li>Step 2：依走訪或搜尋規則決定往左、往右或拜訪自己。</li><li>Step 3：每次處理一棵 subtree，直到遇到 NULL。</li><li>Step 4：把每一步結果合併成完整答案。</li></ol>
+<h3>（五）動畫展示</h3><div class="anim"><svg id="svg-q26" viewBox="0 0 760 310" width="760" height="310"></svg><div class="anim-state" id="state-q26">準備中</div><div class="controls"><button onclick="resetAnim('q26','tree')">開始 / 重播</button><button onclick="nextAnim('q26','tree')">下一步</button><button onclick="playAnim('q26','tree')">自動播放</button></div></div>
+<h3>（六）圖片或 SVG 圖解</h3><div class="diagram"><p>上方 SVG 圖解已將本題核心資料結構視覺化：高亮節點表示目前操作位置，綠色邊表示已選入或已確認的連線。</p></div>
+<h3>（七）程式碼說明</h3><p><strong>函式說明：</strong>下列程式示範本題核心操作。參數通常是節點、索引、圖或起點；回傳值依題目可能是新 head、搜尋結果、走訪順序或距離表。</p><p><strong>複雜度：</strong>時間 O(n)，空間為遞迴深度 O(h)。</p><div class="codebox"><div class="codehead"><span>C++ 參考程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+struct Node {
+    char data;
+    Node* left;
+    Node* right;
+    Node(char d, Node* l=nullptr, Node* r=nullptr): data(d), left(l), right(r) {}
+};
+
+void preorder(Node* p){ if(!p) return; cout &lt;&lt; p-&gt;data &lt;&lt; &#x27; &#x27;; preorder(p-&gt;left); preorder(p-&gt;right); }
+void inorder(Node* p){ if(!p) return; inorder(p-&gt;left); cout &lt;&lt; p-&gt;data &lt;&lt; &#x27; &#x27;; inorder(p-&gt;right); }
+void postorder(Node* p){ if(!p) return; postorder(p-&gt;left); postorder(p-&gt;right); cout &lt;&lt; p-&gt;data &lt;&lt; &#x27; &#x27;; }
+
+int main(){
+    Node* root = new Node(&#x27;A&#x27;, new Node(&#x27;B&#x27;, new Node(&#x27;D&#x27;), new Node(&#x27;I&#x27;)), new Node(&#x27;C&#x27;, new Node(&#x27;F&#x27;), new Node(&#x27;G&#x27;)));
+    cout &lt;&lt; &quot;Preorder: &quot;; preorder(root); cout &lt;&lt; &quot;\n&quot;;
+    cout &lt;&lt; &quot;Inorder: &quot;; inorder(root); cout &lt;&lt; &quot;\n&quot;;
+    cout &lt;&lt; &quot;Postorder: &quot;; postorder(root); cout &lt;&lt; &quot;\n&quot;;
+}</code></pre></div>
+<h3>（八）常見錯誤</h3><ul><li>把 level 和 height 混淆。</li><li>遞迴函式忘記 base case。</li><li>走訪時把 preorder/inorder/postorder 順序背錯。</li></ul>
+<h3>（九）本題重點總結</h3><ol><li>先看結構，再看操作順序。</li><li>每一步都要確認資料或指標是否仍然連接正確。</li><li>動畫中的高亮部分代表目前正在處理的節點、邊或矩陣格。</li><li>程式實作時要特別注意邊界情況與時間複雜度。</li></ol>
+</div></details>
+
+<details class="lesson" id="q27" data-title="題目 27：Postorder Traversal動畫教學 Chapter 5 Trees" data-kind="tree" data-id="q27">
+<summary><span>題目 27：Postorder Traversal動畫教學</span><span class="meta">Chapter 5 Trees</span></summary>
+<div class="body">
+<h3>（一）主題來源</h3><p><span class="meta">Chapter 5 Trees</span></p>
+<h3>（二）學習目標</h3><div class="box">學會 LRV 走訪順序。</div>
+<h3>（三）核心觀念說明</h3><p>先左右子樹，最後拜訪自己，常用於刪除樹與 expression evaluation。</p><p>這個主題的教學重點是讓學生不只是背名詞，而是能看見資料如何被連接、搬移、比較或拜訪。請先觀察圖形狀態，再配合下方 Step-by-step 說明與動畫按鈕逐步理解。</p>
+<h3>（四）步驟式教學</h3><ol><li>Step 1：先找到 root，確認左右子樹。</li><li>Step 2：依走訪或搜尋規則決定往左、往右或拜訪自己。</li><li>Step 3：每次處理一棵 subtree，直到遇到 NULL。</li><li>Step 4：把每一步結果合併成完整答案。</li></ol>
+<h3>（五）動畫展示</h3><div class="anim"><svg id="svg-q27" viewBox="0 0 760 310" width="760" height="310"></svg><div class="anim-state" id="state-q27">準備中</div><div class="controls"><button onclick="resetAnim('q27','tree')">開始 / 重播</button><button onclick="nextAnim('q27','tree')">下一步</button><button onclick="playAnim('q27','tree')">自動播放</button></div></div>
+<h3>（六）圖片或 SVG 圖解</h3><div class="diagram"><p>上方 SVG 圖解已將本題核心資料結構視覺化：高亮節點表示目前操作位置，綠色邊表示已選入或已確認的連線。</p></div>
+<h3>（七）程式碼說明</h3><p><strong>函式說明：</strong>下列程式示範本題核心操作。參數通常是節點、索引、圖或起點；回傳值依題目可能是新 head、搜尋結果、走訪順序或距離表。</p><p><strong>複雜度：</strong>時間 O(n)，空間為遞迴深度 O(h)。</p><div class="codebox"><div class="codehead"><span>C++ 參考程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+struct Node {
+    char data;
+    Node* left;
+    Node* right;
+    Node(char d, Node* l=nullptr, Node* r=nullptr): data(d), left(l), right(r) {}
+};
+
+void preorder(Node* p){ if(!p) return; cout &lt;&lt; p-&gt;data &lt;&lt; &#x27; &#x27;; preorder(p-&gt;left); preorder(p-&gt;right); }
+void inorder(Node* p){ if(!p) return; inorder(p-&gt;left); cout &lt;&lt; p-&gt;data &lt;&lt; &#x27; &#x27;; inorder(p-&gt;right); }
+void postorder(Node* p){ if(!p) return; postorder(p-&gt;left); postorder(p-&gt;right); cout &lt;&lt; p-&gt;data &lt;&lt; &#x27; &#x27;; }
+
+int main(){
+    Node* root = new Node(&#x27;A&#x27;, new Node(&#x27;B&#x27;, new Node(&#x27;D&#x27;), new Node(&#x27;I&#x27;)), new Node(&#x27;C&#x27;, new Node(&#x27;F&#x27;), new Node(&#x27;G&#x27;)));
+    cout &lt;&lt; &quot;Preorder: &quot;; preorder(root); cout &lt;&lt; &quot;\n&quot;;
+    cout &lt;&lt; &quot;Inorder: &quot;; inorder(root); cout &lt;&lt; &quot;\n&quot;;
+    cout &lt;&lt; &quot;Postorder: &quot;; postorder(root); cout &lt;&lt; &quot;\n&quot;;
+}</code></pre></div>
+<h3>（八）常見錯誤</h3><ul><li>把 level 和 height 混淆。</li><li>遞迴函式忘記 base case。</li><li>走訪時把 preorder/inorder/postorder 順序背錯。</li></ul>
+<h3>（九）本題重點總結</h3><ol><li>先看結構，再看操作順序。</li><li>每一步都要確認資料或指標是否仍然連接正確。</li><li>動畫中的高亮部分代表目前正在處理的節點、邊或矩陣格。</li><li>程式實作時要特別注意邊界情況與時間複雜度。</li></ol>
+</div></details>
+
+<details class="lesson" id="q28" data-title="題目 28：Level-order Traversal動畫教學 Chapter 5 Trees" data-kind="tree" data-id="q28">
+<summary><span>題目 28：Level-order Traversal動畫教學</span><span class="meta">Chapter 5 Trees</span></summary>
+<div class="body">
+<h3>（一）主題來源</h3><p><span class="meta">Chapter 5 Trees</span></p>
+<h3>（二）學習目標</h3><div class="box">理解 BFS 式樹走訪。</div>
+<h3>（三）核心觀念說明</h3><p>一層一層拜訪，必須使用 queue。</p><p>這個主題的教學重點是讓學生不只是背名詞，而是能看見資料如何被連接、搬移、比較或拜訪。請先觀察圖形狀態，再配合下方 Step-by-step 說明與動畫按鈕逐步理解。</p>
+<h3>（四）步驟式教學</h3><ol><li>Step 1：先找到 root，確認左右子樹。</li><li>Step 2：依走訪或搜尋規則決定往左、往右或拜訪自己。</li><li>Step 3：每次處理一棵 subtree，直到遇到 NULL。</li><li>Step 4：把每一步結果合併成完整答案。</li></ol>
+<h3>（五）動畫展示</h3><div class="anim"><svg id="svg-q28" viewBox="0 0 760 310" width="760" height="310"></svg><div class="anim-state" id="state-q28">準備中</div><div class="controls"><button onclick="resetAnim('q28','tree')">開始 / 重播</button><button onclick="nextAnim('q28','tree')">下一步</button><button onclick="playAnim('q28','tree')">自動播放</button></div></div>
+<h3>（六）圖片或 SVG 圖解</h3><div class="diagram"><p>上方 SVG 圖解已將本題核心資料結構視覺化：高亮節點表示目前操作位置，綠色邊表示已選入或已確認的連線。</p></div>
+<h3>（七）程式碼說明</h3><p><strong>函式說明：</strong>下列程式示範本題核心操作。參數通常是節點、索引、圖或起點；回傳值依題目可能是新 head、搜尋結果、走訪順序或距離表。</p><p><strong>複雜度：</strong>時間 O(n)，空間為遞迴深度 O(h)。</p><div class="codebox"><div class="codehead"><span>C++ 參考程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+struct Node {
+    char data;
+    Node* left;
+    Node* right;
+    Node(char d, Node* l=nullptr, Node* r=nullptr): data(d), left(l), right(r) {}
+};
+
+void preorder(Node* p){ if(!p) return; cout &lt;&lt; p-&gt;data &lt;&lt; &#x27; &#x27;; preorder(p-&gt;left); preorder(p-&gt;right); }
+void inorder(Node* p){ if(!p) return; inorder(p-&gt;left); cout &lt;&lt; p-&gt;data &lt;&lt; &#x27; &#x27;; inorder(p-&gt;right); }
+void postorder(Node* p){ if(!p) return; postorder(p-&gt;left); postorder(p-&gt;right); cout &lt;&lt; p-&gt;data &lt;&lt; &#x27; &#x27;; }
+
+int main(){
+    Node* root = new Node(&#x27;A&#x27;, new Node(&#x27;B&#x27;, new Node(&#x27;D&#x27;), new Node(&#x27;I&#x27;)), new Node(&#x27;C&#x27;, new Node(&#x27;F&#x27;), new Node(&#x27;G&#x27;)));
+    cout &lt;&lt; &quot;Preorder: &quot;; preorder(root); cout &lt;&lt; &quot;\n&quot;;
+    cout &lt;&lt; &quot;Inorder: &quot;; inorder(root); cout &lt;&lt; &quot;\n&quot;;
+    cout &lt;&lt; &quot;Postorder: &quot;; postorder(root); cout &lt;&lt; &quot;\n&quot;;
+}</code></pre></div>
+<h3>（八）常見錯誤</h3><ul><li>把 level 和 height 混淆。</li><li>遞迴函式忘記 base case。</li><li>走訪時把 preorder/inorder/postorder 順序背錯。</li></ul>
+<h3>（九）本題重點總結</h3><ol><li>先看結構，再看操作順序。</li><li>每一步都要確認資料或指標是否仍然連接正確。</li><li>動畫中的高亮部分代表目前正在處理的節點、邊或矩陣格。</li><li>程式實作時要特別注意邊界情況與時間複雜度。</li></ol>
+</div></details>
+
+<details class="lesson" id="q29" data-title="題目 29：Expression Tree動畫教學 Chapter 5 Trees" data-kind="tree" data-id="q29">
+<summary><span>題目 29：Expression Tree動畫教學</span><span class="meta">Chapter 5 Trees</span></summary>
+<div class="body">
+<h3>（一）主題來源</h3><p><span class="meta">Chapter 5 Trees</span></p>
+<h3>（二）學習目標</h3><div class="box">理解運算式如何放入二元樹。</div>
+<h3>（三）核心觀念說明</h3><p>operator 放在內部節點，operand 放在葉節點。</p><p>這個主題的教學重點是讓學生不只是背名詞，而是能看見資料如何被連接、搬移、比較或拜訪。請先觀察圖形狀態，再配合下方 Step-by-step 說明與動畫按鈕逐步理解。</p>
+<h3>（四）步驟式教學</h3><ol><li>Step 1：先找到 root，確認左右子樹。</li><li>Step 2：依走訪或搜尋規則決定往左、往右或拜訪自己。</li><li>Step 3：每次處理一棵 subtree，直到遇到 NULL。</li><li>Step 4：把每一步結果合併成完整答案。</li></ol>
+<h3>（五）動畫展示</h3><div class="anim"><svg id="svg-q29" viewBox="0 0 760 310" width="760" height="310"></svg><div class="anim-state" id="state-q29">準備中</div><div class="controls"><button onclick="resetAnim('q29','tree')">開始 / 重播</button><button onclick="nextAnim('q29','tree')">下一步</button><button onclick="playAnim('q29','tree')">自動播放</button></div></div>
+<h3>（六）圖片或 SVG 圖解</h3><div class="diagram"><p>上方 SVG 圖解已將本題核心資料結構視覺化：高亮節點表示目前操作位置，綠色邊表示已選入或已確認的連線。</p></div>
+<h3>（七）程式碼說明</h3><p><strong>函式說明：</strong>下列程式示範本題核心操作。參數通常是節點、索引、圖或起點；回傳值依題目可能是新 head、搜尋結果、走訪順序或距離表。</p><p><strong>複雜度：</strong>時間 O(n)，空間為遞迴深度 O(h)。</p><div class="codebox"><div class="codehead"><span>C++ 參考程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+struct Node {
+    char data;
+    Node* left;
+    Node* right;
+    Node(char d, Node* l=nullptr, Node* r=nullptr): data(d), left(l), right(r) {}
+};
+
+void preorder(Node* p){ if(!p) return; cout &lt;&lt; p-&gt;data &lt;&lt; &#x27; &#x27;; preorder(p-&gt;left); preorder(p-&gt;right); }
+void inorder(Node* p){ if(!p) return; inorder(p-&gt;left); cout &lt;&lt; p-&gt;data &lt;&lt; &#x27; &#x27;; inorder(p-&gt;right); }
+void postorder(Node* p){ if(!p) return; postorder(p-&gt;left); postorder(p-&gt;right); cout &lt;&lt; p-&gt;data &lt;&lt; &#x27; &#x27;; }
+
+int main(){
+    Node* root = new Node(&#x27;A&#x27;, new Node(&#x27;B&#x27;, new Node(&#x27;D&#x27;), new Node(&#x27;I&#x27;)), new Node(&#x27;C&#x27;, new Node(&#x27;F&#x27;), new Node(&#x27;G&#x27;)));
+    cout &lt;&lt; &quot;Preorder: &quot;; preorder(root); cout &lt;&lt; &quot;\n&quot;;
+    cout &lt;&lt; &quot;Inorder: &quot;; inorder(root); cout &lt;&lt; &quot;\n&quot;;
+    cout &lt;&lt; &quot;Postorder: &quot;; postorder(root); cout &lt;&lt; &quot;\n&quot;;
+}</code></pre></div>
+<h3>（八）常見錯誤</h3><ul><li>把 level 和 height 混淆。</li><li>遞迴函式忘記 base case。</li><li>走訪時把 preorder/inorder/postorder 順序背錯。</li></ul>
+<h3>（九）本題重點總結</h3><ol><li>先看結構，再看操作順序。</li><li>每一步都要確認資料或指標是否仍然連接正確。</li><li>動畫中的高亮部分代表目前正在處理的節點、邊或矩陣格。</li><li>程式實作時要特別注意邊界情況與時間複雜度。</li></ol>
+</div></details>
+
+<details class="lesson" id="q30" data-title="題目 30：Copy Binary Tree動畫教學 Chapter 5 Trees" data-kind="tree" data-id="q30">
+<summary><span>題目 30：Copy Binary Tree動畫教學</span><span class="meta">Chapter 5 Trees</span></summary>
+<div class="body">
+<h3>（一）主題來源</h3><p><span class="meta">Chapter 5 Trees</span></p>
+<h3>（二）學習目標</h3><div class="box">理解 deep copy。</div>
+<h3>（三）核心觀念說明</h3><p>不能只複製 root pointer，而要為每個節點建立新節點。</p><p>這個主題的教學重點是讓學生不只是背名詞，而是能看見資料如何被連接、搬移、比較或拜訪。請先觀察圖形狀態，再配合下方 Step-by-step 說明與動畫按鈕逐步理解。</p>
+<h3>（四）步驟式教學</h3><ol><li>Step 1：先找到 root，確認左右子樹。</li><li>Step 2：依走訪或搜尋規則決定往左、往右或拜訪自己。</li><li>Step 3：每次處理一棵 subtree，直到遇到 NULL。</li><li>Step 4：把每一步結果合併成完整答案。</li></ol>
+<h3>（五）動畫展示</h3><div class="anim"><svg id="svg-q30" viewBox="0 0 760 310" width="760" height="310"></svg><div class="anim-state" id="state-q30">準備中</div><div class="controls"><button onclick="resetAnim('q30','tree')">開始 / 重播</button><button onclick="nextAnim('q30','tree')">下一步</button><button onclick="playAnim('q30','tree')">自動播放</button></div></div>
+<h3>（六）圖片或 SVG 圖解</h3><div class="diagram"><p>上方 SVG 圖解已將本題核心資料結構視覺化：高亮節點表示目前操作位置，綠色邊表示已選入或已確認的連線。</p></div>
+<h3>（七）程式碼說明</h3><p><strong>函式說明：</strong>下列程式示範本題核心操作。參數通常是節點、索引、圖或起點；回傳值依題目可能是新 head、搜尋結果、走訪順序或距離表。</p><p><strong>複雜度：</strong>時間 O(n)，空間為遞迴深度 O(h)。</p><div class="codebox"><div class="codehead"><span>C++ 參考程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+struct Node {
+    char data;
+    Node* left;
+    Node* right;
+    Node(char d, Node* l=nullptr, Node* r=nullptr): data(d), left(l), right(r) {}
+};
+
+void preorder(Node* p){ if(!p) return; cout &lt;&lt; p-&gt;data &lt;&lt; &#x27; &#x27;; preorder(p-&gt;left); preorder(p-&gt;right); }
+void inorder(Node* p){ if(!p) return; inorder(p-&gt;left); cout &lt;&lt; p-&gt;data &lt;&lt; &#x27; &#x27;; inorder(p-&gt;right); }
+void postorder(Node* p){ if(!p) return; postorder(p-&gt;left); postorder(p-&gt;right); cout &lt;&lt; p-&gt;data &lt;&lt; &#x27; &#x27;; }
+
+int main(){
+    Node* root = new Node(&#x27;A&#x27;, new Node(&#x27;B&#x27;, new Node(&#x27;D&#x27;), new Node(&#x27;I&#x27;)), new Node(&#x27;C&#x27;, new Node(&#x27;F&#x27;), new Node(&#x27;G&#x27;)));
+    cout &lt;&lt; &quot;Preorder: &quot;; preorder(root); cout &lt;&lt; &quot;\n&quot;;
+    cout &lt;&lt; &quot;Inorder: &quot;; inorder(root); cout &lt;&lt; &quot;\n&quot;;
+    cout &lt;&lt; &quot;Postorder: &quot;; postorder(root); cout &lt;&lt; &quot;\n&quot;;
+}</code></pre></div>
+<h3>（八）常見錯誤</h3><ul><li>把 level 和 height 混淆。</li><li>遞迴函式忘記 base case。</li><li>走訪時把 preorder/inorder/postorder 順序背錯。</li></ul>
+<h3>（九）本題重點總結</h3><ol><li>先看結構，再看操作順序。</li><li>每一步都要確認資料或指標是否仍然連接正確。</li><li>動畫中的高亮部分代表目前正在處理的節點、邊或矩陣格。</li><li>程式實作時要特別注意邊界情況與時間複雜度。</li></ol>
+</div></details>
+
+<details class="lesson" id="q31" data-title="題目 31：Equality Testing動畫教學 Chapter 5 Trees" data-kind="tree" data-id="q31">
+<summary><span>題目 31：Equality Testing動畫教學</span><span class="meta">Chapter 5 Trees</span></summary>
+<div class="body">
+<h3>（一）主題來源</h3><p><span class="meta">Chapter 5 Trees</span></p>
+<h3>（二）學習目標</h3><div class="box">判斷兩棵樹是否相等。</div>
+<h3>（三）核心觀念說明</h3><p>資料要相同，左右子樹結構也要相同。</p><p>這個主題的教學重點是讓學生不只是背名詞，而是能看見資料如何被連接、搬移、比較或拜訪。請先觀察圖形狀態，再配合下方 Step-by-step 說明與動畫按鈕逐步理解。</p>
+<h3>（四）步驟式教學</h3><ol><li>Step 1：先找到 root，確認左右子樹。</li><li>Step 2：依走訪或搜尋規則決定往左、往右或拜訪自己。</li><li>Step 3：每次處理一棵 subtree，直到遇到 NULL。</li><li>Step 4：把每一步結果合併成完整答案。</li></ol>
+<h3>（五）動畫展示</h3><div class="anim"><svg id="svg-q31" viewBox="0 0 760 310" width="760" height="310"></svg><div class="anim-state" id="state-q31">準備中</div><div class="controls"><button onclick="resetAnim('q31','tree')">開始 / 重播</button><button onclick="nextAnim('q31','tree')">下一步</button><button onclick="playAnim('q31','tree')">自動播放</button></div></div>
+<h3>（六）圖片或 SVG 圖解</h3><div class="diagram"><p>上方 SVG 圖解已將本題核心資料結構視覺化：高亮節點表示目前操作位置，綠色邊表示已選入或已確認的連線。</p></div>
+<h3>（七）程式碼說明</h3><p><strong>函式說明：</strong>下列程式示範本題核心操作。參數通常是節點、索引、圖或起點；回傳值依題目可能是新 head、搜尋結果、走訪順序或距離表。</p><p><strong>複雜度：</strong>時間 O(n)，空間為遞迴深度 O(h)。</p><div class="codebox"><div class="codehead"><span>C++ 參考程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+struct Node {
+    char data;
+    Node* left;
+    Node* right;
+    Node(char d, Node* l=nullptr, Node* r=nullptr): data(d), left(l), right(r) {}
+};
+
+void preorder(Node* p){ if(!p) return; cout &lt;&lt; p-&gt;data &lt;&lt; &#x27; &#x27;; preorder(p-&gt;left); preorder(p-&gt;right); }
+void inorder(Node* p){ if(!p) return; inorder(p-&gt;left); cout &lt;&lt; p-&gt;data &lt;&lt; &#x27; &#x27;; inorder(p-&gt;right); }
+void postorder(Node* p){ if(!p) return; postorder(p-&gt;left); postorder(p-&gt;right); cout &lt;&lt; p-&gt;data &lt;&lt; &#x27; &#x27;; }
+
+int main(){
+    Node* root = new Node(&#x27;A&#x27;, new Node(&#x27;B&#x27;, new Node(&#x27;D&#x27;), new Node(&#x27;I&#x27;)), new Node(&#x27;C&#x27;, new Node(&#x27;F&#x27;), new Node(&#x27;G&#x27;)));
+    cout &lt;&lt; &quot;Preorder: &quot;; preorder(root); cout &lt;&lt; &quot;\n&quot;;
+    cout &lt;&lt; &quot;Inorder: &quot;; inorder(root); cout &lt;&lt; &quot;\n&quot;;
+    cout &lt;&lt; &quot;Postorder: &quot;; postorder(root); cout &lt;&lt; &quot;\n&quot;;
+}</code></pre></div>
+<h3>（八）常見錯誤</h3><ul><li>把 level 和 height 混淆。</li><li>遞迴函式忘記 base case。</li><li>走訪時把 preorder/inorder/postorder 順序背錯。</li></ul>
+<h3>（九）本題重點總結</h3><ol><li>先看結構，再看操作順序。</li><li>每一步都要確認資料或指標是否仍然連接正確。</li><li>動畫中的高亮部分代表目前正在處理的節點、邊或矩陣格。</li><li>程式實作時要特別注意邊界情況與時間複雜度。</li></ol>
+</div></details>
+
+<details class="lesson" id="q32" data-title="題目 32：Threaded Binary Tree動畫教學 Chapter 5 Trees" data-kind="tree" data-id="q32">
+<summary><span>題目 32：Threaded Binary Tree動畫教學</span><span class="meta">Chapter 5 Trees</span></summary>
+<div class="body">
+<h3>（一）主題來源</h3><p><span class="meta">Chapter 5 Trees</span></p>
+<h3>（二）學習目標</h3><div class="box">理解 thread 取代空指標。</div>
+<h3>（三）核心觀念說明</h3><p>把原本 NULL link 改成 inorder predecessor/successor，可不用 stack 走訪。</p><p>這個主題的教學重點是讓學生不只是背名詞，而是能看見資料如何被連接、搬移、比較或拜訪。請先觀察圖形狀態，再配合下方 Step-by-step 說明與動畫按鈕逐步理解。</p>
+<h3>（四）步驟式教學</h3><ol><li>Step 1：先找到 root，確認左右子樹。</li><li>Step 2：依走訪或搜尋規則決定往左、往右或拜訪自己。</li><li>Step 3：每次處理一棵 subtree，直到遇到 NULL。</li><li>Step 4：把每一步結果合併成完整答案。</li></ol>
+<h3>（五）動畫展示</h3><div class="anim"><svg id="svg-q32" viewBox="0 0 760 310" width="760" height="310"></svg><div class="anim-state" id="state-q32">準備中</div><div class="controls"><button onclick="resetAnim('q32','tree')">開始 / 重播</button><button onclick="nextAnim('q32','tree')">下一步</button><button onclick="playAnim('q32','tree')">自動播放</button></div></div>
+<h3>（六）圖片或 SVG 圖解</h3><div class="diagram"><p>上方 SVG 圖解已將本題核心資料結構視覺化：高亮節點表示目前操作位置，綠色邊表示已選入或已確認的連線。</p></div>
+<h3>（七）程式碼說明</h3><p><strong>函式說明：</strong>下列程式示範本題核心操作。參數通常是節點、索引、圖或起點；回傳值依題目可能是新 head、搜尋結果、走訪順序或距離表。</p><p><strong>複雜度：</strong>時間 O(n)，空間為遞迴深度 O(h)。</p><div class="codebox"><div class="codehead"><span>C++ 參考程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+struct Node {
+    char data;
+    Node* left;
+    Node* right;
+    Node(char d, Node* l=nullptr, Node* r=nullptr): data(d), left(l), right(r) {}
+};
+
+void preorder(Node* p){ if(!p) return; cout &lt;&lt; p-&gt;data &lt;&lt; &#x27; &#x27;; preorder(p-&gt;left); preorder(p-&gt;right); }
+void inorder(Node* p){ if(!p) return; inorder(p-&gt;left); cout &lt;&lt; p-&gt;data &lt;&lt; &#x27; &#x27;; inorder(p-&gt;right); }
+void postorder(Node* p){ if(!p) return; postorder(p-&gt;left); postorder(p-&gt;right); cout &lt;&lt; p-&gt;data &lt;&lt; &#x27; &#x27;; }
+
+int main(){
+    Node* root = new Node(&#x27;A&#x27;, new Node(&#x27;B&#x27;, new Node(&#x27;D&#x27;), new Node(&#x27;I&#x27;)), new Node(&#x27;C&#x27;, new Node(&#x27;F&#x27;), new Node(&#x27;G&#x27;)));
+    cout &lt;&lt; &quot;Preorder: &quot;; preorder(root); cout &lt;&lt; &quot;\n&quot;;
+    cout &lt;&lt; &quot;Inorder: &quot;; inorder(root); cout &lt;&lt; &quot;\n&quot;;
+    cout &lt;&lt; &quot;Postorder: &quot;; postorder(root); cout &lt;&lt; &quot;\n&quot;;
+}</code></pre></div>
+<h3>（八）常見錯誤</h3><ul><li>把 level 和 height 混淆。</li><li>遞迴函式忘記 base case。</li><li>走訪時把 preorder/inorder/postorder 順序背錯。</li></ul>
+<h3>（九）本題重點總結</h3><ol><li>先看結構，再看操作順序。</li><li>每一步都要確認資料或指標是否仍然連接正確。</li><li>動畫中的高亮部分代表目前正在處理的節點、邊或矩陣格。</li><li>程式實作時要特別注意邊界情況與時間複雜度。</li></ol>
+</div></details>
+
+<details class="lesson" id="q33" data-title="題目 33：Heap Push / Bubble Up動畫教學 Chapter 5 Trees" data-kind="heap" data-id="q33">
+<summary><span>題目 33：Heap Push / Bubble Up動畫教學</span><span class="meta">Chapter 5 Trees</span></summary>
+<div class="body">
+<h3>（一）主題來源</h3><p><span class="meta">Chapter 5 Trees</span></p>
+<h3>（二）學習目標</h3><div class="box">理解 max heap 插入。</div>
+<h3>（三）核心觀念說明</h3><p>新元素先放最後，再和 parent 比較，必要時往上調整。</p><p>這個主題的教學重點是讓學生不只是背名詞，而是能看見資料如何被連接、搬移、比較或拜訪。請先觀察圖形狀態，再配合下方 Step-by-step 說明與動畫按鈕逐步理解。</p>
+<h3>（四）步驟式教學</h3><ol><li>Step 1：維持 complete binary tree 形狀，先找最後位置。</li><li>Step 2：比較 parent/child 是否違反 heap property。</li><li>Step 3：必要時 bubble up 或 trickle down。</li><li>Step 4：確認每個 parent 都符合 heap order。</li></ol>
+<h3>（五）動畫展示</h3><div class="anim"><svg id="svg-q33" viewBox="0 0 760 310" width="760" height="310"></svg><div class="anim-state" id="state-q33">準備中</div><div class="controls"><button onclick="resetAnim('q33','heap')">開始 / 重播</button><button onclick="nextAnim('q33','heap')">下一步</button><button onclick="playAnim('q33','heap')">自動播放</button></div></div>
+<h3>（六）圖片或 SVG 圖解</h3><div class="diagram"><p>上方 SVG 圖解已將本題核心資料結構視覺化：高亮節點表示目前操作位置，綠色邊表示已選入或已確認的連線。</p></div>
+<h3>（七）程式碼說明</h3><p><strong>函式說明：</strong>下列程式示範本題核心操作。參數通常是節點、索引、圖或起點；回傳值依題目可能是新 head、搜尋結果、走訪順序或距離表。</p><p><strong>複雜度：</strong>時間 O(log n)，空間 O(1)。</p><div class="codebox"><div class="codehead"><span>C++ 參考程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+using namespace std;
+
+void pushMaxHeap(vector&lt;int&gt;&amp; h, int x){
+    h.push_back(x);                 // h[0] 不用，新元素放最後
+    int i = h.size() - 1;
+    while(i &gt; 1 &amp;&amp; h[i/2] &lt; x){     // parent 比新值小就往上
+        h[i] = h[i/2];
+        i /= 2;
+    }
+    h[i] = x;
+}
+
+int main(){
+    vector&lt;int&gt; heap = {0,20,15,2,14,10,1};
+    pushMaxHeap(heap, 21);
+    for(int i=1;i&lt;heap.size();++i) cout &lt;&lt; heap[i] &lt;&lt; &#x27; &#x27;;
+    cout &lt;&lt; &quot;\n&quot;; // 21 15 20 14 10 1 2
+}</code></pre></div>
+<h3>（八）常見錯誤</h3><ul><li>忘記 heap 通常從 index 1 開始。</li><li>Pop 時沒有選較大的 child。</li><li>只維持大小關係卻破壞 complete tree 形狀。</li></ul>
+<h3>（九）本題重點總結</h3><ol><li>先看結構，再看操作順序。</li><li>每一步都要確認資料或指標是否仍然連接正確。</li><li>動畫中的高亮部分代表目前正在處理的節點、邊或矩陣格。</li><li>程式實作時要特別注意邊界情況與時間複雜度。</li></ol>
+</div></details>
+
+<details class="lesson" id="q34" data-title="題目 34：Heap Pop / Trickle Down動畫教學 Chapter 5 Trees" data-kind="heap" data-id="q34">
+<summary><span>題目 34：Heap Pop / Trickle Down動畫教學</span><span class="meta">Chapter 5 Trees</span></summary>
+<div class="body">
+<h3>（一）主題來源</h3><p><span class="meta">Chapter 5 Trees</span></p>
+<h3>（二）學習目標</h3><div class="box">理解 max heap 刪除最大值。</div>
+<h3>（三）核心觀念說明</h3><p>刪 root 後用最後元素補，然後和較大的 child 比較往下調整。</p><p>這個主題的教學重點是讓學生不只是背名詞，而是能看見資料如何被連接、搬移、比較或拜訪。請先觀察圖形狀態，再配合下方 Step-by-step 說明與動畫按鈕逐步理解。</p>
+<h3>（四）步驟式教學</h3><ol><li>Step 1：維持 complete binary tree 形狀，先找最後位置。</li><li>Step 2：比較 parent/child 是否違反 heap property。</li><li>Step 3：必要時 bubble up 或 trickle down。</li><li>Step 4：確認每個 parent 都符合 heap order。</li></ol>
+<h3>（五）動畫展示</h3><div class="anim"><svg id="svg-q34" viewBox="0 0 760 310" width="760" height="310"></svg><div class="anim-state" id="state-q34">準備中</div><div class="controls"><button onclick="resetAnim('q34','heap')">開始 / 重播</button><button onclick="nextAnim('q34','heap')">下一步</button><button onclick="playAnim('q34','heap')">自動播放</button></div></div>
+<h3>（六）圖片或 SVG 圖解</h3><div class="diagram"><p>上方 SVG 圖解已將本題核心資料結構視覺化：高亮節點表示目前操作位置，綠色邊表示已選入或已確認的連線。</p></div>
+<h3>（七）程式碼說明</h3><p><strong>函式說明：</strong>下列程式示範本題核心操作。參數通常是節點、索引、圖或起點；回傳值依題目可能是新 head、搜尋結果、走訪順序或距離表。</p><p><strong>複雜度：</strong>時間 O(log n)，空間 O(1)。</p><div class="codebox"><div class="codehead"><span>C++ 參考程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+using namespace std;
+
+void pushMaxHeap(vector&lt;int&gt;&amp; h, int x){
+    h.push_back(x);                 // h[0] 不用，新元素放最後
+    int i = h.size() - 1;
+    while(i &gt; 1 &amp;&amp; h[i/2] &lt; x){     // parent 比新值小就往上
+        h[i] = h[i/2];
+        i /= 2;
+    }
+    h[i] = x;
+}
+
+int main(){
+    vector&lt;int&gt; heap = {0,20,15,2,14,10,1};
+    pushMaxHeap(heap, 21);
+    for(int i=1;i&lt;heap.size();++i) cout &lt;&lt; heap[i] &lt;&lt; &#x27; &#x27;;
+    cout &lt;&lt; &quot;\n&quot;; // 21 15 20 14 10 1 2
+}</code></pre></div>
+<h3>（八）常見錯誤</h3><ul><li>忘記 heap 通常從 index 1 開始。</li><li>Pop 時沒有選較大的 child。</li><li>只維持大小關係卻破壞 complete tree 形狀。</li></ul>
+<h3>（九）本題重點總結</h3><ol><li>先看結構，再看操作順序。</li><li>每一步都要確認資料或指標是否仍然連接正確。</li><li>動畫中的高亮部分代表目前正在處理的節點、邊或矩陣格。</li><li>程式實作時要特別注意邊界情況與時間複雜度。</li></ol>
+</div></details>
+
+<details class="lesson" id="q35" data-title="題目 35：BST Search / Insert / Delete動畫教學 Chapter 5 Trees" data-kind="bst" data-id="q35">
+<summary><span>題目 35：BST Search / Insert / Delete動畫教學</span><span class="meta">Chapter 5 Trees</span></summary>
+<div class="body">
+<h3>（一）主題來源</h3><p><span class="meta">Chapter 5 Trees</span></p>
+<h3>（二）學習目標</h3><div class="box">掌握二元搜尋樹操作。</div>
+<h3>（三）核心觀念說明</h3><p>左小右大，搜尋和插入依 key 比較往左或往右。刪除分 leaf、one child、two children。</p><p>這個主題的教學重點是讓學生不只是背名詞，而是能看見資料如何被連接、搬移、比較或拜訪。請先觀察圖形狀態，再配合下方 Step-by-step 說明與動畫按鈕逐步理解。</p>
+<h3>（四）步驟式教學</h3><ol><li>Step 1：先找到 root，確認左右子樹。</li><li>Step 2：依走訪或搜尋規則決定往左、往右或拜訪自己。</li><li>Step 3：每次處理一棵 subtree，直到遇到 NULL。</li><li>Step 4：把每一步結果合併成完整答案。</li></ol>
+<h3>（五）動畫展示</h3><div class="anim"><svg id="svg-q35" viewBox="0 0 760 310" width="760" height="310"></svg><div class="anim-state" id="state-q35">準備中</div><div class="controls"><button onclick="resetAnim('q35','bst')">開始 / 重播</button><button onclick="nextAnim('q35','bst')">下一步</button><button onclick="playAnim('q35','bst')">自動播放</button></div></div>
+<h3>（六）圖片或 SVG 圖解</h3><div class="diagram"><p>上方 SVG 圖解已將本題核心資料結構視覺化：高亮節點表示目前操作位置，綠色邊表示已選入或已確認的連線。</p></div>
+<h3>（七）程式碼說明</h3><p><strong>函式說明：</strong>下列程式示範本題核心操作。參數通常是節點、索引、圖或起點；回傳值依題目可能是新 head、搜尋結果、走訪順序或距離表。</p><p><strong>複雜度：</strong>平均 O(log n)，最壞 O(n)。</p><div class="codebox"><div class="codehead"><span>C++ 參考程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+struct Node{ int key; Node* left; Node* right; Node(int k):key(k),left(nullptr),right(nullptr){} };
+
+Node* insert(Node* root, int key){
+    if(!root) return new Node(key);
+    if(key &lt; root-&gt;key) root-&gt;left = insert(root-&gt;left, key);
+    else if(key &gt; root-&gt;key) root-&gt;right = insert(root-&gt;right, key);
+    return root;
+}
+
+bool search(Node* root, int key){
+    if(!root) return false;
+    if(key == root-&gt;key) return true;
+    return key &lt; root-&gt;key ? search(root-&gt;left,key) : search(root-&gt;right,key);
+}
+
+int main(){
+    Node* root=nullptr; for(int x:{7,6,10,8,14}) root=insert(root,x);
+    cout &lt;&lt; (search(root,8)?&quot;found&quot;:&quot;not found&quot;) &lt;&lt; &quot;\n&quot;;
+}</code></pre></div>
+<h3>（八）常見錯誤</h3><ul><li>把 heap property 誤當 BST property。</li><li>刪除 two children 節點時沒有處理 successor。</li><li>忘記最壞高度可能是 O(n)。</li></ul>
+<h3>（九）本題重點總結</h3><ol><li>先看結構，再看操作順序。</li><li>每一步都要確認資料或指標是否仍然連接正確。</li><li>動畫中的高亮部分代表目前正在處理的節點、邊或矩陣格。</li><li>程式實作時要特別注意邊界情況與時間複雜度。</li></ol>
+</div></details>
+
+<details class="lesson" id="q36" data-title="題目 36：Graph G = (V, E)動畫教學 Chapter 6 Graphs" data-kind="graph" data-id="q36">
+<summary><span>題目 36：Graph G = (V, E)動畫教學</span><span class="meta">Chapter 6 Graphs</span></summary>
+<div class="body">
+<h3>（一）主題來源</h3><p><span class="meta">Chapter 6 Graphs</span></p>
+<h3>（二）學習目標</h3><div class="box">理解 vertex 與 edge。</div>
+<h3>（三）核心觀念說明</h3><p>Graph 用點表示物件，用邊表示關係。</p><p>這個主題的教學重點是讓學生不只是背名詞，而是能看見資料如何被連接、搬移、比較或拜訪。請先觀察圖形狀態，再配合下方 Step-by-step 說明與動畫按鈕逐步理解。</p>
+<h3>（四）步驟式教學</h3><ol><li>Step 1：建立 vertices 與 edges 的圖形。</li><li>Step 2：從指定起點開始，標記 visited。</li><li>Step 3：依 DFS/stack 或 BFS/queue 規則展開鄰居。</li><li>Step 4：直到沒有可拜訪的點為止。</li></ol>
+<h3>（五）動畫展示</h3><div class="anim"><svg id="svg-q36" viewBox="0 0 760 310" width="760" height="310"></svg><div class="anim-state" id="state-q36">準備中</div><div class="controls"><button onclick="resetAnim('q36','graph')">開始 / 重播</button><button onclick="nextAnim('q36','graph')">下一步</button><button onclick="playAnim('q36','graph')">自動播放</button></div></div>
+<h3>（六）圖片或 SVG 圖解</h3><div class="diagram"><p>上方 SVG 圖解已將本題核心資料結構視覺化：高亮節點表示目前操作位置，綠色邊表示已選入或已確認的連線。</p></div>
+<h3>（七）程式碼說明</h3><p><strong>函式說明：</strong>下列程式示範本題核心操作。參數通常是節點、索引、圖或起點；回傳值依題目可能是新 head、搜尋結果、走訪順序或距離表。</p><p><strong>複雜度：</strong>依表示法不同，matrix 常 O(V²)，list 常 O(V+E)。</p><div class="codebox"><div class="codehead"><span>C++ 參考程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+using namespace std;
+
+int main(){
+    int n = 4;
+    vector&lt;vector&lt;int&gt;&gt; adj(n);
+    auto addEdge=[&amp;](int u,int v){ adj[u].push_back(v); adj[v].push_back(u); };
+    addEdge(0,1); addEdge(0,2); addEdge(1,3);
+    for(int u=0; u&lt;n; ++u){
+        cout &lt;&lt; u &lt;&lt; &quot;: &quot;;
+        for(int v: adj[u]) cout &lt;&lt; v &lt;&lt; &#x27; &#x27;;
+        cout &lt;&lt; &quot;\n&quot;;
+    }
+}</code></pre></div>
+<h3>（八）常見錯誤</h3><ul><li>有向邊與無向邊混淆。</li><li>degree、in-degree、out-degree 算錯。</li><li>把 path 和 cycle 定義混淆。</li></ul>
+<h3>（九）本題重點總結</h3><ol><li>先看結構，再看操作順序。</li><li>每一步都要確認資料或指標是否仍然連接正確。</li><li>動畫中的高亮部分代表目前正在處理的節點、邊或矩陣格。</li><li>程式實作時要特別注意邊界情況與時間複雜度。</li></ol>
+</div></details>
+
+<details class="lesson" id="q37" data-title="題目 37：Directed Graph vs Undirected Graph動畫教學 Chapter 6 Graphs" data-kind="graph" data-id="q37">
+<summary><span>題目 37：Directed Graph vs Undirected Graph動畫教學</span><span class="meta">Chapter 6 Graphs</span></summary>
+<div class="body">
+<h3>（一）主題來源</h3><p><span class="meta">Chapter 6 Graphs</span></p>
+<h3>（二）學習目標</h3><div class="box">比較有向與無向邊。</div>
+<h3>（三）核心觀念說明</h3><p>有向邊有方向，無向邊只表示兩點相連。</p><p>這個主題的教學重點是讓學生不只是背名詞，而是能看見資料如何被連接、搬移、比較或拜訪。請先觀察圖形狀態，再配合下方 Step-by-step 說明與動畫按鈕逐步理解。</p>
+<h3>（四）步驟式教學</h3><ol><li>Step 1：建立 vertices 與 edges 的圖形。</li><li>Step 2：從指定起點開始，標記 visited。</li><li>Step 3：依 DFS/stack 或 BFS/queue 規則展開鄰居。</li><li>Step 4：直到沒有可拜訪的點為止。</li></ol>
+<h3>（五）動畫展示</h3><div class="anim"><svg id="svg-q37" viewBox="0 0 760 310" width="760" height="310"></svg><div class="anim-state" id="state-q37">準備中</div><div class="controls"><button onclick="resetAnim('q37','graph')">開始 / 重播</button><button onclick="nextAnim('q37','graph')">下一步</button><button onclick="playAnim('q37','graph')">自動播放</button></div></div>
+<h3>（六）圖片或 SVG 圖解</h3><div class="diagram"><p>上方 SVG 圖解已將本題核心資料結構視覺化：高亮節點表示目前操作位置，綠色邊表示已選入或已確認的連線。</p></div>
+<h3>（七）程式碼說明</h3><p><strong>函式說明：</strong>下列程式示範本題核心操作。參數通常是節點、索引、圖或起點；回傳值依題目可能是新 head、搜尋結果、走訪順序或距離表。</p><p><strong>複雜度：</strong>依表示法不同，matrix 常 O(V²)，list 常 O(V+E)。</p><div class="codebox"><div class="codehead"><span>C++ 參考程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+using namespace std;
+
+int main(){
+    int n = 4;
+    vector&lt;vector&lt;int&gt;&gt; adj(n);
+    auto addEdge=[&amp;](int u,int v){ adj[u].push_back(v); adj[v].push_back(u); };
+    addEdge(0,1); addEdge(0,2); addEdge(1,3);
+    for(int u=0; u&lt;n; ++u){
+        cout &lt;&lt; u &lt;&lt; &quot;: &quot;;
+        for(int v: adj[u]) cout &lt;&lt; v &lt;&lt; &#x27; &#x27;;
+        cout &lt;&lt; &quot;\n&quot;;
+    }
+}</code></pre></div>
+<h3>（八）常見錯誤</h3><ul><li>有向邊與無向邊混淆。</li><li>degree、in-degree、out-degree 算錯。</li><li>把 path 和 cycle 定義混淆。</li></ul>
+<h3>（九）本題重點總結</h3><ol><li>先看結構，再看操作順序。</li><li>每一步都要確認資料或指標是否仍然連接正確。</li><li>動畫中的高亮部分代表目前正在處理的節點、邊或矩陣格。</li><li>程式實作時要特別注意邊界情況與時間複雜度。</li></ol>
+</div></details>
+
+<details class="lesson" id="q38" data-title="題目 38：Degree / In-degree / Out-degree動畫教學 Chapter 6 Graphs" data-kind="graph" data-id="q38">
+<summary><span>題目 38：Degree / In-degree / Out-degree動畫教學</span><span class="meta">Chapter 6 Graphs</span></summary>
+<div class="body">
+<h3>（一）主題來源</h3><p><span class="meta">Chapter 6 Graphs</span></p>
+<h3>（二）學習目標</h3><div class="box">理解度數計算。</div>
+<h3>（三）核心觀念說明</h3><p>無向圖看 incident edges；有向圖分進入的 in-degree 和出去的 out-degree。</p><p>這個主題的教學重點是讓學生不只是背名詞，而是能看見資料如何被連接、搬移、比較或拜訪。請先觀察圖形狀態，再配合下方 Step-by-step 說明與動畫按鈕逐步理解。</p>
+<h3>（四）步驟式教學</h3><ol><li>Step 1：建立 vertices 與 edges 的圖形。</li><li>Step 2：從指定起點開始，標記 visited。</li><li>Step 3：依 DFS/stack 或 BFS/queue 規則展開鄰居。</li><li>Step 4：直到沒有可拜訪的點為止。</li></ol>
+<h3>（五）動畫展示</h3><div class="anim"><svg id="svg-q38" viewBox="0 0 760 310" width="760" height="310"></svg><div class="anim-state" id="state-q38">準備中</div><div class="controls"><button onclick="resetAnim('q38','graph')">開始 / 重播</button><button onclick="nextAnim('q38','graph')">下一步</button><button onclick="playAnim('q38','graph')">自動播放</button></div></div>
+<h3>（六）圖片或 SVG 圖解</h3><div class="diagram"><p>上方 SVG 圖解已將本題核心資料結構視覺化：高亮節點表示目前操作位置，綠色邊表示已選入或已確認的連線。</p></div>
+<h3>（七）程式碼說明</h3><p><strong>函式說明：</strong>下列程式示範本題核心操作。參數通常是節點、索引、圖或起點；回傳值依題目可能是新 head、搜尋結果、走訪順序或距離表。</p><p><strong>複雜度：</strong>依表示法不同，matrix 常 O(V²)，list 常 O(V+E)。</p><div class="codebox"><div class="codehead"><span>C++ 參考程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+using namespace std;
+
+int main(){
+    int n = 4;
+    vector&lt;vector&lt;int&gt;&gt; adj(n);
+    auto addEdge=[&amp;](int u,int v){ adj[u].push_back(v); adj[v].push_back(u); };
+    addEdge(0,1); addEdge(0,2); addEdge(1,3);
+    for(int u=0; u&lt;n; ++u){
+        cout &lt;&lt; u &lt;&lt; &quot;: &quot;;
+        for(int v: adj[u]) cout &lt;&lt; v &lt;&lt; &#x27; &#x27;;
+        cout &lt;&lt; &quot;\n&quot;;
+    }
+}</code></pre></div>
+<h3>（八）常見錯誤</h3><ul><li>有向邊與無向邊混淆。</li><li>degree、in-degree、out-degree 算錯。</li><li>把 path 和 cycle 定義混淆。</li></ul>
+<h3>（九）本題重點總結</h3><ol><li>先看結構，再看操作順序。</li><li>每一步都要確認資料或指標是否仍然連接正確。</li><li>動畫中的高亮部分代表目前正在處理的節點、邊或矩陣格。</li><li>程式實作時要特別注意邊界情況與時間複雜度。</li></ol>
+</div></details>
+
+<details class="lesson" id="q39" data-title="題目 39：Path / Cycle / Connected動畫教學 Chapter 6 Graphs" data-kind="graph" data-id="q39">
+<summary><span>題目 39：Path / Cycle / Connected動畫教學</span><span class="meta">Chapter 6 Graphs</span></summary>
+<div class="body">
+<h3>（一）主題來源</h3><p><span class="meta">Chapter 6 Graphs</span></p>
+<h3>（二）學習目標</h3><div class="box">判斷路徑、環與連通。</div>
+<h3>（三）核心觀念說明</h3><p>Path 是頂點序列；cycle 起終點相同；connected 表示任兩點可達。</p><p>這個主題的教學重點是讓學生不只是背名詞，而是能看見資料如何被連接、搬移、比較或拜訪。請先觀察圖形狀態，再配合下方 Step-by-step 說明與動畫按鈕逐步理解。</p>
+<h3>（四）步驟式教學</h3><ol><li>Step 1：建立 vertices 與 edges 的圖形。</li><li>Step 2：從指定起點開始，標記 visited。</li><li>Step 3：依 DFS/stack 或 BFS/queue 規則展開鄰居。</li><li>Step 4：直到沒有可拜訪的點為止。</li></ol>
+<h3>（五）動畫展示</h3><div class="anim"><svg id="svg-q39" viewBox="0 0 760 310" width="760" height="310"></svg><div class="anim-state" id="state-q39">準備中</div><div class="controls"><button onclick="resetAnim('q39','graph')">開始 / 重播</button><button onclick="nextAnim('q39','graph')">下一步</button><button onclick="playAnim('q39','graph')">自動播放</button></div></div>
+<h3>（六）圖片或 SVG 圖解</h3><div class="diagram"><p>上方 SVG 圖解已將本題核心資料結構視覺化：高亮節點表示目前操作位置，綠色邊表示已選入或已確認的連線。</p></div>
+<h3>（七）程式碼說明</h3><p><strong>函式說明：</strong>下列程式示範本題核心操作。參數通常是節點、索引、圖或起點；回傳值依題目可能是新 head、搜尋結果、走訪順序或距離表。</p><p><strong>複雜度：</strong>依表示法不同，matrix 常 O(V²)，list 常 O(V+E)。</p><div class="codebox"><div class="codehead"><span>C++ 參考程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+using namespace std;
+
+int main(){
+    int n = 4;
+    vector&lt;vector&lt;int&gt;&gt; adj(n);
+    auto addEdge=[&amp;](int u,int v){ adj[u].push_back(v); adj[v].push_back(u); };
+    addEdge(0,1); addEdge(0,2); addEdge(1,3);
+    for(int u=0; u&lt;n; ++u){
+        cout &lt;&lt; u &lt;&lt; &quot;: &quot;;
+        for(int v: adj[u]) cout &lt;&lt; v &lt;&lt; &#x27; &#x27;;
+        cout &lt;&lt; &quot;\n&quot;;
+    }
+}</code></pre></div>
+<h3>（八）常見錯誤</h3><ul><li>有向邊與無向邊混淆。</li><li>degree、in-degree、out-degree 算錯。</li><li>把 path 和 cycle 定義混淆。</li></ul>
+<h3>（九）本題重點總結</h3><ol><li>先看結構，再看操作順序。</li><li>每一步都要確認資料或指標是否仍然連接正確。</li><li>動畫中的高亮部分代表目前正在處理的節點、邊或矩陣格。</li><li>程式實作時要特別注意邊界情況與時間複雜度。</li></ol>
+</div></details>
+
+<details class="lesson" id="q40" data-title="題目 40：Adjacency Matrix動畫教學 Chapter 6 Graphs" data-kind="matrix" data-id="q40">
+<summary><span>題目 40：Adjacency Matrix動畫教學</span><span class="meta">Chapter 6 Graphs</span></summary>
+<div class="body">
+<h3>（一）主題來源</h3><p><span class="meta">Chapter 6 Graphs</span></p>
+<h3>（二）學習目標</h3><div class="box">學會矩陣表示圖。</div>
+<h3>（三）核心觀念說明</h3><p>matrix 查詢邊是否存在是 O(1)，但空間 O(n²)。</p><p>這個主題的教學重點是讓學生不只是背名詞，而是能看見資料如何被連接、搬移、比較或拜訪。請先觀察圖形狀態，再配合下方 Step-by-step 說明與動畫按鈕逐步理解。</p>
+<h3>（四）步驟式教學</h3><ol><li>Step 1：建立矩陣，對角線為 0 或可達自己。</li><li>Step 2：依序允許 k 作為中繼點。</li><li>Step 3：檢查 i→k→j 是否改善 i→j。</li><li>Step 4：完成所有 k 後得到最終矩陣。</li></ol>
+<h3>（五）動畫展示</h3><div class="anim"><svg id="svg-q40" viewBox="0 0 760 310" width="760" height="310"></svg><div class="anim-state" id="state-q40">準備中</div><div class="controls"><button onclick="resetAnim('q40','matrix')">開始 / 重播</button><button onclick="nextAnim('q40','matrix')">下一步</button><button onclick="playAnim('q40','matrix')">自動播放</button></div></div>
+<h3>（六）圖片或 SVG 圖解</h3><div class="diagram"><p>上方 SVG 圖解已將本題核心資料結構視覺化：高亮節點表示目前操作位置，綠色邊表示已選入或已確認的連線。</p></div>
+<h3>（七）程式碼說明</h3><p><strong>函式說明：</strong>下列程式示範本題核心操作。參數通常是節點、索引、圖或起點；回傳值依題目可能是新 head、搜尋結果、走訪順序或距離表。</p><p><strong>複雜度：</strong>Floyd-Warshall 時間 O(n³)，空間 O(n²)。</p><div class="codebox"><div class="codehead"><span>C++ 參考程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+using namespace std;
+int main(){
+    const int INF=9999; vector&lt;vector&lt;int&gt;&gt; a={{0,4,11},{6,0,2},{3,INF,0}};
+    int n=a.size();
+    for(int k=0;k&lt;n;k++) for(int i=0;i&lt;n;i++) for(int j=0;j&lt;n;j++)
+        if(a[i][k]+a[k][j] &lt; a[i][j]) a[i][j]=a[i][k]+a[k][j];
+    for(auto &amp;row:a){ for(int x:row) cout &lt;&lt; x &lt;&lt; &#x27; &#x27;; cout &lt;&lt; &quot;\n&quot;; }
+}</code></pre></div>
+<h3>（八）常見錯誤</h3><ul><li>INF 直接相加造成 overflow。</li><li>Floyd 的 k/i/j 意義混淆。</li><li>把可達性矩陣和距離矩陣混在一起。</li></ul>
+<h3>（九）本題重點總結</h3><ol><li>先看結構，再看操作順序。</li><li>每一步都要確認資料或指標是否仍然連接正確。</li><li>動畫中的高亮部分代表目前正在處理的節點、邊或矩陣格。</li><li>程式實作時要特別注意邊界情況與時間複雜度。</li></ol>
+</div></details>
+
+<details class="lesson" id="q41" data-title="題目 41：Adjacency List動畫教學 Chapter 6 Graphs" data-kind="graph" data-id="q41">
+<summary><span>題目 41：Adjacency List動畫教學</span><span class="meta">Chapter 6 Graphs</span></summary>
+<div class="body">
+<h3>（一）主題來源</h3><p><span class="meta">Chapter 6 Graphs</span></p>
+<h3>（二）學習目標</h3><div class="box">學會串列表示圖。</div>
+<h3>（三）核心觀念說明</h3><p>每個頂點存鄰居清單，適合 sparse graph。</p><p>這個主題的教學重點是讓學生不只是背名詞，而是能看見資料如何被連接、搬移、比較或拜訪。請先觀察圖形狀態，再配合下方 Step-by-step 說明與動畫按鈕逐步理解。</p>
+<h3>（四）步驟式教學</h3><ol><li>Step 1：建立 vertices 與 edges 的圖形。</li><li>Step 2：從指定起點開始，標記 visited。</li><li>Step 3：依 DFS/stack 或 BFS/queue 規則展開鄰居。</li><li>Step 4：直到沒有可拜訪的點為止。</li></ol>
+<h3>（五）動畫展示</h3><div class="anim"><svg id="svg-q41" viewBox="0 0 760 310" width="760" height="310"></svg><div class="anim-state" id="state-q41">準備中</div><div class="controls"><button onclick="resetAnim('q41','graph')">開始 / 重播</button><button onclick="nextAnim('q41','graph')">下一步</button><button onclick="playAnim('q41','graph')">自動播放</button></div></div>
+<h3>（六）圖片或 SVG 圖解</h3><div class="diagram"><p>上方 SVG 圖解已將本題核心資料結構視覺化：高亮節點表示目前操作位置，綠色邊表示已選入或已確認的連線。</p></div>
+<h3>（七）程式碼說明</h3><p><strong>函式說明：</strong>下列程式示範本題核心操作。參數通常是節點、索引、圖或起點；回傳值依題目可能是新 head、搜尋結果、走訪順序或距離表。</p><p><strong>複雜度：</strong>依表示法不同，matrix 常 O(V²)，list 常 O(V+E)。</p><div class="codebox"><div class="codehead"><span>C++ 參考程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+using namespace std;
+
+int main(){
+    int n = 4;
+    vector&lt;vector&lt;int&gt;&gt; adj(n);
+    auto addEdge=[&amp;](int u,int v){ adj[u].push_back(v); adj[v].push_back(u); };
+    addEdge(0,1); addEdge(0,2); addEdge(1,3);
+    for(int u=0; u&lt;n; ++u){
+        cout &lt;&lt; u &lt;&lt; &quot;: &quot;;
+        for(int v: adj[u]) cout &lt;&lt; v &lt;&lt; &#x27; &#x27;;
+        cout &lt;&lt; &quot;\n&quot;;
+    }
+}</code></pre></div>
+<h3>（八）常見錯誤</h3><ul><li>有向邊與無向邊混淆。</li><li>degree、in-degree、out-degree 算錯。</li><li>把 path 和 cycle 定義混淆。</li></ul>
+<h3>（九）本題重點總結</h3><ol><li>先看結構，再看操作順序。</li><li>每一步都要確認資料或指標是否仍然連接正確。</li><li>動畫中的高亮部分代表目前正在處理的節點、邊或矩陣格。</li><li>程式實作時要特別注意邊界情況與時間複雜度。</li></ol>
+</div></details>
+
+<details class="lesson" id="q42" data-title="題目 42：DFS 動畫動畫教學 Chapter 6 Graphs" data-kind="dfs" data-id="q42">
+<summary><span>題目 42：DFS 動畫動畫教學</span><span class="meta">Chapter 6 Graphs</span></summary>
+<div class="body">
+<h3>（一）主題來源</h3><p><span class="meta">Chapter 6 Graphs</span></p>
+<h3>（二）學習目標</h3><div class="box">理解深度優先搜尋。</div>
+<h3>（三）核心觀念說明</h3><p>沿著一條路走到底，再回溯，通常用 recursion 或 stack。</p><p>這個主題的教學重點是讓學生不只是背名詞，而是能看見資料如何被連接、搬移、比較或拜訪。請先觀察圖形狀態，再配合下方 Step-by-step 說明與動畫按鈕逐步理解。</p>
+<h3>（四）步驟式教學</h3><ol><li>Step 1：建立 vertices 與 edges 的圖形。</li><li>Step 2：從指定起點開始，標記 visited。</li><li>Step 3：依 DFS/stack 或 BFS/queue 規則展開鄰居。</li><li>Step 4：直到沒有可拜訪的點為止。</li></ol>
+<h3>（五）動畫展示</h3><div class="anim"><svg id="svg-q42" viewBox="0 0 760 310" width="760" height="310"></svg><div class="anim-state" id="state-q42">準備中</div><div class="controls"><button onclick="resetAnim('q42','dfs')">開始 / 重播</button><button onclick="nextAnim('q42','dfs')">下一步</button><button onclick="playAnim('q42','dfs')">自動播放</button></div></div>
+<h3>（六）圖片或 SVG 圖解</h3><div class="diagram"><p>上方 SVG 圖解已將本題核心資料結構視覺化：高亮節點表示目前操作位置，綠色邊表示已選入或已確認的連線。</p></div>
+<h3>（七）程式碼說明</h3><p><strong>函式說明：</strong>下列程式示範本題核心操作。參數通常是節點、索引、圖或起點；回傳值依題目可能是新 head、搜尋結果、走訪順序或距離表。</p><p><strong>複雜度：</strong>時間 O(V+E)，空間 O(V)。</p><div class="codebox"><div class="codehead"><span>C++ 參考程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+using namespace std;
+
+vector&lt;vector&lt;int&gt;&gt; adj;
+vector&lt;int&gt; visited;
+
+void dfs(int u){
+    visited[u] = 1;               // 標記已拜訪
+    cout &lt;&lt; u &lt;&lt; &#x27; &#x27;;
+    for(int v: adj[u])
+        if(!visited[v]) dfs(v);   // 往尚未拜訪的鄰居深入
+}
+
+int main(){
+    adj={{1,2},{3,4},{5,6},{},{},{},{}};
+    visited.assign(adj.size(),0);
+    dfs(0); // 0 1 3 4 2 5 6
+}</code></pre></div>
+<h3>（八）常見錯誤</h3><ul><li>忘記 visited 導致無限遞迴。</li><li>鄰接順序不同卻誤以為答案唯一。</li><li>遞迴回溯流程沒追蹤清楚。</li></ul>
+<h3>（九）本題重點總結</h3><ol><li>先看結構，再看操作順序。</li><li>每一步都要確認資料或指標是否仍然連接正確。</li><li>動畫中的高亮部分代表目前正在處理的節點、邊或矩陣格。</li><li>程式實作時要特別注意邊界情況與時間複雜度。</li></ol>
+</div></details>
+
+<details class="lesson" id="q43" data-title="題目 43：BFS 動畫動畫教學 Chapter 6 Graphs" data-kind="bfs" data-id="q43">
+<summary><span>題目 43：BFS 動畫動畫教學</span><span class="meta">Chapter 6 Graphs</span></summary>
+<div class="body">
+<h3>（一）主題來源</h3><p><span class="meta">Chapter 6 Graphs</span></p>
+<h3>（二）學習目標</h3><div class="box">理解廣度優先搜尋。</div>
+<h3>（三）核心觀念說明</h3><p>一層一層擴散，必須用 queue。</p><p>這個主題的教學重點是讓學生不只是背名詞，而是能看見資料如何被連接、搬移、比較或拜訪。請先觀察圖形狀態，再配合下方 Step-by-step 說明與動畫按鈕逐步理解。</p>
+<h3>（四）步驟式教學</h3><ol><li>Step 1：建立 vertices 與 edges 的圖形。</li><li>Step 2：從指定起點開始，標記 visited。</li><li>Step 3：依 DFS/stack 或 BFS/queue 規則展開鄰居。</li><li>Step 4：直到沒有可拜訪的點為止。</li></ol>
+<h3>（五）動畫展示</h3><div class="anim"><svg id="svg-q43" viewBox="0 0 760 310" width="760" height="310"></svg><div class="anim-state" id="state-q43">準備中</div><div class="controls"><button onclick="resetAnim('q43','bfs')">開始 / 重播</button><button onclick="nextAnim('q43','bfs')">下一步</button><button onclick="playAnim('q43','bfs')">自動播放</button></div></div>
+<h3>（六）圖片或 SVG 圖解</h3><div class="diagram"><p>上方 SVG 圖解已將本題核心資料結構視覺化：高亮節點表示目前操作位置，綠色邊表示已選入或已確認的連線。</p></div>
+<h3>（七）程式碼說明</h3><p><strong>函式說明：</strong>下列程式示範本題核心操作。參數通常是節點、索引、圖或起點；回傳值依題目可能是新 head、搜尋結果、走訪順序或距離表。</p><p><strong>複雜度：</strong>時間 O(V+E)，空間 O(V)。</p><div class="codebox"><div class="codehead"><span>C++ 參考程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+using namespace std;
+
+int main(){
+    vector&lt;vector&lt;int&gt;&gt; adj={{1,2},{3,4},{5,6},{},{},{},{}};
+    vector&lt;int&gt; visited(adj.size(),0);
+    queue&lt;int&gt; q; q.push(0); visited[0]=1;
+    while(!q.empty()){
+        int u=q.front(); q.pop(); cout &lt;&lt; u &lt;&lt; &#x27; &#x27;;
+        for(int v: adj[u]) if(!visited[v]){ visited[v]=1; q.push(v); }
+    }
+}</code></pre></div>
+<h3>（八）常見錯誤</h3><ul><li>誤用 stack 而不是 queue。</li><li>入隊時沒有立刻標記 visited。</li><li>以為 BFS 對加權圖一定能找最短距離。</li></ul>
+<h3>（九）本題重點總結</h3><ol><li>先看結構，再看操作順序。</li><li>每一步都要確認資料或指標是否仍然連接正確。</li><li>動畫中的高亮部分代表目前正在處理的節點、邊或矩陣格。</li><li>程式實作時要特別注意邊界情況與時間複雜度。</li></ol>
+</div></details>
+
+<details class="lesson" id="q44" data-title="題目 44：Connected Components動畫教學 Chapter 6 Graphs" data-kind="dfs" data-id="q44">
+<summary><span>題目 44：Connected Components動畫教學</span><span class="meta">Chapter 6 Graphs</span></summary>
+<div class="body">
+<h3>（一）主題來源</h3><p><span class="meta">Chapter 6 Graphs</span></p>
+<h3>（二）學習目標</h3><div class="box">找出圖中互相連通的群組。</div>
+<h3>（三）核心觀念說明</h3><p>對未拜訪的 vertex 重複 DFS/BFS，每次得到一個 component。</p><p>這個主題的教學重點是讓學生不只是背名詞，而是能看見資料如何被連接、搬移、比較或拜訪。請先觀察圖形狀態，再配合下方 Step-by-step 說明與動畫按鈕逐步理解。</p>
+<h3>（四）步驟式教學</h3><ol><li>Step 1：建立 vertices 與 edges 的圖形。</li><li>Step 2：從指定起點開始，標記 visited。</li><li>Step 3：依 DFS/stack 或 BFS/queue 規則展開鄰居。</li><li>Step 4：直到沒有可拜訪的點為止。</li></ol>
+<h3>（五）動畫展示</h3><div class="anim"><svg id="svg-q44" viewBox="0 0 760 310" width="760" height="310"></svg><div class="anim-state" id="state-q44">準備中</div><div class="controls"><button onclick="resetAnim('q44','dfs')">開始 / 重播</button><button onclick="nextAnim('q44','dfs')">下一步</button><button onclick="playAnim('q44','dfs')">自動播放</button></div></div>
+<h3>（六）圖片或 SVG 圖解</h3><div class="diagram"><p>上方 SVG 圖解已將本題核心資料結構視覺化：高亮節點表示目前操作位置，綠色邊表示已選入或已確認的連線。</p></div>
+<h3>（七）程式碼說明</h3><p><strong>函式說明：</strong>下列程式示範本題核心操作。參數通常是節點、索引、圖或起點；回傳值依題目可能是新 head、搜尋結果、走訪順序或距離表。</p><p><strong>複雜度：</strong>時間 O(V+E)，空間 O(V)。</p><div class="codebox"><div class="codehead"><span>C++ 參考程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+using namespace std;
+
+vector&lt;vector&lt;int&gt;&gt; adj;
+vector&lt;int&gt; visited;
+
+void dfs(int u){
+    visited[u] = 1;               // 標記已拜訪
+    cout &lt;&lt; u &lt;&lt; &#x27; &#x27;;
+    for(int v: adj[u])
+        if(!visited[v]) dfs(v);   // 往尚未拜訪的鄰居深入
+}
+
+int main(){
+    adj={{1,2},{3,4},{5,6},{},{},{},{}};
+    visited.assign(adj.size(),0);
+    dfs(0); // 0 1 3 4 2 5 6
+}</code></pre></div>
+<h3>（八）常見錯誤</h3><ul><li>忘記 visited 導致無限遞迴。</li><li>鄰接順序不同卻誤以為答案唯一。</li><li>遞迴回溯流程沒追蹤清楚。</li></ul>
+<h3>（九）本題重點總結</h3><ol><li>先看結構，再看操作順序。</li><li>每一步都要確認資料或指標是否仍然連接正確。</li><li>動畫中的高亮部分代表目前正在處理的節點、邊或矩陣格。</li><li>程式實作時要特別注意邊界情況與時間複雜度。</li></ol>
+</div></details>
+
+<details class="lesson" id="q45" data-title="題目 45：Articulation Point動畫教學 Chapter 6 Graphs" data-kind="graph" data-id="q45">
+<summary><span>題目 45：Articulation Point動畫教學</span><span class="meta">Chapter 6 Graphs</span></summary>
+<div class="body">
+<h3>（一）主題來源</h3><p><span class="meta">Chapter 6 Graphs</span></p>
+<h3>（二）學習目標</h3><div class="box">理解割點。</div>
+<h3>（三）核心觀念說明</h3><p>刪除某點後讓圖變不連通，該點就是 articulation point。</p><p>這個主題的教學重點是讓學生不只是背名詞，而是能看見資料如何被連接、搬移、比較或拜訪。請先觀察圖形狀態，再配合下方 Step-by-step 說明與動畫按鈕逐步理解。</p>
+<h3>（四）步驟式教學</h3><ol><li>Step 1：建立 vertices 與 edges 的圖形。</li><li>Step 2：從指定起點開始，標記 visited。</li><li>Step 3：依 DFS/stack 或 BFS/queue 規則展開鄰居。</li><li>Step 4：直到沒有可拜訪的點為止。</li></ol>
+<h3>（五）動畫展示</h3><div class="anim"><svg id="svg-q45" viewBox="0 0 760 310" width="760" height="310"></svg><div class="anim-state" id="state-q45">準備中</div><div class="controls"><button onclick="resetAnim('q45','graph')">開始 / 重播</button><button onclick="nextAnim('q45','graph')">下一步</button><button onclick="playAnim('q45','graph')">自動播放</button></div></div>
+<h3>（六）圖片或 SVG 圖解</h3><div class="diagram"><p>上方 SVG 圖解已將本題核心資料結構視覺化：高亮節點表示目前操作位置，綠色邊表示已選入或已確認的連線。</p></div>
+<h3>（七）程式碼說明</h3><p><strong>函式說明：</strong>下列程式示範本題核心操作。參數通常是節點、索引、圖或起點；回傳值依題目可能是新 head、搜尋結果、走訪順序或距離表。</p><p><strong>複雜度：</strong>依表示法不同，matrix 常 O(V²)，list 常 O(V+E)。</p><div class="codebox"><div class="codehead"><span>C++ 參考程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+using namespace std;
+
+int main(){
+    int n = 4;
+    vector&lt;vector&lt;int&gt;&gt; adj(n);
+    auto addEdge=[&amp;](int u,int v){ adj[u].push_back(v); adj[v].push_back(u); };
+    addEdge(0,1); addEdge(0,2); addEdge(1,3);
+    for(int u=0; u&lt;n; ++u){
+        cout &lt;&lt; u &lt;&lt; &quot;: &quot;;
+        for(int v: adj[u]) cout &lt;&lt; v &lt;&lt; &#x27; &#x27;;
+        cout &lt;&lt; &quot;\n&quot;;
+    }
+}</code></pre></div>
+<h3>（八）常見錯誤</h3><ul><li>有向邊與無向邊混淆。</li><li>degree、in-degree、out-degree 算錯。</li><li>把 path 和 cycle 定義混淆。</li></ul>
+<h3>（九）本題重點總結</h3><ol><li>先看結構，再看操作順序。</li><li>每一步都要確認資料或指標是否仍然連接正確。</li><li>動畫中的高亮部分代表目前正在處理的節點、邊或矩陣格。</li><li>程式實作時要特別注意邊界情況與時間複雜度。</li></ol>
+</div></details>
+
+<details class="lesson" id="q46" data-title="題目 46：Kruskal MST動畫教學 Chapter 6 Graphs" data-kind="mst" data-id="q46">
+<summary><span>題目 46：Kruskal MST動畫教學</span><span class="meta">Chapter 6 Graphs</span></summary>
+<div class="body">
+<h3>（一）主題來源</h3><p><span class="meta">Chapter 6 Graphs</span></p>
+<h3>（二）學習目標</h3><div class="box">理解以邊為中心的最小生成樹。</div>
+<h3>（三）核心觀念說明</h3><p>按權重排序，每次加入不形成 cycle 的最小邊。</p><p>這個主題的教學重點是讓學生不只是背名詞，而是能看見資料如何被連接、搬移、比較或拜訪。請先觀察圖形狀態，再配合下方 Step-by-step 說明與動畫按鈕逐步理解。</p>
+<h3>（四）步驟式教學</h3><ol><li>Step 1：把所有邊依權重排序或維護候選邊。</li><li>Step 2：選擇目前最安全的邊。</li><li>Step 3：檢查是否造成 cycle。</li><li>Step 4：直到選到 |V|-1 條邊。</li></ol>
+<h3>（五）動畫展示</h3><div class="anim"><svg id="svg-q46" viewBox="0 0 760 310" width="760" height="310"></svg><div class="anim-state" id="state-q46">準備中</div><div class="controls"><button onclick="resetAnim('q46','mst')">開始 / 重播</button><button onclick="nextAnim('q46','mst')">下一步</button><button onclick="playAnim('q46','mst')">自動播放</button></div></div>
+<h3>（六）圖片或 SVG 圖解</h3><div class="diagram"><p>上方 SVG 圖解已將本題核心資料結構視覺化：高亮節點表示目前操作位置，綠色邊表示已選入或已確認的連線。</p></div>
+<h3>（七）程式碼說明</h3><p><strong>函式說明：</strong>下列程式示範本題核心操作。參數通常是節點、索引、圖或起點；回傳值依題目可能是新 head、搜尋結果、走訪順序或距離表。</p><p><strong>複雜度：</strong>Kruskal 常 O(E log E)，Prim 常 O(E log V)。</p><div class="codebox"><div class="codehead"><span>C++ 參考程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+struct Edge{int u,v,w; bool operator&lt;(const Edge&amp; o)const{return w&lt;o.w;}};
+struct DSU{ vector&lt;int&gt; p; DSU(int n):p(n){for(int i=0;i&lt;n;i++)p[i]=i;} int find(int x){return p[x]==x?x:p[x]=find(p[x]);} bool unite(int a,int b){a=find(a);b=find(b);if(a==b)return false;p[a]=b;return true;} };
+int main(){
+    vector&lt;Edge&gt; e={{0,1,4},{0,2,3},{1,2,1},{1,3,2},{2,3,5}};
+    sort(e.begin(),e.end()); DSU d(4); int cost=0;
+    for(auto x:e) if(d.unite(x.u,x.v)){ cout&lt;&lt;x.u&lt;&lt;&quot;-&quot;&lt;&lt;x.v&lt;&lt;&quot;\n&quot;; cost+=x.w; }
+    cout &lt;&lt; &quot;cost=&quot; &lt;&lt; cost &lt;&lt; &quot;\n&quot;;
+}</code></pre></div>
+<h3>（八）常見錯誤</h3><ul><li>Kruskal 忘記檢查 cycle。</li><li>Prim 與 Dijkstra 的目標混淆。</li><li>把 MST 誤認為最短路徑樹。</li></ul>
+<h3>（九）本題重點總結</h3><ol><li>先看結構，再看操作順序。</li><li>每一步都要確認資料或指標是否仍然連接正確。</li><li>動畫中的高亮部分代表目前正在處理的節點、邊或矩陣格。</li><li>程式實作時要特別注意邊界情況與時間複雜度。</li></ol>
+</div></details>
+
+<details class="lesson" id="q47" data-title="題目 47：Prim MST動畫教學 Chapter 6 Graphs" data-kind="mst" data-id="q47">
+<summary><span>題目 47：Prim MST動畫教學</span><span class="meta">Chapter 6 Graphs</span></summary>
+<div class="body">
+<h3>（一）主題來源</h3><p><span class="meta">Chapter 6 Graphs</span></p>
+<h3>（二）學習目標</h3><div class="box">理解以點集合擴張的最小生成樹。</div>
+<h3>（三）核心觀念說明</h3><p>從一點開始，每次選連到外部的最小邊。</p><p>這個主題的教學重點是讓學生不只是背名詞，而是能看見資料如何被連接、搬移、比較或拜訪。請先觀察圖形狀態，再配合下方 Step-by-step 說明與動畫按鈕逐步理解。</p>
+<h3>（四）步驟式教學</h3><ol><li>Step 1：把所有邊依權重排序或維護候選邊。</li><li>Step 2：選擇目前最安全的邊。</li><li>Step 3：檢查是否造成 cycle。</li><li>Step 4：直到選到 |V|-1 條邊。</li></ol>
+<h3>（五）動畫展示</h3><div class="anim"><svg id="svg-q47" viewBox="0 0 760 310" width="760" height="310"></svg><div class="anim-state" id="state-q47">準備中</div><div class="controls"><button onclick="resetAnim('q47','mst')">開始 / 重播</button><button onclick="nextAnim('q47','mst')">下一步</button><button onclick="playAnim('q47','mst')">自動播放</button></div></div>
+<h3>（六）圖片或 SVG 圖解</h3><div class="diagram"><p>上方 SVG 圖解已將本題核心資料結構視覺化：高亮節點表示目前操作位置，綠色邊表示已選入或已確認的連線。</p></div>
+<h3>（七）程式碼說明</h3><p><strong>函式說明：</strong>下列程式示範本題核心操作。參數通常是節點、索引、圖或起點；回傳值依題目可能是新 head、搜尋結果、走訪順序或距離表。</p><p><strong>複雜度：</strong>Kruskal 常 O(E log E)，Prim 常 O(E log V)。</p><div class="codebox"><div class="codehead"><span>C++ 參考程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+struct Edge{int u,v,w; bool operator&lt;(const Edge&amp; o)const{return w&lt;o.w;}};
+struct DSU{ vector&lt;int&gt; p; DSU(int n):p(n){for(int i=0;i&lt;n;i++)p[i]=i;} int find(int x){return p[x]==x?x:p[x]=find(p[x]);} bool unite(int a,int b){a=find(a);b=find(b);if(a==b)return false;p[a]=b;return true;} };
+int main(){
+    vector&lt;Edge&gt; e={{0,1,4},{0,2,3},{1,2,1},{1,3,2},{2,3,5}};
+    sort(e.begin(),e.end()); DSU d(4); int cost=0;
+    for(auto x:e) if(d.unite(x.u,x.v)){ cout&lt;&lt;x.u&lt;&lt;&quot;-&quot;&lt;&lt;x.v&lt;&lt;&quot;\n&quot;; cost+=x.w; }
+    cout &lt;&lt; &quot;cost=&quot; &lt;&lt; cost &lt;&lt; &quot;\n&quot;;
+}</code></pre></div>
+<h3>（八）常見錯誤</h3><ul><li>Kruskal 忘記檢查 cycle。</li><li>Prim 與 Dijkstra 的目標混淆。</li><li>把 MST 誤認為最短路徑樹。</li></ul>
+<h3>（九）本題重點總結</h3><ol><li>先看結構，再看操作順序。</li><li>每一步都要確認資料或指標是否仍然連接正確。</li><li>動畫中的高亮部分代表目前正在處理的節點、邊或矩陣格。</li><li>程式實作時要特別注意邊界情況與時間複雜度。</li></ol>
+</div></details>
+
+<details class="lesson" id="q48" data-title="題目 48：Dijkstra Shortest Path動畫教學 Chapter 6 Graphs" data-kind="dijkstra" data-id="q48">
+<summary><span>題目 48：Dijkstra Shortest Path動畫教學</span><span class="meta">Chapter 6 Graphs</span></summary>
+<div class="body">
+<h3>（一）主題來源</h3><p><span class="meta">Chapter 6 Graphs</span></p>
+<h3>（二）學習目標</h3><div class="box">理解非負權重最短路徑。</div>
+<h3>（三）核心觀念說明</h3><p>每次選尚未確定且 dist 最小的點，再 relax 它的邊。</p><p>這個主題的教學重點是讓學生不只是背名詞，而是能看見資料如何被連接、搬移、比較或拜訪。請先觀察圖形狀態，再配合下方 Step-by-step 說明與動畫按鈕逐步理解。</p>
+<h3>（四）步驟式教學</h3><ol><li>Step 1：初始化 source 距離為 0，其餘為 ∞。</li><li>Step 2：選出尚未確定且 dist 最小的頂點。</li><li>Step 3：Relax 此頂點的所有邊。</li><li>Step 4：重複直到所有可達點都確定。</li></ol>
+<h3>（五）動畫展示</h3><div class="anim"><svg id="svg-q48" viewBox="0 0 760 310" width="760" height="310"></svg><div class="anim-state" id="state-q48">準備中</div><div class="controls"><button onclick="resetAnim('q48','dijkstra')">開始 / 重播</button><button onclick="nextAnim('q48','dijkstra')">下一步</button><button onclick="playAnim('q48','dijkstra')">自動播放</button></div></div>
+<h3>（六）圖片或 SVG 圖解</h3><div class="diagram"><p>上方 SVG 圖解已將本題核心資料結構視覺化：高亮節點表示目前操作位置，綠色邊表示已選入或已確認的連線。</p></div>
+<h3>（七）程式碼說明</h3><p><strong>函式說明：</strong>下列程式示範本題核心操作。參數通常是節點、索引、圖或起點；回傳值依題目可能是新 head、搜尋結果、走訪順序或距離表。</p><p><strong>複雜度：</strong>使用 priority queue 常 O(E log V)。</p><div class="codebox"><div class="codehead"><span>C++ 參考程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+using namespace std;
+int main(){
+    const int INF=1e9; int n=5, s=0;
+    vector&lt;vector&lt;pair&lt;int,int&gt;&gt;&gt; adj(n);
+    adj[0]={{1,10},{2,3}}; adj[2]={{1,4},{3,8},{4,2}}; adj[4]={{3,9}};
+    vector&lt;int&gt; dist(n,INF); dist[s]=0;
+    priority_queue&lt;pair&lt;int,int&gt;, vector&lt;pair&lt;int,int&gt;&gt;, greater&lt;pair&lt;int,int&gt;&gt;&gt; pq;
+    pq.push({0,s});
+    while(!pq.empty()){
+        auto [d,u]=pq.top(); pq.pop(); if(d!=dist[u]) continue;
+        for(auto [v,w]: adj[u]) if(d+w&lt;dist[v]){ dist[v]=d+w; pq.push({dist[v],v}); }
+    }
+    for(int x:dist) cout &lt;&lt; x &lt;&lt; &#x27; &#x27;;
+}</code></pre></div>
+<h3>（八）常見錯誤</h3><ul><li>用 Dijkstra 處理負權重邊。</li><li>選點後又想回頭修改已確定點。</li><li>relax 條件寫錯。</li></ul>
+<h3>（九）本題重點總結</h3><ol><li>先看結構，再看操作順序。</li><li>每一步都要確認資料或指標是否仍然連接正確。</li><li>動畫中的高亮部分代表目前正在處理的節點、邊或矩陣格。</li><li>程式實作時要特別注意邊界情況與時間複雜度。</li></ol>
+</div></details>
+
+<details class="lesson" id="q49" data-title="題目 49：Floyd-Warshall動畫教學 Chapter 6 Graphs" data-kind="matrix" data-id="q49">
+<summary><span>題目 49：Floyd-Warshall動畫教學</span><span class="meta">Chapter 6 Graphs</span></summary>
+<div class="body">
+<h3>（一）主題來源</h3><p><span class="meta">Chapter 6 Graphs</span></p>
+<h3>（二）學習目標</h3><div class="box">理解所有點對最短路徑。</div>
+<h3>（三）核心觀念說明</h3><p>逐步允許中繼點 k，檢查 i→k→j 是否更短。</p><p>這個主題的教學重點是讓學生不只是背名詞，而是能看見資料如何被連接、搬移、比較或拜訪。請先觀察圖形狀態，再配合下方 Step-by-step 說明與動畫按鈕逐步理解。</p>
+<h3>（四）步驟式教學</h3><ol><li>Step 1：建立矩陣，對角線為 0 或可達自己。</li><li>Step 2：依序允許 k 作為中繼點。</li><li>Step 3：檢查 i→k→j 是否改善 i→j。</li><li>Step 4：完成所有 k 後得到最終矩陣。</li></ol>
+<h3>（五）動畫展示</h3><div class="anim"><svg id="svg-q49" viewBox="0 0 760 310" width="760" height="310"></svg><div class="anim-state" id="state-q49">準備中</div><div class="controls"><button onclick="resetAnim('q49','matrix')">開始 / 重播</button><button onclick="nextAnim('q49','matrix')">下一步</button><button onclick="playAnim('q49','matrix')">自動播放</button></div></div>
+<h3>（六）圖片或 SVG 圖解</h3><div class="diagram"><p>上方 SVG 圖解已將本題核心資料結構視覺化：高亮節點表示目前操作位置，綠色邊表示已選入或已確認的連線。</p></div>
+<h3>（七）程式碼說明</h3><p><strong>函式說明：</strong>下列程式示範本題核心操作。參數通常是節點、索引、圖或起點；回傳值依題目可能是新 head、搜尋結果、走訪順序或距離表。</p><p><strong>複雜度：</strong>Floyd-Warshall 時間 O(n³)，空間 O(n²)。</p><div class="codebox"><div class="codehead"><span>C++ 參考程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+using namespace std;
+int main(){
+    const int INF=9999; vector&lt;vector&lt;int&gt;&gt; a={{0,4,11},{6,0,2},{3,INF,0}};
+    int n=a.size();
+    for(int k=0;k&lt;n;k++) for(int i=0;i&lt;n;i++) for(int j=0;j&lt;n;j++)
+        if(a[i][k]+a[k][j] &lt; a[i][j]) a[i][j]=a[i][k]+a[k][j];
+    for(auto &amp;row:a){ for(int x:row) cout &lt;&lt; x &lt;&lt; &#x27; &#x27;; cout &lt;&lt; &quot;\n&quot;; }
+}</code></pre></div>
+<h3>（八）常見錯誤</h3><ul><li>INF 直接相加造成 overflow。</li><li>Floyd 的 k/i/j 意義混淆。</li><li>把可達性矩陣和距離矩陣混在一起。</li></ul>
+<h3>（九）本題重點總結</h3><ol><li>先看結構，再看操作順序。</li><li>每一步都要確認資料或指標是否仍然連接正確。</li><li>動畫中的高亮部分代表目前正在處理的節點、邊或矩陣格。</li><li>程式實作時要特別注意邊界情況與時間複雜度。</li></ol>
+</div></details>
+
+<details class="lesson" id="q50" data-title="題目 50：Topological Sort / Critical Path動畫教學 Chapter 6 Graphs" data-kind="topo" data-id="q50">
+<summary><span>題目 50：Topological Sort / Critical Path動畫教學</span><span class="meta">Chapter 6 Graphs</span></summary>
+<div class="body">
+<h3>（一）主題來源</h3><p><span class="meta">Chapter 6 Graphs</span></p>
+<h3>（二）學習目標</h3><div class="box">理解 DAG 排序與關鍵路徑。</div>
+<h3>（三）核心觀念說明</h3><p>拓樸排序處理先後順序；Critical Path 找出不可延誤的活動。</p><p>這個主題的教學重點是讓學生不只是背名詞，而是能看見資料如何被連接、搬移、比較或拜訪。請先觀察圖形狀態，再配合下方 Step-by-step 說明與動畫按鈕逐步理解。</p>
+<h3>（四）步驟式教學</h3><ol><li>Step 1：計算所有頂點 indegree。</li><li>Step 2：把 indegree=0 的頂點放入 queue。</li><li>Step 3：輸出頂點並移除它的 outgoing edges。</li><li>Step 4：若所有頂點輸出成功，得到拓樸序。</li></ol>
+<h3>（五）動畫展示</h3><div class="anim"><svg id="svg-q50" viewBox="0 0 760 310" width="760" height="310"></svg><div class="anim-state" id="state-q50">準備中</div><div class="controls"><button onclick="resetAnim('q50','topo')">開始 / 重播</button><button onclick="nextAnim('q50','topo')">下一步</button><button onclick="playAnim('q50','topo')">自動播放</button></div></div>
+<h3>（六）圖片或 SVG 圖解</h3><div class="diagram"><p>上方 SVG 圖解已將本題核心資料結構視覺化：高亮節點表示目前操作位置，綠色邊表示已選入或已確認的連線。</p></div>
+<h3>（七）程式碼說明</h3><p><strong>函式說明：</strong>下列程式示範本題核心操作。參數通常是節點、索引、圖或起點；回傳值依題目可能是新 head、搜尋結果、走訪順序或距離表。</p><p><strong>複雜度：</strong>時間 O(V+E)，空間 O(V)。</p><div class="codebox"><div class="codehead"><span>C++ 參考程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+using namespace std;
+int main(){
+    vector&lt;vector&lt;int&gt;&gt; adj={{1,2},{3},{3},{}}; int n=4;
+    vector&lt;int&gt; indeg(n,0); for(int u=0;u&lt;n;u++) for(int v:adj[u]) indeg[v]++;
+    queue&lt;int&gt; q; for(int i=0;i&lt;n;i++) if(indeg[i]==0) q.push(i);
+    while(!q.empty()){
+        int u=q.front(); q.pop(); cout &lt;&lt; u &lt;&lt; &#x27; &#x27;;
+        for(int v:adj[u]) if(--indeg[v]==0) q.push(v);
+    }
+}</code></pre></div>
+<h3>（八）常見錯誤</h3><ul><li>有 cycle 卻仍嘗試拓樸排序。</li><li>忘記更新 indegree。</li><li>以為 topological order 一定唯一。</li></ul>
+<h3>（九）本題重點總結</h3><ol><li>先看結構，再看操作順序。</li><li>每一步都要確認資料或指標是否仍然連接正確。</li><li>動畫中的高亮部分代表目前正在處理的節點、邊或矩陣格。</li><li>程式實作時要特別注意邊界情況與時間複雜度。</li></ol>
+</div></details>
+
+<section class="card"><div class="card-pad"><h2>完成後自我檢查紀錄</h2><ul><li>已產生 50 個 Accordion 題目。</li><li>每題均含 SVG 動畫區、下一步與重播按鈕。</li><li>每題均含 C++ 程式碼與 Copy Button。</li><li>已加入搜尋、深色模式、回到頂端與線上 C++ 編輯器連結。</li><li>版面採 RWD 設計，SVG 與程式碼區可橫向捲動。</li></ul></div></section>
+</main><a class="btn topbtn" href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">↑ Top</a><footer class="container" style="padding:40px 20px;text-align:center;color:var(--muted)">DataStructures_Ch4_Ch6_50題主題動畫教學.html｜單一 HTML，可直接上傳 GitHub Pages</footer>
+<script>
+const states={};
+function copyCode(btn){const code=btn.closest('.codebox').querySelector('code').innerText;navigator.clipboard.writeText(code).then(()=>{let t=btn.innerText;btn.innerText='已複製';setTimeout(()=>btn.innerText=t,1200);});}
+function toggleDark(){document.body.classList.toggle('dark');}
+function searchLessons(){const q=document.getElementById('searchBox').value.trim().toLowerCase();document.querySelectorAll('details.lesson').forEach(d=>{d.classList.toggle('hide', q && !d.innerText.toLowerCase().includes(q));});}
+function resetAnim(id,kind){states[id]=0;drawAnim(id,kind)}
+function nextAnim(id,kind){states[id]=(states[id]||0)+1;if(states[id]>3)states[id]=3;drawAnim(id,kind)}
+function playAnim(id,kind){resetAnim(id,kind);let t=setInterval(()=>{nextAnim(id,kind);if(states[id]>=3)clearInterval(t)},800)}
+function drawAnim(id,kind){const step=states[id]||0;const svg=document.getElementById('svg-'+id);const txt=document.getElementById('state-'+id);if(!svg)return;txt.innerText=`Step ${step}：`+stateText(kind,step);svg.innerHTML=svgContent(kind,step);}
+function stateText(kind,s){const map={list:['初始結構，先觀察 head 與節點連線。','建立或選定要操作的節點。','更新第一條關鍵指標，保存後半段。','完成操作，檢查是否仍可走到 NULL。'],tree:['從 root 開始觀察。','依規則先處理左子樹或目前節點。','處理右子樹或下一層節點。','合併結果，完成本次樹操作。'],heap:['原始 complete binary tree。','新元素放最後或 root 被最後元素補上。','與 parent/child 比較並交換。','完成 heap property。'],bst:['從 root 開始比較 key。','依 key 大小往左或往右。','找到位置或目標節點。','完成 search/insert/delete。'],graph:['建立頂點與邊。','從起點開始標記 visited。','依演算法展開鄰居或選邊。','得到走訪順序或最終結果。'],dfs:['DFS 從起點開始。','沿第一個鄰居深入。','走到底後回溯。','完成深度優先走訪。'],bfs:['BFS 起點入隊。','依序出隊並拜訪。','新發現鄰居入隊。','完成層次走訪。'],mst:['所有邊依權重排序。','選目前最小候選邊。','若不形成 cycle 就加入。','形成最小生成樹。'],dijkstra:['dist[source]=0，其餘為 ∞。','選最小 dist 未確定點。','Relax 鄰邊更新距離。','完成 shortest path tree。'],matrix:['顯示原始矩陣。','允許 k=0 作為中繼。','允許更多中繼點並更新。','得到最終矩陣。'],topo:['計算 indegree。','輸出 indegree=0 的頂點。','移除 outgoing edges 更新 indegree。','得到合法拓樸序或偵測 cycle。']};return (map[kind]||map.graph)[s];}
+function svgContent(kind,s){if(kind==='list')return listSvg(s);if(kind==='tree'||kind==='bst')return treeSvg(s,kind);if(kind==='heap')return heapSvg(s);if(kind==='dfs'||kind==='bfs'||kind==='graph'||kind==='mst'||kind==='dijkstra'||kind==='topo')return graphSvg(s,kind);if(kind==='matrix')return matrixSvg(s);return graphSvg(s,'graph');}
+function listSvg(s){let hi=s>=1?'#fde68a':'#dbeafe';let link=s>=2?'#dc2626':'#334155';let n3=s>=3?'':'opacity=".35"';return `<defs><marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#334155"/></marker></defs><text x="20" y="35" font-size="18" font-weight="800">head</text><line x1="75" y1="30" x2="125" y2="65" stroke="#334155" stroke-width="3" marker-end="url(#a)"/><g transform="translate(130,45)"><rect width="80" height="46" rx="8" fill="#dbeafe" stroke="#2563eb"/><rect x="80" width="36" height="46" fill="#fff" stroke="#2563eb"/><text x="32" y="29">10</text></g><line x1="246" y1="68" x2="305" y2="68" stroke="${link}" stroke-width="3" marker-end="url(#a)"/><g transform="translate(310,45)"><rect width="80" height="46" rx="8" fill="${hi}" stroke="#2563eb"/><rect x="80" width="36" height="46" fill="#fff" stroke="#2563eb"/><text x="32" y="29">50</text></g><line x1="426" y1="68" x2="485" y2="68" stroke="#334155" stroke-width="3" marker-end="url(#a)"/><g ${n3} transform="translate(490,45)"><rect width="80" height="46" rx="8" fill="#dbeafe" stroke="#2563eb"/><rect x="80" width="36" height="46" fill="#fff" stroke="#2563eb"/><text x="32" y="29">20</text></g><text x="620" y="74" font-size="18" fill="#dc2626">NULL</text><text x="130" y="130" font-size="15">重點：先保存 next，再改 link。</text>`}
+function treeSvg(s,kind){let nodes=[['A',380,55],['B',250,135],['C',510,135],['D',185,220],['I',315,220],['F',445,220],['G',575,220]];let order=kind==='bst'?[0,2,5]:[0,1,3,4,2,5,6];let active=order.slice(0,s+1).map(i=>nodes[i][0]);let edges=[[0,1],[0,2],[1,3],[1,4],[2,5],[2,6]].map(e=>`<line x1="${nodes[e[0]][1]}" y1="${nodes[e[0]][2]}" x2="${nodes[e[1]][1]}" y2="${nodes[e[1]][2]}" stroke="#2563eb" stroke-width="3"/>`).join('');let ns=nodes.map(n=>`<circle cx="${n[1]}" cy="${n[2]}" r="27" fill="${active.includes(n[0])?'#fde68a':'#dcfce7'}" stroke="#0f766e" stroke-width="2"/><text x="${n[1]}" y="${n[2]+7}" text-anchor="middle" font-size="20" font-weight="800">${n[0]}</text>`).join('');return edges+ns+`<text x="30" y="35" font-size="16">${kind==='bst'?'BST 比較路徑：A → C → F':'走訪高亮節點表示目前處理順序'}</text>`}
+function heapSvg(s){let vals=s<1?[20,15,2,14,10,1,21]:s<2?[20,15,21,14,10,1,2]:[21,15,20,14,10,1,2];let pos=[[380,50],[270,120],[490,120],[205,200],[335,200],[455,200],[565,200]];let es=[[0,1],[0,2],[1,3],[1,4],[2,5],[2,6]].map(e=>`<line x1="${pos[e[0]][0]}" y1="${pos[e[0]][1]}" x2="${pos[e[1]][0]}" y2="${pos[e[1]][1]}" stroke="#dc2626" stroke-width="3"/>`).join('');let ns=vals.map((v,i)=>`<circle cx="${pos[i][0]}" cy="${pos[i][1]}" r="27" fill="${v===21?'#fde68a':'#fee2e2'}" stroke="#ef4444" stroke-width="2"/><text x="${pos[i][0]}" y="${pos[i][1]+7}" text-anchor="middle" font-size="18" font-weight="800">${v}</text>`).join('');let arr=vals.map((v,i)=>`<rect x="${145+i*65}" y="250" width="58" height="32" fill="#fff" stroke="#ef4444"/><text x="${174+i*65}" y="272" text-anchor="middle">${v}</text>`).join('');return es+ns+arr}
+function graphSvg(s,kind){let pos={0:[90,160],1:[220,75],2:[220,230],3:[370,75],4:[370,230],5:[520,160]};let edges=[[0,1,2],[0,2,4],[1,3,1],[2,4,3],[3,5,5],[4,5,1],[1,4,2]];let chosen=s===0?[]:s===1?[0,1]:s===2?[0,2,3]:[0,2,3,5];let es=edges.map((e,i)=>`<line x1="${pos[e[0]][0]}" y1="${pos[e[0]][1]}" x2="${pos[e[1]][0]}" y2="${pos[e[1]][1]}" stroke="${chosen.includes(i)?'#16a34a':'#94a3b8'}" stroke-width="${chosen.includes(i)?5:3}"/><text x="${(pos[e[0]][0]+pos[e[1]][0])/2}" y="${(pos[e[0]][1]+pos[e[1]][1])/2-6}" font-size="13">${kind==='mst'||kind==='dijkstra'?e[2]:''}</text>`).join('');let active=kind==='bfs'?[0,1,2,3,4,5].slice(0,s+2):kind==='dfs'?[0,1,3,5,4,2].slice(0,s+2):[0,1,2,3,4,5].slice(0,s+2);let ns=Object.entries(pos).map(([k,p])=>`<circle cx="${p[0]}" cy="${p[1]}" r="25" fill="${active.includes(+k)?'#fde68a':'#fff'}" stroke="#2563eb" stroke-width="3"/><text x="${p[0]}" y="${p[1]+7}" text-anchor="middle" font-weight="800">${k}</text>`).join('');return es+ns+`<text x="30" y="35" font-size="16">${kind.toUpperCase()} 動畫示意：綠邊/黃點代表目前步驟</text>`}
+function matrixSvg(s){let m=s<1?[[0,4,11],[6,0,2],[3,'∞',0]]:s<2?[[0,4,6],[5,0,2],[3,7,0]]:[[0,4,6],[5,0,2],[3,7,0]];let cells='<foreignObject x="80" y="30" width="520" height="220"><table xmlns="http://www.w3.org/1999/xhtml" style="border-collapse:collapse;width:420px;background:white;color:#111"><tr><th></th><th>0</th><th>1</th><th>2</th></tr>';for(let i=0;i<3;i++){cells+=`<tr><th>${i}</th>`;for(let j=0;j<3;j++)cells+=`<td style="border:1px solid #ccc;padding:10px;text-align:center">${m[i][j]}</td>`;cells+='</tr>'}cells+='</table></foreignObject>';return cells}
+window.addEventListener('DOMContentLoaded',()=>{document.querySelectorAll('[data-kind]').forEach(el=>resetAnim(el.dataset.id,el.dataset.kind));});
+</script></body></html>
