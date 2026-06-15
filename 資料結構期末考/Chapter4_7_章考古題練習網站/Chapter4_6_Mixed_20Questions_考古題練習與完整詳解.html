@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 4–6 Mixed Exam Practice：20 Questions with Complete Solutions</title>
+<style>
+:root{--bg:#f5f7fb;--card:#fff;--ink:#172033;--muted:#5b6475;--main:#2563eb;--main2:#0f766e;--warn:#b45309;--soft:#e8f0ff;--code:#101827;--line:#d8e0ef;--hi:#facc15;--ok:#16a34a;--red:#ef4444;--blue:#3b82f6}
+*{box-sizing:border-box}body{margin:0;font-family:"Noto Sans TC","Microsoft JhengHei",Arial,sans-serif;background:linear-gradient(180deg,#eef4ff,var(--bg));color:var(--ink);line-height:1.75}header{padding:36px 22px;background:linear-gradient(135deg,#1d4ed8,#0f766e);color:white}header h1{margin:0;font-size:30px}header p{max-width:1120px;margin:10px 0 0;color:#e7f2ff}.wrap{max-width:1220px;margin:0 auto;padding:22px}.toolbar,.toc,.exam-box{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;margin:18px 0;box-shadow:0 8px 20px #1e293b12}button{border:0;border-radius:10px;padding:9px 14px;background:var(--main);color:white;cursor:pointer;font-weight:700;margin:4px}button.secondary{background:#475569}button.ghost{background:#e2e8f0;color:#1e293b}button:hover{filter:brightness(.96)}.toc a{display:inline-block;margin:5px 6px;padding:7px 10px;border-radius:999px;background:var(--soft);color:#1d4ed8;text-decoration:none;font-weight:700}.accordion{margin:16px 0;border-radius:18px;overflow:hidden;border:1px solid var(--line);background:var(--card);box-shadow:0 10px 22px #1e293b12}.acc-head{width:100%;text-align:left;padding:18px 22px;background:#fff;color:var(--ink);display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);font-size:19px}.acc-head span:first-child{font-weight:900}.acc-body{display:none;padding:22px}.accordion.open .acc-body{display:block}.tag{display:inline-block;background:#dcfce7;color:#166534;border-radius:999px;padding:2px 9px;margin:2px;font-size:13px;font-weight:800}.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}@media(max-width:850px){.grid{grid-template-columns:1fr}}.box{background:#f8fafc;border:1px solid var(--line);border-radius:14px;padding:14px;margin:12px 0}.answer{border-left:5px solid var(--ok);background:#f0fdf4}.warning{border-left:5px solid var(--warn);background:#fff7ed}.program{border-left:5px solid #7c3aed;background:#faf5ff}h2,h3,h4{line-height:1.35}h3{margin-top:22px;color:#0f3f7a}pre{white-space:pre-wrap;word-break:break-word}.code-wrap{position:relative;margin:12px 0}.copy-btn{position:absolute;right:10px;top:10px;background:#334155;font-size:13px}code,pre.code{font-family:Consolas,"Courier New",monospace}pre.code{background:var(--code);color:#dbeafe;padding:48px 16px 16px;border-radius:14px;overflow:auto;line-height:1.55}.svgbox{background:white;border:1px solid var(--line);border-radius:14px;padding:8px;margin:10px 0;overflow:auto}svg{max-width:100%;height:auto}.node circle{fill:#ffffff;stroke:#334155;stroke-width:2}.node.active circle{fill:var(--hi);stroke:#b45309;stroke-width:3}.node.done circle{fill:#bbf7d0;stroke:#15803d}.edge{stroke:#475569;stroke-width:2;fill:none}.edge.red{stroke:#ef4444;stroke-width:3}.edge.blue{stroke:#3b82f6;stroke-width:3;stroke-dasharray:6 4}.label{font-size:15px;font-weight:800;text-anchor:middle;dominant-baseline:middle;fill:#172033}.small{font-size:13px;fill:#64748b}.stepper{display:grid;grid-template-columns:minmax(330px,1fr) 360px;gap:16px;align-items:start}@media(max-width:900px){.stepper{grid-template-columns:1fr}}.step-text{font-weight:800;background:#fff7ed;border:1px solid #fed7aa;border-radius:12px;padding:12px;color:#7c2d12}.array{display:flex;flex-wrap:wrap;gap:4px;margin:8px 0}.cell{min-width:38px;text-align:center;border:1px solid #64748b;background:white;border-radius:6px;padding:6px;font-weight:800}.cell.active{background:var(--hi)}.cell.sorted{background:#bbf7d0}.cell.bad{background:#fecaca}.flow svg text{font-size:13px;font-weight:700}.kv{display:grid;grid-template-columns:190px 1fr;gap:8px}.kv div{padding:8px;border-bottom:1px dashed #cbd5e1}.mini-table{border-collapse:collapse;width:100%;margin:10px 0}.mini-table th,.mini-table td{border:1px solid #cbd5e1;padding:8px;text-align:center}.mini-table th{background:#e0f2fe}.pill{display:inline-block;border-radius:8px;background:#eef2ff;color:#3730a3;padding:2px 8px;font-weight:800}
+</style>
+</head>
+<body>
+<header><div class="wrap"><h1>Chapter 4–6 Mixed Exam Practice：20 Questions with Complete Solutions</h1><p>依照老師考古題習慣設計：英文題目、中文翻譯、操作過程、圖形狀態、程式追蹤、完整解答。範圍混合 Chapter 4 Linked Lists、Chapter 5 Trees、Chapter 6 Graphs。共 20 題，其中 5 題為程式題。</p></div></header>
+<main class="wrap">
+<section class="toolbar"><button onclick="openAll()">全部展開</button><button class="secondary" onclick="closeAll()">全部收合</button><button class="ghost" onclick="window.print()">列印 / 另存 PDF</button></section>
+<section class="toc"><h2>首頁目錄</h2>
+<a href="#q1">Q1 Array vs Linked</a><a href="#q2">Q2 Insert/Delete Chain</a><a href="#q3">Q3 Reverse Program</a><a href="#q4">Q4 Circular List</a><a href="#q5">Q5 Polynomial</a><a href="#q6">Q6 Sparse Matrix</a><a href="#q7">Q7 Tree Terminology</a><a href="#q8">Q8 LCRS</a><a href="#q9">Q9 Traversal Program</a><a href="#q10">Q10 Threaded Tree</a><a href="#q11">Q11 Heap Build</a><a href="#q12">Q12 Heap Program</a><a href="#q13">Q13 BST Insert/Search</a><a href="#q14">Q14 BST Delete/Rank</a><a href="#q15">Q15 Disjoint Set</a><a href="#q16">Q16 Graph Basics</a><a href="#q17">Q17 Graph Representation</a><a href="#q18">Q18 DFS/BFS Program</a><a href="#q19">Q19 dfn/low</a><a href="#q20">Q20 MST</a>
+</section>
+<section class="exam-box"><h2>出題習慣對應</h2><p>這 20 題刻意混合老師常考的五種模式：一、給資料結構要求畫出最終狀態；二、要求每一步操作狀態；三、比較資料結構複雜度；四、追蹤 C++ 程式；五、根據圖判斷 DFS/BFS、MST、dfn/low、articulation point。程式題共 5 題：Q3、Q9、Q12、Q14、Q18。</p></section>
+
+<article class="accordion open" id="q1"><button class="acc-head"><span>Q1：Sequential Representation vs. Linked Representation</span><span>＋/－</span></button><div class="acc-body">
+<h3>Question</h3><div class="box">Given an ordered list EAT → FAT → HAT, compare the cost of inserting GAT before HAT using an array representation and a singly linked list representation. Explain which links or elements must be changed.</div>
+<h3>中文翻譯</h3><p>給定有序串列 EAT → FAT → HAT，比較用陣列表示法與單向鏈結串列表示法，在 HAT 前插入 GAT 的成本，並說明必須改變哪些元素或指標。</p>
+<p><span class="tag">Chapter 4</span><span class="tag">Array vs Linked</span><span class="tag">O(n) / O(1)</span></p>
+<h3>動態圖解</h3><div class="stepper"><div id="anim-q1" class="svgbox"></div><div><div id="text-q1" class="step-text"></div><button onclick="prevStep('q1')">上一步</button><button onclick="nextStep('q1')">下一步</button><button onclick="replay('q1')">重播</button></div></div>
+<h3>中文解析</h3><ol><li>陣列中間插入：必須先把 HAT 往後搬，空出 index 2。</li><li>鏈結串列中間插入：只要知道前一個節點 FAT，就能改兩個 link。</li><li>老師常考陷阱：linked list 的插入 O(1) 是指「已經有前一個節點指標」的情況；如果要先搜尋 FAT，仍需 O(n)。</li></ol>
+<div class="box answer"><b>Answer：</b>Array insertion in the middle costs O(n) because elements after the insertion point must be shifted. Singly linked list insertion after FAT costs O(1) if the pointer to FAT is already known: newNode->link = FAT->link; FAT->link = newNode.</div>
+</div></article>
+
+<article class="accordion" id="q2"><button class="acc-head"><span>Q2：Singly Linked List Insert and Delete Trace</span><span>＋/－</span></button><div class="acc-body">
+<h3>Question</h3><div class="box">A chain initially contains 10 → 20 → 30. Execute Insert50(x), where x points to the node 20, and then Delete(x, y), where x points to the node 20 and y points to the node 10. Show the final chain.</div>
+<h3>中文翻譯</h3><p>一條 chain 原本為 10 → 20 → 30。先執行 Insert50(x)，其中 x 指向 20；再執行 Delete(x,y)，其中 x 指向 20、y 指向 10。請畫出最後的 chain。</p>
+<p><span class="tag">ChainNode</span><span class="tag">Insert50</span><span class="tag">Delete</span></p>
+<h3>動態圖解</h3><div class="stepper"><div id="anim-q2" class="svgbox"></div><div><div id="text-q2" class="step-text"></div><button onclick="prevStep('q2')">上一步</button><button onclick="nextStep('q2')">下一步</button><button onclick="replay('q2')">重播</button></div></div>
+<h3>中文解析</h3><ol><li>Insert50(x) 是插在 x 後面，所以 50 會插在 20 後面。</li><li>刪除 x=20 時，因為 x 不是 first，所以 y->link = x->link。</li><li>刪除後 10 會直接指向 50。</li></ol>
+<div class="box answer"><b>Answer：</b>Initial: 10 → 20 → 30. After Insert50(20): 10 → 20 → 50 → 30. After Delete(20,10): 10 → 50 → 30.</div>
+<div class="box warning"><b>常見錯誤：</b>很多人會把 50 插在 20 前面，但課本的 Insert50(x) 是 insert after x。</div>
+</div></article>
+
+<article class="accordion" id="q3"><button class="acc-head"><span>Q3：Program Question 1 — Reverse a Chain In-Place</span><span>程式題</span></button><div class="acc-body">
+<h3>Question</h3><div class="box program">Write a C++ function to reverse a singly linked list in-place. Then trace the list 10 → 20 → 30 → 40 after the function finishes.</div>
+<h3>中文翻譯</h3><p>請寫出 C++ 函式，將單向鏈結串列原地反轉，並追蹤 10 → 20 → 30 → 40 反轉後的結果。</p>
+<h3>反轉動畫</h3><div class="stepper"><div id="anim-q3" class="svgbox"></div><div><div id="text-q3" class="step-text"></div><button onclick="prevStep('q3')">上一步</button><button onclick="nextStep('q3')">下一步</button><button onclick="replay('q3')">重播</button></div></div>
+<h3>完整 C++ 程式碼</h3><div class="code-wrap"><button class="copy-btn" onclick="copyCode('code3')">複製程式碼</button><pre class="code"><code id="code3">#include &lt;iostream&gt;
+using namespace std;
+
+struct Node {
+    int data;       // 節點資料
+    Node* link;     // 指向下一個節點
+    Node(int d, Node* next = nullptr) : data(d), link(next) {}
+};
+
+// 函式功能：將 first 所指向的單向鏈結串列原地反轉
+// 參數：first 是串列第一個節點的指標，使用參考傳入，才能更新真正的表頭
+// 時間複雜度：O(n)，每個節點處理一次
+// 空間複雜度：O(1)，只使用 current、previous、r 三個指標
+void Reverse(Node*& first) {
+    Node* current = first;      // current 指向目前正在處理的節點
+    Node* previous = nullptr;   // previous 指向已反轉部分的第一個節點
+
+    while (current != nullptr) {
+        Node* r = previous;           // r 暫存 previous
+        previous = current;           // previous 前進到 current
+        current = current-&gt;link;      // current 先移到下一個節點
+        previous-&gt;link = r;           // 將目前節點 link 反轉回去
+    }
+
+    first = previous; // previous 最後會停在原本最後一個節點，成為新的 first
+}
+
+void Print(Node* p) {
+    while (p) {
+        cout &lt;&lt; p-&gt;data;
+        if (p-&gt;link) cout &lt;&lt; " -&gt; ";
+        p = p-&gt;link;
+    }
+    cout &lt;&lt; endl;
+}
+
+int main() {
+    Node* first = new Node(10, new Node(20, new Node(30, new Node(40))));
+    Reverse(first);
+    Print(first); // 40 -&gt; 30 -&gt; 20 -&gt; 10
+    return 0;
+}</code></pre></div>
+<h3>函式說明</h3><div class="box kv"><div>Reverse(Node*& first)</div><div>原地反轉整條 singly linked list，最後更新 first。</div><div>current</div><div>目前正在處理的節點。</div><div>previous</div><div>已經反轉好的前半段開頭。</div><div>r</div><div>暫存 previous，避免 link 改掉後遺失。</div></div>
+<div class="box answer"><b>Answer：</b>反轉後為 40 → 30 → 20 → 10。</div>
+</div></article>
+
+<article class="accordion" id="q4"><button class="acc-head"><span>Q4：Circular List with a Header Node</span><span>＋/－</span></button><div class="acc-body">
+<h3>Question</h3><div class="box">An empty circular list has a header node head, and head->link points to itself. Execute InsertFront(30), InsertFront(20), InsertFront(10). Show the final circular list.</div>
+<h3>中文翻譯</h3><p>一個含 header node 的空 circular list 中，head->link 指向自己。依序執行 InsertFront(30)、InsertFront(20)、InsertFront(10)，請畫出最後結果。</p>
+<h3>圖解</h3><div class="stepper"><div id="anim-q4" class="svgbox"></div><div><div id="text-q4" class="step-text"></div><button onclick="prevStep('q4')">上一步</button><button onclick="nextStep('q4')">下一步</button><button onclick="replay('q4')">重播</button></div></div>
+<h3>中文解析</h3><ol><li>Header node 的好處是空串列不用特別寫 if-else。</li><li>InsertFront 每次都是插在 head 後面。</li><li>最後順序會是 head → 10 → 20 → 30 → head。</li></ol>
+<div class="box answer"><b>Answer：</b>Final circular list: head → 10 → 20 → 30 → head.</div>
+</div></article>
+
+<article class="accordion" id="q5"><button class="acc-head"><span>Q5：Polynomial Addition Using Linked Lists</span><span>＋/－</span></button><div class="acc-body">
+<h3>Question</h3><div class="box">Let A(x)=3x^14+2x^8+1 and B(x)=8x^14−3x^10+10x^6. Add A and B using linked-list polynomial representation sorted by decreasing exponents.</div>
+<h3>中文翻譯</h3><p>令 A(x)=3x^14+2x^8+1，B(x)=8x^14−3x^10+10x^6。使用依 exponent 遞減排序的 linked-list polynomial 表示法做相加。</p>
+<h3>比較動畫</h3><div class="stepper"><div id="anim-q5" class="svgbox"></div><div><div id="text-q5" class="step-text"></div><button onclick="prevStep('q5')">上一步</button><button onclick="nextStep('q5')">下一步</button><button onclick="replay('q5')">重播</button></div></div>
+<h3>中文解析</h3><ol><li>ai.exp == bi.exp：係數相加，3+8=11，所以得到 11x^14。</li><li>ai.exp &lt; bi.exp：copy B 的項，得到 −3x^10。</li><li>ai.exp &gt; bi.exp：copy A 的項，得到 2x^8。</li><li>B 還有 10x^6，A 還有 1。</li></ol>
+<div class="box answer"><b>Answer：</b>A(x)+B(x)=11x^14−3x^10+2x^8+10x^6+1. Time complexity is O(m+n).</div>
+</div></article>
+
+<article class="accordion" id="q6"><button class="acc-head"><span>Q6：Sparse Matrix Linked Representation</span><span>＋/－</span></button><div class="acc-body">
+<h3>Question</h3><div class="box">A sparse matrix has size 5×4 and nonzero entries: (0,0,2), (1,0,4), (1,3,3), (3,0,8), (3,3,1), (4,2,6). How many total nodes are required in the linked representation described in class?</div>
+<h3>中文翻譯</h3><p>一個 5×4 稀疏矩陣有 6 個非零元素。依照課堂的 linked sparse matrix 表示法，總共需要多少個節點？</p>
+<h3>圖解</h3><div class="svgbox"><svg viewBox="0 0 760 260"><text x="20" y="35" class="label" text-anchor="start">Formula: max{rows, cols} + nonzero elements + 1</text><rect x="70" y="70" width="210" height="120" rx="12" fill="#dbeafe" stroke="#2563eb"/><text x="175" y="100" class="label">Header nodes</text><text x="175" y="135" class="label">max{5,4}=5</text><rect x="310" y="70" width="210" height="120" rx="12" fill="#dcfce7" stroke="#16a34a"/><text x="415" y="100" class="label">Element nodes</text><text x="415" y="135" class="label">r=6</text><rect x="550" y="70" width="150" height="120" rx="12" fill="#fef3c7" stroke="#b45309"/><text x="625" y="100" class="label">Main head</text><text x="625" y="135" class="label">1</text><text x="380" y="230" class="label">Total = 5 + 6 + 1 = 12 nodes</text></svg></div>
+<h3>中文解析</h3><p>課堂表示法中，每一列 / 欄共用 header node，數量是 max{row, col}。此外每個 nonzero element 一個節點，再加一個總 headnode。</p>
+<div class="box answer"><b>Answer：</b>Total nodes = max{5,4}+6+1 = 12 nodes.</div>
+</div></article>
+
+<article class="accordion" id="q7"><button class="acc-head"><span>Q7：Tree Terminology</span><span>＋/－</span></button><div class="acc-body">
+<h3>Question</h3><div class="box"><pre>Given the tree:
+        A
+      / | \
+     B  C  D
+    / \    /|\
+   E   F  H I J
+  / \     |
+ K   L    M
+Answer: root, leaves, degree(D), parent(H), ancestors(M), and height.</pre></div>
+<h3>中文翻譯</h3><p>根據樹回答 root、leaf、degree(D)、parent(H)、ancestors(M)、height。</p>
+<h3>圖解</h3><div id="treeTerms" class="svgbox"></div>
+<h3>中文解析</h3><ol><li>Root 是最上層 A。</li><li>Leaves 是沒有 children 的節點。</li><li>degree(D) 是 D 的子樹數量，有 H、I、J，共 3。</li><li>ancestors(M) 是從 root 到 M 的路徑上，M 之前的節點。</li></ol>
+<div class="box answer"><b>Answer：</b>root=A；leaves={K,L,F,C,M,I,J}；degree(D)=3；parent(H)=D；ancestors(M)={A,D,H}；height=4 if root is level 1.</div>
+</div></article>
+
+<article class="accordion" id="q8"><button class="acc-head"><span>Q8：Forest / General Tree to Degree-Two Tree</span><span>＋/－</span></button><div class="acc-body">
+<h3>Question</h3><div class="box">Convert the general tree A(B(E,F), C, D(H,I,J)) into the left-child right-sibling representation. Then explain why the right child of the root is empty in the corresponding degree-two tree.</div>
+<h3>中文翻譯</h3><p>請將一般樹 A(B(E,F), C, D(H,I,J)) 轉成 left-child right-sibling 表示法，並說明對應 degree-two tree 中 root 的 right child 為什麼是空的。</p>
+<h3>動態圖解</h3><div class="stepper"><div id="anim-q8" class="svgbox"></div><div><div id="text-q8" class="step-text"></div><button onclick="prevStep('q8')">上一步</button><button onclick="nextStep('q8')">下一步</button><button onclick="replay('q8')">重播</button></div></div>
+<div class="box answer"><b>Answer：</b>A.left=B；B.right=C；C.right=D；B.left=E；E.right=F；D.left=H；H.right=I；I.right=J。Root A has no right sibling, so its right child in the degree-two tree is empty.</div>
+<div class="box warning"><b>常見錯誤：</b>right child 在 degree-two tree 裡代表 right sibling，不代表原一般樹的第二個 child。</div>
+</div></article>
+
+<article class="accordion" id="q9"><button class="acc-head"><span>Q9：Program Question 2 — Binary Tree Traversal Output</span><span>程式題</span></button><div class="acc-body">
+<h3>Question</h3><div class="box program"><pre>Given this binary tree, write the output of inorder, preorder, postorder, and level-order traversal.
+        A
+       / \
+      B   C
+     / \ / \
+    D  I F  G</pre></div>
+<h3>中文翻譯</h3><p>請寫出這棵二元樹的 inorder、preorder、postorder 與 level-order 結果，並提供 C++ 參考程式。</p>
+<h3>走訪動畫</h3><div class="box"><button onclick="setTraversalMode('in')">Inorder</button><button onclick="setTraversalMode('pre')">Preorder</button><button onclick="setTraversalMode('post')">Postorder</button><button onclick="setTraversalMode('level')">Level-order</button></div><div class="stepper"><div id="anim-q9" class="svgbox"></div><div><div id="text-q9" class="step-text"></div><button onclick="prevStep('q9')">上一步</button><button onclick="nextStep('q9')">下一步</button><button onclick="replay('q9')">重播</button></div></div>
+<h3>完整 C++ 程式碼</h3><div class="code-wrap"><button class="copy-btn" onclick="copyCode('code9')">複製程式碼</button><pre class="code"><code id="code9">#include &lt;iostream&gt;
+#include &lt;queue&gt;
+using namespace std;
+
+struct Node {
+    char data;       // 節點資料
+    Node* left;      // 左子樹
+    Node* right;     // 右子樹
+    Node(char d) : data(d), left(nullptr), right(nullptr) {}
+};
+
+void inorder(Node* root) {       // LVR：左、根、右
+    if (!root) return;
+    inorder(root-&gt;left);
+    cout &lt;&lt; root-&gt;data &lt;&lt; ' ';
+    inorder(root-&gt;right);
+}
+
+void preorder(Node* root) {      // VLR：根、左、右
+    if (!root) return;
+    cout &lt;&lt; root-&gt;data &lt;&lt; ' ';
+    preorder(root-&gt;left);
+    preorder(root-&gt;right);
+}
+
+void postorder(Node* root) {     // LRV：左、右、根
+    if (!root) return;
+    postorder(root-&gt;left);
+    postorder(root-&gt;right);
+    cout &lt;&lt; root-&gt;data &lt;&lt; ' ';
+}
+
+void levelorder(Node* root) {    // 使用 queue 做 level-order
+    if (!root) return;
+    queue&lt;Node*&gt; q;
+    q.push(root);
+    while (!q.empty()) {
+        Node* cur = q.front(); q.pop();
+        cout &lt;&lt; cur-&gt;data &lt;&lt; ' ';
+        if (cur-&gt;left) q.push(cur-&gt;left);
+        if (cur-&gt;right) q.push(cur-&gt;right);
+    }
+}</code></pre></div>
+<h3>函式說明</h3><div class="box kv"><div>inorder</div><div>左子樹 → 根 → 右子樹。</div><div>preorder</div><div>根 → 左子樹 → 右子樹。</div><div>postorder</div><div>左子樹 → 右子樹 → 根。</div><div>levelorder</div><div>使用 queue 逐層拜訪。</div></div>
+<div class="box answer"><b>Answer：</b>Inorder: D B I A F C G；Preorder: A B D I C F G；Postorder: D I B F G C A；Level-order: A B C D I F G.</div>
+</div></article>
+
+<article class="accordion" id="q10"><button class="acc-head"><span>Q10：Threaded Binary Tree Inorder Successor</span><span>＋/－</span></button><div class="acc-body">
+<h3>Question</h3><div class="box">In a threaded binary tree, the inorder sequence is D, I, B, A, F, C, G. What is the inorder successor of B, G, and D? Explain how rightThread helps.</div>
+<h3>中文翻譯</h3><p>Threaded binary tree 的 inorder 順序為 D, I, B, A, F, C, G。請問 B、G、D 的 inorder successor 是誰？並說明 rightThread 的幫助。</p>
+<h3>圖解</h3><div class="svgbox"><svg viewBox="0 0 780 260"><text x="35" y="35" class="label" text-anchor="start">Inorder sequence:</text><g transform="translate(30,70)"><rect x="0" y="0" width="70" height="42" fill="#dbeafe" stroke="#2563eb"/><text x="35" y="22" class="label">D</text><rect x="70" y="0" width="70" height="42" fill="#dbeafe" stroke="#2563eb"/><text x="105" y="22" class="label">I</text><rect x="140" y="0" width="70" height="42" fill="#fef3c7" stroke="#b45309"/><text x="175" y="22" class="label">B</text><rect x="210" y="0" width="70" height="42" fill="#dcfce7" stroke="#16a34a"/><text x="245" y="22" class="label">A</text><rect x="280" y="0" width="70" height="42" fill="#dbeafe" stroke="#2563eb"/><text x="315" y="22" class="label">F</text><rect x="350" y="0" width="70" height="42" fill="#dbeafe" stroke="#2563eb"/><text x="385" y="22" class="label">C</text><rect x="420" y="0" width="70" height="42" fill="#fef3c7" stroke="#b45309"/><text x="455" y="22" class="label">G</text></g><text x="50" y="170" class="label" text-anchor="start">successor(B)=A, successor(G)=head/null, successor(D)=I</text><text x="50" y="215" class="small">If rightThread is true, rightChild points directly to the inorder successor. If false, go to the leftmost node of the right subtree.</text></svg></div>
+<div class="box answer"><b>Answer：</b>successor(B)=A；successor(G)=none / head；successor(D)=I。rightThread=true 時不用 stack，直接沿 rightChild thread 找 successor，空間複雜度可降為 O(1)。</div>
+</div></article>
+
+<article class="accordion" id="q11"><button class="acc-head"><span>Q11：Build a Max Heap</span><span>＋/－</span></button><div class="acc-body">
+<h3>Question</h3><div class="box">Build a max heap from the array [4, 1, 3, 2, 16, 9, 10, 14, 8, 7] using bottom-up heapify. Show the final heap array.</div>
+<h3>中文翻譯</h3><p>請用 bottom-up heapify 將 [4,1,3,2,16,9,10,14,8,7] 建成 max heap，並寫出最後 heap array。</p>
+<h3>Heap 動畫</h3><div class="stepper"><div id="anim-q11" class="svgbox"></div><div><div id="text-q11" class="step-text"></div><button onclick="prevStep('q11')">上一步</button><button onclick="nextStep('q11')">下一步</button><button onclick="replay('q11')">重播</button></div></div>
+<h3>中文解析</h3><p>Bottom-up heapify 從最後一個非葉節點開始，也就是 index floor(n/2) 往 root 處理。每次把較大的 child 往上提，直到 parent 大於左右 child。</p>
+<div class="box answer"><b>Answer：</b>Final max heap array = [16, 14, 10, 8, 7, 9, 3, 2, 4, 1].</div>
+</div></article>
+
+<article class="accordion" id="q12"><button class="acc-head"><span>Q12：Program Question 3 — HeapSort Trace</span><span>程式題</span></button><div class="acc-body">
+<h3>Question</h3><div class="box program">Use the given Adjust and HeapSort idea to sort [4,1,3,2,16,9,10,14,8,7] into nondecreasing order. Provide commented C++ code and the final output.</div>
+<h3>中文翻譯</h3><p>使用 Adjust 與 HeapSort 的概念，把陣列 [4,1,3,2,16,9,10,14,8,7] 排成遞增順序，提供有中文註解的 C++ 程式與最後輸出。</p>
+<h3>Heap Sort 動畫</h3><div class="stepper"><div id="anim-q12" class="svgbox"></div><div><div id="text-q12" class="step-text"></div><button onclick="prevStep('q12')">上一步</button><button onclick="nextStep('q12')">下一步</button><button onclick="replay('q12')">重播</button></div></div>
+<h3>完整 C++ 程式碼</h3><div class="code-wrap"><button class="copy-btn" onclick="copyCode('code12')">複製程式碼</button><pre class="code"><code id="code12">#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+// 對 root 位置做 max heapify，heap 範圍是 a[1] 到 a[n]
+void Adjust(int a[], int root, int n) {
+    int e = a[root];             // 暫存 root 的值
+    int j = 2 * root;            // j 指向左孩子
+
+    for (; j &lt;= n; j *= 2) {
+        // 如果右孩子存在且比左孩子大，改選右孩子
+        if (j &lt; n && a[j] &lt; a[j + 1]) j++;
+
+        // 如果 e 已經比最大孩子大，可以放在目前位置
+        if (e &gt;= a[j]) break;
+
+        // 否則把較大的 child 往上提
+        a[j / 2] = a[j];
+    }
+
+    // 把 e 放到最後找到的位置
+    a[j / 2] = e;
+}
+
+void HeapSort(int a[], int n) {
+    // 1. bottom-up 建立 max heap
+    for (int i = n / 2; i &gt;= 1; --i) {
+        Adjust(a, i, n);
+    }
+
+    // 2. 每次把最大值 a[1] 換到最後，再縮小 heap
+    for (int i = n - 1; i &gt;= 1; --i) {
+        swap(a[1], a[i + 1]);
+        Adjust(a, 1, i);
+    }
+}
+
+int main() {
+    int a[11] = {0, 4, 1, 3, 2, 16, 9, 10, 14, 8, 7}; // a[0] 不用
+    HeapSort(a, 10);
+    for (int i = 1; i &lt;= 10; ++i) cout &lt;&lt; a[i] &lt;&lt; ' ';
+    return 0;
+}</code></pre></div>
+<h3>函式說明</h3><div class="box kv"><div>Adjust</div><div>維護以 root 為根的 max heap 性質。</div><div>HeapSort</div><div>先建 max heap，再反覆把最大值交換到右側排序區。</div><div>為什麼 a[0] 不用</div><div>投影片採用 heap[1..n]，parent/child index 公式較簡單。</div></div>
+<div class="box answer"><b>Answer：</b>Output: 1 2 3 4 7 8 9 10 14 16. Time complexity: O(n log n).</div>
+</div></article>
+
+<article class="accordion" id="q13"><button class="acc-head"><span>Q13：BST Build and Search Path</span><span>＋/－</span></button><div class="acc-body">
+<h3>Question</h3><div class="box">Insert the keys 7, 14, 10, 8, 16, 3, 2, 4, 1 into an initially empty BST. Then search for key 8 and key 15. Show the search paths.</div>
+<h3>中文翻譯</h3><p>把 7,14,10,8,16,3,2,4,1 依序插入空 BST，然後搜尋 8 與 15，寫出搜尋路徑。</p>
+<h3>BST 動畫</h3><div class="stepper"><div id="anim-q13" class="svgbox"></div><div><div id="text-q13" class="step-text"></div><button onclick="prevStep('q13')">上一步</button><button onclick="nextStep('q13')">下一步</button><button onclick="replay('q13')">重播</button></div></div>
+<h3>中文解析</h3><p>BST 左子樹比 root 小、右子樹比 root 大；插入順序不能重新排序。搜尋時每一步都要比較 key 與目前節點。</p>
+<div class="box answer"><b>Answer：</b>Search 8: 7 → 14 → 10 → 8, found. Search 15: 7 → 14 → 16 → null, not found.</div>
+</div></article>
+
+<article class="accordion" id="q14"><button class="acc-head"><span>Q14：Program Question 4 — BST Delete and Rank</span><span>程式題</span></button><div class="acc-body">
+<h3>Question</h3><div class="box program"><pre>Given BST keys: 6, 3, 15, 12, 10, 7.
+a. Delete key 6 using its inorder successor.
+b. If each node stores leftSize = 1 + number of nodes in its left subtree, explain how RankGet(4) works.</pre></div>
+<h3>中文翻譯</h3><p>給定 BST key：6,3,15,12,10,7。a. 使用 inorder successor 刪除 6。b. 如果每個節點存 leftSize，說明 RankGet(4) 如何找到第 4 小。</p>
+<h3>圖解</h3><div class="svgbox" id="q14svg"></div>
+<h3>參考 C++ 程式碼：RankGet</h3><div class="code-wrap"><button class="copy-btn" onclick="copyCode('code14')">複製程式碼</button><pre class="code"><code id="code14">// 搜尋第 r 小的元素，假設每個節點都有 leftSize 欄位
+// leftSize = 1 + 左子樹節點數，也就是目前 root 在自己子樹中的排名
+template &lt;class K, class E&gt;
+pair&lt;K, E&gt;* BST&lt;K, E&gt;::RankGet(int r) {
+    TreeNode&lt;pair&lt;K, E&gt;&gt;* p = root; // 從 root 開始
+
+    while (p) {
+        if (r &lt; p-&gt;leftSize) {
+            // 第 r 小在左子樹
+            p = p-&gt;leftChild;
+        } else if (r &gt; p-&gt;leftSize) {
+            // 第 r 小在右子樹，扣掉左子樹與目前節點
+            r -= p-&gt;leftSize;
+            p = p-&gt;rightChild;
+        } else {
+            // r 剛好等於 leftSize，目前節點就是第 r 小
+            return &amp;p-&gt;data;
+        }
+    }
+    return nullptr; // 找不到
+}</code></pre></div>
+<h3>中文解析</h3><ol><li>刪除有兩個 children 的節點時，可用 successor，也就是右子樹最小值。</li><li>6 的右子樹中最小值是 7，所以用 7 取代 6。</li><li>RankGet 每次利用 leftSize 判斷第 r 小在左邊、目前節點或右邊。</li></ol>
+<div class="box answer"><b>Answer：</b>Delete 6 by successor: successor is 7, so 7 replaces 6; original 7 node is removed from the left side of 10. Sorted order is 3,6,7,10,12,15 before deletion, so the 4th smallest before deletion is 10.</div>
+</div></article>
+
+<article class="accordion" id="q15"><button class="acc-head"><span>Q15：Disjoint Sets — Weighted Union and Collapsing Find</span><span>＋/－</span></button><div class="acc-body">
+<h3>Question</h3><div class="box"><pre>Initially parent[i] = -1 for i = 0..7.
+Apply WeightedUnion(0,1), WeightedUnion(2,3), WeightedUnion(0,2), WeightedUnion(4,5), WeightedUnion(6,7), WeightedUnion(4,6), WeightedUnion(0,4).
+Show the final parent array. Then perform CollapsingFind(7).</pre></div>
+<h3>中文翻譯</h3><p>parent[0..7] 初始都為 -1。依序做加權 union，寫出最後 parent array，然後執行 CollapsingFind(7)。</p>
+<h3>動態圖解</h3><div class="stepper"><div id="anim-q15" class="svgbox"></div><div><div id="text-q15" class="step-text"></div><button onclick="prevStep('q15')">上一步</button><button onclick="nextStep('q15')">下一步</button><button onclick="replay('q15')">重播</button></div></div>
+<h3>中文解析</h3><p>parent[root] 用負數記錄集合大小。WeightedUnion 會把較小集合掛到較大集合下。若大小相同，依照程式 else 分支，j 掛到 i。</p>
+<div class="box answer"><b>Answer：</b>After all weighted unions, one possible final array is [-8,0,0,2,0,4,4,6]. After CollapsingFind(7), path 7→6→4→0 is collapsed, so parent[7]=0 and parent[6]=0. Final array becomes [-8,0,0,2,0,4,0,0].</div>
+</div></article>
+
+<article class="accordion" id="q16"><button class="acc-head"><span>Q16：Graph Basics — Complete Graph, Degree, Path, Cycle</span><span>＋/－</span></button><div class="acc-body">
+<h3>Question</h3><div class="box"><pre>For an undirected graph with V={0,1,2,3} and E={(0,1),(0,2),(0,3),(1,2),(2,3)}:
+a. Is it complete?
+b. What is degree(0) and degree(1)?
+c. Is 0,1,2,3 a path?
+d. Is 0,1,2,0 a cycle?</pre></div>
+<h3>中文翻譯</h3><p>給定無向圖，判斷是否 complete、計算 degree、判斷 path 與 cycle。</p>
+<h3>圖解</h3><div class="svgbox" id="q16svg"></div>
+<h3>中文解析</h3><ol><li>4 個頂點的 complete undirected graph 需要 n(n−1)/2=6 條邊。</li><li>本圖只有 5 條邊，少了 (1,3)，所以不是 complete。</li><li>degree(0)=3，degree(1)=2。</li><li>0-1-2-3 每一段都有邊，所以是 path。</li><li>0-1-2-0 有邊 (0,1)、(1,2)、(2,0)，所以是 cycle。</li></ol>
+<div class="box answer"><b>Answer：</b>a. Not complete. b. degree(0)=3, degree(1)=2. c. Yes. d. Yes.</div>
+</div></article>
+
+<article class="accordion" id="q17"><button class="acc-head"><span>Q17：Adjacency Matrix vs. Adjacency List</span><span>＋/－</span></button><div class="acc-body">
+<h3>Question</h3><div class="box">For the graph in Q16, write its adjacency matrix and adjacency lists. Then state which representation is better for sparse graphs and which is faster for checking whether edge (u,v) exists.</div>
+<h3>中文翻譯</h3><p>針對 Q16 的圖，寫出 adjacency matrix 與 adjacency lists，並說明 sparse graph 適合哪一種，以及哪一種檢查邊是否存在較快。</p>
+<h3>表示法整理</h3><table class="mini-table"><tr><th>Vertex</th><th>Adjacency List</th></tr><tr><td>0</td><td>1, 2, 3</td></tr><tr><td>1</td><td>0, 2</td></tr><tr><td>2</td><td>0, 1, 3</td></tr><tr><td>3</td><td>0, 2</td></tr></table>
+<div class="svgbox"><svg viewBox="0 0 620 250"><text x="40" y="30" class="label" text-anchor="start">Adjacency matrix</text><g transform="translate(40,55)"><rect width="200" height="160" fill="#fff" stroke="#334155"/><text x="50" y="30" class="label">0</text><text x="90" y="30" class="label">1</text><text x="130" y="30" class="label">1</text><text x="170" y="30" class="label">1</text><text x="50" y="70" class="label">1</text><text x="90" y="70" class="label">0</text><text x="130" y="70" class="label">1</text><text x="170" y="70" class="label">0</text><text x="50" y="110" class="label">1</text><text x="90" y="110" class="label">1</text><text x="130" y="110" class="label">0</text><text x="170" y="110" class="label">1</text><text x="50" y="150" class="label">1</text><text x="90" y="150" class="label">0</text><text x="130" y="150" class="label">1</text><text x="170" y="150" class="label">0</text></g><text x="310" y="80" class="label" text-anchor="start">Matrix: O(n²) space, edge lookup O(1)</text><text x="310" y="125" class="label" text-anchor="start">List: O(n+e) space, good for sparse graphs</text><text x="310" y="170" class="label" text-anchor="start">Teacher trap: undirected matrix is symmetric</text></svg></div>
+<div class="box answer"><b>Answer：</b>Adjacency list is better for sparse graphs because it uses O(n+e) space. Adjacency matrix is faster for ExistsEdge(u,v), usually O(1).</div>
+</div></article>
+
+<article class="accordion" id="q18"><button class="acc-head"><span>Q18：Program Question 5 — DFS and BFS Trace</span><span>程式題</span></button><div class="acc-body">
+<h3>Question</h3><div class="box program"><pre>Given an undirected graph with adjacency lists:
+0: 1, 2
+1: 0, 3, 4
+2: 0, 5, 6
+3: 1, 7
+4: 1, 7
+5: 2, 7
+6: 2, 7
+7: 3, 4, 5, 6
+Starting from 0, write the DFS order and BFS order. Assume neighbors are visited in increasing order.</pre></div>
+<h3>中文翻譯</h3><p>給定無向圖 adjacency lists，從 0 開始，鄰居依照遞增順序拜訪，寫出 DFS 與 BFS 順序，並提供 C++ 程式。</p>
+<h3>DFS/BFS 動畫</h3><div class="box"><button onclick="setGraphMode('dfs')">DFS 動畫</button><button onclick="setGraphMode('bfs')">BFS 動畫</button></div><div class="stepper"><div id="anim-q18" class="svgbox"></div><div><div id="text-q18" class="step-text"></div><button onclick="prevStep('q18')">上一步</button><button onclick="nextStep('q18')">下一步</button><button onclick="replay('q18')">重播</button></div></div>
+<h3>完整 C++ 程式碼</h3><div class="code-wrap"><button class="copy-btn" onclick="copyCode('code18')">複製程式碼</button><pre class="code"><code id="code18">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+using namespace std;
+
+void DFS(int v, const vector&lt;vector&lt;int&gt;&gt;&amp; adj, vector&lt;bool&gt;&amp; visited) {
+    visited[v] = true;          // 標記目前節點已拜訪
+    cout &lt;&lt; v &lt;&lt; ' ';          // 輸出 DFS 拜訪順序
+    for (int w : adj[v]) {      // 依照 adjacency list 的順序拜訪鄰居
+        if (!visited[w]) DFS(w, adj, visited);
+    }
+}
+
+void BFS(int start, const vector&lt;vector&lt;int&gt;&gt;&amp; adj) {
+    vector&lt;bool&gt; visited(adj.size(), false);
+    queue&lt;int&gt; q;
+    visited[start] = true;
+    q.push(start);
+
+    while (!q.empty()) {
+        int v = q.front(); q.pop();
+        cout &lt;&lt; v &lt;&lt; ' ';
+        for (int w : adj[v]) {
+            if (!visited[w]) {
+                visited[w] = true; // 入隊前就標記，避免重複入隊
+                q.push(w);
+            }
+        }
+    }
+}
+
+int main() {
+    vector&lt;vector&lt;int&gt;&gt; adj = {
+        {1,2}, {0,3,4}, {0,5,6}, {1,7},
+        {1,7}, {2,7}, {2,7}, {3,4,5,6}
+    };
+    vector&lt;bool&gt; visited(8, false);
+    cout &lt;&lt; "DFS: "; DFS(0, adj, visited); cout &lt;&lt; endl;
+    cout &lt;&lt; "BFS: "; BFS(0, adj); cout &lt;&lt; endl;
+}</code></pre></div>
+<h3>中文解析</h3><p>DFS 像 preorder，一路走到底；BFS 像 level-order，使用 queue 逐層擴散。</p>
+<div class="box answer"><b>Answer：</b>DFS: 0, 1, 3, 7, 4, 5, 2, 6. BFS: 0, 1, 2, 3, 4, 5, 6, 7.</div>
+</div></article>
+
+<article class="accordion" id="q19"><button class="acc-head"><span>Q19：dfn / low and Articulation Points</span><span>＋/－</span></button><div class="acc-body">
+<h3>Question</h3><div class="box"><pre>Given DFS tree edges:
+3-4, 4-2, 2-1, 1-0, 3-5, 5-6, 6-7, 7-8, 7-9
+Back edges: 0-3 and 2-5.
+DFS starts at 3. Compute dfn and low values, then identify articulation points.</pre></div>
+<h3>中文翻譯</h3><p>給定 DFS tree edges 與 back edges，從 3 開始 DFS，請計算 dfn、low，並找出 articulation points。</p>
+<h3>圖解</h3><div class="svgbox" id="q19svg"></div>
+<h3>中文解析</h3><ol><li>dfn 是 DFS 拜訪順序。</li><li>low(w)=w 能透過 descendants 加最多一條 back edge 到達的最小 dfn。</li><li>非 root 節點 u 若存在 child w 使 low(w) ≥ dfn(u)，則 u 是 articulation point。</li><li>root 若有至少兩個 DFS children，則 root 是 articulation point。</li></ol>
+<table class="mini-table"><tr><th>vertex</th><th>3</th><th>4</th><th>2</th><th>1</th><th>0</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th></tr><tr><th>dfn</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td></tr><tr><th>low</th><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>3</td><td>6</td><td>6</td><td>9</td><td>10</td></tr></table>
+<div class="box answer"><b>Answer：</b>Articulation points: 3, 5, 6, 7. 其中 3 是 root 且有兩個 DFS children；5、6、7 都存在 child w 使 low(w) ≥ dfn(u)。</div>
+</div></article>
+
+<article class="accordion" id="q20"><button class="acc-head"><span>Q20：Minimum Spanning Tree — Kruskal vs. Prim</span><span>＋/－</span></button><div class="acc-body">
+<h3>Question</h3><div class="box"><pre>Given weighted edges:
+(0,5,10), (2,3,12), (1,6,14), (1,2,16), (3,6,18), (3,4,22), (4,6,24), (4,5,25), (0,1,28).
+a. Use Kruskal's algorithm to find the MST.
+b. Explain one difference between Kruskal and Prim.</pre></div>
+<h3>中文翻譯</h3><p>給定 weighted edges，使用 Kruskal 找 MST，並說明 Kruskal 與 Prim 的差異。</p>
+<h3>MST 動畫</h3><div class="stepper"><div id="anim-q20" class="svgbox"></div><div><div id="text-q20" class="step-text"></div><button onclick="prevStep('q20')">上一步</button><button onclick="nextStep('q20')">下一步</button><button onclick="replay('q20')">重播</button></div></div>
+<h3>中文解析</h3><ol><li>Kruskal：先把所有邊依 weight 排序。</li><li>由小到大選邊，但不能形成 cycle。</li><li>使用 Union-Find 判斷兩端點是否已在同一集合。</li><li>n=7 個 vertices，所以 MST 需要 6 條邊。</li></ol>
+<div class="box answer"><b>Answer：</b>MST edges: (0,5,10), (2,3,12), (1,6,14), (1,2,16), (3,4,22), (4,5,25). Total cost = 99. Kruskal grows a forest by adding globally smallest safe edges; Prim grows one tree from a starting vertex by adding the cheapest edge leaving the current tree.</div>
+</div></article>
+
+</main>
+<script>
+document.querySelectorAll('.acc-head').forEach(btn=>btn.addEventListener('click',()=>btn.parentElement.classList.toggle('open')));
+function openAll(){document.querySelectorAll('.accordion').forEach(a=>a.classList.add('open'));}
+function closeAll(){document.querySelectorAll('.accordion').forEach(a=>a.classList.remove('open'));}
+function copyCode(id){navigator.clipboard.writeText(document.getElementById(id).innerText).then(()=>alert('已複製程式碼'));}
+const state={};
+function nextStep(id){state[id].idx=Math.min(state[id].idx+1,state[id].steps.length-1);renderStep(id)}
+function prevStep(id){state[id].idx=Math.max(state[id].idx-1,0);renderStep(id)}
+function replay(id){state[id].idx=0;renderStep(id)}
+function renderStep(id){const s=state[id],it=s.steps[s.idx];document.getElementById('text-'+id).innerHTML=`第 ${s.idx+1} / ${s.steps.length} 步：${it.text}`;document.getElementById('anim-'+id).innerHTML=it.svg();}
+function node(cx,cy,t,cls=''){return `<g class="node ${cls}"><circle cx="${cx}" cy="${cy}" r="22"/><text class="label" x="${cx}" y="${cy}">${t}</text></g>`}
+function line(x1,y1,x2,y2,cls=''){return `<line class="edge ${cls}" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/>`}
+function cells(arr,hi=[],sortedFrom=999){return '<div class="array">'+arr.map((v,i)=>`<div class="cell ${hi.includes(i)?'active':''} ${i>=sortedFrom?'sorted':''}">${v}<br><small>[${i}]</small></div>`).join('')+'</div>'}
+function listSvg(items,hi=[],caption=''){let s='<svg viewBox="0 0 760 170">';let x=70;for(let i=0;i<items.length;i++){let cls=hi.includes(i)?'active':'';s+=`<rect x="${x}" y="55" width="70" height="42" fill="${hi.includes(i)?'#fde68a':'#dbeafe'}" stroke="#334155"/><text x="${x+35}" y="78" class="label">${items[i]}</text>`;if(i<items.length-1){s+=line(x+70,76,x+115,76)}x+=115;}s+=`<text x="30" y="35" class="label" text-anchor="start">${caption}</text></svg>`;return s}
+function q1Svg(stage){if(stage==0)return `<svg viewBox="0 0 780 260"><text x="30" y="35" class="label" text-anchor="start">Array before insertion</text>${cells(['EAT','FAT','HAT','',''],[])}</svg>`; if(stage==1)return `<svg viewBox="0 0 780 260"><text x="30" y="35" class="label" text-anchor="start">Array: shift HAT to the right, then put GAT</text>${cells(['EAT','FAT','GAT','HAT',''],[2,3])}</svg>`; if(stage==2)return listSvg(['EAT','FAT','HAT'],[1],'Linked list: pointer to FAT is known'); return listSvg(['EAT','FAT','GAT','HAT'],[2],'Change only two links: GAT->HAT, FAT->GAT');}
+function chainSvg(items,hi=[],caption=''){return listSvg(items,hi,caption)}
+function circularSvg(items,hi=[],caption=''){let s='<svg viewBox="0 0 760 220"><text x="30" y="30" class="label" text-anchor="start">'+caption+'</text>';let x=80;s+=node(x,100,'head','active');let prevx=x;for(let i=0;i<items.length;i++){x+=110;s+=line(prevx+22,100,x-22,100);s+=node(x,100,items[i],hi.includes(i)?'active':'');prevx=x;}s+=`<path class="edge blue" d="M ${prevx+22} 100 C ${prevx+80} 160, 40 160, 58 100"/>`;s+='</svg>';return s}
+function polySvg(step){const captions=['Compare 14 and 14: same exponent, add coefficients 3+8','Compare 8 and 10: copy B term -3x^10','Compare 8 and 6: copy A term 2x^8','Copy remaining terms: 10x^6 and 1'];const result=[['11x^14'],['11x^14','-3x^10'],['11x^14','-3x^10','2x^8'],['11x^14','-3x^10','2x^8','10x^6','1']][step];let s='<svg viewBox="0 0 880 250"><text x="30" y="30" class="label" text-anchor="start">'+captions[step]+'</text>';s+=`<text x="50" y="85" class="label" text-anchor="start">A: 3x^14 → 2x^8 → 1</text><text x="50" y="125" class="label" text-anchor="start">B: 8x^14 → -3x^10 → 10x^6</text><text x="50" y="185" class="label" text-anchor="start">C: ${result.join(' → ')}</text></svg>`;return s}
+function genTreeTerms(){const p={A:[360,40],B:[210,105],C:[360,105],D:[510,105],E:[150,175],F:[270,175],H:[450,175],I:[510,175],J:[570,175],K:[120,235],L:[180,235],M:[450,235]};let es=[['A','B'],['A','C'],['A','D'],['B','E'],['B','F'],['D','H'],['D','I'],['D','J'],['E','K'],['E','L'],['H','M']];let s='<svg viewBox="0 0 720 270">';for(const [a,b] of es)s+=line(p[a][0],p[a][1],p[b][0],p[b][1]);for(const k in p)s+=node(p[k][0],p[k][1],k,['K','L','F','C','M','I','J'].includes(k)?'done':k=='A'?'active':'');s+='</svg>';document.getElementById('treeTerms').innerHTML=s;}
+function lcrsSvg(stage){const p={A:[360,45],B:[250,115],C:[360,115],D:[470,115],E:[190,190],F:[300,190],H:[410,190],I:[520,190],J:[630,190]};let es=[];if(stage>=0)es.push(['A','B']);if(stage>=1)es.push(['B','C'],['C','D']);if(stage>=2)es.push(['B','E'],['E','F']);if(stage>=3)es.push(['D','H'],['H','I'],['I','J']);let s='<svg viewBox="0 0 760 250">';for(const [a,b] of es)s+=line(p[a][0],p[a][1],p[b][0],p[b][1],(['B','C'].includes(a)||['C','D'].includes(a)||['E','F'].includes(a)||['H','I'].includes(a)||['I','J'].includes(a))?'red':'');for(const k in p)s+=node(p[k][0],p[k][1],k);s+=`<text x="30" y="230" class="small">Green/normal: left child. Red/horizontal: right sibling.</text></svg>`;return s}
+const treeP={A:[370,45],B:[240,120],C:[500,120],D:[170,200],I:[310,200],F:[440,200],G:[560,200]};const treeE=[['A','B'],['A','C'],['B','D'],['B','I'],['C','F'],['C','G']];
+function treeSvg(hi=[],done=[]){let s='<svg viewBox="0 0 720 250">';for(const [a,b] of treeE)s+=line(treeP[a][0],treeP[a][1],treeP[b][0],treeP[b][1]);for(const k in treeP)s+=node(treeP[k][0],treeP[k][1],k,hi.includes(k)?'active':done.includes(k)?'done':'');s+='</svg>';return s}
+function traversalSteps(mode){const orders={in:['D','B','I','A','F','C','G'],pre:['A','B','D','I','C','F','G'],post:['D','I','B','F','G','C','A'],level:['A','B','C','D','I','F','G']};const names={in:'Inorder LVR',pre:'Preorder VLR',post:'Postorder LRV',level:'Level-order'};return orders[mode].map((v,i)=>({text:`${names[mode]}：目前輸出 ${v}，累積輸出 ${orders[mode].slice(0,i+1).join(' ')}`,svg:()=>treeSvg([v],orders[mode].slice(0,i))}))}
+function setTraversalMode(m){state.q9.steps=traversalSteps(m);state.q9.idx=0;renderStep('q9')}
+function heapSvg(arr,hi=[],sortedFrom=999){const pos=[[360,45],[240,115],[480,115],[150,190],[300,190],[430,190],[570,190],[95,260],[205,260],[275,260],[335,260]];let s='<svg viewBox="0 0 720 335">';for(let i=0;i<arr.length&&i<sortedFrom;i++){let l=2*i+1,r=2*i+2;if(l<arr.length&&l<sortedFrom)s+=line(pos[i][0],pos[i][1],pos[l][0],pos[l][1]);if(r<arr.length&&r<sortedFrom)s+=line(pos[i][0],pos[i][1],pos[r][0],pos[r][1]);}for(let i=0;i<arr.length&&i<sortedFrom;i++)s+=node(pos[i][0],pos[i][1],arr[i],hi.includes(i)?'active':'');s+='</svg>'+cells(arr,hi,sortedFrom);return s}
+const heapBuild=[
+{a:[4,1,3,2,16,9,10,14,8,7],h:[4],t:'從最後一個非葉節點開始 bottom-up heapify。'},
+{a:[4,1,3,14,16,9,10,2,8,7],h:[3,7],t:'節點 2 與較大孩子 14 交換。'},
+{a:[4,1,10,14,16,9,3,2,8,7],h:[2,6],t:'節點 3 與較大孩子 10 交換。'},
+{a:[4,16,10,14,7,9,3,2,8,1],h:[1,4,9],t:'節點 1 向下調整，16 上升。'},
+{a:[16,14,10,8,7,9,3,2,4,1],h:[0],t:'調整 root 後完成 max heap。'}];
+const sortBuild=[
+{a:[16,14,10,8,7,9,3,2,4,1],h:[0],sf:10,t:'先建立 max heap。'},
+{a:[14,8,10,4,7,9,3,2,1,16],h:[0],sf:9,t:'取出 16 放到右側排序區。'},
+{a:[10,8,9,4,7,1,3,2,14,16],h:[0],sf:8,t:'取出 14 放到右側排序區。'},
+{a:[9,8,3,4,7,1,2,10,14,16],h:[0],sf:7,t:'取出 10 放到右側排序區。'},
+{a:[1,2,3,4,7,8,9,10,14,16],h:[],sf:0,t:'排序完成。'}];
+const bstP={7:[360,45],3:[230,115],14:[500,115],2:[150,190],4:[300,190],10:[440,190],16:[560,190],1:[100,260],8:[390,260]};const bstE=[[7,3],[7,14],[3,2],[3,4],[14,10],[14,16],[2,1],[10,8]];
+function bstSvg(present,hi=[]){let s='<svg viewBox="0 0 720 320">';for(const [a,b] of bstE)if(present.includes(a)&&present.includes(b))s+=line(bstP[a][0],bstP[a][1],bstP[b][0],bstP[b][1]);for(const k of present)s+=node(bstP[k][0],bstP[k][1],k,hi.includes(k)?'active':'');s+='</svg>';return s}
+function parentCells(arr,hi=[]){return '<div class="array">'+arr.map((v,i)=>`<div class="cell ${hi.includes(i)?'active':''}">${v}<br><small>${i}</small></div>`).join('')+'</div>'}
+function graphSvg(hi=[],treeEdges=[],extra=[]){const p={0:[360,45],1:[230,115],2:[490,115],3:[160,190],4:[300,190],5:[430,190],6:[570,190],7:[360,270]};const all=[[0,1],[0,2],[1,3],[1,4],[2,5],[2,6],[3,7],[4,7],[5,7],[6,7]];let s='<svg viewBox="0 0 720 330">';for(const e of all){const red=treeEdges.some(t=>(t[0]==e[0]&&t[1]==e[1])||(t[0]==e[1]&&t[1]==e[0]));s+=line(p[e[0]][0],p[e[0]][1],p[e[1]][0],p[e[1]][1],red?'red':'');}for(const k in p)s+=node(p[k][0],p[k][1],k,hi.includes(Number(k))?'active':'');s+='</svg>';return s}
+function graphSteps(mode){const order=mode=='dfs'?[0,1,3,7,4,5,2,6]:[0,1,2,3,4,5,6,7];return order.map((v,i)=>({text:`${mode.toUpperCase()} 目前拜訪 ${v}，順序：${order.slice(0,i+1).join(' → ')}`,svg:()=>graphSvg([v])}))}
+function setGraphMode(m){state.q18.steps=graphSteps(m);state.q18.idx=0;renderStep('q18')}
+function q14Svg(){document.getElementById('q14svg').innerHTML=`<svg viewBox="0 0 760 270"><text x="40" y="30" class="label" text-anchor="start">Delete 6 by successor: successor = 7</text>${node(360,60,'6','bad')}${node(250,130,'3')}${node(480,130,'15')}${node(420,200,'12')}${node(360,245,'10')}${node(300,245,'7','active')}${line(360,60,250,130)}${line(360,60,480,130)}${line(480,130,420,200)}${line(420,200,360,245)}${line(360,245,300,245,'red')}<text x="430" y="250" class="small">7 replaces 6</text></svg>`}
+function q16Svg(){const p={0:[360,50],1:[220,180],2:[500,180],3:[360,250]};let es=[[0,1],[0,2],[0,3],[1,2],[2,3]];let s='<svg viewBox="0 0 720 300">';for(const [a,b] of es)s+=line(p[a][0],p[a][1],p[b][0],p[b][1]);for(const k in p)s+=node(p[k][0],p[k][1],k);s+=`<text x="30" y="35" class="small">Missing edge: (1,3), so not complete.</text></svg>`;document.getElementById('q16svg').innerHTML=s;}
+function q19Svg(){document.getElementById('q19svg').innerHTML=`<svg viewBox="0 0 780 360"><text x="30" y="30" class="label" text-anchor="start">DFS tree from 3, with back edges 0-3 and 2-5</text>${node(360,55,'3','active')}${node(250,105,'4')}${node(250,160,'2')}${node(250,215,'1')}${node(250,270,'0')}${node(480,105,'5','active')}${node(480,160,'6','active')}${node(480,215,'7','active')}${node(420,285,'8')}${node(540,285,'9')}${line(360,55,250,105,'red')}${line(250,105,250,160,'red')}${line(250,160,250,215,'red')}${line(250,215,250,270,'red')}${line(360,55,480,105,'red')}${line(480,105,480,160,'red')}${line(480,160,480,215,'red')}${line(480,215,420,285,'red')}${line(480,215,540,285,'red')}<path class="edge blue" d="M250 270 C140 180,160 80,360 55"/><path class="edge blue" d="M250 160 C340 130,380 120,480 105"/><text x="40" y="330" class="small">Articulation points: 3, 5, 6, 7</text></svg>`}
+function mstSvg(step){const p={0:[360,45],5:[230,110],1:[500,105],6:[430,175],2:[570,175],3:[500,250],4:[270,250]};const all=[[0,5,10],[0,1,28],[1,6,14],[1,2,16],[2,3,12],[3,6,18],[3,4,22],[4,6,24],[4,5,25]];const chosen=[[[0,5]],[[0,5],[2,3]],[[0,5],[2,3],[1,6]],[[0,5],[2,3],[1,6],[1,2]],[[0,5],[2,3],[1,6],[1,2],[3,4]],[[0,5],[2,3],[1,6],[1,2],[3,4],[4,5]]][step];let s='<svg viewBox="0 0 760 320">';for(const [a,b,w] of all){const red=chosen.some(e=>(e[0]==a&&e[1]==b)||(e[0]==b&&e[1]==a));s+=line(p[a][0],p[a][1],p[b][0],p[b][1],red?'red':'');s+=`<text x="${(p[a][0]+p[b][0])/2}" y="${(p[a][1]+p[b][1])/2-5}" class="small">${w}</text>`;}for(const k in p)s+=node(p[k][0],p[k][1],k);s+='</svg>';return s}
+function init(){
+state.q1={idx:0,steps:[0,1,2,3].map(i=>({text:['Array 原始狀態。','Array 插入中間需要搬移元素。','Linked list 已知 FAT 指標。','Linked list 改兩個 link 完成插入。'][i],svg:()=>q1Svg(i)}))};
+state.q2={idx:0,steps:[{text:'原始 chain：10 → 20 → 30。',svg:()=>chainSvg(['10','20','30'],[1],'x points to 20')},{text:'Insert50(x)：把 50 插在 20 後面。',svg:()=>chainSvg(['10','20','50','30'],[2],'After insertion')},{text:'Delete x=20：10 直接連到 50。',svg:()=>chainSvg(['10','50','30'],[1],'Final chain')} ]};
+state.q3={idx:0,steps:[{text:'current=10, previous=null，準備反轉第一個 link。',svg:()=>chainSvg(['10','20','30','40'],[0],'Before reverse')},{text:'10 的 link 指回 null，previous=10。',svg:()=>chainSvg(['10'],[0],'Reversed part: 10')},{text:'20 指回 10，previous=20。',svg:()=>chainSvg(['20','10'],[0],'Reversed part: 20 → 10')},{text:'30 指回 20。',svg:()=>chainSvg(['30','20','10'],[0],'Reversed part: 30 → 20 → 10')},{text:'40 指回 30，first 更新為 40。',svg:()=>chainSvg(['40','30','20','10'],[0],'Final')} ]};
+state.q4={idx:0,steps:[{text:'空 circular list：head 指回自己。',svg:()=>circularSvg([],[],'Empty')},{text:'InsertFront(30)：插在 head 後面。',svg:()=>circularSvg(['30'],[0],'head → 30 → head')},{text:'InsertFront(20)：20 插到 head 後面。',svg:()=>circularSvg(['20','30'],[0],'head → 20 → 30 → head')},{text:'InsertFront(10)：最後為 head → 10 → 20 → 30 → head。',svg:()=>circularSvg(['10','20','30'],[0],'Final')} ]};
+state.q5={idx:0,steps:[0,1,2,3].map(i=>({text:['同次方項相加。','B 的 exponent 較大，copy B。','A 的 exponent 較大，copy A。','剩餘項目依序接到答案。'][i],svg:()=>polySvg(i)}))};
+state.q8={idx:0,steps:[0,1,2,3].map(i=>({text:['A 的 left child 是 B。','B、C、D 是 siblings，用 right sibling 串起來。','B 的 children E、F 用 left child + right sibling。','D 的 children H、I、J 用 left child + right sibling。'][i],svg:()=>lcrsSvg(i)}))};
+state.q9={idx:0,steps:traversalSteps('in')};
+state.q11={idx:0,steps:heapBuild.map(o=>({text:o.t,svg:()=>heapSvg(o.a,o.h)}))};
+state.q12={idx:0,steps:sortBuild.map(o=>({text:o.t,svg:()=>heapSvg(o.a,o.h,o.sf)}))};
+const bstInsert=[7,14,10,8,16,3,2,4,1];let pres=[];state.q13={idx:0,steps:bstInsert.map(v=>{pres=[...pres,v];let copy=[...pres];return {text:`插入 ${v}，目前 BST 節點：${copy.join(', ')}`,svg:()=>bstSvg(copy,[v])}}).concat([{text:'搜尋 8：7 → 14 → 10 → 8。',svg:()=>bstSvg([7,14,10,8,16,3,2,4,1],[7,14,10,8])},{text:'搜尋 15：7 → 14 → 16 → null，找不到。',svg:()=>bstSvg([7,14,10,8,16,3,2,4,1],[7,14,16])}])};
+state.q15={idx:0,steps:[{text:'初始每個元素自成一個集合。',svg:()=>parentCells([-1,-1,-1,-1,-1,-1,-1,-1])},{text:'Union(0,1), Union(2,3)。',svg:()=>parentCells([-2,0,-2,2,-1,-1,-1,-1],[0,2])},{text:'Union(0,2)：兩個大小 2 的集合合併。',svg:()=>parentCells([-4,0,0,2,-1,-1,-1,-1],[0])},{text:'Union(4,5), Union(6,7), Union(4,6)。',svg:()=>parentCells([-4,0,0,2,-4,4,4,6],[4])},{text:'Union(0,4)：全部合併成一個集合。',svg:()=>parentCells([-8,0,0,2,0,4,4,6],[0])},{text:'CollapsingFind(7)：7→6→4→0，將 7 和 6 直接指向 0。',svg:()=>parentCells([-8,0,0,2,0,4,0,0],[7,6,0])}]};
+state.q18={idx:0,steps:graphSteps('dfs')};
+state.q20={idx:0,steps:[0,1,2,3,4,5].map(i=>({text:['選最小安全邊 (0,5,10)。','選 (2,3,12)。','選 (1,6,14)。','選 (1,2,16)，合併 1-6 與 2-3。','跳過會成 cycle 的邊後，選 (3,4,22)。','選 (4,5,25)，MST 完成。'][i],svg:()=>mstSvg(i)}))};
+for(const id of Object.keys(state))renderStep(id);genTreeTerms();q14Svg();q16Svg();q19Svg();}
+init();
+</script>
+</body>
+</html>

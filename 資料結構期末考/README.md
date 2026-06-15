@@ -6,60 +6,51 @@
 index.html
 ```
 
-本版修正為：**總主頁只放五個大目錄入口**，不展開每個目錄內的所有子頁。
+## 本次修正
 
----
-
-## 網站結構
+已將原附件中的：
 
 ```text
-資料結構期末考網站/
-├── index.html
-├── README.md
-├── 老師的考古題.html
-├── 教學網站/
-│   └── index.html
-├── AI 所出的期末練習題/
-│   └── index.html
-├── 各章節的動畫說明/
-│   └── index.html
-└── 書本練習說明/
-    └── index.html
+Chapter4_7_章考古題練習網站/
 ```
 
----
+完整複製成：
 
-## 五大目錄連結
+```text
+AI 所出的期末練習題/
+```
 
-1. 第一個目錄：教學網站  
-   連到：`教學網站/index.html`
+因此第三個目錄現在會連到：
 
-2. 第二個目錄：老師的考古題  
-   連到：`老師的考古題.html`  
-   注意：這是 only one HTML，所有考古題細項統整在這一頁裡。
+```text
+AI 所出的期末練習題/index.html
+```
 
-3. 第三個目錄：AI 所出的期末練習題  
-   連到：`AI 所出的期末練習題/index.html`  
-   注意：這裡對應你截圖中的資料夾「AI 所出的期末練習題」。
+## AI 所出的期末練習題內含 HTML
 
-4. 第四個目錄：各章節的動畫說明  
-   連到：`各章節的動畫說明/index.html`
+共 7 個：
 
-5. 第五個目錄：書本練習說明  
-   連到：`書本練習說明/index.html`
+- `Chapter4_6_Mixed_20Questions_考古題練習與完整詳解.html`
+- `Chapter6B_GraphsPartII_完整教學網站.html`
+- `Lesson4_LinkedLists_考古題練習與完整詳解.html`
+- `Lesson5A_TreesPartI_考古題練習與完整詳解.html`
+- `Lesson5B_TreesPartII_考古題練習與完整詳解.html`
+- `Lesson6A_GraphsPartI_考古題練習與完整詳解.html`
+- `Lesson7_Sorting_考古題練習與完整詳解_修改版.html`
 
----
 
-## 使用方式
+## 五大目錄
 
-1. 解壓縮 ZIP。
-2. 開啟最外層 `index.html`。
-3. 點選五大目錄其中一個。
-4. 進入該目錄主頁後，再選擇裡面的細項頁面。
-
----
-
-## 部署方式
-
-可直接放到 GitHub Pages、Replit、Netlify 或一般網頁伺服器。  
-請保持所有資料夾名稱與相對路徑不變。
+```text
+index.html
+├─ 第一個目錄：教學網站
+│  └─ 資料結構教學網站/index.html
+├─ 第二個目錄：老師的考古題
+│  └─ 資料結構考古題.html
+├─ 第三個目錄：AI 所出的期末練習題
+│  └─ AI 所出的期末練習題/index.html
+├─ 第四個目錄：各章節的動畫說明
+│  └─ DataStructure_AnimationLinks/index.html
+└─ 第五個目錄：書本練習說明
+   └─ 書本練習說明/index.html
+```

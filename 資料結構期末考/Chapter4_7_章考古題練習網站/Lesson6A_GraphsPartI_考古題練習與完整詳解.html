@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 6A Graphs Part I 考古題練習與完整詳解</title>
+<style>
+:root{--bg:#f5f7fb;--card:#fff;--ink:#172033;--muted:#5b6475;--main:#2563eb;--main2:#0f766e;--warn:#b45309;--soft:#e8f0ff;--code:#101827;--line:#d8e0ef;--hi:#facc15;--ok:#16a34a;--bad:#dc2626}
+*{box-sizing:border-box}body{margin:0;font-family:"Noto Sans TC","Microsoft JhengHei",Arial,sans-serif;background:linear-gradient(180deg,#eef4ff,var(--bg));color:var(--ink);line-height:1.75}header{padding:36px 22px;background:linear-gradient(135deg,#1d4ed8,#0f766e);color:white}header h1{margin:0;font-size:30px}header p{max-width:1100px;margin:10px 0 0;color:#e7f2ff}.wrap{max-width:1180px;margin:0 auto;padding:22px}.toolbar,.toc,.exam-box{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;margin:18px 0;box-shadow:0 8px 20px #1e293b12}button{border:0;border-radius:10px;padding:9px 14px;background:var(--main);color:white;cursor:pointer;font-weight:700;margin:4px}button.secondary{background:#475569}button.ghost{background:#e2e8f0;color:#1e293b}button:hover{filter:brightness(.96)}.toc a{display:inline-block;margin:5px 6px;padding:7px 10px;border-radius:999px;background:var(--soft);color:#1d4ed8;text-decoration:none;font-weight:700}.accordion{margin:16px 0;border-radius:18px;overflow:hidden;border:1px solid var(--line);background:var(--card);box-shadow:0 10px 22px #1e293b12}.acc-head{width:100%;text-align:left;padding:18px 22px;background:#fff;color:var(--ink);display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);font-size:19px}.acc-head span:first-child{font-weight:900}.acc-body{display:none;padding:22px}.accordion.open .acc-body{display:block}.tag{display:inline-block;background:#dcfce7;color:#166534;border-radius:999px;padding:2px 9px;margin:2px;font-size:13px;font-weight:800}.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}@media(max-width:850px){.grid{grid-template-columns:1fr}}.box{background:#f8fafc;border:1px solid var(--line);border-radius:14px;padding:14px;margin:12px 0}.answer{border-left:5px solid var(--ok);background:#f0fdf4}.warning{border-left:5px solid var(--warn);background:#fff7ed}.bad{border-left:5px solid var(--bad);background:#fef2f2}h2,h3,h4{line-height:1.35}h3{margin-top:22px;color:#0f3f7a}pre{white-space:pre-wrap;word-break:break-word}.code-wrap{position:relative;margin:12px 0}.copy-btn{position:absolute;right:10px;top:10px;background:#334155;font-size:13px}code,pre.code{font-family:Consolas,"Courier New",monospace}pre.code{background:var(--code);color:#dbeafe;padding:48px 16px 16px;border-radius:14px;overflow:auto;line-height:1.55}.svgbox{background:white;border:1px solid var(--line);border-radius:14px;padding:8px;margin:10px 0;overflow:auto}svg{max-width:100%;height:auto}.node circle{fill:#fff;stroke:#334155;stroke-width:2}.node.active circle{fill:var(--hi);stroke:#b45309;stroke-width:3}.node.done circle{fill:#bbf7d0;stroke:#15803d}.node.bad circle{fill:#fecaca;stroke:#dc2626}.edge{stroke:#475569;stroke-width:2;fill:none}.edge.active{stroke:#dc2626;stroke-width:4}.edge.good{stroke:#16a34a;stroke-width:4}.edge.dash{stroke-dasharray:7 5}.edge.blue{stroke:#2563eb}.label{font-size:15px;font-weight:800;text-anchor:middle;dominant-baseline:middle;fill:#172033}.small{font-size:13px;fill:#64748b}.stepper{display:grid;grid-template-columns:minmax(300px,1fr) 330px;gap:16px;align-items:start}@media(max-width:850px){.stepper{grid-template-columns:1fr}}.step-text{font-weight:800;background:#fff7ed;border:1px solid #fed7aa;border-radius:12px;padding:12px;color:#7c2d12}.array{display:flex;flex-wrap:wrap;gap:4px;margin:8px 0}.cell{min-width:42px;text-align:center;border:1px solid #64748b;background:white;border-radius:6px;padding:6px;font-weight:800}.cell.active{background:var(--hi)}.cell.done{background:#bbf7d0}.matrix{border-collapse:collapse;margin:10px 0;background:white}.matrix td,.matrix th{border:1px solid #64748b;padding:8px 12px;text-align:center}.matrix th{background:#e2e8f0}.kv{display:grid;grid-template-columns:190px 1fr;gap:8px}.kv div{padding:8px;border-bottom:1px dashed #cbd5e1}.flow svg text{font-size:13px;font-weight:700}.legend{display:flex;flex-wrap:wrap;gap:10px;font-size:14px;color:#475569}.dot{display:inline-block;width:13px;height:13px;border-radius:50%;border:2px solid #334155;margin-right:5px;vertical-align:-2px}.dot.red{background:#fecaca;border-color:#dc2626}.dot.green{background:#bbf7d0;border-color:#15803d}.dot.yellow{background:#facc15;border-color:#b45309}
+</style>
+</head>
+<body>
+<header><div class="wrap"><h1>Lesson 6A Graphs Part I 考古題練習與完整詳解</h1><p>依照老師考古題風格設計：英文題目、中文翻譯與解析、完整步驟、動態 SVG 圖解、C++ 程式碼中文註解與函式說明。重點放在 Graph 定義、表示法、DFS/BFS、biconnected components、dfn/low、MST、Kruskal、Prim、Sollin。</p></div></header>
+<main class="wrap">
+<section class="toolbar"><button onclick="openAll()">全部展開</button><button class="secondary" onclick="closeAll()">全部收合</button><button class="ghost" onclick="window.print()">列印 / 另存 PDF</button></section>
+<section class="toc"><h2>首頁目錄</h2>
+<a href="#q1">第1題 Graph abstraction</a><a href="#q2">第2題 Graph definitions</a><a href="#q3">第3題 Complete graph / degree</a><a href="#q4">第4題 Path / cycle / connected</a><a href="#q5">第5題 Adjacency matrix</a><a href="#q6">第6題 Adjacency list / multilist</a><a href="#q7">第7題 DFS</a><a href="#q8">第8題 BFS</a><a href="#q9">第9題 Spanning tree</a><a href="#q10">第10題 dfn / low / articulation</a><a href="#q11">第11題 MST / Kruskal</a><a href="#q12">第12題 Prim / Sollin</a>
+</section>
+<section class="exam-box"><h2>考試重點整理區</h2><p>最可能考：<b>graph representation、adjacency matrix/list、DFS/BFS traversal order、DFS/BFS spanning tree、back edge / cross edge、dfn / low、articulation point、Kruskal、Prim</b>。老師常用題型是「給一張圖，要求你一步一步列出順序、矩陣、表格、MST 邊集合、程式 trace」。</p></section>
+
+<article class="accordion open" id="q1"><button class="acc-head"><span>第 1 題：Graph Abstraction 圖形抽象化</span><span>＋/－</span></button><div class="acc-body">
+<h3>題目原文</h3><div class="box">Explain how the Königsberg Bridge Problem can be abstracted into a graph. What are the vertices and edges? Why is there no Eulerian walk?</div>
+<h3>中文翻譯</h3><p>說明如何把科尼格茲堡橋問題抽象成圖形。什麼是 vertex？什麼是 edge？為什麼沒有 Eulerian walk？</p>
+<h3>核心觀念</h3><p><span class="tag">abstraction</span><span class="tag">vertex</span><span class="tag">edge</span><span class="tag">Eulerian walk</span></p>
+<h3>動態圖解</h3><div class="stepper"><div id="anim-q1" class="svgbox"></div><div><div id="text-q1" class="step-text"></div><button onclick="prevStep('q1')">上一步</button><button onclick="nextStep('q1')">下一步</button><button onclick="replay('q1')">重播</button></div></div>
+<h3>解題步驟</h3><ol><li>把陸地區域抽象成 vertex。</li><li>把橋抽象成 edge。</li><li>Eulerian walk 要每條 edge 走一次且回到起點，所有 vertex 的 degree 必須是偶數。</li><li>科尼格茲堡橋抽象圖中有奇數 degree 的 vertex，所以不可能。</li></ol>
+<div class="box answer"><b>完整答案：</b>The land areas become vertices, and the bridges become edges. Since an Eulerian walk returning to the start requires every vertex to have even degree, but this graph contains vertices of odd degree, no Eulerian walk exists.</div>
+<div class="box warning"><b>考試容易錯：</b>不要把橋當 vertex；橋是 edge，陸地才是 vertex。</div>
+</div></article>
+
+<article class="accordion" id="q2"><button class="acc-head"><span>第 2 題：Graph Definition 有向圖與無向圖</span><span>＋/－</span></button><div class="acc-body">
+<h3>題目原文</h3><div class="box"><pre>Given V = {0,1,2,3} and E = {(0,1),(0,2),(1,2),(2,3)}.
+a. Is this graph directed or undirected?
+b. List all vertices adjacent to vertex 2.
+c. If the graph were directed with edges <0,1>, <0,2>, <1,2>, <2,3>, what are the outgoing neighbors of 2?</pre></div>
+<h3>中文翻譯</h3><p>給定 V 與 E，判斷是有向圖或無向圖，列出 vertex 2 的相鄰點；若改成 directed graph，求 2 的 outgoing neighbors。</p>
+<h3>圖解</h3><div class="svgbox" id="q2svg"></div>
+<h3>解題步驟</h3><ol><li>使用小括號 (u,v) 表示無向邊時，(u,v) 與 (v,u) 相同。</li><li>vertex 2 連到 0、1、3，所以 adjacent vertices 是 0、1、3。</li><li>若是 directed edges，從 2 出發只有 &lt;2,3&gt;，所以 outgoing neighbor 是 3。</li></ol>
+<div class="box answer"><b>完整答案：</b>a. Undirected graph. b. Adjacent to 2: {0,1,3}. c. In the directed version, outgoing neighbors of 2: {3}。</div>
+<div class="box warning"><b>考試容易錯：</b>Directed graph 要分 outgoing 與 incoming；undirected graph 則不用分方向。</div>
+</div></article>
+
+<article class="accordion" id="q3"><button class="acc-head"><span>第 3 題：Complete Graph 與 Degree</span><span>＋/－</span></button><div class="acc-body">
+<h3>題目原文</h3><div class="box">For a simple graph with n vertices, how many edges are in a complete undirected graph and a complete directed graph? If n = 5, compute both values. Also explain the degree-sum formula for an undirected graph.</div>
+<h3>中文翻譯</h3><p>n 個頂點的 simple graph，如果是 complete undirected graph 與 complete directed graph，各有幾條邊？n=5 時計算答案。並說明無向圖 degree-sum 公式。</p>
+<h3>核心觀念</h3><p><span class="tag">complete graph</span><span class="tag">degree</span><span class="tag">degree-sum formula</span></p>
+<h3>圖解</h3><div class="svgbox" id="q3svg"></div>
+<h3>解題步驟</h3><ol><li>Complete undirected graph：任兩點之間一條無向邊，所以 C(n,2)=n(n−1)/2。</li><li>Complete directed graph：每對不同頂點有兩個方向，所以 n(n−1)。</li><li>n=5：undirected = 5×4/2=10；directed = 5×4=20。</li><li>無向圖每條邊會貢獻兩個 incident degree，所以所有 degree 總和 = 2e。</li></ol>
+<div class="box answer"><b>完整答案：</b>Complete undirected graph has n(n−1)/2 edges; complete directed graph has n(n−1) edges. When n=5, they are 10 and 20. For undirected graphs, ∑degree(v)=2|E|。</div>
+</div></article>
+
+<article class="accordion" id="q4"><button class="acc-head"><span>第 4 題：Path、Cycle、Connected Components</span><span>＋/－</span></button><div class="acc-body">
+<h3>題目原文</h3><div class="box"><pre>Given the graph with edges:
+(0,1), (1,2), (2,0), (2,3), (4,5)
+a. Is 0,1,2,0 a cycle?
+b. Is the graph connected?
+c. How many connected components are there?</pre></div>
+<h3>中文翻譯</h3><p>根據邊集合判斷路徑是否形成 cycle、整張圖是否 connected，以及 connected components 有幾個。</p>
+<h3>動態圖解</h3><div class="stepper"><div id="anim-q4" class="svgbox"></div><div><div id="text-q4" class="step-text"></div><button onclick="prevStep('q4')">上一步</button><button onclick="nextStep('q4')">下一步</button><button onclick="replay('q4')">重播</button></div></div>
+<h3>解題步驟</h3><ol><li>0→1、1→2、2→0 都存在，且起點等於終點，所以 0,1,2,0 是 cycle。</li><li>vertex 4 和 5 只彼此相連，沒有連到 0,1,2,3。</li><li>component 1 是 {0,1,2,3}；component 2 是 {4,5}。</li></ol>
+<div class="box answer"><b>完整答案：</b>a. Yes. b. No. c. There are 2 connected components: {0,1,2,3} and {4,5}。</div>
+</div></article>
+
+<article class="accordion" id="q5"><button class="acc-head"><span>第 5 題：Adjacency Matrix 鄰接矩陣</span><span>＋/－</span></button><div class="acc-body">
+<h3>題目原文</h3><div class="box"><pre>Construct the adjacency matrix of the following directed graph:
+V = {0,1,2,3}
+E = {<0,1>, <0,2>, <1,2>, <2,0>, <2,3>, <3,3>}
+Then find the in-degree and out-degree of vertex 2.</pre></div>
+<h3>中文翻譯</h3><p>請建立 directed graph 的 adjacency matrix，並計算 vertex 2 的 in-degree 與 out-degree。</p>
+<h3>圖解與矩陣</h3><div class="grid"><div class="svgbox" id="q5svg"></div><div class="svgbox" id="q5matrix"></div></div>
+<h3>解題步驟</h3><ol><li>Directed matrix 中，a[i][j]=1 表示有邊 i→j。</li><li>第 2 列代表 vertex 2 出去的邊：2→0、2→3，所以 out-degree(2)=2。</li><li>第 2 欄代表進入 vertex 2 的邊：0→2、1→2，所以 in-degree(2)=2。</li><li>3→3 是 self loop，矩陣 a[3][3]=1。</li></ol>
+<div class="box answer"><b>完整答案：</b>Matrix rows 0..3 are [0,1,1,0], [0,0,1,0], [1,0,0,1], [0,0,0,1]。in-degree(2)=2，out-degree(2)=2。</div>
+<div class="box warning"><b>考試容易錯：</b>Directed graph 的 in-degree 看「欄 column」，out-degree 看「列 row」。</div>
+</div></article>
+
+<article class="accordion" id="q6"><button class="acc-head"><span>第 6 題：Adjacency List / Multilist</span><span>＋/－</span></button><div class="acc-body">
+<h3>題目原文</h3><div class="box"><pre>For the undirected graph with edges:
+(0,1), (0,2), (1,2), (1,3), (2,3)
+a. Write its adjacency list.
+b. How many edge nodes are needed in an adjacency multilist?
+c. Which representation is better for a sparse graph?</pre></div>
+<h3>中文翻譯</h3><p>給定無向圖，寫出 adjacency list，判斷 adjacency multilist 需要多少 edge node，並說明 sparse graph 較適合哪種表示法。</p>
+<h3>圖解</h3><div class="svgbox" id="q6svg"></div>
+<h3>解題步驟</h3><ol><li>無向圖 adjacency list 每條邊會出現在兩個 vertex 的 list 中。</li><li>Adjacency multilist 是「每條邊一個 edge node」，所以 5 條邊需要 5 個 edge nodes。</li><li>Sparse graph 邊數少，adjacency list 空間 O(n+e)，比 matrix O(n²) 好。</li></ol>
+<div class="box answer"><b>完整答案：</b>Adj[0]={1,2}; Adj[1]={0,2,3}; Adj[2]={0,1,3}; Adj[3]={1,2}。Adjacency multilist needs 5 edge nodes. Sparse graph usually uses adjacency list。</div>
+</div></article>
+
+<article class="accordion" id="q7"><button class="acc-head"><span>第 7 題：Depth-First Search，DFS</span><span>＋/－</span></button><div class="acc-body">
+<h3>題目原文</h3><div class="box"><pre>Starting from vertex 0, perform DFS on the graph below.
+When there is a choice, always visit the smallest-numbered unvisited neighbor first.
+Edges: (0,1), (0,2), (1,3), (1,4), (2,5), (2,6), (3,7), (4,7), (5,7), (6,7)
+Write the DFS traversal order and draw the DFS spanning tree.</pre></div>
+<h3>中文翻譯</h3><p>從 0 開始做 DFS；若有多個選擇，先走編號最小的未拜訪鄰點。請寫出 DFS 順序並畫出 DFS spanning tree。</p>
+<h3>DFS 動態圖解</h3><div class="stepper"><div id="anim-q7" class="svgbox"></div><div><div id="text-q7" class="step-text"></div><button onclick="prevStep('q7')">上一步</button><button onclick="nextStep('q7')">下一步</button><button onclick="replay('q7')">重播</button></div></div>
+<h3>解題步驟</h3><ol><li>DFS 是一路往深處走，走到底再 backtrack。</li><li>從 0 開始：0→1→3→7。</li><li>7 的未拜訪鄰點依序可到 4、5、6；先走 4，再回來走 5，再走 2，再走 6。</li><li>依照最小編號鄰點規則，完整 order 如答案。</li></ol>
+<div class="box answer"><b>完整答案：</b>DFS order: 0, 1, 3, 7, 4, 5, 2, 6。DFS tree edges: (0,1), (1,3), (3,7), (7,4), (7,5), (5,2), (2,6)。</div>
+<h3>完整 C++ 參考程式碼</h3><div class="code-wrap"><button class="copy-btn" onclick="copyCode('code7')">複製程式碼</button><pre class="code"><code id="code7">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+class Graph {
+private:
+    int n;                         // 頂點數量
+    vector&lt;vector&lt;int&gt;&gt; adj;       // adjacency list
+    vector&lt;bool&gt; visited;          // 紀錄是否拜訪過
+
+    // DFS 的遞迴工作函式
+    void dfsWork(int v) {
+        visited[v] = true;         // 標記目前頂點已拜訪
+        cout &lt;&lt; v &lt;&lt; " ";         // 輸出 DFS 拜訪順序
+
+        // 依照題目規定：小編號鄰點優先
+        for (int w : adj[v]) {
+            if (!visited[w]) {
+                dfsWork(w);        // 往尚未拜訪的鄰點深入
+            }
+        }
+    }
+
+public:
+    Graph(int vertices) : n(vertices), adj(vertices), visited(vertices, false) {}
+
+    // 加入無向邊
+    void addEdge(int u, int v) {
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+
+    // 排序所有 adjacency list，保證小編號優先
+    void sortNeighbors() {
+        for (auto &list : adj) sort(list.begin(), list.end());
+    }
+
+    // DFS driver function
+    void DFS(int start) {
+        fill(visited.begin(), visited.end(), false);
+        dfsWork(start);
+        cout &lt;&lt; endl;
+    }
+};</code></pre></div>
+<h3>函式說明</h3><div class="box kv"><div>addEdge(u,v)</div><div>加入無向邊，因此 u 的 list 加 v，v 的 list 也加 u。</div><div>sortNeighbors()</div><div>把每個 adjacency list 排序，符合「小編號優先」。</div><div>dfsWork(v)</div><div>遞迴拜訪 v，再往未拜訪鄰點深入。</div><div>DFS(start)</div><div>初始化 visited，並從 start 開始。</div></div>
+</div></article>
+
+<article class="accordion" id="q8"><button class="acc-head"><span>第 8 題：Breadth-First Search，BFS</span><span>＋/－</span></button><div class="acc-body">
+<h3>題目原文</h3><div class="box"><pre>Using the same graph as Question 7, perform BFS starting from vertex 0.
+When there is a choice, always visit the smallest-numbered unvisited neighbor first.
+Write the BFS traversal order and draw the BFS spanning tree.</pre></div>
+<h3>中文翻譯</h3><p>使用第 7 題同一張圖，從 0 做 BFS；若有多個選擇，先拜訪編號最小的未拜訪鄰點。請寫出 BFS 順序與 BFS spanning tree。</p>
+<h3>BFS 動態圖解</h3><div class="stepper"><div id="anim-q8" class="svgbox"></div><div><div id="text-q8" class="step-text"></div><button onclick="prevStep('q8')">上一步</button><button onclick="nextStep('q8')">下一步</button><button onclick="replay('q8')">重播</button></div></div>
+<h3>解題步驟</h3><ol><li>BFS 使用 queue，一層一層往外擴散。</li><li>從 0 開始，先放入 1、2。</li><li>處理 1 時加入 3、4；處理 2 時加入 5、6。</li><li>最後處理 3 時加入 7。</li></ol>
+<div class="box answer"><b>完整答案：</b>BFS order: 0, 1, 2, 3, 4, 5, 6, 7。BFS tree edges: (0,1), (0,2), (1,3), (1,4), (2,5), (2,6), (3,7)。</div>
+<h3>完整 C++ 參考程式碼</h3><div class="code-wrap"><button class="copy-btn" onclick="copyCode('code8')">複製程式碼</button><pre class="code"><code id="code8">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+void BFS(const vector&lt;vector&lt;int&gt;&gt;& adj, int start) {
+    vector&lt;bool&gt; visited(adj.size(), false); // 紀錄是否拜訪過
+    queue&lt;int&gt; q;                            // BFS 使用 queue
+
+    visited[start] = true;                    // 起點先標記
+    q.push(start);                            // 起點進入 queue
+
+    while (!q.empty()) {
+        int v = q.front();                    // 取出最早進入 queue 的頂點
+        q.pop();
+        cout &lt;&lt; v &lt;&lt; " ";
+
+        // 依序檢查 v 的鄰點
+        for (int w : adj[v]) {
+            if (!visited[w]) {
+                visited[w] = true;            // 入 queue 前就標記，避免重複入隊
+                q.push(w);
+            }
+        }
+    }
+}</code></pre></div>
+<div class="box warning"><b>考試容易錯：</b>BFS 是「進 queue 時」就標記 visited，不是出 queue 才標記，否則同一節點可能重複入隊。</div>
+</div></article>
+
+<article class="accordion" id="q9"><button class="acc-head"><span>第 9 題：DFS / BFS Spanning Tree 與 Edge Classification</span><span>＋/－</span></button><div class="acc-body">
+<h3>題目原文</h3><div class="box">Explain the difference between a DFS spanning tree and a BFS spanning tree. In an undirected graph, what is the difference between back edges and cross edges with respect to a spanning tree?</div>
+<h3>中文翻譯</h3><p>說明 DFS spanning tree 與 BFS spanning tree 的差異。對於無向圖，相對於 spanning tree，back edge 與 cross edge 有何差別？</p>
+<h3>圖解</h3><div class="grid"><div class="svgbox" id="q9dfs"></div><div class="svgbox" id="q9bfs"></div></div>
+<h3>解題步驟</h3><ol><li>DFS tree 像 preorder tree traversal，會一路深入。</li><li>BFS tree 像 level-order traversal，會一層一層展開。</li><li>Back edge：非 tree edge 連到 ancestor / descendant。</li><li>Cross edge：非 tree edge 連到彼此沒有 ancestor-descendant 關係的節點。</li></ol>
+<div class="box answer"><b>完整答案：</b>DFS spanning tree is depth-oriented and built by recursive exploration; BFS spanning tree is level-oriented and built by queue expansion. A back edge connects a vertex to its ancestor or descendant in the spanning tree, while a cross edge connects vertices with no ancestor-descendant relationship。</div>
+<div class="box warning"><b>考試容易錯：</b>投影片中特別強調：DFS spanning tree 沒有 cross edges；BFS spanning tree 沒有 back edges。</div>
+</div></article>
+
+<article class="accordion" id="q10"><button class="acc-head"><span>第 10 題：dfn / low / Articulation Point</span><span>＋/－</span></button><div class="acc-body">
+<h3>題目原文</h3><div class="box"><pre>Given the following DFS tree information:
+Vertex:  0  1  2  3  4  5  6
+Parent: -  0  1  1  3  3  5
+dfn:     1  2  3  4  5  6  7
+low:     1  1  3  2  5  4  7
+Which non-root vertices are articulation points? Use the rule low(w) >= dfn(u).</pre></div>
+<h3>中文翻譯</h3><p>根據 DFS tree、dfn 與 low 值，使用 low(w) ≥ dfn(u) 判斷哪些非 root vertex 是 articulation point。</p>
+<h3>動態分析</h3><div class="stepper"><div id="anim-q10" class="svgbox"></div><div><div id="text-q10" class="step-text"></div><button onclick="prevStep('q10')">上一步</button><button onclick="nextStep('q10')">下一步</button><button onclick="replay('q10')">重播</button></div></div>
+<h3>解題步驟</h3><ol><li>非 root vertex u 是 articulation point，若存在 child w 使 low(w) ≥ dfn(u)。</li><li>u=1 有 children 2,3。low(2)=3 ≥ dfn(1)=2，所以 1 是 articulation point。</li><li>u=3 有 children 4,5。low(4)=5 ≥ dfn(3)=4，所以 3 是 articulation point。</li><li>u=5 有 child 6。low(6)=7 ≥ dfn(5)=6，所以 5 是 articulation point。</li></ol>
+<div class="box answer"><b>完整答案：</b>Articulation points are vertices 1, 3, and 5。</div>
+<h3>完整 C++ 參考程式碼</h3><div class="code-wrap"><button class="copy-btn" onclick="copyCode('code10')">複製程式碼</button><pre class="code"><code id="code10">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+class ArticulationFinder {
+private:
+    int n, timer;
+    vector&lt;vector&lt;int&gt;&gt; adj;
+    vector&lt;int&gt; dfn, low, parent;
+    vector&lt;bool&gt; isArt;
+
+    void dfs(int u) {
+        dfn[u] = low[u] = ++timer;       // 設定 DFS 拜訪順序與初始 low
+        int childCount = 0;              // root 需要用 child 數判斷
+
+        for (int w : adj[u]) {
+            if (dfn[w] == 0) {           // tree edge：w 尚未拜訪
+                parent[w] = u;
+                childCount++;
+                dfs(w);
+                low[u] = min(low[u], low[w]);
+
+                // 非 root：存在 child w 使 low[w] >= dfn[u]
+                if (parent[u] != -1 && low[w] >= dfn[u]) {
+                    isArt[u] = true;
+                }
+            } else if (w != parent[u]) { // back edge：不能把 parent edge 算進去
+                low[u] = min(low[u], dfn[w]);
+            }
+        }
+
+        // root：至少有兩個 DFS children 才是 articulation point
+        if (parent[u] == -1 && childCount >= 2) {
+            isArt[u] = true;
+        }
+    }
+
+public:
+    ArticulationFinder(int vertices) : n(vertices), timer(0), adj(vertices),
+        dfn(vertices, 0), low(vertices, 0), parent(vertices, -1), isArt(vertices, false) {}
+
+    void addEdge(int u, int v) {
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+
+    void findArticulationPoints() {
+        for (int i = 0; i &lt; n; i++) {
+            if (dfn[i] == 0) dfs(i);
+        }
+        for (int i = 0; i &lt; n; i++) {
+            if (isArt[i]) cout &lt;&lt; i &lt;&lt; " ";
+        }
+    }
+};</code></pre></div>
+<h3>函式說明</h3><div class="box kv"><div>dfn[u]</div><div>DFS 拜訪 u 的順序。</div><div>low[u]</div><div>u 或其 descendants 經由最多一條 back edge 可到達的最小 dfn。</div><div>low[w] ≥ dfn[u]</div><div>代表 w 的子樹無法回到 u 的祖先，所以 u 是關節點。</div><div>root case</div><div>DFS root 若有兩個以上 children，才是 articulation point。</div></div>
+</div></article>
+
+<article class="accordion" id="q11"><button class="acc-head"><span>第 11 題：Minimum Spanning Tree / Kruskal</span><span>＋/－</span></button><div class="acc-body">
+<h3>題目原文</h3><div class="box"><pre>Use Kruskal's algorithm to find an MST of the weighted graph:
+Edges: (0,5,10), (2,3,12), (1,6,14), (1,2,16), (3,6,18), (3,4,22), (4,6,24), (4,5,25), (0,1,28)
+Show the selected edges and total cost.</pre></div>
+<h3>中文翻譯</h3><p>請使用 Kruskal 演算法找出 weighted graph 的 MST，列出被選的邊與總成本。</p>
+<h3>Kruskal 動態圖解</h3><div class="stepper"><div id="anim-q11" class="svgbox"></div><div><div id="text-q11" class="step-text"></div><button onclick="prevStep('q11')">上一步</button><button onclick="nextStep('q11')">下一步</button><button onclick="replay('q11')">重播</button></div></div>
+<h3>解題步驟</h3><ol><li>Kruskal 先將所有邊依 weight 由小到大排序。</li><li>每次選最小邊，但不能形成 cycle。</li><li>選到 |V|−1 條邊就完成。</li><li>需要用 disjoint set / union-find 判斷兩端點是否已在同一集合。</li></ol>
+<div class="box answer"><b>完整答案：</b>Selected edges: (0,5,10), (2,3,12), (1,6,14), (1,2,16), skip (3,6,18), select (3,4,22), skip (4,6,24), select (4,5,25)。Total cost = 10+12+14+16+22+25 = 99。</div>
+<h3>完整 C++ 參考程式碼</h3><div class="code-wrap"><button class="copy-btn" onclick="copyCode('code11')">複製程式碼</button><pre class="code"><code id="code11">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+struct Edge {
+    int u, v, w; // u、v 為端點，w 為權重
+};
+
+class DisjointSet {
+private:
+    vector&lt;int&gt; parent;
+public:
+    DisjointSet(int n) : parent(n, -1) {}
+
+    // collapsing find：找 root，並做路徑壓縮
+    int find(int x) {
+        if (parent[x] &lt; 0) return x;
+        return parent[x] = find(parent[x]);
+    }
+
+    // weighted union：小集合接到大集合下
+    bool unite(int a, int b) {
+        int ra = find(a), rb = find(b);
+        if (ra == rb) return false; // 同集合，加入會形成 cycle
+        if (parent[ra] &gt; parent[rb]) swap(ra, rb); // ra 集合較大或相等
+        parent[ra] += parent[rb];
+        parent[rb] = ra;
+        return true;
+    }
+};
+
+int main() {
+    int V = 7;
+    vector&lt;Edge&gt; edges = {
+        {0,5,10}, {2,3,12}, {1,6,14}, {1,2,16}, {3,6,18},
+        {3,4,22}, {4,6,24}, {4,5,25}, {0,1,28}
+    };
+
+    sort(edges.begin(), edges.end(), [](const Edge& a, const Edge& b) {
+        return a.w &lt; b.w; // 由小到大排序
+    });
+
+    DisjointSet ds(V);
+    int total = 0, count = 0;
+
+    for (const Edge& e : edges) {
+        if (ds.unite(e.u, e.v)) { // 若不形成 cycle，選取此邊
+            cout &lt;&lt; "Select (" &lt;&lt; e.u &lt;&lt; "," &lt;&lt; e.v &lt;&lt; ") weight=" &lt;&lt; e.w &lt;&lt; endl;
+            total += e.w;
+            count++;
+            if (count == V - 1) break;
+        }
+    }
+    cout &lt;&lt; "Total cost = " &lt;&lt; total &lt;&lt; endl;
+    return 0;
+}</code></pre></div>
+</div></article>
+
+<article class="accordion" id="q12"><button class="acc-head"><span>第 12 題：Prim vs. Sollin Algorithm</span><span>＋/－</span></button><div class="acc-body">
+<h3>題目原文</h3><div class="box">Compare Prim's algorithm and Sollin's algorithm for constructing a minimum spanning tree. Explain how each algorithm grows the MST and give the time complexity of Prim's algorithm when implemented with a priority queue.</div>
+<h3>中文翻譯</h3><p>比較 Prim 與 Sollin 演算法如何建立 MST，並說明 Prim 使用 priority queue 時的時間複雜度。</p>
+<h3>圖解比較</h3><div class="grid"><div class="svgbox" id="q12prim"></div><div class="svgbox" id="q12sollin"></div></div>
+<h3>解題步驟</h3><ol><li>Prim：從單一 vertex 開始，每次加入一條連接 T 與非 T 的最小安全邊。</li><li>Sollin：一開始每個 vertex 是一個 component，每一輪每個 component 選一條最便宜的 outgoing edge。</li><li>Prim 一次通常長一條邊；Sollin 一輪可以同時加入多條邊並 merge components。</li><li>Prim 使用 priority queue 時，常見時間複雜度為 O(E log V)。</li></ol>
+<div class="box answer"><b>完整答案：</b>Prim grows one tree from a chosen start vertex by repeatedly adding the minimum safe edge from the current tree to an outside vertex. Sollin starts with many components and lets each component choose its cheapest outgoing edge, then merges components. Prim with a priority queue runs in O(E log V)。</div>
+<div class="box warning"><b>考試容易錯：</b>Prim 不是先排序所有 edges；Kruskal 才是直接依 edge weight 排序。</div>
+</div></article>
+</main>
+
+<script>
+document.querySelectorAll('.acc-head').forEach(btn=>btn.addEventListener('click',()=>btn.parentElement.classList.toggle('open')));
+function openAll(){document.querySelectorAll('.accordion').forEach(a=>a.classList.add('open'));}
+function closeAll(){document.querySelectorAll('.accordion').forEach(a=>a.classList.remove('open'));}
+function copyCode(id){navigator.clipboard.writeText(document.getElementById(id).innerText).then(()=>alert('已複製程式碼'));}
+const state={};
+function nextStep(id){state[id].idx=Math.min(state[id].idx+1,state[id].steps.length-1);renderStep(id)}
+function prevStep(id){state[id].idx=Math.max(state[id].idx-1,0);renderStep(id)}
+function replay(id){state[id].idx=0;renderStep(id)}
+function renderStep(id){let st=state[id], item=st.steps[st.idx];document.getElementById('text-'+id).innerHTML=`第 ${st.idx+1} / ${st.steps.length} 步：${item.text}`;document.getElementById('anim-'+id).innerHTML=item.svg()}
+function line(x1,y1,x2,y2,cls='edge'){return `<line class="${cls}" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/>`}
+function arrow(x1,y1,x2,y2,cls='edge'){return `<defs><marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#475569"/></marker></defs><line class="${cls}" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" marker-end="url(#arr)"/>`}
+function node(id,x,y,cls='node'){return `<g class="${cls}"><circle cx="${x}" cy="${y}" r="24"/><text class="label" x="${x}" y="${y}">${id}</text></g>`}
+function graphSvg(pos,edges,hiNodes=[],hiEdges=[],directed=false,view='0 0 560 340'){
+ let s=`<svg viewBox="${view}">`;
+ if(directed)s+=`<defs><marker id="arrow2" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#475569"/></marker></defs>`;
+ edges.forEach((e,idx)=>{let [u,v,w]=e,[x1,y1]=pos[u],[x2,y2]=pos[v];let cls='edge '+(hiEdges.includes(idx)?'active':'');if(directed)s+=`<line class="${cls}" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" marker-end="url(#arrow2)"/>`;else s+=line(x1,y1,x2,y2,cls); if(w!==undefined)s+=`<text class="small" x="${(x1+x2)/2+6}" y="${(y1+y2)/2-6}">${w}</text>`});
+ Object.keys(pos).forEach(k=>{let [x,y]=pos[k];let cls='node '+(hiNodes.includes(Number(k))||hiNodes.includes(k)?'active':'');s+=node(k,x,y,cls)});
+ return s+'</svg>'
+}
+function q1Svg(step){let pos={A:[110,115],B:[250,70],C:[250,160],D:[390,115]};let edges=[['A','B'],['A','C'],['A','D'],['B','D'],['C','D'],['B','C'],['A','C']]; if(step===0)return `<svg viewBox="0 0 520 240"><rect x="40" y="40" width="160" height="140" rx="18" fill="#dbeafe" stroke="#2563eb"/><text x="120" y="115" class="label">Land areas</text><path d="M210 110 C250 70 270 70 310 110" fill="none" stroke="#b45309" stroke-width="8"/><path d="M210 130 C250 170 270 170 310 130" fill="none" stroke="#b45309" stroke-width="8"/><text x="360" y="115" class="label">Bridges</text></svg>`;
+ if(step===1)return graphSvg(pos,[['A','B'],['A','C'],['A','D'],['B','D'],['C','D'],['B','C']],['A','B','C','D'],[],false);
+ return graphSvg(pos,[['A','B'],['A','C'],['A','D'],['B','D'],['C','D'],['B','C']],['A','B','C','D'],[0,1,2,3,4,5],false)+`<div class="box bad">有奇數 degree 的 vertex，因此不能形成回到起點的 Eulerian walk。</div>`;
+}
+function q2(){let pos={0:[120,90],1:[250,60],2:[250,180],3:[390,180]};let edges=[[0,1],[0,2],[1,2],[2,3]];document.getElementById('q2svg').innerHTML=graphSvg(pos,edges,[2],[1,2,3],false)+`<div class="legend"><span><span class="dot yellow"></span>vertex 2</span><span>相鄰點：0, 1, 3</span></div>`}
+function q3(){let pos={0:[260,60],1:[140,130],2:[190,250],3:[330,250],4:[380,130]};let edges=[];for(let i=0;i<5;i++)for(let j=i+1;j<5;j++)edges.push([i,j]);document.getElementById('q3svg').innerHTML=graphSvg(pos,edges,[],[],false,'0 0 520 310')+`<div class="box">Complete undirected graph with n=5：10 edges</div>`}
+function q4Svg(hi=[]){let pos={0:[150,80],1:[260,80],2:[205,180],3:[340,180],4:[110,270],5:[220,270]};let edges=[[0,1],[1,2],[2,0],[2,3],[4,5]];return graphSvg(pos,edges,hi,hi.includes(0)?[0,1,2]:[],false,'0 0 460 330')}
+function matrixHtml(rows){let s='<table class="matrix"><tr><th></th><th>0</th><th>1</th><th>2</th><th>3</th></tr>';rows.forEach((r,i)=>{s+=`<tr><th>${i}</th>`+r.map(v=>`<td>${v}</td>`).join('')+'</tr>'});return s+'</table>'}
+function q5(){let pos={0:[110,80],1:[250,70],2:[250,190],3:[390,190]};let edges=[[0,1],[0,2],[1,2],[2,0],[2,3],[3,3]];document.getElementById('q5svg').innerHTML=graphSvg(pos,edges,[2],[],true,'0 0 500 280');document.getElementById('q5matrix').innerHTML='<h4>Adjacency Matrix</h4>'+matrixHtml([[0,1,1,0],[0,0,1,0],[1,0,0,1],[0,0,0,1]])+'<p><b>in-degree(2)=2；out-degree(2)=2</b></p>'}
+function q6(){let pos={0:[150,80],1:[280,80],2:[210,190],3:[350,190]};let edges=[[0,1],[0,2],[1,2],[1,3],[2,3]];document.getElementById('q6svg').innerHTML=graphSvg(pos,edges,[],[],false,'0 0 500 260')+`<div class="grid"><div class="box"><b>Adjacency list</b><br>0: 1 → 2<br>1: 0 → 2 → 3<br>2: 0 → 1 → 3<br>3: 1 → 2</div><div class="box"><b>Adjacency multilist</b><br>Each edge uses one edge node.<br>Total edge nodes = 5.</div></div>`}
+const gpos={0:[280,45],1:[160,120],2:[400,120],3:[90,205],4:[230,205],5:[350,205],6:[470,205],7:[280,290]};
+const gedges=[[0,1],[0,2],[1,3],[1,4],[2,5],[2,6],[3,7],[4,7],[5,7],[6,7]];
+function dfsSteps(){let order=[0,1,3,7,4,5,2,6];let tree=[[0,1],[1,3],[3,7],[7,4],[7,5],[5,2],[2,6]];return order.map((v,i)=>({text:`拜訪 ${v}；目前 DFS order：${order.slice(0,i+1).join(', ')}。`,svg:()=>graphSvg(gpos,gedges,order.slice(0,i+1),tree.slice(0,Math.max(0,i)).map(te=>gedges.findIndex(e=>(e[0]==te[0]&&e[1]==te[1])||(e[0]==te[1]&&e[1]==te[0]))),false,'0 0 560 340')}))}
+function bfsSteps(){let order=[0,1,2,3,4,5,6,7];let tree=[[0,1],[0,2],[1,3],[1,4],[2,5],[2,6],[3,7]];return order.map((v,i)=>({text:`從 queue 取出 / 拜訪 ${v}；目前 BFS order：${order.slice(0,i+1).join(', ')}。`,svg:()=>graphSvg(gpos,gedges,order.slice(0,i+1),tree.slice(0,Math.max(0,i)).map(te=>gedges.findIndex(e=>(e[0]==te[0]&&e[1]==te[1])||(e[0]==te[1]&&e[1]==te[0]))),false,'0 0 560 340')}))}
+function q9(){document.getElementById('q9dfs').innerHTML='<h4>DFS Spanning Tree</h4>'+graphSvg(gpos,[[0,1],[1,3],[3,7],[7,4],[7,5],[5,2],[2,6]],[],[],false,'0 0 560 340');document.getElementById('q9bfs').innerHTML='<h4>BFS Spanning Tree</h4>'+graphSvg(gpos,[[0,1],[0,2],[1,3],[1,4],[2,5],[2,6],[3,7]],[],[],false,'0 0 560 340')}
+function q10Svg(i){let pos={0:[280,45],1:[160,120],2:[90,200],3:[230,200],4:[190,280],5:[310,280],6:[390,350]};let edges=[[0,1],[1,2],[1,3],[3,4],[3,5],[5,6]];let checks=[[1,2],[1,3],[3,4],[3,5],[5,6]];let hi=i<checks.length?checks[i]:[];return graphSvg(pos,edges,hi,[],false,'0 0 520 400')+`<table class="matrix"><tr><th>v</th><th>dfn</th><th>low</th></tr><tr><td>0</td><td>1</td><td>1</td></tr><tr><td>1</td><td>2</td><td>1</td></tr><tr><td>2</td><td>3</td><td>3</td></tr><tr><td>3</td><td>4</td><td>2</td></tr><tr><td>4</td><td>5</td><td>5</td></tr><tr><td>5</td><td>6</td><td>4</td></tr><tr><td>6</td><td>7</td><td>7</td></tr></table>`}
+function kruskalSteps(){let pos={0:[110,55],5:[90,170],4:[170,260],3:[310,250],2:[430,170],1:[410,55],6:[280,120]};let edges=[[0,5,10],[2,3,12],[1,6,14],[1,2,16],[3,6,18],[3,4,22],[4,6,24],[4,5,25],[0,1,28]];let selected=[];let texts=['Select (0,5), cost 10.','Select (2,3), cost 12.','Select (1,6), cost 14.','Select (1,2), cost 16.','Skip (3,6), because it forms a cycle.','Select (3,4), cost 22.','Skip (4,6), because it forms a cycle.','Select (4,5), cost 25. MST complete, total cost=99.'];let selectedIndex=[0,1,2,3,null,5,null,7];return texts.map((t,i)=>{if(selectedIndex[i]!=null)selected.push(selectedIndex[i]);let now=selected.slice();return {text:t,svg:()=>graphSvg(pos,edges,[],now,false,'0 0 520 330')}})}
+function q12(){document.getElementById('q12prim').innerHTML='<h4>Prim：長出一棵 tree</h4>'+graphSvg({0:[80,80],5:[160,120],4:[240,160],3:[320,120],2:[400,80]},[[0,5,10],[5,4,25],[4,3,22],[3,2,12]],[0,5,4,3,2],[0,1,2,3],false,'0 0 500 230')+'<p>每次從目前 T 往外選最小安全邊。</p>';document.getElementById('q12sollin').innerHTML='<h4>Sollin：多個 components 同時合併</h4>'+graphSvg({0:[70,80],1:[170,80],2:[270,80],3:[370,80],4:[470,80]},[[0,1,10],[2,3,12],[3,4,22]],[0,1,2,3,4],[0,1,2],false,'0 0 540 180')+'<p>每個 component 選最便宜的 outgoing edge。</p>'}
+function init(){state.q1={idx:0,steps:[{text:'先保留本質：陸地區域與橋。',svg:()=>q1Svg(0)},{text:'把陸地變成 vertices，把橋變成 edges。',svg:()=>q1Svg(1)},{text:'若要每條邊剛好走一次並回到起點，每個 vertex 的 degree 都要是偶數；本圖不符合。',svg:()=>q1Svg(2)}]};state.q4={idx:0,steps:[{text:'0→1→2→0 形成 cycle。',svg:()=>q4Svg([0,1,2])},{text:'3 與 0,1,2 相連，所以 {0,1,2,3} 是一個 component。',svg:()=>q4Svg([0,1,2,3])},{text:'4 與 5 形成另一個 component，所以整張圖不 connected。',svg:()=>q4Svg([4,5])}]};state.q7={idx:0,steps:dfsSteps()};state.q8={idx:0,steps:bfsSteps()};state.q10={idx:0,steps:[{text:'檢查 u=1 的 child 2：low(2)=3 ≥ dfn(1)=2，所以 1 是 articulation point。',svg:()=>q10Svg(0)},{text:'檢查 u=1 的 child 3：low(3)=2 ≥ dfn(1)=2，也支持 1 是 articulation point。',svg:()=>q10Svg(1)},{text:'檢查 u=3 的 child 4：low(4)=5 ≥ dfn(3)=4，所以 3 是 articulation point。',svg:()=>q10Svg(2)},{text:'檢查 u=3 的 child 5：low(5)=4 ≥ dfn(3)=4，也支持 3 是 articulation point。',svg:()=>q10Svg(3)},{text:'檢查 u=5 的 child 6：low(6)=7 ≥ dfn(5)=6，所以 5 是 articulation point。',svg:()=>q10Svg(4)}]};state.q11={idx:0,steps:kruskalSteps()};Object.keys(state).forEach(renderStep);q2();q3();q5();q6();q9();q12();}
+init();
+</script>
+</body>
+</html>
