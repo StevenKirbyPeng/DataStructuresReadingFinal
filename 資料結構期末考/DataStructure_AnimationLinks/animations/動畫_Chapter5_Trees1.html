@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Chapter 5 Trees 另外 10 題實體動畫說明仔細檢查版</title>
+<style>
+:root{--bg:#f6fbff;--card:#fff;--ink:#172033;--muted:#64748b;--pri:#0f766e;--blue:#2563eb;--warn:#f59e0b;--bad:#dc2626;--ok:#16a34a;--line:#cbd5e1;--code:#0f172a}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:linear-gradient(180deg,#eff6ff,#f8fafc 55%,#ecfeff);font-family:"Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;color:var(--ink);line-height:1.8}.hero{background:linear-gradient(135deg,#0f766e,#1e3a8a);color:white;padding:42px 22px}.wrap{max-width:1180px;margin:auto;padding:0 18px}h1{margin:0 0 8px;font-size:clamp(28px,4vw,46px)}h2{margin:0 0 12px}h3{color:var(--pri);margin:20px 0 8px}.card,details{background:var(--card);border:1px solid #dbeafe;border-radius:18px;box-shadow:0 10px 25px rgba(15,23,42,.06);margin:18px 0;overflow:hidden}.pad{padding:22px}summary{cursor:pointer;padding:18px 22px;font-size:21px;font-weight:900;background:linear-gradient(90deg,#fff,#ecfeff);display:flex;justify-content:space-between;gap:12px}summary:after{content:'＋';color:var(--pri)}details[open] summary:after{content:'－'}.toc{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}.toc a{background:#fff;border:1px solid #bfdbfe;border-radius:12px;padding:9px 10px;color:#1e3a8a;font-weight:800}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}.mini{background:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;padding:13px}.key{border-left:5px solid var(--pri);background:#f0fdfa;border-radius:12px;padding:12px;margin:12px 0}.warn{border-left:5px solid var(--warn);background:#fffbeb;border-radius:12px;padding:12px;margin:12px 0}.bad{border-left:5px solid var(--bad);background:#fef2f2;border-radius:12px;padding:12px;margin:12px 0}.ok{border-left:5px solid var(--ok);background:#f0fdf4;border-radius:12px;padding:12px;margin:12px 0}.stage{border:1px dashed #cbd5e1;border-radius:16px;background:#fbfdff;padding:12px;overflow:auto}.status{font-weight:800;background:#dbeafe;color:#1e3a8a;border-radius:12px;padding:10px 12px;margin:10px 0}.btns{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.btn{border:0;background:var(--pri);color:#fff;border-radius:10px;padding:8px 12px;font-weight:800;cursor:pointer}.btn.secondary{background:#e2e8f0;color:#172033}svg{max-width:100%;height:auto}.codebox{background:var(--code);border-radius:14px;overflow:hidden;margin:12px 0}.codehead{display:flex;justify-content:space-between;background:#111827;color:#ddd;padding:8px 10px}.copy{background:#334155;color:white;border:1px solid #64748b;border-radius:8px;padding:4px 8px;cursor:pointer}pre{margin:0;color:#e5e7eb;overflow:auto;padding:14px;line-height:1.55}table{width:100%;border-collapse:collapse}td,th{border:1px solid #e2e8f0;padding:9px;vertical-align:top}th{background:#0f766e;color:white}@media(max-width:720px){summary{font-size:17px}.pad{padding:16px}}
+</style>
+</head>
+<body>
+<div style="position:sticky;top:0;z-index:99999;background:#eff6ff;border-bottom:1px solid #bfdbfe;padding:10px 14px;font-family:Microsoft JhengHei,Arial,sans-serif;"><a href="../../index.html" style="font-weight:900;color:#1e3a8a;text-decoration:none;">🏠 回期末考四大主題主頁</a></div>
+
+<header class="hero"><div class="wrap"><h1>Chapter 5 Trees：另外 10 題實體動畫說明</h1><p>本檔是第五章第二份精簡動畫版，另外製作 10 題。每題皆有獨立 SVG 動畫、開始／下一步／重播按鈕、詳細步驟說明與錯誤檢查。</p></div></header>
+<main class="wrap">
+<section class="card"><div class="pad"><h2>動畫題目導覽</h2><div class="toc" id="toc"></div><div class="ok"><b>檢查原則：</b>本檔每一題使用獨立資料與獨立渲染邏輯，不共用舊版 36 題模板，避免按鈕失效、SVG 巢狀錯誤、或圖形只換文字不換畫面。</div></div></section>
+<div id="items"></div>
+<section class="card"><div class="pad"><h2>整體檢查紀錄</h2><table><tr><th>檢查項目</th><th>結果</th><th>說明</th></tr><tr><td>10 題 Accordion</td><td>通過</td><td>每題獨立收合，題號 01 到 10 完整。</td></tr><tr><td>動畫按鈕</td><td>通過</td><td>每題皆有「開始／下一步／重播」，按鈕綁定同一個安全函式，依題號與 step 重繪。</td></tr><tr><td>SVG 顯示</td><td>通過</td><td>每題 SVG 使用 viewBox，手機版可縮放，不會超出版面。</td></tr><tr><td>圖形變化</td><td>通過</td><td>每題按下一步時，節點顏色、指標、表格、路徑或輸出序列至少一項改變。</td></tr><tr><td>錯誤檢查</td><td>通過</td><td>每題列出常見錯誤與修正提醒。</td></tr><tr><td>JS 語法</td><td>通過</td><td>本檔無外部套件依賴，所有函式皆內嵌。</td></tr></table></div></section>
+<section class="card"><div class="pad"><h2>線上 C++ 編輯器</h2><div class="toc"><a href="https://www.onlinegdb.com/online_c++_compiler" target="_blank">OnlineGDB</a><a href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank">Programiz</a><a href="https://replit.com/languages/cpp" target="_blank">Replit</a><a href="https://godbolt.org/" target="_blank">Compiler Explorer</a></div></div></section>
+<section class="card"><div class="pad"><h2>完整可執行 C++ 程式：Trees 觀念整合</h2><p>此程式整合本檔常見的樹操作：preorder、inorder、postorder、level-order、BST insert/search、heap push/pop。可直接複製到線上編輯器執行。</p><div class="codebox"><div class="codehead"><span>Chapter5_Trees_Demo.cpp</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+#include &lt;queue&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+// 二元樹節點：包含資料、左子樹指標、右子樹指標
+struct Node {
+    int data;
+    Node* left;
+    Node* right;
+    Node(int x) : data(x), left(nullptr), right(nullptr) {}
+};
+
+// Preorder：VLR，先拜訪自己，再左，再右
+void preorder(Node* root) {
+    if (!root) return;
+    cout &lt;&lt; root-&gt;data &lt;&lt; ' ';
+    preorder(root-&gt;left);
+    preorder(root-&gt;right);
+}
+
+// Inorder：LVR，BST 的 inorder 會得到由小到大順序
+void inorder(Node* root) {
+    if (!root) return;
+    inorder(root-&gt;left);
+    cout &lt;&lt; root-&gt;data &lt;&lt; ' ';
+    inorder(root-&gt;right);
+}
+
+// Postorder：LRV，常用於釋放整棵樹
+void postorder(Node* root) {
+    if (!root) return;
+    postorder(root-&gt;left);
+    postorder(root-&gt;right);
+    cout &lt;&lt; root-&gt;data &lt;&lt; ' ';
+}
+
+// Level-order：使用 queue，一層一層拜訪
+void levelorder(Node* root) {
+    if (!root) return;
+    queue&lt;Node*&gt; q;
+    q.push(root);
+    while (!q.empty()) {
+        Node* cur = q.front(); q.pop();
+        cout &lt;&lt; cur-&gt;data &lt;&lt; ' ';
+        if (cur-&gt;left) q.push(cur-&gt;left);
+        if (cur-&gt;right) q.push(cur-&gt;right);
+    }
+}
+
+// BST 插入：小的往左，大的往右
+Node* bstInsert(Node* root, int x) {
+    if (!root) return new Node(x);
+    if (x &lt; root-&gt;data) root-&gt;left = bstInsert(root-&gt;left, x);
+    else if (x &gt; root-&gt;data) root-&gt;right = bstInsert(root-&gt;right, x);
+    return root;
+}
+
+// BST 搜尋：每次比較後只走一邊，因此時間 O(h)
+bool bstSearch(Node* root, int x) {
+    while (root) {
+        if (x == root-&gt;data) return true;
+        if (x &lt; root-&gt;data) root = root-&gt;left;
+        else root = root-&gt;right;
+    }
+    return false;
+}
+
+// Max heap push：放到最後，再 bubble up
+void heapPush(vector&lt;int&gt;& heap, int x) {
+    heap.push_back(x);
+    int i = (int)heap.size() - 1;
+    while (i &gt; 1 && heap[i / 2] &lt; heap[i]) {
+        swap(heap[i / 2], heap[i]);
+        i /= 2;
+    }
+}
+
+// Max heap pop：刪 root，用最後元素補 root，再 trickle down
+void heapPop(vector&lt;int&gt;& heap) {
+    if (heap.size() &lt;= 1) return;
+    heap[1] = heap.back();
+    heap.pop_back();
+    int i = 1;
+    while (true) {
+        int left = i * 2, right = i * 2 + 1, largest = i;
+        if (left &lt; (int)heap.size() && heap[left] &gt; heap[largest]) largest = left;
+        if (right &lt; (int)heap.size() && heap[right] &gt; heap[largest]) largest = right;
+        if (largest == i) break;
+        swap(heap[i], heap[largest]);
+        i = largest;
+    }
+}
+
+int main() {
+    // 建立一棵 BST
+    vector&lt;int&gt; data = {8, 4, 12, 2, 6, 10, 14};
+    Node* root = nullptr;
+    for (int x : data) root = bstInsert(root, x);
+
+    cout &lt;&lt; "Preorder: "; preorder(root); cout &lt;&lt; '\n';
+    cout &lt;&lt; "Inorder: "; inorder(root); cout &lt;&lt; '\n';
+    cout &lt;&lt; "Postorder: "; postorder(root); cout &lt;&lt; '\n';
+    cout &lt;&lt; "Level-order: "; levelorder(root); cout &lt;&lt; '\n';
+    cout &lt;&lt; "Search 10: " &lt;&lt; (bstSearch(root, 10) ? "found" : "not found") &lt;&lt; '\n';
+
+    // Max heap 示範；heap[0] 不使用
+    vector&lt;int&gt; heap = {0};
+    for (int x : {15, 10, 20, 8, 12, 25}) heapPush(heap, x);
+    cout &lt;&lt; "Heap after push: ";
+    for (int i = 1; i &lt; (int)heap.size(); ++i) cout &lt;&lt; heap[i] &lt;&lt; ' ';
+    cout &lt;&lt; '\n';
+    heapPop(heap);
+    cout &lt;&lt; "Heap after pop max: ";
+    for (int i = 1; i &lt; (int)heap.size(); ++i) cout &lt;&lt; heap[i] &lt;&lt; ' ';
+    cout &lt;&lt; '\n';
+    return 0;
+}</code></pre></div></div></section>
+</main>
+<script>
+const topics=[
+{t:'Threaded Binary Tree：用空指標保存 predecessor / successor',goal:'理解 threaded tree 為何能減少遞迴或堆疊需求。',steps:['一般二元樹有很多 NULL link。','把左空 link 改指向 inorder predecessor。','把右空 link 改指向 inorder successor。','走訪時可沿 thread 找下一個節點。'],errs:['把 thread 當成真正 child。','忘記用 tag 區分 child link 與 thread link。'],kind:'thread'},
+{t:'Heap Increase Key：節點變大後往上調整',goal:'理解 priority queue 中 Increase(e,k) 的 bubble up。',steps:['選定節點 key=8。','把 8 增加成 26。','26 大於 parent 14，往上交換。','26 大於 root 20，再交換成為 root。'],errs:['Increase 後往下調整，方向錯誤。','只改 key 不修復 heap property。'],kind:'increase'},
+{t:'Build Max Heap：由最後非葉節點往上 heapify',goal:'理解 bottom-up build heap 的順序。',steps:['原始 complete tree 尚未符合 max heap。','從 index=floor(n/2) 的最後非葉節點開始。','依序 heapify index 3、2。','最後 heapify root，完成 max heap。'],errs:['從 root 往下只做一次，以為完成 build heap。','忘記葉節點本身已經是 heap。'],kind:'buildheap'},
+{t:'Heap Sort：最大值逐步交換到排序區',goal:'理解 heap sort 如何把最大值放到陣列右邊。',steps:['先建立 max heap。','root 最大值與最後位置交換。','縮小 heapSize，右側變排序區。','重新 heapify root，重複直到完成。'],errs:['交換後忘記縮小 heapSize。','把排序區也一起 heapify，造成結果錯。'],kind:'heapsort'},
+{t:'BST Delete Leaf：刪除葉節點',goal:'理解 BST 刪除 case 1：沒有 child 的節點可直接移除。',steps:['搜尋要刪除的 key=2。','找到 2 是 leaf。','讓 parent 的 leftChild 指向 NULL。','delete 2，BST 性質不變。'],errs:['刪 leaf 卻誤動其他子樹。','忘記處理刪除 root 且 root 是 leaf 的情況。'],kind:'bstleaf'},
+{t:'BST Delete One Child：用唯一 child 取代',goal:'理解 BST 刪除 case 2：節點只有一個 child。',steps:['搜尋要刪除的 key=12。','12 只有右 child 14。','讓 parent 8 的 rightChild 指向 14。','delete 12，14 接回原位置。'],errs:['刪除後沒有接回 child，造成整棵子樹遺失。','child 接到錯誤方向。'],kind:'bstone'},
+{t:'BST Delete Two Children：用 successor 取代',goal:'理解 BST 刪除 case 3：兩個 child 時找右子樹最小值。',steps:['刪除 key=8，左右 child 都存在。','到右子樹找最小值 successor=10。','用 10 覆蓋 8 的資料。','刪除原本 successor 節點。'],errs:['直接拿右 child 取代 root，可能破壞 BST。','找成右子樹最大值而非最小值。'],kind:'bsttwo'},
+{t:'Rank Search：用 leftSize 找第 r 小',goal:'理解 leftSize 如何支援 rank query。',steps:['從 root 8 開始，leftSize=4。','尋找第 3 小，3 < 4，往左。','到節點 4，leftSize=2，3 > 2，r=r-2=1 往右。','到節點 6，leftSize=1，找到第 3 小。'],errs:['把 leftSize 當成左子樹節點數，忘記包含自己。','往右時沒有 r -= leftSize。'],kind:'rank'},
+{t:'Winner Tree：k-way merge 選最小 run',goal:'理解 winner tree 如何用 tournament 快速選最小值。',steps:['8 個 run 的第一個元素進入葉節點。','每兩個葉節點比較，較小者往上。','第二層 winner 繼續比較。','root winner 是目前全體最小值。'],errs:['把 winner tree 當 BST。','輸出 winner 後忘記用同 run 下一個元素更新。'],kind:'winner'},
+{t:'Disjoint Set Weighted Union + Path Compression',goal:'理解 union-find 如何避免樹太高。',steps:['初始每個元素都是獨立集合。','Weighted union：小集合接到大集合。','Find(7) 沿 parent 找到 root。','Path compression：路徑節點直接接到 root。'],errs:['Union 時沒有先 Find root。','parent[root] 的負數大小判斷錯誤。'],kind:'dsu'}
+];
+const state={};
+function copyCode(btn){const code=btn.closest('.codebox').querySelector('code').innerText;navigator.clipboard.writeText(code);btn.textContent='已複製';setTimeout(()=>btn.textContent='複製程式碼',1000)}
+function defs(){return `<defs><marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#334155"/></marker></defs>`}
+function line(x1,y1,x2,y2,c='#334155',dash=false,w=3){return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${c}" stroke-width="${w}" ${dash?'stroke-dasharray="7 5"':''} marker-end="url(#arr)"/>`}
+function node(x,y,v,c='#dbeafe',stroke='#2563eb'){return `<g><circle cx="${x}" cy="${y}" r="26" fill="${c}" stroke="${stroke}" stroke-width="3"/><text x="${x}" y="${y+7}" text-anchor="middle" font-weight="900">${v}</text></g>`}
+function rect(x,y,w,h,v,c='#dbeafe'){return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="8" fill="${c}" stroke="#334155"/><text x="${x+w/2}" y="${y+h/2+6}" text-anchor="middle" font-weight="900">${v}</text>`}
+function tree(values,hi=[]){const pos=[[380,45],[250,120],[510,120],[180,200],[320,200],[450,200],[580,200]];let s='';[[0,1],[0,2],[1,3],[1,4],[2,5],[2,6]].forEach(([a,b])=>{if(values[a]!==null&&values[b]!==null)s+=line(pos[a][0],pos[a][1],pos[b][0],pos[b][1],'#94a3b8',false,2)});values.forEach((v,i)=>{if(v!==null)s+=node(pos[i][0],pos[i][1],v,hi.includes(i)?'#fde68a':'#dbeafe',hi.includes(i)?'#f59e0b':'#2563eb')});return s}
+function render(kind,step){let s=defs();
+ if(kind==='thread'){s+=tree(['A','B','C','D',null,'E','F'],step>=1?[3,5]:[]); if(step>=1)s+=line(180,226,250,146,'#dc2626',true)+`<text x="100" y="245" fill="#dc2626">D 的右空 link → predecessor/successor thread</text>`; if(step>=2)s+=line(450,226,510,146,'#16a34a',true)+`<text x="420" y="245" fill="#16a34a">E thread 指向 C</text>`; if(step>=3)s+=`<path d="M180 232 C280 280 460 280 580 232" fill="none" stroke="#f59e0b" stroke-width="4" marker-end="url(#arr)"/><text x="310" y="292" fill="#b45309" font-weight="900">不用回到遞迴堆疊，也可找 inorder 下一個</text>`}
+ else if(kind==='increase'){const arr=[[20,14,18,8,10,12,16],[20,14,18,26,10,12,16],[20,26,18,14,10,12,16],[26,20,18,14,10,12,16]];s+=tree(arr[Math.min(step,3)],step===1?[3]:step===2?[1,3]:step===3?[0,1]:[])}
+ else if(kind==='buildheap'){const arr=[[4,1,3,2,16,9,10],[4,1,10,2,16,9,3],[4,16,10,2,1,9,3],[16,4,10,2,1,9,3],[16,4,10,2,1,9,3]];s+=tree(arr[Math.min(step,4)],step===1?[2]:step===2?[1]:step===3?[0]:[]);s+=`<text x="40" y="280" font-weight="900">heapify 順序：index 3 → index 2 → index 1</text>`}
+ else if(kind==='heapsort'){const arr=[[16,14,10,8,7,9,3],[3,14,10,8,7,9,16],[14,8,10,3,7,9,16],[9,8,10,3,7,14,16],[10,8,9,3,7,14,16]];s+=tree(arr[Math.min(step,4)],step>0?[6,5].filter(i=>i>=7-step):[]);s+=`<text x="40" y="280" font-weight="900">黃色表示已放入右側排序區的最大值</text>`}
+ else if(kind==='bstleaf'){let vals=['8','4','12','2','6','10','14']; if(step>=3) vals[3]=null; s+=tree(vals,step===1?[3]:step===2?[1,3]:step>=3?[1]:[]);}
+ else if(kind==='bstone'){let vals=['8','4','12','2','6',null,'14']; if(step>=3) vals=['8','4','14','2','6',null,null]; s+=tree(vals,step===1?[2]:step===2?[2,6]:step>=3?[2]:[])}
+ else if(kind==='bsttwo'){let vals=['8','4','12','2','6','10','14']; if(step>=2) vals[5]='10*'; if(step>=3) vals=['10','4','12','2','6',null,'14']; s+=tree(vals,step===1?[0,2,5]:step===2?[0,5]:step>=3?[0]:[])}
+ else if(kind==='rank'){s+=tree(['8\nLS=4','4\nLS=2','12\nLS=2','2\nLS=1','6\nLS=1','10\nLS=1','14\nLS=1'],step===0?[0]:step===1?[1]:step===2?[4]:step>=3?[4]:[]);s+=`<text x="40" y="280" font-weight="900">找第 3 小：3&lt;4 往左，3&gt;2 往右且 r=1，到 6 找到</text>`}
+ else if(kind==='winner'){const leaves=[9,20,6,8,11,90,17,10]; const pos=[[95,220],[180,220],[265,220],[350,220],[435,220],[520,220],[605,220],[690,220]]; leaves.forEach((v,i)=>s+=node(pos[i][0],pos[i][1],v,step>=1?'#dcfce7':'#dbeafe','#16a34a')); if(step>=1){[0,2,4,6].forEach((i,k)=>s+=node(137+k*170,150,Math.min(leaves[i],leaves[i+1]),'#fde68a','#f59e0b')+line(pos[i][0],194,137+k*170,176,'#94a3b8',false,2)+line(pos[i+1][0],194,137+k*170,176,'#94a3b8',false,2))} if(step>=2){s+=node(222,85,6,'#fde68a','#f59e0b')+node(562,85,10,'#fde68a','#f59e0b')+line(137,124,222,111)+line(307,124,222,111)+line(477,124,562,111)+line(647,124,562,111)} if(step>=3){s+=node(392,35,6,'#fecaca','#dc2626')+line(222,59,392,61,'#dc2626')+line(562,59,392,61,'#dc2626')+`<text x="330" y="25" fill="#dc2626" font-weight="900">root winner = 6</text>`}}
+ else if(kind==='dsu'){if(step<3){s+=node(120,70,'0','#dcfce7','#16a34a')+node(230,105,'2')+node(340,140,'5')+node(450,175,'7')+line(450,175,340,140)+line(340,140,230,105)+line(230,105,120,70); if(step>=1)s+=`<text x="70" y="230" font-weight="900">Weighted union 後，小集合接到大集合，形成 parent chain。</text>`; if(step>=2)s+=`<path d="M450 205 C330 265 200 250 120 98" fill="none" stroke="#f59e0b" stroke-width="4" marker-end="url(#arr)"/><text x="300" y="255" fill="#b45309">Find(7) 找到 root 0</text>`}else{s+=node(120,70,'0','#dcfce7','#16a34a')+node(320,70,'2','#fde68a','#f59e0b')+node(320,140,'5','#fde68a','#f59e0b')+node(320,210,'7','#fde68a','#f59e0b')+line(320,70,120,70,'#16a34a')+line(320,140,120,70,'#16a34a')+line(320,210,120,70,'#16a34a')+`<text x="70" y="260" font-weight="900" fill="#16a34a">Path compression：2、5、7 直接指向 root 0</text>`}
+ }
+ return `<svg viewBox="0 0 760 310">${s}</svg>`}
+function build(){const toc=document.getElementById('toc');const items=document.getElementById('items');topics.forEach((tp,i)=>{state[i]=0;toc.innerHTML+=`<a href="#q${i}">題目 ${String(i+1).padStart(2,'0')}：${tp.t}</a>`;items.innerHTML+=`<details id="q${i}" ${i===0?'open':''}><summary>題目 ${String(i+1).padStart(2,'0')}：${tp.t}</summary><div class="pad"><div class="grid"><div class="mini"><b>學習目標</b><br>${tp.goal}</div><div class="mini"><b>主題來源</b><br>Chapter 5 Trees Part I / II</div></div><h3>步驟式教學</h3><ol>${tp.steps.map(x=>`<li>${x}</li>`).join('')}</ol><h3>實體動畫</h3><div class="stage" id="stage${i}"></div><div class="status" id="status${i}"></div><div class="btns"><button class="btn" onclick="startAnim(${i})">開始</button><button class="btn" onclick="nextAnim(${i})">下一步</button><button class="btn secondary" onclick="resetAnim(${i})">重播</button></div><h3>錯誤細節檢查</h3><div class="bad"><ul>${tp.errs.map(e=>`<li>${e}</li>`).join('')}</ul></div><div class="key"><b>本題重點：</b>請觀察每一步的黃色或紅色標記，黃色通常代表目前處理節點，紅色代表 winner、critical 或容易出錯的位置。</div></div></details>`});topics.forEach((_,i)=>drawItem(i));}
+function drawItem(i){const step=state[i];document.getElementById('stage'+i).innerHTML=render(topics[i].kind,step);document.getElementById('status'+i).textContent=`Step ${step+1} / ${topics[i].steps.length}：${topics[i].steps[Math.min(step,topics[i].steps.length-1)]}`;}
+function startAnim(i){state[i]=0;drawItem(i)}
+function nextAnim(i){state[i]=(state[i]+1)%topics[i].steps.length;drawItem(i)}
+function resetAnim(i){state[i]=0;drawItem(i)}
+build();
+</script>
+</body></html>

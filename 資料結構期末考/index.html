@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>資料結構期末考四大主題主頁</title>
+<style>
+:root {
+  --ink:#172033; --muted:#64748b; --line:#dbe3f0; --paper:#fff;
+}
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  margin:0;
+  font-family:"Microsoft JhengHei","Noto Sans TC",Arial,sans-serif;
+  color:var(--ink);
+  background:linear-gradient(180deg,#eff6ff,#f8fafc 48%,#ecfeff);
+  line-height:1.75;
+}
+.hero {
+  padding:60px 22px 44px;
+  color:white;
+  text-align:center;
+  background:radial-gradient(circle at 16% 22%,rgba(255,255,255,.23),transparent 31%),linear-gradient(135deg,#0f172a,#1e3a8a,#0f766e);
+}
+.hero h1 {
+  margin:0 0 12px;
+  font-size:clamp(32px,5vw,60px);
+  letter-spacing:.03em;
+}
+.hero p {
+  max-width:1100px;
+  margin:0 auto;
+  color:#e0f2fe;
+  font-size:19px;
+}
+.wrap {
+  max-width:1360px;
+  margin:auto;
+  padding:26px;
+}
+.notice {
+  margin-bottom:22px;
+  background:#fff7ed;
+  color:#7c2d12;
+  border:1px solid #fed7aa;
+  border-radius:18px;
+  padding:16px 18px;
+  box-shadow:0 8px 22px rgba(15,23,42,.06);
+}
+.quick {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:14px;
+  margin:20px 0 30px;
+}
+.quick a {
+  display:block;
+  background:white;
+  color:var(--accent);
+  border:1px solid color-mix(in srgb, var(--accent) 28%, white);
+  border-left:8px solid var(--accent);
+  border-radius:18px;
+  padding:16px 18px;
+  text-decoration:none;
+  font-weight:950;
+  box-shadow:0 8px 22px rgba(15,23,42,.06);
+}
+.theme-card {
+  display:grid;
+  grid-template-columns:430px minmax(0,1fr);
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:26px;
+  overflow:hidden;
+  margin:26px 0;
+  box-shadow:0 14px 34px rgba(15,23,42,.08);
+}
+.cover {
+  background:linear-gradient(135deg,var(--accent),#0f172a);
+  padding:18px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.cover svg {
+  width:100%;
+  border-radius:20px;
+  box-shadow:0 12px 28px rgba(0,0,0,.20);
+}
+.theme-body {
+  padding:28px;
+  border-left:8px solid var(--accent);
+}
+.theme-kicker {
+  display:inline-block;
+  color:var(--accent);
+  background:color-mix(in srgb, var(--accent) 13%, white);
+  border:1px solid color-mix(in srgb, var(--accent) 35%, white);
+  border-radius:999px;
+  padding:5px 12px;
+  font-weight:900;
+}
+h2 {
+  color:var(--accent);
+  margin:14px 0 2px;
+  font-size:31px;
+}
+h3 {
+  margin:0 0 12px;
+  color:#334155;
+}
+p {
+  color:#334155;
+  font-weight:650;
+}
+.links-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:10px;
+  margin-top:18px;
+}
+.link-item {
+  display:block;
+  background:#f8fafc;
+  border:1px solid var(--line);
+  border-radius:15px;
+  padding:12px 14px;
+  text-decoration:none;
+  color:#172033;
+}
+.link-item:hover {
+  border-color:var(--accent);
+  box-shadow:0 6px 16px rgba(15,23,42,.08);
+}
+.tag {
+  display:inline-block;
+  color:var(--accent);
+  background:white;
+  border:1px solid color-mix(in srgb, var(--accent) 30%, white);
+  border-radius:999px;
+  padding:3px 8px;
+  font-size:12px;
+  font-weight:900;
+  margin-bottom:6px;
+}
+.link-item strong {
+  display:block;
+  line-height:1.45;
+}
+.link-item small {
+  display:block;
+  color:var(--muted);
+  margin-top:4px;
+  word-break:break-all;
+}
+.empty {
+  padding:16px;
+  background:#f8fafc;
+  border:1px dashed var(--line);
+  border-radius:15px;
+  color:var(--muted);
+}
+.footer {
+  text-align:center;
+  color:var(--muted);
+  padding:34px 18px 44px;
+}
+.homebar {
+  position:sticky;
+  top:0;
+  z-index:99999;
+  background:#eff6ff;
+  border-bottom:1px solid #bfdbfe;
+  padding:10px 14px;
+  font-weight:900;
+}
+@media(max-width:920px) {
+  .theme-card { grid-template-columns:1fr; }
+  .theme-body { border-left:0; border-top:8px solid var(--accent); }
+}
+</style>
+</head>
+<body>
+<header class="hero">
+  <h1>資料結構期末考四大主題主頁</h1>
+  <p>主頁分成四大主題：教學網站、老師考古題、AI 期末練習題、各章節動畫說明。每個主題都有概略說明圖，並可連結到各章節主頁或對應練習頁。</p>
+</header>
+<main class="wrap">
+  <div class="notice">
+    <strong>使用方式：</strong>解壓縮後開啟最外層 <strong>index.html</strong>。四大主題卡片內的每個連結都可直接開啟對應頁面。
+  </div>
+  <nav class="quick">
+    <a href="#teaching" style="--accent:#0f766e">📘 教學網站</a><a href="#past_exam" style="--accent:#1e3a8a">📝 老師的考古題</a><a href="#ai_practice" style="--accent:#7c3aed">🤖 AI 所出的期末練習題</a><a href="#animations" style="--accent:#ea580c">🎬 各章節的動畫說明</a>
+  </nav>
+  
+    <section class="theme-card" id="teaching" style="--accent:#0f766e">
+      <div class="cover">
+    <svg viewBox="0 0 520 310" role="img" aria-label="教學網站概略說明圖">
+      <rect width="520" height="310" rx="28" fill="#0f766e"/>
+      <circle cx="450" cy="55" r="76" fill="rgba(255,255,255,.12)"/>
+      <circle cx="74" cy="270" r="90" fill="rgba(255,255,255,.10)"/>
+      
+        <rect x="70" y="82" width="120" height="68" rx="14" fill="rgba(255,255,255,.9)"/>
+        <rect x="205" y="82" width="120" height="68" rx="14" fill="rgba(255,255,255,.9)"/>
+        <rect x="340" y="82" width="120" height="68" rx="14" fill="rgba(255,255,255,.9)"/>
+        <text x="130" y="123" text-anchor="middle" fill="#0f172a" font-size="18" font-weight="900">Ch4</text>
+        <text x="265" y="123" text-anchor="middle" fill="#0f172a" font-size="18" font-weight="900">Ch5</text>
+        <text x="400" y="123" text-anchor="middle" fill="#0f172a" font-size="18" font-weight="900">Ch6/7</text>
+        <line x1="130" y1="150" x2="130" y2="210" stroke="white" stroke-width="4"/>
+        <line x1="265" y1="150" x2="265" y2="210" stroke="white" stroke-width="4"/>
+        <line x1="400" y1="150" x2="400" y2="210" stroke="white" stroke-width="4"/>
+        <rect x="90" y="210" width="350" height="45" rx="12" fill="rgba(255,255,255,.82)"/>
+        <text x="265" y="238" text-anchor="middle" fill="#0f172a" font-size="17" font-weight="900">投影片圖片＋中文講解＋C++</text>
+        
+      <text x="28" y="45" fill="white" font-size="28" font-weight="900">教學網站</text>
+    </svg>
+    </div>
+      <div class="theme-body">
+        <div class="theme-kicker">📘 四大主題</div>
+        <h2>第一大主題：教學網站</h2>
+        <h3>Chapter 4~7 完整章節教學主頁</h3>
+        <p>這一區連到完整教學網站，適合從觀念開始讀。每個章節主頁包含投影片圖片、條列式說明、流程圖、C++ 程式碼、考試重點與老師常考題型。</p>
+        <div class="links-grid">
+          
+            <a class="link-item" href="資料結構教學網站/Chapter4_LinkedLists/index.html">
+              <span class="tag">Chapter 4</span>
+              <strong>Chapter 4 Linked Lists｜67頁×1000字完整教學版</strong>
+              <small>資料結構教學網站/Chapter4_LinkedLists/index.html</small>
+            </a>
+            
+            <a class="link-item" href="資料結構教學網站/Chapter5A_TreesPartI/index.html">
+              <span class="tag">Chapter 5</span>
+              <strong>Chapter 5A Trees Part I｜44頁×1000字完整教學版</strong>
+              <small>資料結構教學網站/Chapter5A_TreesPartI/index.html</small>
+            </a>
+            
+            <a class="link-item" href="資料結構教學網站/Chapter5B_TreesPartII/index.html">
+              <span class="tag">Chapter 5</span>
+              <strong>Chapter 5B Trees Part II｜69頁×1000字完整教學版</strong>
+              <small>資料結構教學網站/Chapter5B_TreesPartII/index.html</small>
+            </a>
+            
+            <a class="link-item" href="資料結構教學網站/Chapter6A_GraphsPartI/index.html">
+              <span class="tag">Chapter 6</span>
+              <strong>Chapter 6A Graphs Part I｜52頁×1000字完整教學版</strong>
+              <small>資料結構教學網站/Chapter6A_GraphsPartI/index.html</small>
+            </a>
+            
+            <a class="link-item" href="資料結構教學網站/Chapter7_Sorting/index.html">
+              <span class="tag">Chapter 7</span>
+              <strong>Chapter 7 Sorting｜25頁×1000字完整教學版</strong>
+              <small>資料結構教學網站/Chapter7_Sorting/index.html</small>
+            </a>
+            
+            <a class="link-item" href="資料結構教學網站/index.html">
+              <span class="tag">綜合</span>
+              <strong>資料結構完整教學網站主頁</strong>
+              <small>資料結構教學網站/index.html</small>
+            </a>
+            
+        </div>
+      </div>
+    </section>
+    
+    <section class="theme-card" id="past_exam" style="--accent:#1e3a8a">
+      <div class="cover">
+    <svg viewBox="0 0 520 310" role="img" aria-label="老師的考古題概略說明圖">
+      <rect width="520" height="310" rx="28" fill="#1e3a8a"/>
+      <circle cx="450" cy="55" r="76" fill="rgba(255,255,255,.12)"/>
+      <circle cx="74" cy="270" r="90" fill="rgba(255,255,255,.10)"/>
+      
+        <rect x="95" y="78" width="330" height="175" rx="22" fill="rgba(255,255,255,.9)"/>
+        <line x1="135" y1="125" x2="385" y2="125" stroke="#1e3a8a" stroke-width="5"/>
+        <line x1="135" y1="165" x2="385" y2="165" stroke="#1e3a8a" stroke-width="5"/>
+        <line x1="135" y1="205" x2="315" y2="205" stroke="#1e3a8a" stroke-width="5"/>
+        <circle cx="120" cy="125" r="8" fill="#1e3a8a"/>
+        <circle cx="120" cy="165" r="8" fill="#1e3a8a"/>
+        <circle cx="120" cy="205" r="8" fill="#1e3a8a"/>
+        <text x="260" y="100" text-anchor="middle" fill="#0f172a" font-size="20" font-weight="900">Past Exam</text>
+        
+      <text x="28" y="45" fill="white" font-size="28" font-weight="900">老師的考古題</text>
+    </svg>
+    </div>
+      <div class="theme-body">
+        <div class="theme-kicker">📝 四大主題</div>
+        <h2>第二大主題：老師的考古題</h2>
+        <h3>2024 / 2025 期末考古題與完整詳解</h3>
+        <p>這一區連到老師歷年考古題與解答頁。適合考前確認老師出題習慣、常見題型、英文題目翻譯、圖解與完整解題步驟。</p>
+        <div class="links-grid">
+          
+            <a class="link-item" href="Chapter4_7_章考古題練習網站/Chapter4_6_Mixed_20Questions_考古題練習與完整詳解.html">
+              <span class="tag">Chapter 4</span>
+              <strong>Chapter 4–6 Mixed Exam Practice：20 Questions with Complete Solutions</strong>
+              <small>Chapter4_7_章考古題練習網站/Chapter4_6_Mixed_20Questions_考古題練習與完整詳解.html</small>
+            </a>
+            
+            <a class="link-item" href="Chapter4_7_章考古題練習網站/Chapter6B_GraphsPartII_完整教學網站.html">
+              <span class="tag">Chapter 4</span>
+              <strong>Chapter 6B Graphs Part II 圖形結構（二）完整教學網站</strong>
+              <small>Chapter4_7_章考古題練習網站/Chapter6B_GraphsPartII_完整教學網站.html</small>
+            </a>
+            
+            <a class="link-item" href="Chapter4_7_章考古題練習網站/index.html">
+              <span class="tag">Chapter 4</span>
+              <strong>資料結構考古題完整詳解｜章節主頁</strong>
+              <small>Chapter4_7_章考古題練習網站/index.html</small>
+            </a>
+            
+            <a class="link-item" href="Chapter4_7_章考古題練習網站/Lesson4_LinkedLists_考古題練習與完整詳解.html">
+              <span class="tag">Chapter 4</span>
+              <strong>Lesson 4 Linked Lists 考古題練習與完整詳解</strong>
+              <small>Chapter4_7_章考古題練習網站/Lesson4_LinkedLists_考古題練習與完整詳解.html</small>
+            </a>
+            
+            <a class="link-item" href="Chapter4_7_章考古題練習網站/Lesson5A_TreesPartI_考古題練習與完整詳解.html">
+              <span class="tag">Chapter 4</span>
+              <strong>Lesson 5A Trees Part I 考古題練習與完整詳解</strong>
+              <small>Chapter4_7_章考古題練習網站/Lesson5A_TreesPartI_考古題練習與完整詳解.html</small>
+            </a>
+            
+            <a class="link-item" href="Chapter4_7_章考古題練習網站/Lesson5B_TreesPartII_考古題練習與完整詳解.html">
+              <span class="tag">Chapter 4</span>
+              <strong>Lesson 5B Trees Part II 考古題練習與完整詳解</strong>
+              <small>Chapter4_7_章考古題練習網站/Lesson5B_TreesPartII_考古題練習與完整詳解.html</small>
+            </a>
+            
+            <a class="link-item" href="Chapter4_7_章考古題練習網站/Lesson6A_GraphsPartI_考古題練習與完整詳解.html">
+              <span class="tag">Chapter 4</span>
+              <strong>Lesson 6A Graphs Part I 考古題練習與完整詳解</strong>
+              <small>Chapter4_7_章考古題練習網站/Lesson6A_GraphsPartI_考古題練習與完整詳解.html</small>
+            </a>
+            
+            <a class="link-item" href="Chapter4_7_章考古題練習網站/Lesson7_Sorting_考古題練習與完整詳解_修改版.html">
+              <span class="tag">Chapter 4</span>
+              <strong>第七章 Sorting：考古題練習與完整詳解（修改版）</strong>
+              <small>Chapter4_7_章考古題練習網站/Lesson7_Sorting_考古題練習與完整詳解_修改版.html</small>
+            </a>
+            
+            <a class="link-item" href="資料結構考古題.html">
+              <span class="tag">Final Exam</span>
+              <strong>資料結構考古題三合一主頁</strong>
+              <small>資料結構考古題.html</small>
+            </a>
+            
+        </div>
+      </div>
+    </section>
+    
+    <section class="theme-card" id="ai_practice" style="--accent:#7c3aed">
+      <div class="cover">
+    <svg viewBox="0 0 520 310" role="img" aria-label="AI 所出的期末練習題概略說明圖">
+      <rect width="520" height="310" rx="28" fill="#7c3aed"/>
+      <circle cx="450" cy="55" r="76" fill="rgba(255,255,255,.12)"/>
+      <circle cx="74" cy="270" r="90" fill="rgba(255,255,255,.10)"/>
+      
+        <circle cx="260" cy="150" r="70" fill="rgba(255,255,255,.9)"/>
+        <rect x="205" y="122" width="110" height="70" rx="18" fill="#f5f3ff" stroke="#7c3aed" stroke-width="5"/>
+        <circle cx="238" cy="155" r="8" fill="#7c3aed"/>
+        <circle cx="282" cy="155" r="8" fill="#7c3aed"/>
+        <line x1="230" y1="178" x2="290" y2="178" stroke="#7c3aed" stroke-width="5" stroke-linecap="round"/>
+        <line x1="260" y1="80" x2="260" y2="45" stroke="white" stroke-width="5"/>
+        <circle cx="260" cy="38" r="10" fill="white"/>
+        <text x="260" y="246" text-anchor="middle" fill="white" font-size="22" font-weight="900">AI Practice</text>
+        
+      <text x="28" y="45" fill="white" font-size="28" font-weight="900">AI 所出的期末練習題</text>
+    </svg>
+    </div>
+      <div class="theme-body">
+        <div class="theme-kicker">🤖 四大主題</div>
+        <h2>第三大主題：AI 所出的期末練習題</h2>
+        <h3>AI 模擬題、混合題、章節練習與預測題</h3>
+        <p>這一區連到 AI 產生的期末練習題。適合在讀完教學網站與考古題後，用混合題測驗自己是否真的會 trace code、畫資料結構與分析時間複雜度。</p>
+        <div class="links-grid">
+          <div class="empty">目前 ZIP 內沒有自動找到此類型頁面，可以之後再把檔案加入資料夾。</div>
+        </div>
+      </div>
+    </section>
+    
+    <section class="theme-card" id="animations" style="--accent:#ea580c">
+      <div class="cover">
+    <svg viewBox="0 0 520 310" role="img" aria-label="各章節的動畫說明概略說明圖">
+      <rect width="520" height="310" rx="28" fill="#ea580c"/>
+      <circle cx="450" cy="55" r="76" fill="rgba(255,255,255,.12)"/>
+      <circle cx="74" cy="270" r="90" fill="rgba(255,255,255,.10)"/>
+      
+        <polygon points="210,95 210,215 330,155" fill="rgba(255,255,255,.92)"/>
+        <circle cx="260" cy="155" r="105" fill="none" stroke="rgba(255,255,255,.75)" stroke-width="8"/>
+        <circle cx="130" cy="90" r="24" fill="rgba(255,255,255,.85)"/>
+        <circle cx="390" cy="220" r="24" fill="rgba(255,255,255,.85)"/>
+        <text x="260" y="270" text-anchor="middle" fill="white" font-size="22" font-weight="900">Animation</text>
+        
+      <text x="28" y="45" fill="white" font-size="28" font-weight="900">各章節的動畫說明</text>
+    </svg>
+    </div>
+      <div class="theme-body">
+        <div class="theme-kicker">🎬 四大主題</div>
+        <h2>第四大主題：各章節的動畫說明</h2>
+        <h3>Linked Lists、Trees、Graphs、Sorting 互動動畫</h3>
+        <p>這一區連到各章節動畫說明。適合用動態方式理解 pointer 改變、tree traversal、heap bubble/trickle、DFS/BFS、shortest path 與 sorting trace。</p>
+        <div class="links-grid">
+          
+            <a class="link-item" href="DataStructure_AnimationLinks/animations/Chapter7_Sorting_動畫教學.html">
+              <span class="tag">Chapter 7</span>
+              <strong>Chapter 7 Sorting 動畫教學 HTML</strong>
+              <small>DataStructure_AnimationLinks/animations/Chapter7_Sorting_動畫教學.html</small>
+            </a>
+            
+            <a class="link-item" href="DataStructure_AnimationLinks/animations/動畫_Chapter4_LinkedLists.html">
+              <span class="tag">Chapter 4</span>
+              <strong>Chapter 4 Linked Lists 動畫實體檔與檢查說明</strong>
+              <small>DataStructure_AnimationLinks/animations/動畫_Chapter4_LinkedLists.html</small>
+            </a>
+            
+            <a class="link-item" href="DataStructure_AnimationLinks/animations/動畫_Chapter5_Trees1.html">
+              <span class="tag">Chapter 5</span>
+              <strong>Chapter 5 Trees 另外 10 題實體動畫說明仔細檢查版</strong>
+              <small>DataStructure_AnimationLinks/animations/動畫_Chapter5_Trees1.html</small>
+            </a>
+            
+            <a class="link-item" href="DataStructure_AnimationLinks/animations/動畫_Chapter5_Trees2.html">
+              <span class="tag">Chapter 5</span>
+              <strong>Chapter 5 Trees：10 題精簡動畫說明檢查版</strong>
+              <small>DataStructure_AnimationLinks/animations/動畫_Chapter5_Trees2.html</small>
+            </a>
+            
+            <a class="link-item" href="DataStructure_AnimationLinks/animations/動畫_Chapter5_Trees_3.html">
+              <span class="tag">Chapter 5</span>
+              <strong>Chapter 5 Trees 36題實體動畫說明 檢查修正版</strong>
+              <small>DataStructure_AnimationLinks/animations/動畫_Chapter5_Trees_3.html</small>
+            </a>
+            
+            <a class="link-item" href="DataStructure_AnimationLinks/animations/動畫_Chapter6_Graphs1.html">
+              <span class="tag">Chapter 6</span>
+              <strong>Chapter 6 Graphs 另外 10 題實體動畫說明</strong>
+              <small>DataStructure_AnimationLinks/animations/動畫_Chapter6_Graphs1.html</small>
+            </a>
+            
+            <a class="link-item" href="DataStructure_AnimationLinks/animations/動畫_Chapter6_Graphs2.html">
+              <span class="tag">Chapter 6</span>
+              <strong>Chapter 6 Graphs 10題動畫</strong>
+              <small>DataStructure_AnimationLinks/animations/動畫_Chapter6_Graphs2.html</small>
+            </a>
+            
+            <a class="link-item" href="DataStructure_AnimationLinks/animations/動畫_DataStructures_Ch4_Ch6_50.html">
+              <span class="tag">Chapter 4</span>
+              <strong>DataStructures Ch4-Ch6 50題主題動畫教學</strong>
+              <small>DataStructure_AnimationLinks/animations/動畫_DataStructures_Ch4_Ch6_50.html</small>
+            </a>
+            
+            <a class="link-item" href="DataStructure_AnimationLinks/Chapter4_LinkedLists/index.html">
+              <span class="tag">Chapter 4</span>
+              <strong>Chapter 4 Linked Lists｜67頁×1000字完整教學版</strong>
+              <small>DataStructure_AnimationLinks/Chapter4_LinkedLists/index.html</small>
+            </a>
+            
+            <a class="link-item" href="DataStructure_AnimationLinks/Chapter5A_TreesPartI/index.html">
+              <span class="tag">Chapter 5</span>
+              <strong>Chapter 5A Trees Part I｜44頁×1000字完整教學版</strong>
+              <small>DataStructure_AnimationLinks/Chapter5A_TreesPartI/index.html</small>
+            </a>
+            
+            <a class="link-item" href="DataStructure_AnimationLinks/Chapter5B_TreesPartII/index.html">
+              <span class="tag">Chapter 5</span>
+              <strong>Chapter 5B Trees Part II｜69頁×1000字完整教學版</strong>
+              <small>DataStructure_AnimationLinks/Chapter5B_TreesPartII/index.html</small>
+            </a>
+            
+            <a class="link-item" href="DataStructure_AnimationLinks/Chapter6A_GraphsPartI/index.html">
+              <span class="tag">Chapter 6</span>
+              <strong>Chapter 6A Graphs Part I｜52頁×1000字完整教學版</strong>
+              <small>DataStructure_AnimationLinks/Chapter6A_GraphsPartI/index.html</small>
+            </a>
+            
+            <a class="link-item" href="DataStructure_AnimationLinks/Chapter6B_GraphsPartII/index.html">
+              <span class="tag">Chapter 6</span>
+              <strong>Chapter 6B Graphs Part II｜34頁×1000字完整教學版</strong>
+              <small>DataStructure_AnimationLinks/Chapter6B_GraphsPartII/index.html</small>
+            </a>
+            
+            <a class="link-item" href="DataStructure_AnimationLinks/Chapter7_Sorting/index.html">
+              <span class="tag">Chapter 7</span>
+              <strong>Chapter 7 Sorting｜25頁×1000字完整教學版</strong>
+              <small>DataStructure_AnimationLinks/Chapter7_Sorting/index.html</small>
+            </a>
+            
+            <a class="link-item" href="DataStructure_AnimationLinks/index.html">
+              <span class="tag">綜合</span>
+              <strong>資料結構動畫連結主頁</strong>
+              <small>DataStructure_AnimationLinks/index.html</small>
+            </a>
+            
+        </div>
+      </div>
+    </section>
+    
+</main>
+<div class="footer">Data Structures Final Exam Portal｜Teaching + Past Exams + AI Practice + Animations</div>
+</body>
+</html>

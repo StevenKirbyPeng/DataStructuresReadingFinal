@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Chapter 5 Trees：10 題精簡動畫說明檢查版</title>
+<style>
+:root{--bg:#f4f8fb;--card:#fff;--ink:#172033;--muted:#64748b;--pri:#0f766e;--blue:#2563eb;--warn:#f59e0b;--bad:#dc2626;--ok:#16a34a;--line:#cbd5e1;--code:#0f172a;--soft:#eff6ff}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:linear-gradient(180deg,#eff6ff,#f8fafc 42%,#ecfeff);font-family:"Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;color:var(--ink);line-height:1.75}.hero{background:linear-gradient(135deg,#0f766e,#1e3a8a);color:white;padding:44px 22px}.wrap{max-width:1180px;margin:auto;padding:0 18px}h1{margin:0 0 10px;font-size:clamp(28px,4vw,48px)}h2{margin:0 0 12px;font-size:28px}h3{color:var(--pri);margin:22px 0 8px}.card,details.topic{background:var(--card);border:1px solid #dbeafe;border-radius:18px;box-shadow:0 10px 25px rgba(15,23,42,.06);margin:18px 0;overflow:hidden}.pad{padding:22px}summary{cursor:pointer;padding:18px 22px;font-size:20px;font-weight:900;background:linear-gradient(90deg,#fff,#ecfeff);display:flex;justify-content:space-between;gap:12px}summary:after{content:'＋';color:var(--pri)}details[open] summary:after{content:'－'}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}.mini{background:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;padding:13px}.mini b{color:var(--pri)}.key{border-left:5px solid var(--pri);background:#f0fdfa;border-radius:12px;padding:12px;margin:12px 0}.warn{border-left:5px solid var(--warn);background:#fffbeb;border-radius:12px;padding:12px;margin:12px 0}.bad{border-left:5px solid var(--bad);background:#fef2f2;border-radius:12px;padding:12px;margin:12px 0}.ok{border-left:5px solid var(--ok);background:#f0fdf4;border-radius:12px;padding:12px;margin:12px 0}.stage{border:1px dashed #cbd5e1;border-radius:16px;background:#fbfdff;padding:12px;overflow:auto}.status{font-weight:800;background:#dbeafe;color:#1e3a8a;border-radius:12px;padding:10px 12px;margin:10px 0}.btns{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.btn{border:0;background:var(--pri);color:#fff;border-radius:10px;padding:8px 12px;font-weight:800;cursor:pointer}.btn.secondary{background:#e2e8f0;color:#172033}.btn.warn{background:#f59e0b;color:#111827}svg{max-width:100%;height:auto}.toc{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:8px}.toc a{display:block;background:#fff;border:1px solid #bfdbfe;border-radius:10px;padding:8px 10px;color:#1e3a8a;font-weight:700}.flow{display:flex;gap:8px;flex-wrap:wrap}.flow span{background:#eff6ff;border:1px solid #bfdbfe;border-radius:999px;padding:6px 10px;font-weight:700}.codebox{background:var(--code);border-radius:14px;overflow:hidden;margin:12px 0}.codehead{display:flex;justify-content:space-between;background:#111827;color:#ddd;padding:8px 10px}.copy{background:#334155;color:white;border:1px solid #64748b;border-radius:8px;padding:4px 8px;cursor:pointer}pre{margin:0;color:#e5e7eb;overflow:auto;padding:14px;line-height:1.6}table{width:100%;border-collapse:collapse}td,th{border:1px solid #e2e8f0;padding:9px;vertical-align:top}th{background:#0f766e;color:white}.hl{filter:drop-shadow(0 0 8px #f59e0b)}.ghost{opacity:.18}.small{color:var(--muted);font-size:14px}.editor-links a{display:block;padding:12px;border-radius:14px;border:1px solid #bfdbfe;background:#eff6ff;color:#1e3a8a;font-weight:800}@media(max-width:720px){summary{font-size:17px}.pad{padding:16px}}
+</style>
+</head>
+<body>
+<div style="position:sticky;top:0;z-index:99999;background:#eff6ff;border-bottom:1px solid #bfdbfe;padding:10px 14px;font-family:Microsoft JhengHei,Arial,sans-serif;"><a href="../../index.html" style="font-weight:900;color:#1e3a8a;text-decoration:none;">🏠 回期末考四大主題主頁</a></div>
+
+<header class="hero"><div class="wrap"><h1>Chapter 5 Trees：10 題精簡動畫說明檢查版</h1><p>本檔重新製作第五章 10 題動畫。每題都有獨立 SVG 畫面、獨立狀態文字、開始／下一步／重播按鈕，避免前版動畫共用模板造成不會動或位置錯亂。</p></div></header>
+<main class="wrap">
+<section class="card"><div class="pad"><h2>10 題快速導覽</h2><div class="toc" id="toc"></div><div class="ok"><b>檢查原則：</b>每一題的按鈕都會改變 step，SVG 會重新繪製；不是只換文字。所有 SVG 都用固定 viewBox，節點與邊位置已避免重疊。</div></div></section>
+<section class="card"><div class="pad"><h2>線上 C++ 編輯器</h2><div class="grid editor-links"><a href="https://www.onlinegdb.com/online_c++_compiler" target="_blank">OnlineGDB C++</a><a href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank">Programiz C++</a><a href="https://replit.com/languages/cpp" target="_blank">Replit C++</a><a href="https://godbolt.org/" target="_blank">Compiler Explorer</a></div></div></section>
+<div id="items"></div>
+<section class="card"><div class="pad"><h2>完整 C++ 程式：第五章 Trees 核心操作整合版</h2><p>此程式包含 Binary Tree Traversal、Max Heap、BST Search / Insert / Delete，已加入中文註解，可直接複製到線上 C++ 編輯器執行。</p><div class="codebox"><div class="codehead"><span>Chapter 5 Trees 完整可執行程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+// ===================== Binary Tree Traversal =====================
+struct TNode {
+    char data;
+    TNode *left, *right;
+    TNode(char d) : data(d), left(nullptr), right(nullptr) {}
+};
+
+void preorder(TNode* r) {        // VLR：先拜訪自己，再左，再右
+    if (!r) return;
+    cout &lt;&lt; r-&gt;data &lt;&lt; ' ';
+    preorder(r-&gt;left);
+    preorder(r-&gt;right);
+}
+void inorder(TNode* r) {         // LVR：左、自己、右
+    if (!r) return;
+    inorder(r-&gt;left);
+    cout &lt;&lt; r-&gt;data &lt;&lt; ' ';
+    inorder(r-&gt;right);
+}
+void postorder(TNode* r) {       // LRV：左、右、自己
+    if (!r) return;
+    postorder(r-&gt;left);
+    postorder(r-&gt;right);
+    cout &lt;&lt; r-&gt;data &lt;&lt; ' ';
+}
+
+// ===================== Max Heap =====================
+class MaxHeap {
+private:
+    vector&lt;int&gt; heap; // heap[0] 不使用，root 放 heap[1]
+public:
+    MaxHeap() { heap.push_back(0); }
+    bool empty() const { return heap.size() == 1; }
+    int top() const { return heap[1]; }
+
+    void push(int x) {
+        heap.push_back(x);              // Step 1：先放在 complete tree 的最後
+        int i = heap.size() - 1;
+        while (i &gt; 1 &amp;&amp; heap[i/2] &lt; x) { // Step 2：若比 parent 大就往上
+            heap[i] = heap[i/2];
+            i /= 2;
+        }
+        heap[i] = x;
+    }
+
+    void pop() {
+        if (empty()) return;
+        int last = heap.back();
+        heap.pop_back();
+        if (empty()) return;
+        int i = 1, child = 2;
+        while (child &lt; (int)heap.size()) {
+            if (child + 1 &lt; (int)heap.size() &amp;&amp; heap[child] &lt; heap[child+1]) child++;
+            if (last &gt;= heap[child]) break;
+            heap[i] = heap[child];
+            i = child;
+            child *= 2;
+        }
+        heap[i] = last;
+    }
+
+    void print() const {
+        for (int i = 1; i &lt; (int)heap.size(); ++i) cout &lt;&lt; heap[i] &lt;&lt; ' ';
+        cout &lt;&lt; '\n';
+    }
+};
+
+// ===================== BST =====================
+struct BNode {
+    int key;
+    BNode *left, *right;
+    BNode(int k) : key(k), left(nullptr), right(nullptr) {}
+};
+
+BNode* insertBST(BNode* r, int key) {
+    if (!r) return new BNode(key);
+    if (key &lt; r-&gt;key) r-&gt;left = insertBST(r-&gt;left, key);
+    else if (key &gt; r-&gt;key) r-&gt;right = insertBST(r-&gt;right, key);
+    return r;
+}
+
+bool searchBST(BNode* r, int key) {
+    if (!r) return false;
+    if (key == r-&gt;key) return true;
+    if (key &lt; r-&gt;key) return searchBST(r-&gt;left, key);
+    return searchBST(r-&gt;right, key);
+}
+
+BNode* findMin(BNode* r) {
+    while (r &amp;&amp; r-&gt;left) r = r-&gt;left;
+    return r;
+}
+
+BNode* deleteBST(BNode* r, int key) {
+    if (!r) return nullptr;
+    if (key &lt; r-&gt;key) r-&gt;left = deleteBST(r-&gt;left, key);
+    else if (key &gt; r-&gt;key) r-&gt;right = deleteBST(r-&gt;right, key);
+    else {
+        if (!r-&gt;left) { BNode* t = r-&gt;right; delete r; return t; }
+        if (!r-&gt;right) { BNode* t = r-&gt;left; delete r; return t; }
+        BNode* succ = findMin(r-&gt;right); // two children：找 successor
+        r-&gt;key = succ-&gt;key;
+        r-&gt;right = deleteBST(r-&gt;right, succ-&gt;key);
+    }
+    return r;
+}
+
+void inorderBST(BNode* r) {
+    if (!r) return;
+    inorderBST(r-&gt;left);
+    cout &lt;&lt; r-&gt;key &lt;&lt; ' ';
+    inorderBST(r-&gt;right);
+}
+
+int main() {
+    cout &lt;&lt; "Binary Tree Traversal:\n";
+    TNode* root = new TNode('+');
+    root-&gt;left = new TNode('*'); root-&gt;right = new TNode('E');
+    root-&gt;left-&gt;left = new TNode('A'); root-&gt;left-&gt;right = new TNode('B');
+    cout &lt;&lt; "Preorder: "; preorder(root); cout &lt;&lt; '\n';
+    cout &lt;&lt; "Inorder: "; inorder(root); cout &lt;&lt; '\n';
+    cout &lt;&lt; "Postorder: "; postorder(root); cout &lt;&lt; "\n\n";
+
+    cout &lt;&lt; "Max Heap:\n";
+    MaxHeap h;
+    for (int x : {20,15,2,14,10,1,21}) h.push(x);
+    h.print();
+    h.pop();
+    cout &lt;&lt; "After pop: "; h.print(); cout &lt;&lt; '\n';
+
+    cout &lt;&lt; "BST:\n";
+    BNode* bst = nullptr;
+    for (int x : {7,6,10,8,14,12}) bst = insertBST(bst, x);
+    cout &lt;&lt; "Search 8: " &lt;&lt; (searchBST(bst, 8) ? "found" : "not found") &lt;&lt; '\n';
+    bst = insertBST(bst, 9);
+    cout &lt;&lt; "After insert 9 inorder: "; inorderBST(bst); cout &lt;&lt; '\n';
+    bst = deleteBST(bst, 10);
+    cout &lt;&lt; "After delete 10 inorder: "; inorderBST(bst); cout &lt;&lt; '\n';
+    return 0;
+}</code></pre></div></div></section>
+<section class="card"><div class="pad"><h2>本版檢查紀錄</h2><table><tr><th>檢查項目</th><th>結果</th><th>說明</th></tr><tr><td>10 題 Accordion</td><td>通過</td><td>每題獨立收合。</td></tr><tr><td>動畫按鈕</td><td>通過</td><td>每題使用獨立 id 與 step 狀態，按下一步會重繪 SVG。</td></tr><tr><td>SVG 位置</td><td>通過</td><td>節點座標重新規劃，避免前版重疊與超出版面。</td></tr><tr><td>JavaScript 語法</td><td>通過</td><td>已用 node --check 檢查 script 語法。</td></tr><tr><td>Copy Button</td><td>通過</td><td>程式碼可複製。</td></tr></table></div></section>
+</main>
+<script>
+const topics = [
+{title:'Tree 基本術語：root、degree、leaf、height',source:'Trees Part I',goal:'看懂一棵樹中 root、parent、child、sibling、degree、leaf、height 的位置。',steps:['顯示整棵樹。','標示 root A。','標示 B、C、D 是 A 的 children，也是 siblings。','標示 leaf：F、G、I、J。','顯示 height = 4，degree(A)=3。'],errors:['把 level 和 height 混在一起。','把 leaf 誤認為最下面一層全部節點；其實 leaf 是 degree=0。'],kind:'terminology'},
+{title:'Left Child Right Sibling 轉換',source:'Trees Part I',goal:'理解一般樹如何用 left child / right sibling 表示成二元樹。',steps:['原本 A 有三個孩子 B,C,D。','B 成為 A 的 left child。','C 成為 B 的 right sibling。','D 成為 C 的 right sibling。','B 的孩子 E,F 也用同樣方式串接。'],errors:['把所有孩子都畫成 binary children。','忘記 right sibling 是同一層兄弟，不是父子。'],kind:'lcrs'},
+{title:'Skewed / Complete / Full Binary Tree 比較',source:'Trees Part I',goal:'分辨 skewed、complete、full 三種二元樹型態。',steps:['先顯示 skewed tree：一路往左。','顯示 complete tree：最後一層由左到右填入。','顯示 full tree：每一層都填滿。','比較三者高度與空間使用。'],errors:['把 complete 和 full 混用。','以為 skewed tree 不能是 binary tree。'],kind:'types'},
+{title:'Binary Tree Array Representation',source:'Trees Part I',goal:'理解 complete binary tree 中 parent(i)、leftChild(i)、rightChild(i) 的公式。',steps:['顯示 array index 1 到 7。','把 index 1 畫成 root。','index 2、3 是 1 的 children。','index 4、5 是 2 的 children，6、7 是 3 的 children。','列出 parent(i)=⌊i/2⌋，left=2i，right=2i+1。'],errors:['從 index 0 開始套用投影片的公式。','忘記 tree[0] 通常不使用。'],kind:'arrayrep'},
+{title:'Preorder Traversal：VLR',source:'Trees Part I',goal:'理解 preorder 是先 Visit，再 Left，再 Right。',steps:['從 root A 開始。','Visit A。','往左拜訪 B。','拜訪 D、E。','再回到右子樹 C、F、G。'],errors:['把 preorder 和 inorder 搞混。','遞迴返回時忘記右子樹。'],kind:'preorder'},
+{title:'Inorder Traversal：LVR',source:'Trees Part I',goal:'理解 inorder 是 Left、Visit、Right，常對應 expression tree 的 infix。',steps:['先一路往左到 D。','Visit D，再回 B。','Visit B，再 Visit E。','回 root A。','最後走 C、F、G。'],errors:['一開始就拜訪 root。','沒有理解 inorder 依賴遞迴 call stack。'],kind:'inorder'},
+{title:'Postorder Traversal：LRV',source:'Trees Part I',goal:'理解 postorder 是 Left、Right、Visit，常用於刪除樹或 postfix。',steps:['先處理左子樹最左 D。','再處理 E。','Visit B。','處理 F、G 後 Visit C。','最後才 Visit root A。'],errors:['太早 Visit root。','刪除樹時若不用 postorder，可能先刪 parent 後找不到 children。'],kind:'postorder'},
+{title:'Max Heap Push：Bubble Up',source:'Trees Part II',goal:'看懂插入新 key 時，先放最後，再與 parent 比較一路往上。',steps:['原 heap 為 20,15,2,14,10,1。','Push 21 到 index 7。','21 比 parent 2 大，往上。','21 又比 parent 20 大，成為 root。','完成 max heap。'],errors:['新節點直接放 root。','bubble up 時沒有保存新元素 e。'],kind:'heappush'},
+{title:'Max Heap Pop：Trickle Down',source:'Trees Part II',goal:'看懂刪除 root 後，用最後元素補 root，再和較大 child 交換。',steps:['Root 21 是最大值，要刪除。','用最後元素 2 補 root。','比較 children 15 與 20，選較大 20。','2 往下，20 往上。','再比較後完成 heap。'],errors:['Pop 時沒有選較大的 child。','刪 root 後沒有用最後一個元素補 root。'],kind:'heappop'},
+{title:'BST Search / Insert / Delete',source:'Trees Part II',goal:'理解 BST 左小右大，並看懂搜尋、插入與刪除 successor。',steps:['Search 8：7→10→8。','Insert 9：7→10→8，9 放到 8 的右邊。','Delete 10：10 有兩個 children。','找右子樹最小 successor 12。','用 12 取代 10，再刪除原 12。'],errors:['把 heap property 當成 BST property。','刪除 two children 節點時沒有處理 successor/predecessor。'],kind:'bst'}
+];
+let steps = Array(topics.length).fill(0);
+function copyCode(btn){const code=btn.closest('.codebox').querySelector('code').innerText;navigator.clipboard.writeText(code);btn.textContent='已複製';setTimeout(()=>btn.textContent='複製程式碼',1000)}
+function defs(){return `<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#334155"/></marker></defs>`}
+function line(x1,y1,x2,y2,color='#334155',w=3,dash=false){return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="${w}" ${dash?'stroke-dasharray="7 5"':''} marker-end="url(#arrow)"/>`}
+function edge(x1,y1,x2,y2,color='#64748b',w=3){return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="${w}"/>`}
+function node(x,y,label,fill='#dbeafe',stroke='#2563eb',r=26){return `<g><circle cx="${x}" cy="${y}" r="${r}" fill="${fill}" stroke="${stroke}" stroke-width="3"/><text x="${x}" y="${y+7}" text-anchor="middle" font-weight="900">${label}</text></g>`}
+function rect(x,y,w,h,label,fill='#dbeafe'){return `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="10" fill="${fill}" stroke="#334155" stroke-width="2"/><text x="${x+w/2}" y="${y+h/2+7}" text-anchor="middle" font-weight="900">${label}</text>`}
+const baseTree={A:[370,55],B:[240,130],C:[500,130],D:[170,210],E:[310,210],F:[430,210],G:[570,210]};
+function drawBinaryTree(active=[], labels=true){let s='';[['A','B'],['A','C'],['B','D'],['B','E'],['C','F'],['C','G']].forEach(([a,b])=>s+=edge(...baseTree[a],...baseTree[b]));Object.keys(baseTree).forEach(k=>s+=node(...baseTree[k],k,active.includes(k)?'#fde68a':'#dbeafe',active.includes(k)?'#f59e0b':'#2563eb'));return s;}
+function render(kind,st){let s=defs();
+if(kind==='terminology'){s+=drawBinaryTree(st>=1?['A']:[]); if(st>=2)s+=`<text x="285" y="115" fill="#dc2626" font-weight="900">children(A) = B,C</text><text x="285" y="140" fill="#dc2626" font-weight="900">siblings: B 與 C</text>`; if(st>=3)['D','E','F','G'].forEach(k=>{let [x,y]=baseTree[k];s+=`<circle cx="${x}" cy="${y}" r="34" fill="none" stroke="#16a34a" stroke-width="4"/>`}); if(st>=4)s+=`<text x="40" y="290" font-size="18" font-weight="900">height = 3 levels below root shown；degree(A)=2，degree(B)=2，leaf={D,E,F,G}</text>`;}
+else if(kind==='lcrs'){let A=[110,60],B=[70,140],C=[140,140],D=[210,140],E=[45,220],F=[95,220];s+=edge(...A,...B)+edge(...A,...C)+edge(...A,...D)+edge(...B,...E)+edge(...B,...F);[['A',A],['B',B],['C',C],['D',D],['E',E],['F',F]].forEach(([k,p])=>s+=node(...p,k));s+=`<text x="40" y="280" font-weight="900">一般樹</text>`;let ax=420, ay=60; if(st>=1){s+=node(ax,ay,'A','#fde68a');s+=line(ax,ay+26,ax-80,ay+80,'#2563eb');s+=node(ax-80,ay+100,'B','#fde68a');s+=`<text x="360" y="180" fill="#2563eb">left child</text>`} if(st>=2){s+=line(ax-54,ay+100,ax+40,ay+100,'#dc2626');s+=node(ax+70,ay+100,'C','#fecaca','#dc2626');s+=`<text x="425" y="135" fill="#dc2626">right sibling</text>`} if(st>=3){s+=line(ax+96,ay+100,ax+180,ay+100,'#dc2626');s+=node(ax+210,ay+100,'D','#fecaca','#dc2626')} if(st>=4){s+=line(ax-80,ay+126,ax-120,ay+170,'#2563eb');s+=node(ax-120,ay+190,'E','#dbeafe');s+=line(ax-94,ay+190,ax-40,ay+190,'#dc2626');s+=node(ax-10,ay+190,'F','#fecaca','#dc2626')} }
+else if(kind==='types'){let offset=st<1?0:st<2?260:520; if(st>=0){s+=`<text x="60" y="35" font-weight="900">Skewed</text>`+edge(100,70,100,130)+edge(100,130,100,190)+node(100,70,'A')+node(100,130,'B')+node(100,190,'C')} if(st>=1){s+=`<text x="310" y="35" font-weight="900">Complete</text>`+edge(360,70,300,135)+edge(360,70,420,135)+edge(300,135,270,200)+edge(300,135,330,200)+node(360,70,'A')+node(300,135,'B')+node(420,135,'C')+node(270,200,'D')+node(330,200,'E')} if(st>=2){s+=`<text x="590" y="35" font-weight="900">Full</text>`+edge(650,70,590,135)+edge(650,70,710,135)+edge(590,135,560,200)+edge(590,135,620,200)+edge(710,135,680,200)+edge(710,135,740,200)+node(650,70,'A')+node(590,135,'B')+node(710,135,'C')+node(560,200,'D')+node(620,200,'E')+node(680,200,'F')+node(740,200,'G')} if(st>=3)s+=`<text x="60" y="280" font-weight="900" fill="#0f766e">Complete：最後一層由左到右填；Full：每層全滿；Skewed：退化成鏈。</text>`;}
+else if(kind==='arrayrep'){let xs=[370,240,500,170,310,430,570], ys=[55,130,130,210,210,210,210];[[0,1],[0,2],[1,3],[1,4],[2,5],[2,6]].forEach(([a,b])=>s+=edge(xs[a],ys[a],xs[b],ys[b]));for(let i=0;i<7;i++)s+=node(xs[i],ys[i],i+1,st>=Math.ceil((i+1)/2)?'#fde68a':'#dbeafe');for(let i=1;i<=7;i++)s+=rect(90+i*72,275,64,42,i,st>=4?'#dcfce7':'#eff6ff')+`<text x="${122+i*72}" y="265" text-anchor="middle" class="small">[${i}]</text>`; if(st>=4)s+=`<text x="70" y="350" font-weight="900">公式：parent(i)=⌊i/2⌋，leftChild=2i，rightChild=2i+1。</text>`;}
+else if(['preorder','inorder','postorder'].includes(kind)){let orders={preorder:['A','B','D','E','C','F','G'],inorder:['D','B','E','A','F','C','G'],postorder:['D','E','B','F','G','C','A']};let active=orders[kind].slice(0,st);s+=drawBinaryTree(active);s+=`<text x="60" y="295" font-size="20" font-weight="900">Output：${active.join(' → ')||'尚未拜訪'}</text>`;let code={preorder:'VLR：Visit → Left → Right',inorder:'LVR：Left → Visit → Right',postorder:'LRV：Left → Right → Visit'}[kind];s+=`<text x="60" y="325" font-size="18" fill="#0f766e" font-weight="900">${code}</text>`;}
+else if(kind==='heappush'){let states=[[20,15,2,14,10,1],[20,15,2,14,10,1,21],[20,15,21,14,10,1,2],[21,15,20,14,10,1,2],[21,15,20,14,10,1,2]];let arr=states[Math.min(st,4)],pos=[[370,55],[240,130],[500,130],[170,210],[310,210],[430,210],[570,210]];[[0,1],[0,2],[1,3],[1,4],[2,5],[2,6]].forEach(([a,b])=>{if(arr[b]!==undefined)s+=edge(...pos[a],...pos[b])});arr.forEach((v,i)=>s+=node(...pos[i],v,(st>0&&v===21)?'#fde68a':'#dbeafe',(st>0&&v===21)?'#f59e0b':'#2563eb'));arr.forEach((v,i)=>s+=rect(105+i*78,285,64,38,v,(st>0&&v===21)?'#fde68a':'#eff6ff')); if(st>=2)s+=`<text x="70" y="350" font-weight="900" fill="#dc2626">21 比 parent 大，所以一路 bubble up。</text>`;}
+else if(kind==='heappop'){let states=[[21,15,20,14,10,1,2],[2,15,20,14,10,1],[20,15,2,14,10,1],[20,15,2,14,10,1],[20,15,2,14,10,1]];let arr=states[Math.min(st,4)],pos=[[370,55],[240,130],[500,130],[170,210],[310,210],[430,210],[570,210]];[[0,1],[0,2],[1,3],[1,4],[2,5],[2,6]].forEach(([a,b])=>{if(arr[b]!==undefined)s+=edge(...pos[a],...pos[b])});arr.forEach((v,i)=>s+=node(...pos[i],v,(st>=1&&i===0)?'#fde68a':'#dbeafe',(st>=1&&i===0)?'#f59e0b':'#2563eb'));arr.forEach((v,i)=>s+=rect(105+i*78,285,64,38,v)); if(st===0)s+=`<text x="70" y="350" font-weight="900">準備刪除 root 21。</text>`;if(st>=2)s+=`<text x="70" y="350" font-weight="900" fill="#dc2626">選較大的 child 20 上移，2 往下 trickle down。</text>`;}
+else if(kind==='bst'){let p={7:[370,55],6:[240,130],10:[500,130],8:[430,210],14:[570,210],12:[520,285],9:[470,285]};let edges=[['7','6'],['7','10'],['10','8'],['10','14'],['14','12']];if(st>=2)edges.push(['8','9']);let replace=st>=3;edges.forEach(([a,b])=>s+=edge(...p[a],...p[b]));Object.keys(p).forEach(k=>{if(k==='9'&&st<2)return;if(k==='12'&&st>=4)return;let label=(k==='10'&&st>=4)?'12':k;let active=(st===0&&['7','10','8'].includes(k))||(st===2&&k==='9')||(st>=3&&(k==='10'||k==='12'));s+=node(...p[k],label,active?'#fde68a':'#dbeafe',active?'#f59e0b':'#2563eb')});let txt=['Search 8：7→10→8。','比較規則：小往左，大往右。','Insert 9：9 > 8，所以接在 8 右邊。','Delete 10：有兩個 children，找 successor=12。','用 12 取代 10，原 12 節點刪除。'][st]||'';s+=`<text x="55" y="340" font-size="18" font-weight="900">${txt}</text>`;}
+return `<svg viewBox="0 0 760 380">${s}</svg>`;}
+function setStep(i,v){steps[i]=Math.max(0,Math.min(v,topics[i].steps.length-1));draw(i)}
+function next(i){setStep(i,steps[i]+1)}
+function reset(i){setStep(i,0)}
+function draw(i){const t=topics[i];document.getElementById('svg'+i).innerHTML=render(t.kind,steps[i]);document.getElementById('status'+i).textContent='Step '+(steps[i]+1)+'：'+t.steps[steps[i]]}
+function makeItems(){const items=document.getElementById('items'),toc=document.getElementById('toc');topics.forEach((t,i)=>{const n=String(i+1).padStart(2,'0');toc.insertAdjacentHTML('beforeend',`<a href="#q${i}">題目 ${n}：${t.title}</a>`);items.insertAdjacentHTML('beforeend',`<details class="topic" id="q${i}" ${i===0?'open':''}><summary>題目 ${n}：${t.title}</summary><div class="pad"><div class="grid"><div class="mini"><b>主題來源</b><br>${t.source}</div><div class="mini"><b>學習目標</b><br>${t.goal}</div></div><h3>核心觀念說明</h3><p>${t.goal}。本題用動畫把抽象的樹狀結構轉成可觀察的步驟，重點是「每一步狀態如何改變」，而不是只背名詞。</p><h3>步驟式教學</h3><div class="flow">${t.steps.map((x,k)=>`<span>Step ${k+1}：${x}</span>`).join('')}</div><h3>動畫展示</h3><div class="stage" id="svg${i}"></div><div class="status" id="status${i}"></div><div class="btns"><button class="btn" onclick="setStep(${i},0)">開始</button><button class="btn" onclick="next(${i})">下一步</button><button class="btn secondary" onclick="reset(${i})">重播</button></div><h3>常見錯誤與細節檢查</h3><div class="bad"><ul>${t.errors.map(e=>`<li>${e}</li>`).join('')}</ul></div><h3>本題重點總結</h3><div class="key"><ul><li>先看結構規則，再看操作順序。</li><li>每一步都要確認節點、邊或指標是否仍符合定義。</li><li>若是遞迴或 heap/BST 操作，要特別注意停止條件與比較方向。</li></ul></div></div></details>`)});topics.forEach((_,i)=>draw(i));}
+document.addEventListener('DOMContentLoaded',makeItems);
+</script>
+</body></html>

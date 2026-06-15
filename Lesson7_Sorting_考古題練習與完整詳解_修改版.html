@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第七章 Sorting：考古題練習與完整詳解（修改版）</title>
+<style>
+:root{--bg:#f5f7fb;--card:#fff;--ink:#1f2937;--muted:#64748b;--brand:#2563eb;--brand2:#0f766e;--soft:#eff6ff;--line:#d8e2ef;--ok:#ecfdf5;--warn:#fff7ed;--code:#0f172a}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Noto Sans TC","Microsoft JhengHei",Arial,sans-serif;background:linear-gradient(180deg,#eaf2ff,#f8fbff 260px,var(--bg));color:var(--ink);line-height:1.75}
+header{padding:44px 22px 30px;text-align:center;background:radial-gradient(circle at top left,#bfdbfe,transparent 36%),radial-gradient(circle at top right,#ccfbf1,transparent 35%)}
+header h1{margin:0;font-size:clamp(28px,4vw,46px)} header p{max-width:1050px;margin:14px auto;color:var(--muted);font-size:18px}
+.container{max-width:1220px;margin:auto;padding:22px}
+.card,.acc{background:rgba(255,255,255,.96);border:1px solid var(--line);border-radius:18px;box-shadow:0 12px 28px rgba(30,41,59,.08);margin:18px 0}
+.card{padding:22px}
+.toc{display:grid;grid-template-columns:repeat(auto-fit,minmax(245px,1fr));gap:12px}
+.toc a{display:block;text-decoration:none;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;font-weight:800}
+details.acc{overflow:hidden}
+summary{cursor:pointer;list-style:none;padding:18px 22px;font-size:21px;font-weight:900;background:linear-gradient(90deg,#eff6ff,#f0fdfa)}
+summary::-webkit-details-marker{display:none}
+.body{padding:22px}
+h2{font-size:26px} h3{font-size:21px;color:#12385f;margin-top:24px}
+.note,.answer,.questionBox{border-radius:14px;padding:14px 16px;margin:14px 0;border:1px solid}
+.note{background:var(--soft);border-color:#bfdbfe} .answer{background:var(--ok);border-color:#86efac} .questionBox{background:#fff7ed;border-color:#fed7aa}
+table{border-collapse:collapse;width:100%;margin:12px 0;background:white} th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top} th{background:#eff6ff;text-align:center}
+.editor a,.editTop button{display:inline-block;margin:4px;border:0;border-radius:10px;padding:8px 12px;background:#2563eb;color:white;font-weight:900;text-decoration:none;cursor:pointer}
+.editor a:nth-child(2),.editTop button:nth-child(2){background:#0f766e}
+.editArea{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#f8fafc}
+.editTop{padding:10px;background:#eaf2ff;border-bottom:1px solid var(--line)}
+textarea{width:100%;min-height:420px;border:0;padding:16px;font-family:Consolas,"Courier New",monospace;font-size:14px;line-height:1.55;background:#0f172a;color:#e5e7eb;resize:vertical;outline:none}
+.output{background:#111827;color:#bbf7d0;border-radius:14px;padding:16px;white-space:pre-wrap;overflow:auto}
+.comic{background:white;border:1px solid var(--line);border-radius:16px;padding:12px;margin:14px 0;overflow:auto}
+.svgTitle{font-size:20px;font-weight:900;fill:#12385f}
+.svgLabel{font-size:15px;font-weight:700;fill:#1f2937;dominant-baseline:middle}
+.num{font-size:13px;font-weight:900;fill:white;text-anchor:middle;dominant-baseline:middle}
+.footer{text-align:center;color:var(--muted);padding:28px}
+code{background:#f1f5f9;border:1px solid #e2e8f0;border-radius:6px;padding:1px 5px}
+</style>
+</head>
+<body>
+<header>
+<h1>第七章 Sorting：考古題練習與完整詳解（修改版）</h1>
+<p>已移除所有動畫，改成一張一張的連環圖說明。每一題都有完整可編輯 C++ 程式、中文註解、預期輸出結果、變數與函式分析。</p>
+</header>
+<div class="container">
+<section class="card">
+<h2>線上可編輯 C++ 編輯器</h2>
+<div class="editor">
+<a href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank">Programiz C++ Online Compiler</a>
+<a href="https://www.onlinegdb.com/online_c++_compiler" target="_blank">OnlineGDB C++ Compiler</a>
+</div>
+<div class="note">使用方式：在每題程式框中直接修改程式 → 複製 → 貼到上方任一線上 C++ 編輯器 → Run → 對照「預期輸出結果」。</div>
+</section>
+<section class="card">
+<h2>題目目錄</h2>
+<div class="toc">
+<a href="#q1">題型 1：Bubble Sort 追蹤題</a><a href="#q2">題型 2：Selection Sort 追蹤與穩定性</a><a href="#q3">題型 3：Insertion Sort 最佳/最壞情況</a><a href="#q4">題型 4：Quick Sort Pivot 分割</a><a href="#q5">題型 5：Merge Sort Pass 追蹤</a><a href="#q6">題型 6：MergePass 程式填空</a><a href="#q7">題型 7：Decision Tree 證明題</a><a href="#q8">題型 8：Heap Sort 改成遞減排序</a><a href="#q9">題型 9：排序性質 True / False</a><a href="#q10">題型 10：綜合大題</a>
+</div>
+</section>
+<section class="card">
+<h2>本版修改重點</h2>
+<table>
+<tr><th>項目</th><th>修改內容</th></tr>
+<tr><td>動畫</td><td>全部移除，改成靜態 SVG 連環圖步驟。</td></tr>
+<tr><td>程式碼</td><td>每題都有完整 C++ 程式，不再只有片段。</td></tr>
+<tr><td>可編輯</td><td>程式碼放在 textarea，可直接修改、複製與還原。</td></tr>
+<tr><td>輸出</td><td>每題附預期輸出，方便貼到線上編輯器後比對。</td></tr>
+<tr><td>分析</td><td>每題附變數與函式用途說明。</td></tr>
+</table>
+</section>
+
+<details class="acc" id="q1" open>
+<summary>題型 1：Bubble Sort 追蹤題</summary>
+<div class="body">
+  <div class="questionBox">
+    <h3>英文題目</h3>
+    <p>Given 5, 4, 1, 2, 8, show the array after each pass of Bubble Sort.</p>
+  </div>
+  <h3>演算法原理講解</h3>
+  <p>Bubble Sort 每一輪從左到右比較相鄰兩個元素，若順序錯誤就交換。第 1 輪會把最大值推到最右邊，第 2 輪把次大值推到倒數第二格。</p>
+  <div class="comic"><svg viewBox="0 0 860 330" role="img">
+    <defs><marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#64748b"/></marker></defs>
+    <text x="30" y="25" class="svgTitle">連環圖步驟說明</text>
+    <rect x="30" y="50" width="800" height="34" rx="10" fill="#eff6ff" stroke="#cbd5e1"/><circle cx="55" cy="67" r="13" fill="#2563eb"/><text x="55" y="68" class="num">1</text><text x="85" y="68" class="svgLabel">原始：5 4 1 2 8</text><path d="M430 84 V98" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/><rect x="30" y="98" width="800" height="34" rx="10" fill="#f0fdfa" stroke="#cbd5e1"/><circle cx="55" cy="115" r="13" fill="#2563eb"/><text x="55" y="116" class="num">2</text><text x="85" y="116" class="svgLabel">Pass 1：4 1 2 5 8</text><path d="M430 132 V146" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/><rect x="30" y="146" width="800" height="34" rx="10" fill="#fff7ed" stroke="#cbd5e1"/><circle cx="55" cy="163" r="13" fill="#2563eb"/><text x="55" y="164" class="num">3</text><text x="85" y="164" class="svgLabel">Pass 2：1 2 4 5 8</text><path d="M430 180 V194" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/><rect x="30" y="194" width="800" height="34" rx="10" fill="#fef2f2" stroke="#cbd5e1"/><circle cx="55" cy="211" r="13" fill="#2563eb"/><text x="55" y="212" class="num">4</text><text x="85" y="212" class="svgLabel">Pass 3：1 2 4 5 8</text><path d="M430 228 V242" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/><rect x="30" y="242" width="800" height="34" rx="10" fill="#f8fafc" stroke="#cbd5e1"/><circle cx="55" cy="259" r="13" fill="#2563eb"/><text x="55" y="260" class="num">5</text><text x="85" y="260" class="svgLabel">Pass 4：1 2 4 5 8</text>
+    </svg></div>
+  <h3>完整可編輯 C++ 程式碼</h3>
+  <div class="editArea">
+    <div class="editTop"><button onclick="copyText('q1_code')">複製程式碼</button><button onclick="resetCode('q1_code')">還原程式碼</button></div>
+    <textarea id="q1_code" spellcheck="false">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+// 印出陣列內容
+void printArray(const vector&lt;int&gt;&amp; a, int pass) {
+    cout &lt;&lt; "Pass " &lt;&lt; pass &lt;&lt; ": ";
+    for (int x : a) cout &lt;&lt; x &lt;&lt; ' ';
+    cout &lt;&lt; '\n';
+}
+
+// Bubble Sort：相鄰比較，錯誤就交換
+void bubbleSort(vector&lt;int&gt; a) {
+    int n = (int)a.size();
+    printArray(a, 0);
+
+    for (int j = n - 1; j &gt;= 1; --j) {
+        // 每一輪會把目前未排序區間最大值推到位置 j
+        for (int k = 0; k &lt; j; ++k) {
+            if (a[k + 1] &lt; a[k]) {
+                swap(a[k], a[k + 1]);
+            }
+        }
+        printArray(a, n - j);
+    }
+}
+
+int main() {
+    vector&lt;int&gt; a = {5, 4, 1, 2, 8};
+    bubbleSort(a);
+    return 0;
+}</textarea>
+  </div>
+  <h3>預期輸出結果</h3>
+  <pre class="output">Pass 0: 5 4 1 2 8
+Pass 1: 4 1 2 5 8
+Pass 2: 1 2 4 5 8
+Pass 3: 1 2 4 5 8
+Pass 4: 1 2 4 5 8</pre>
+  <h3>程式內容、變數與函式分析</h3>
+  <table><tr><th>變數 / 函式</th><th>中文說明</th></tr><tr><td><code>a</code></td><td>待排序陣列。</td></tr><tr><td><code>n</code></td><td>陣列大小。</td></tr><tr><td><code>j</code></td><td>未排序區間最後位置。</td></tr><tr><td><code>k</code></td><td>相鄰比較的左位置。</td></tr><tr><td><code>bubbleSort</code></td><td>執行 Bubble Sort 並印出每輪結果。</td></tr></table>
+</div>
+</details>
+<details class="acc" id="q2" open>
+<summary>題型 2：Selection Sort 追蹤與穩定性</summary>
+<div class="body">
+  <div class="questionBox">
+    <h3>英文題目</h3>
+    <p>Sort 8, 5, 2, 6, 9, 3, 1 by Selection Sort. Show each pass and explain whether it is stable.</p>
+  </div>
+  <h3>演算法原理講解</h3>
+  <p>Selection Sort 每輪在未排序區間找最小值，和未排序區間第一格交換。它交換次數少，但是通常不是 stable。</p>
+  <div class="comic"><svg viewBox="0 0 860 426" role="img">
+    <defs><marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#64748b"/></marker></defs>
+    <text x="30" y="25" class="svgTitle">連環圖步驟說明</text>
+    <rect x="30" y="50" width="800" height="34" rx="10" fill="#eff6ff" stroke="#cbd5e1"/><circle cx="55" cy="67" r="13" fill="#2563eb"/><text x="55" y="68" class="num">1</text><text x="85" y="68" class="svgLabel">原始：8 5 2 6 9 3 1</text><path d="M430 84 V98" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/><rect x="30" y="98" width="800" height="34" rx="10" fill="#f0fdfa" stroke="#cbd5e1"/><circle cx="55" cy="115" r="13" fill="#2563eb"/><text x="55" y="116" class="num">2</text><text x="85" y="116" class="svgLabel">Pass 1：1 5 2 6 9 3 8</text><path d="M430 132 V146" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/><rect x="30" y="146" width="800" height="34" rx="10" fill="#fff7ed" stroke="#cbd5e1"/><circle cx="55" cy="163" r="13" fill="#2563eb"/><text x="55" y="164" class="num">3</text><text x="85" y="164" class="svgLabel">Pass 2：1 2 5 6 9 3 8</text><path d="M430 180 V194" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/><rect x="30" y="194" width="800" height="34" rx="10" fill="#fef2f2" stroke="#cbd5e1"/><circle cx="55" cy="211" r="13" fill="#2563eb"/><text x="55" y="212" class="num">4</text><text x="85" y="212" class="svgLabel">Pass 3：1 2 3 6 9 5 8</text><path d="M430 228 V242" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/><rect x="30" y="242" width="800" height="34" rx="10" fill="#f8fafc" stroke="#cbd5e1"/><circle cx="55" cy="259" r="13" fill="#2563eb"/><text x="55" y="260" class="num">5</text><text x="85" y="260" class="svgLabel">Pass 4：1 2 3 5 9 6 8</text><path d="M430 276 V290" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/><rect x="30" y="290" width="800" height="34" rx="10" fill="#eff6ff" stroke="#cbd5e1"/><circle cx="55" cy="307" r="13" fill="#2563eb"/><text x="55" y="308" class="num">6</text><text x="85" y="308" class="svgLabel">Pass 5：1 2 3 5 6 9 8</text><path d="M430 324 V338" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/><rect x="30" y="338" width="800" height="34" rx="10" fill="#f0fdfa" stroke="#cbd5e1"/><circle cx="55" cy="355" r="13" fill="#2563eb"/><text x="55" y="356" class="num">7</text><text x="85" y="356" class="svgLabel">Pass 6：1 2 3 5 6 8 9</text>
+    </svg></div>
+  <h3>完整可編輯 C++ 程式碼</h3>
+  <div class="editArea">
+    <div class="editTop"><button onclick="copyText('q2_code')">複製程式碼</button><button onclick="resetCode('q2_code')">還原程式碼</button></div>
+    <textarea id="q2_code" spellcheck="false">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+void printArray(const vector&lt;int&gt;&amp; a, int pass) {
+    cout &lt;&lt; "Pass " &lt;&lt; pass &lt;&lt; ": ";
+    for (int x : a) cout &lt;&lt; x &lt;&lt; ' ';
+    cout &lt;&lt; '\n';
+}
+
+// Selection Sort：每次選出未排序區間最小值
+void selectionSort(vector&lt;int&gt; a) {
+    int n = (int)a.size();
+    printArray(a, 0);
+
+    for (int i = 0; i &lt; n - 1; ++i) {
+        int minPos = i; // 目前最小值的位置
+        for (int j = i + 1; j &lt; n; ++j) {
+            if (a[j] &lt; a[minPos]) minPos = j;
+        }
+        swap(a[i], a[minPos]);
+        printArray(a, i + 1);
+    }
+}
+
+int main() {
+    vector&lt;int&gt; a = {8, 5, 2, 6, 9, 3, 1};
+    selectionSort(a);
+    cout &lt;&lt; "Stable? No, because swapping may change equal-key order.\n";
+    return 0;
+}</textarea>
+  </div>
+  <h3>預期輸出結果</h3>
+  <pre class="output">Pass 0: 8 5 2 6 9 3 1
+Pass 1: 1 5 2 6 9 3 8
+Pass 2: 1 2 5 6 9 3 8
+Pass 3: 1 2 3 6 9 5 8
+Pass 4: 1 2 3 5 9 6 8
+Pass 5: 1 2 3 5 6 9 8
+Pass 6: 1 2 3 5 6 8 9
+Stable? No, because swapping may change equal-key order.</pre>
+  <h3>程式內容、變數與函式分析</h3>
+  <table><tr><th>變數 / 函式</th><th>中文說明</th></tr><tr><td><code>i</code></td><td>未排序區間第一格，也是本輪要放最小值的位置。</td></tr><tr><td><code>j</code></td><td>掃描未排序區間。</td></tr><tr><td><code>minPos</code></td><td>目前找到的最小值位置。</td></tr><tr><td><code>selectionSort</code></td><td>逐輪選最小值並交換到前方。</td></tr></table>
+</div>
+</details>
+<details class="acc" id="q3" open>
+<summary>題型 3：Insertion Sort 最佳/最壞情況</summary>
+<div class="body">
+  <div class="questionBox">
+    <h3>英文題目</h3>
+    <p>Apply Insertion Sort to 5, 4, 3, 2, 1. Show the result after each insertion.</p>
+  </div>
+  <h3>演算法原理講解</h3>
+  <p>把第 j 個元素插入前面已排序的子陣列。反向排序是最壞情況，每次都要搬移很多元素；已排序是最佳情況，只比較一次就停止。</p>
+  <div class="comic"><svg viewBox="0 0 860 330" role="img">
+    <defs><marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#64748b"/></marker></defs>
+    <text x="30" y="25" class="svgTitle">連環圖步驟說明</text>
+    <rect x="30" y="50" width="800" height="34" rx="10" fill="#eff6ff" stroke="#cbd5e1"/><circle cx="55" cy="67" r="13" fill="#2563eb"/><text x="55" y="68" class="num">1</text><text x="85" y="68" class="svgLabel">原始：5 4 3 2 1</text><path d="M430 84 V98" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/><rect x="30" y="98" width="800" height="34" rx="10" fill="#f0fdfa" stroke="#cbd5e1"/><circle cx="55" cy="115" r="13" fill="#2563eb"/><text x="55" y="116" class="num">2</text><text x="85" y="116" class="svgLabel">j=1：4 5 3 2 1</text><path d="M430 132 V146" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/><rect x="30" y="146" width="800" height="34" rx="10" fill="#fff7ed" stroke="#cbd5e1"/><circle cx="55" cy="163" r="13" fill="#2563eb"/><text x="55" y="164" class="num">3</text><text x="85" y="164" class="svgLabel">j=2：3 4 5 2 1</text><path d="M430 180 V194" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/><rect x="30" y="194" width="800" height="34" rx="10" fill="#fef2f2" stroke="#cbd5e1"/><circle cx="55" cy="211" r="13" fill="#2563eb"/><text x="55" y="212" class="num">4</text><text x="85" y="212" class="svgLabel">j=3：2 3 4 5 1</text><path d="M430 228 V242" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/><rect x="30" y="242" width="800" height="34" rx="10" fill="#f8fafc" stroke="#cbd5e1"/><circle cx="55" cy="259" r="13" fill="#2563eb"/><text x="55" y="260" class="num">5</text><text x="85" y="260" class="svgLabel">j=4：1 2 3 4 5</text>
+    </svg></div>
+  <h3>完整可編輯 C++ 程式碼</h3>
+  <div class="editArea">
+    <div class="editTop"><button onclick="copyText('q3_code')">複製程式碼</button><button onclick="resetCode('q3_code')">還原程式碼</button></div>
+    <textarea id="q3_code" spellcheck="false">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+void printArray(const vector&lt;int&gt;&amp; a, string tag) {
+    cout &lt;&lt; tag &lt;&lt; ": ";
+    for (int x : a) cout &lt;&lt; x &lt;&lt; ' ';
+    cout &lt;&lt; '\n';
+}
+
+// Insertion Sort：將 key 插入左邊已排序區間
+void insertionSort(vector&lt;int&gt; a) {
+    int n = (int)a.size();
+    printArray(a, "Original");
+
+    for (int j = 1; j &lt; n; ++j) {
+        int key = a[j];      // 暫存要插入的資料
+        int i = j - 1;       // 從已排序區間最後一格開始找
+
+        while (i &gt;= 0 &amp;&amp; key &lt; a[i]) {
+            a[i + 1] = a[i]; // 比 key 大的元素往右搬
+            --i;
+        }
+        a[i + 1] = key;      // 放入正確位置
+        printArray(a, "j=" + to_string(j));
+    }
+}
+
+int main() {
+    vector&lt;int&gt; a = {5, 4, 3, 2, 1};
+    insertionSort(a);
+    cout &lt;&lt; "Best case: O(n), Worst case: O(n^2), Stable: Yes, In-place: Yes\n";
+    return 0;
+}</textarea>
+  </div>
+  <h3>預期輸出結果</h3>
+  <pre class="output">Original: 5 4 3 2 1
+j=1: 4 5 3 2 1
+j=2: 3 4 5 2 1
+j=3: 2 3 4 5 1
+j=4: 1 2 3 4 5
+Best case: O(n), Worst case: O(n^2), Stable: Yes, In-place: Yes</pre>
+  <h3>程式內容、變數與函式分析</h3>
+  <table><tr><th>變數 / 函式</th><th>中文說明</th></tr><tr><td><code>key</code></td><td>目前要插入的值。</td></tr><tr><td><code>j</code></td><td>未排序區間第一個元素的位置。</td></tr><tr><td><code>i</code></td><td>從已排序區間尾端往左掃描。</td></tr><tr><td><code>insertionSort</code></td><td>逐步擴大已排序區間。</td></tr></table>
+</div>
+</details>
+<details class="acc" id="q4" open>
+<summary>題型 4：Quick Sort Pivot 分割</summary>
+<div class="body">
+  <div class="questionBox">
+    <h3>英文題目</h3>
+    <p>Use Quick Sort with the leftmost element as pivot to sort 26, 5, 37, 1, 61, 11, 59, 15, 48, 19. Show the partition process.</p>
+  </div>
+  <h3>演算法原理講解</h3>
+  <p>Quick Sort 採 divide-and-conquer。先選 pivot，把小於等於 pivot 的放左邊，大於等於 pivot 的放右邊，再遞迴排序左右子陣列。</p>
+  <div class="comic"><svg viewBox="0 0 860 378" role="img">
+    <defs><marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#64748b"/></marker></defs>
+    <text x="30" y="25" class="svgTitle">連環圖步驟說明</text>
+    <rect x="30" y="50" width="800" height="34" rx="10" fill="#eff6ff" stroke="#cbd5e1"/><circle cx="55" cy="67" r="13" fill="#2563eb"/><text x="55" y="68" class="num">1</text><text x="85" y="68" class="svgLabel">原始：[26 5 37 1 61 11 59 15 48 19]</text><path d="M430 84 V98" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/><rect x="30" y="98" width="800" height="34" rx="10" fill="#f0fdfa" stroke="#cbd5e1"/><circle cx="55" cy="115" r="13" fill="#2563eb"/><text x="55" y="116" class="num">2</text><text x="85" y="116" class="svgLabel">pivot=26：[11 5 19 1 15] 26 [59 61 48 37]</text><path d="M430 132 V146" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/><rect x="30" y="146" width="800" height="34" rx="10" fill="#fff7ed" stroke="#cbd5e1"/><circle cx="55" cy="163" r="13" fill="#2563eb"/><text x="55" y="164" class="num">3</text><text x="85" y="164" class="svgLabel">pivot=11：[1 5] 11 [19 15] 26 [59 61 48 37]</text><path d="M430 180 V194" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/><rect x="30" y="194" width="800" height="34" rx="10" fill="#fef2f2" stroke="#cbd5e1"/><circle cx="55" cy="211" r="13" fill="#2563eb"/><text x="55" y="212" class="num">4</text><text x="85" y="212" class="svgLabel">pivot=19：1 5 11 15 19 26 [59 61 48 37]</text><path d="M430 228 V242" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/><rect x="30" y="242" width="800" height="34" rx="10" fill="#f8fafc" stroke="#cbd5e1"/><circle cx="55" cy="259" r="13" fill="#2563eb"/><text x="55" y="260" class="num">5</text><text x="85" y="260" class="svgLabel">pivot=59：1 5 11 15 19 26 [48 37] 59 [61]</text><path d="M430 276 V290" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/><rect x="30" y="290" width="800" height="34" rx="10" fill="#eff6ff" stroke="#cbd5e1"/><circle cx="55" cy="307" r="13" fill="#2563eb"/><text x="55" y="308" class="num">6</text><text x="85" y="308" class="svgLabel">完成：1 5 11 15 19 26 37 48 59 61</text>
+    </svg></div>
+  <h3>完整可編輯 C++ 程式碼</h3>
+  <div class="editArea">
+    <div class="editTop"><button onclick="copyText('q4_code')">複製程式碼</button><button onclick="resetCode('q4_code')">還原程式碼</button></div>
+    <textarea id="q4_code" spellcheck="false">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+void printArray(const vector&lt;int&gt;&amp; a, int left, int right, int pivotPos) {
+    cout &lt;&lt; "pivot position = " &lt;&lt; pivotPos &lt;&lt; ", array: ";
+    for (int x : a) cout &lt;&lt; x &lt;&lt; ' ';
+    cout &lt;&lt; '\n';
+}
+
+// Partition：使用最左邊元素當 pivot
+int partitionLeftPivot(vector&lt;int&gt;&amp; a, int left, int right) {
+    int pivot = a[left];
+    int i = left;
+    int j = right + 1;
+
+    do {
+        do { ++i; } while (i &lt;= right &amp;&amp; a[i] &lt; pivot);
+        do { --j; } while (a[j] &gt; pivot);
+
+        if (i &lt; j) swap(a[i], a[j]);
+    } while (i &lt; j);
+
+    swap(a[left], a[j]);
+    return j;
+}
+
+void quickSort(vector&lt;int&gt;&amp; a, int left, int right) {
+    if (left &lt; right) {
+        int p = partitionLeftPivot(a, left, right);
+        printArray(a, left, right, p);
+        quickSort(a, left, p - 1);
+        quickSort(a, p + 1, right);
+    }
+}
+
+int main() {
+    vector&lt;int&gt; a = {26, 5, 37, 1, 61, 11, 59, 15, 48, 19};
+    quickSort(a, 0, (int)a.size() - 1);
+    cout &lt;&lt; "Sorted: ";
+    for (int x : a) cout &lt;&lt; x &lt;&lt; ' ';
+    cout &lt;&lt; '\n';
+    return 0;
+}</textarea>
+  </div>
+  <h3>預期輸出結果</h3>
+  <pre class="output">pivot position = 5, array: 15 5 19 1 11 26 59 61 48 37
+pivot position = 2, array: 1 5 11 15 19 26 59 61 48 37
+pivot position = 0, array: 1 5 11 15 19 26 59 61 48 37
+pivot position = 4, array: 1 5 11 15 19 26 59 61 48 37
+pivot position = 8, array: 1 5 11 15 19 26 37 48 59 61
+pivot position = 7, array: 1 5 11 15 19 26 37 48 59 61
+Sorted: 1 5 11 15 19 26 37 48 59 61</pre>
+  <h3>程式內容、變數與函式分析</h3>
+  <table><tr><th>變數 / 函式</th><th>中文說明</th></tr><tr><td><code>pivot</code></td><td>基準值，此程式取 left 位置。</td></tr><tr><td><code>i</code></td><td>由左往右找不小於 pivot 的元素。</td></tr><tr><td><code>j</code></td><td>由右往左找不大於 pivot 的元素。</td></tr><tr><td><code>partitionLeftPivot</code></td><td>完成一次分割並回傳 pivot 最終位置。</td></tr><tr><td><code>quickSort</code></td><td>遞迴排序 pivot 左右兩側。</td></tr></table>
+</div>
+</details>
+<details class="acc" id="q5" open>
+<summary>題型 5：Merge Sort Pass 追蹤</summary>
+<div class="body">
+  <div class="questionBox">
+    <h3>英文題目</h3>
+    <p>Show the iterative Merge Sort process for 26, 5, 77, 1, 61, 11, 59, 15, 48, 19.</p>
+  </div>
+  <h3>演算法原理講解</h3>
+  <p>Merge Sort 把資料視為許多已排序長度 1 的串列，兩兩合併成長度 2、4、8，直到完整排序。</p>
+  <div class="comic"><svg viewBox="0 0 860 330" role="img">
+    <defs><marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#64748b"/></marker></defs>
+    <text x="30" y="25" class="svgTitle">連環圖步驟說明</text>
+    <rect x="30" y="50" width="800" height="34" rx="10" fill="#eff6ff" stroke="#cbd5e1"/><circle cx="55" cy="67" r="13" fill="#2563eb"/><text x="55" y="68" class="num">1</text><text x="85" y="68" class="svgLabel">s=1：26 5 | 77 1 | 61 11 | 59 15 | 48 19</text><path d="M430 84 V98" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/><rect x="30" y="98" width="800" height="34" rx="10" fill="#f0fdfa" stroke="#cbd5e1"/><circle cx="55" cy="115" r="13" fill="#2563eb"/><text x="55" y="116" class="num">2</text><text x="85" y="116" class="svgLabel">s=2：5 26 | 1 77 | 11 61 | 15 59 | 19 48</text><path d="M430 132 V146" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/><rect x="30" y="146" width="800" height="34" rx="10" fill="#fff7ed" stroke="#cbd5e1"/><circle cx="55" cy="163" r="13" fill="#2563eb"/><text x="55" y="164" class="num">3</text><text x="85" y="164" class="svgLabel">s=4：1 5 26 77 | 11 15 59 61 | 19 48</text><path d="M430 180 V194" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/><rect x="30" y="194" width="800" height="34" rx="10" fill="#fef2f2" stroke="#cbd5e1"/><circle cx="55" cy="211" r="13" fill="#2563eb"/><text x="55" y="212" class="num">4</text><text x="85" y="212" class="svgLabel">s=8：1 5 11 15 26 59 61 77 | 19 48</text><path d="M430 228 V242" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/><rect x="30" y="242" width="800" height="34" rx="10" fill="#f8fafc" stroke="#cbd5e1"/><circle cx="55" cy="259" r="13" fill="#2563eb"/><text x="55" y="260" class="num">5</text><text x="85" y="260" class="svgLabel">完成：1 5 11 15 19 26 48 59 61 77</text>
+    </svg></div>
+  <h3>完整可編輯 C++ 程式碼</h3>
+  <div class="editArea">
+    <div class="editTop"><button onclick="copyText('q5_code')">複製程式碼</button><button onclick="resetCode('q5_code')">還原程式碼</button></div>
+    <textarea id="q5_code" spellcheck="false">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+void mergeRange(vector&lt;int&gt;&amp; src, vector&lt;int&gt;&amp; dst, int l, int m, int r) {
+    int i = l, j = m + 1, k = l;
+
+    while (i &lt;= m &amp;&amp; j &lt;= r) {
+        if (src[i] &lt;= src[j]) dst[k++] = src[i++]; // 相等取左邊，保持 stable
+        else dst[k++] = src[j++];
+    }
+    while (i &lt;= m) dst[k++] = src[i++];
+    while (j &lt;= r) dst[k++] = src[j++];
+}
+
+void mergePass(vector&lt;int&gt;&amp; src, vector&lt;int&gt;&amp; dst, int s) {
+    int n = (int)src.size();
+    int i = 0;
+
+    for (; i + 2 * s - 1 &lt; n; i += 2 * s) {
+        mergeRange(src, dst, i, i + s - 1, i + 2 * s - 1);
+    }
+
+    if (i + s &lt; n) mergeRange(src, dst, i, i + s - 1, n - 1);
+    else for (int k = i; k &lt; n; ++k) dst[k] = src[k];
+}
+
+void printVec(const vector&lt;int&gt;&amp; a, int s) {
+    cout &lt;&lt; "s=" &lt;&lt; s &lt;&lt; ": ";
+    for (int x : a) cout &lt;&lt; x &lt;&lt; ' ';
+    cout &lt;&lt; '\n';
+}
+
+void iterativeMergeSort(vector&lt;int&gt; a) {
+    int n = (int)a.size();
+    vector&lt;int&gt; temp(n);
+
+    printVec(a, 0);
+    for (int s = 1; s &lt; n; s *= 2) {
+        mergePass(a, temp, s);
+        printVec(temp, s);
+        a.swap(temp);
+    }
+}
+
+int main() {
+    vector&lt;int&gt; a = {26, 5, 77, 1, 61, 11, 59, 15, 48, 19};
+    iterativeMergeSort(a);
+    return 0;
+}</textarea>
+  </div>
+  <h3>預期輸出結果</h3>
+  <pre class="output">s=0: 26 5 77 1 61 11 59 15 48 19
+s=1: 5 26 1 77 11 61 15 59 19 48
+s=2: 1 5 26 77 11 15 59 61 19 48
+s=4: 1 5 11 15 26 59 61 77 19 48
+s=8: 1 5 11 15 19 26 48 59 61 77</pre>
+  <h3>程式內容、變數與函式分析</h3>
+  <table><tr><th>變數 / 函式</th><th>中文說明</th></tr><tr><td><code>src</code></td><td>本輪讀取來源陣列。</td></tr><tr><td><code>dst</code></td><td>本輪合併後寫入陣列。</td></tr><tr><td><code>s</code></td><td>目前每段已排序子串列長度。</td></tr><tr><td><code>mergeRange</code></td><td>合併兩段已排序子陣列。</td></tr><tr><td><code>mergePass</code></td><td>完成所有長度 s 子串列的兩兩合併。</td></tr></table>
+</div>
+</details>
+<details class="acc" id="q6" open>
+<summary>題型 6：MergePass 程式填空</summary>
+<div class="body">
+  <div class="questionBox">
+    <h3>英文題目</h3>
+    <p>Complete the missing parts of MergePass for iterative Merge Sort.</p>
+  </div>
+  <h3>演算法原理講解</h3>
+  <p>這是老師常見 code fill-in 題型。關鍵是知道兩段長度 s 的子串列位置：第一段 i 到 i+s-1，第二段 i+s 到 i+2s-1。</p>
+  <div class="comic"><svg viewBox="0 0 860 330" role="img">
+    <defs><marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#64748b"/></marker></defs>
+    <text x="30" y="25" class="svgTitle">連環圖步驟說明</text>
+    <rect x="30" y="50" width="800" height="34" rx="10" fill="#eff6ff" stroke="#cbd5e1"/><circle cx="55" cy="67" r="13" fill="#2563eb"/><text x="55" y="68" class="num">1</text><text x="85" y="68" class="svgLabel">[A] n - 2*s + 1</text><path d="M430 84 V98" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/><rect x="30" y="98" width="800" height="34" rx="10" fill="#f0fdfa" stroke="#cbd5e1"/><circle cx="55" cy="115" r="13" fill="#2563eb"/><text x="55" y="116" class="num">2</text><text x="85" y="116" class="svgLabel">[B] 2*s</text><path d="M430 132 V146" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/><rect x="30" y="146" width="800" height="34" rx="10" fill="#fff7ed" stroke="#cbd5e1"/><circle cx="55" cy="163" r="13" fill="#2563eb"/><text x="55" y="164" class="num">3</text><text x="85" y="164" class="svgLabel">[C] i + s - 1</text><path d="M430 180 V194" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/><rect x="30" y="194" width="800" height="34" rx="10" fill="#fef2f2" stroke="#cbd5e1"/><circle cx="55" cy="211" r="13" fill="#2563eb"/><text x="55" y="212" class="num">4</text><text x="85" y="212" class="svgLabel">[D] i + 2*s - 1</text><path d="M430 228 V242" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/><rect x="30" y="242" width="800" height="34" rx="10" fill="#f8fafc" stroke="#cbd5e1"/><circle cx="55" cy="259" r="13" fill="#2563eb"/><text x="55" y="260" class="num">5</text><text x="85" y="260" class="svgLabel">若剩餘長度不足兩段，就合併最後兩段或直接 copy。</text>
+    </svg></div>
+  <h3>完整可編輯 C++ 程式碼</h3>
+  <div class="editArea">
+    <div class="editTop"><button onclick="copyText('q6_code')">複製程式碼</button><button onclick="resetCode('q6_code')">還原程式碼</button></div>
+    <textarea id="q6_code" spellcheck="false">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+// 1-based index 版本，a[1] 到 a[n] 有資料
+void Merge(int initList[], int mergedList[], int l, int m, int n) {
+    int i1 = l;
+    int i2 = m + 1;
+    int iResult = l;
+
+    while (i1 &lt;= m &amp;&amp; i2 &lt;= n) {
+        if (initList[i1] &lt;= initList[i2]) mergedList[iResult++] = initList[i1++];
+        else mergedList[iResult++] = initList[i2++];
+    }
+    while (i1 &lt;= m) mergedList[iResult++] = initList[i1++];
+    while (i2 &lt;= n) mergedList[iResult++] = initList[i2++];
+}
+
+void MergePass(int initList[], int resultList[], int n, int s) {
+    int i;
+
+    // 至少要有兩段長度 s 的子串列才進入 for
+    for (i = 1; i &lt;= n - 2 * s + 1; i += 2 * s) {
+        Merge(initList, resultList, i, i + s - 1, i + 2 * s - 1);
+    }
+
+    // 處理最後剩下不足 2s 的部分
+    if ((i + s - 1) &lt; n) Merge(initList, resultList, i, i + s - 1, n);
+    else {
+        for (int k = i; k &lt;= n; ++k) resultList[k] = initList[k];
+    }
+}
+
+int main() {
+    int a[11] = {0, 26, 5, 77, 1, 61, 11, 59, 15, 48, 19};
+    int temp[11] = {};
+    MergePass(a, temp, 10, 1);
+
+    for (int i = 1; i &lt;= 10; ++i) cout &lt;&lt; temp[i] &lt;&lt; ' ';
+    cout &lt;&lt; '\n';
+    return 0;
+}</textarea>
+  </div>
+  <h3>預期輸出結果</h3>
+  <pre class="output">5 26 1 77 11 61 15 59 19 48</pre>
+  <h3>程式內容、變數與函式分析</h3>
+  <table><tr><th>變數 / 函式</th><th>中文說明</th></tr><tr><td><code>i</code></td><td>目前要合併的第一段起點。</td></tr><tr><td><code>s</code></td><td>每段已排序子串列長度。</td></tr><tr><td><code>n</code></td><td>資料總數。</td></tr><tr><td><code>Merge</code></td><td>合併 initList[l..m] 與 initList[m+1..n]。</td></tr><tr><td><code>MergePass</code></td><td>完成一整輪長度 s 的合併。</td></tr></table>
+</div>
+</details>
+<details class="acc" id="q7" open>
+<summary>題型 7：Decision Tree 證明題</summary>
+<div class="body">
+  <div class="questionBox">
+    <h3>英文題目</h3>
+    <p>Prove that every comparison-based sorting algorithm has worst-case lower bound Ω(n log n).</p>
+  </div>
+  <h3>演算法原理講解</h3>
+  <p>比較排序只能透過兩兩比較得到 True/False，因此整個排序過程可以用二元 decision tree 表示。每個葉節點代表一種排序結果。</p>
+  <div class="comic"><svg viewBox="0 0 860 330" role="img">
+    <defs><marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#64748b"/></marker></defs>
+    <text x="30" y="25" class="svgTitle">連環圖步驟說明</text>
+    <rect x="30" y="50" width="800" height="34" rx="10" fill="#eff6ff" stroke="#cbd5e1"/><circle cx="55" cy="67" r="13" fill="#2563eb"/><text x="55" y="68" class="num">1</text><text x="85" y="68" class="svgLabel">n 個相異元素有 n! 種排列。</text><path d="M430 84 V98" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/><rect x="30" y="98" width="800" height="34" rx="10" fill="#f0fdfa" stroke="#cbd5e1"/><circle cx="55" cy="115" r="13" fill="#2563eb"/><text x="55" y="116" class="num">2</text><text x="85" y="116" class="svgLabel">Decision tree 至少要有 n! 個葉節點。</text><path d="M430 132 V146" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/><rect x="30" y="146" width="800" height="34" rx="10" fill="#fff7ed" stroke="#cbd5e1"/><circle cx="55" cy="163" r="13" fill="#2563eb"/><text x="55" y="164" class="num">3</text><text x="85" y="164" class="svgLabel">高度 h 的二元樹最多有 2^(h-1) 個葉節點。</text><path d="M430 180 V194" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/><rect x="30" y="194" width="800" height="34" rx="10" fill="#fef2f2" stroke="#cbd5e1"/><circle cx="55" cy="211" r="13" fill="#2563eb"/><text x="55" y="212" class="num">4</text><text x="85" y="212" class="svgLabel">所以 n! ≤ 2^(h-1)，h ≥ log2(n!)+1。</text><path d="M430 228 V242" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/><rect x="30" y="242" width="800" height="34" rx="10" fill="#f8fafc" stroke="#cbd5e1"/><circle cx="55" cy="259" r="13" fill="#2563eb"/><text x="55" y="260" class="num">5</text><text x="85" y="260" class="svgLabel">log2(n!) = Ω(n log n)，因此比較排序最壞下界是 Ω(n log n)。</text>
+    </svg></div>
+  <h3>完整可編輯 C++ 程式碼</h3>
+  <div class="editArea">
+    <div class="editTop"><button onclick="copyText('q7_code')">複製程式碼</button><button onclick="resetCode('q7_code')">還原程式碼</button></div>
+    <textarea id="q7_code" spellcheck="false">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+// 這支程式不是排序，而是用來計算 log2(n!)，輔助理解下界
+double log2Factorial(int n) {
+    double ans = 0.0;
+    for (int i = 1; i &lt;= n; ++i) {
+        ans += log2((double)i);
+    }
+    return ans;
+}
+
+int main() {
+    for (int n = 2; n &lt;= 10; ++n) {
+        cout &lt;&lt; "n = " &lt;&lt; n
+             &lt;&lt; ", log2(n!) = " &lt;&lt; fixed &lt;&lt; setprecision(3)
+             &lt;&lt; log2Factorial(n) &lt;&lt; '\n';
+    }
+    cout &lt;&lt; "This value is the minimum decision-tree depth order.\n";
+    return 0;
+}</textarea>
+  </div>
+  <h3>預期輸出結果</h3>
+  <pre class="output">n = 2, log2(n!) = 1.000
+n = 3, log2(n!) = 2.585
+n = 4, log2(n!) = 4.585
+n = 5, log2(n!) = 6.907
+n = 6, log2(n!) = 9.492
+n = 7, log2(n!) = 12.299
+n = 8, log2(n!) = 15.299
+n = 9, log2(n!) = 18.469
+n = 10, log2(n!) = 21.791
+This value is the minimum decision-tree depth order.</pre>
+  <h3>程式內容、變數與函式分析</h3>
+  <table><tr><th>變數 / 函式</th><th>中文說明</th></tr><tr><td><code>log2Factorial</code></td><td>計算 log2(n!)，用來觀察下界成長。</td></tr><tr><td><code>ans</code></td><td>累加 log2(1)+...+log2(n)。</td></tr><tr><td><code>n!</code></td><td>所有可能輸出排列數。</td></tr><tr><td><code>h</code></td><td>decision tree 高度，也代表最壞比較次數。</td></tr></table>
+</div>
+</details>
+<details class="acc" id="q8" open>
+<summary>題型 8：Heap Sort 改成遞減排序</summary>
+<div class="body">
+  <div class="questionBox">
+    <h3>英文題目</h3>
+    <p>Modify HeapSort so that the result is in nonincreasing order.</p>
+  </div>
+  <h3>演算法原理講解</h3>
+  <p>原本 max heap 每次把最大值放到最後，因此結果是遞增。若要遞減，就改建 min heap，每次把最小值放到最後。</p>
+  <div class="comic"><svg viewBox="0 0 860 234" role="img">
+    <defs><marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#64748b"/></marker></defs>
+    <text x="30" y="25" class="svgTitle">連環圖步驟說明</text>
+    <rect x="30" y="50" width="800" height="34" rx="10" fill="#eff6ff" stroke="#cbd5e1"/><circle cx="55" cy="67" r="13" fill="#2563eb"/><text x="55" y="68" class="num">1</text><text x="85" y="68" class="svgLabel">Max heap + 每輪把最大值放最後 → nondecreasing。</text><path d="M430 84 V98" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/><rect x="30" y="98" width="800" height="34" rx="10" fill="#f0fdfa" stroke="#cbd5e1"/><circle cx="55" cy="115" r="13" fill="#2563eb"/><text x="55" y="116" class="num">2</text><text x="85" y="116" class="svgLabel">Min heap + 每輪把最小值放最後 → nonincreasing。</text><path d="M430 132 V146" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/><rect x="30" y="146" width="800" height="34" rx="10" fill="#fff7ed" stroke="#cbd5e1"/><circle cx="55" cy="163" r="13" fill="#2563eb"/><text x="55" y="164" class="num">3</text><text x="85" y="164" class="svgLabel">修改比較方向：選較小 child，並用 e &lt;= child 作停止條件。</text>
+    </svg></div>
+  <h3>完整可編輯 C++ 程式碼</h3>
+  <div class="editArea">
+    <div class="editTop"><button onclick="copyText('q8_code')">複製程式碼</button><button onclick="resetCode('q8_code')">還原程式碼</button></div>
+    <textarea id="q8_code" spellcheck="false">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+// Min-Heap Adjust：用來產生 nonincreasing order
+void AdjustMinHeap(vector&lt;int&gt;&amp; a, int root, int n) {
+    int e = a[root];
+    int child;
+
+    for (child = 2 * root; child &lt;= n; child *= 2) {
+        // 選兩個 child 中較小者
+        if (child &lt; n &amp;&amp; a[child] &gt; a[child + 1]) child++;
+
+        // 若 e 已經小於等於較小 child，表示 min heap 性質成立
+        if (e &lt;= a[child]) break;
+
+        // 否則把較小 child 往上移
+        a[child / 2] = a[child];
+    }
+    a[child / 2] = e;
+}
+
+void HeapSortNonIncreasing(vector&lt;int&gt;&amp; a, int n) {
+    // a[0] 不使用，資料放 a[1..n]
+    for (int i = n / 2; i &gt;= 1; --i) AdjustMinHeap(a, i, n);
+
+    for (int i = n - 1; i &gt;= 1; --i) {
+        swap(a[1], a[i + 1]);   // 最小值放到尾端
+        AdjustMinHeap(a, 1, i);
+    }
+}
+
+int main() {
+    vector&lt;int&gt; a = {0, 10, 30, 7, 13, 45, 23, 62};
+    int n = 7;
+
+    HeapSortNonIncreasing(a, n);
+
+    for (int i = 1; i &lt;= n; ++i) cout &lt;&lt; a[i] &lt;&lt; ' ';
+    cout &lt;&lt; '\n';
+    return 0;
+}</textarea>
+  </div>
+  <h3>預期輸出結果</h3>
+  <pre class="output">62 45 30 23 13 10 7</pre>
+  <h3>程式內容、變數與函式分析</h3>
+  <table><tr><th>變數 / 函式</th><th>中文說明</th></tr><tr><td><code>a</code></td><td>1-based heap 陣列，a[0] 不使用。</td></tr><tr><td><code>root</code></td><td>要調整的子樹根節點。</td></tr><tr><td><code>n</code></td><td>目前 heap 的有效大小。</td></tr><tr><td><code>child</code></td><td>root 的子節點位置。</td></tr><tr><td><code>AdjustMinHeap</code></td><td>維持 min heap 性質。</td></tr><tr><td><code>HeapSortNonIncreasing</code></td><td>用 min heap 做遞減排序。</td></tr></table>
+</div>
+</details>
+<details class="acc" id="q9" open>
+<summary>題型 9：排序性質 True / False</summary>
+<div class="body">
+  <div class="questionBox">
+    <h3>英文題目</h3>
+    <p>Judge the following statements: Quick Sort is always O(n log n). Merge Sort is stable. Selection Sort is stable. Heap Sort is in-place.</p>
+  </div>
+  <h3>演算法原理講解</h3>
+  <p>這類題目要先背熟每個排序法的 best/average/worst、stable、in-place，錯誤敘述要補正。</p>
+  <div class="comic"><svg viewBox="0 0 860 282" role="img">
+    <defs><marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#64748b"/></marker></defs>
+    <text x="30" y="25" class="svgTitle">連環圖步驟說明</text>
+    <rect x="30" y="50" width="800" height="34" rx="10" fill="#eff6ff" stroke="#cbd5e1"/><circle cx="55" cy="67" r="13" fill="#2563eb"/><text x="55" y="68" class="num">1</text><text x="85" y="68" class="svgLabel">Quick Sort is always O(n log n)：False，最壞 O(n^2)。</text><path d="M430 84 V98" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/><rect x="30" y="98" width="800" height="34" rx="10" fill="#f0fdfa" stroke="#cbd5e1"/><circle cx="55" cy="115" r="13" fill="#2563eb"/><text x="55" y="116" class="num">2</text><text x="85" y="116" class="svgLabel">Merge Sort is stable：True，相等時先取左邊。</text><path d="M430 132 V146" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/><rect x="30" y="146" width="800" height="34" rx="10" fill="#fff7ed" stroke="#cbd5e1"/><circle cx="55" cy="163" r="13" fill="#2563eb"/><text x="55" y="164" class="num">3</text><text x="85" y="164" class="svgLabel">Selection Sort is stable：False，交換可能破壞相同 key 順序。</text><path d="M430 180 V194" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/><rect x="30" y="194" width="800" height="34" rx="10" fill="#fef2f2" stroke="#cbd5e1"/><circle cx="55" cy="211" r="13" fill="#2563eb"/><text x="55" y="212" class="num">4</text><text x="85" y="212" class="svgLabel">Heap Sort is in-place：True，陣列 heap sort 只需常數額外空間。</text>
+    </svg></div>
+  <h3>完整可編輯 C++ 程式碼</h3>
+  <div class="editArea">
+    <div class="editTop"><button onclick="copyText('q9_code')">複製程式碼</button><button onclick="resetCode('q9_code')">還原程式碼</button></div>
+    <textarea id="q9_code" spellcheck="false">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+struct SortInfo {
+    string name;
+    string bestCase;
+    string averageCase;
+    string worstCase;
+    bool stable;
+    bool inPlace;
+};
+
+int main() {
+    vector&lt;SortInfo&gt; table = {
+        {"Bubble",    "O(n^2), optimized O(n)", "O(n^2)",     "O(n^2)",     true,  true},
+        {"Selection", "O(n^2)",                 "O(n^2)",     "O(n^2)",     false, true},
+        {"Insertion", "O(n)",                   "O(n^2)",     "O(n^2)",     true,  true},
+        {"Quick",     "O(n log n)",             "O(n log n)", "O(n^2)",     false, true},
+        {"Merge",     "O(n log n)",             "O(n log n)", "O(n log n)", true,  false},
+        {"Heap",      "O(n log n)",             "O(n log n)", "O(n log n)", false, true}
+    };
+
+    for (auto &amp;s : table) {
+        cout &lt;&lt; s.name &lt;&lt; ": "
+             &lt;&lt; "Worst=" &lt;&lt; s.worstCase
+             &lt;&lt; ", Stable=" &lt;&lt; (s.stable ? "Yes" : "No")
+             &lt;&lt; ", In-place=" &lt;&lt; (s.inPlace ? "Yes" : "No") &lt;&lt; '\n';
+    }
+    return 0;
+}</textarea>
+  </div>
+  <h3>預期輸出結果</h3>
+  <pre class="output">Bubble: Worst=O(n^2), Stable=Yes, In-place=Yes
+Selection: Worst=O(n^2), Stable=No, In-place=Yes
+Insertion: Worst=O(n^2), Stable=Yes, In-place=Yes
+Quick: Worst=O(n^2), Stable=No, In-place=Yes
+Merge: Worst=O(n log n), Stable=Yes, In-place=No
+Heap: Worst=O(n log n), Stable=No, In-place=Yes</pre>
+  <h3>程式內容、變數與函式分析</h3>
+  <table><tr><th>變數 / 函式</th><th>中文說明</th></tr><tr><td><code>SortInfo</code></td><td>儲存排序法性質的結構。</td></tr><tr><td><code>stable</code></td><td>相同 key 的相對順序是否保留。</td></tr><tr><td><code>inPlace</code></td><td>是否只使用常數額外空間。</td></tr><tr><td><code>table</code></td><td>排序法比較表。</td></tr></table>
+</div>
+</details>
+<details class="acc" id="q10" open>
+<summary>題型 10：綜合大題</summary>
+<div class="body">
+  <div class="questionBox">
+    <h3>英文題目</h3>
+    <p>Given 10, 30, 7, 13, 45, 23, 62: (a) one Bubble pass, (b) first two Insertion steps, (c) first Quick partition with left pivot, (d) classify stable and in-place.</p>
+  </div>
+  <h3>演算法原理講解</h3>
+  <p>綜合題通常把 trace、複雜度、stable/in-place 混在一起。作答時要分小題寫，不要只給最後排序結果。</p>
+  <div class="comic"><svg viewBox="0 0 860 282" role="img">
+    <defs><marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#64748b"/></marker></defs>
+    <text x="30" y="25" class="svgTitle">連環圖步驟說明</text>
+    <rect x="30" y="50" width="800" height="34" rx="10" fill="#eff6ff" stroke="#cbd5e1"/><circle cx="55" cy="67" r="13" fill="#2563eb"/><text x="55" y="68" class="num">1</text><text x="85" y="68" class="svgLabel">(a) Bubble 一輪：10 7 13 30 23 45 62。</text><path d="M430 84 V98" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/><rect x="30" y="98" width="800" height="34" rx="10" fill="#f0fdfa" stroke="#cbd5e1"/><circle cx="55" cy="115" r="13" fill="#2563eb"/><text x="55" y="116" class="num">2</text><text x="85" y="116" class="svgLabel">(b) Insertion：j=1 仍為 10 30 7 13 45 23 62；j=2 為 7 10 30 13 45 23 62。</text><path d="M430 132 V146" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/><rect x="30" y="146" width="800" height="34" rx="10" fill="#fff7ed" stroke="#cbd5e1"/><circle cx="55" cy="163" r="13" fill="#2563eb"/><text x="55" y="164" class="num">3</text><text x="85" y="164" class="svgLabel">(c) Quick pivot=10：7 10 [30 13 45 23 62]。</text><path d="M430 180 V194" stroke="#64748b" stroke-width="2" marker-end="url(#arr)"/><rect x="30" y="194" width="800" height="34" rx="10" fill="#fef2f2" stroke="#cbd5e1"/><circle cx="55" cy="211" r="13" fill="#2563eb"/><text x="55" y="212" class="num">4</text><text x="85" y="212" class="svgLabel">(d) Insertion stable/in-place；Quick non-stable/in-place；Merge stable/not in-place；Heap non-stable/in-place。</text>
+    </svg></div>
+  <h3>完整可編輯 C++ 程式碼</h3>
+  <div class="editArea">
+    <div class="editTop"><button onclick="copyText('q10_code')">複製程式碼</button><button onclick="resetCode('q10_code')">還原程式碼</button></div>
+    <textarea id="q10_code" spellcheck="false">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+void printVec(const vector&lt;int&gt;&amp; a, string title) {
+    cout &lt;&lt; title &lt;&lt; ": ";
+    for (int x : a) cout &lt;&lt; x &lt;&lt; ' ';
+    cout &lt;&lt; '\n';
+}
+
+void oneBubblePass(vector&lt;int&gt; a) {
+    int n = (int)a.size();
+    for (int k = 0; k &lt; n - 1; ++k) {
+        if (a[k + 1] &lt; a[k]) swap(a[k], a[k + 1]);
+    }
+    printVec(a, "(a) Bubble one pass");
+}
+
+void firstTwoInsertionSteps(vector&lt;int&gt; a) {
+    for (int j = 1; j &lt;= 2; ++j) {
+        int key = a[j];
+        int i = j - 1;
+        while (i &gt;= 0 &amp;&amp; key &lt; a[i]) {
+            a[i + 1] = a[i];
+            --i;
+        }
+        a[i + 1] = key;
+        printVec(a, "(b) Insertion j=" + to_string(j));
+    }
+}
+
+void firstQuickPartition(vector&lt;int&gt; a) {
+    int left = 0, right = (int)a.size() - 1;
+    int pivot = a[left];
+    int i = left, j = right + 1;
+
+    do {
+        do { ++i; } while (i &lt;= right &amp;&amp; a[i] &lt; pivot);
+        do { --j; } while (a[j] &gt; pivot);
+        if (i &lt; j) swap(a[i], a[j]);
+    } while (i &lt; j);
+
+    swap(a[left], a[j]);
+    printVec(a, "(c) Quick first partition");
+}
+
+int main() {
+    vector&lt;int&gt; a = {10, 30, 7, 13, 45, 23, 62};
+    oneBubblePass(a);
+    firstTwoInsertionSteps(a);
+    firstQuickPartition(a);
+
+    cout &lt;&lt; "(d) Insertion: stable/in-place\n";
+    cout &lt;&lt; "(d) Quick: non-stable/in-place\n";
+    cout &lt;&lt; "(d) Merge: stable/not in-place\n";
+    cout &lt;&lt; "(d) Heap: non-stable/in-place\n";
+    return 0;
+}</textarea>
+  </div>
+  <h3>預期輸出結果</h3>
+  <pre class="output">(a) Bubble one pass: 10 7 13 30 23 45 62
+(b) Insertion j=1: 10 30 7 13 45 23 62
+(b) Insertion j=2: 7 10 30 13 45 23 62
+(c) Quick first partition: 7 10 30 13 45 23 62
+(d) Insertion: stable/in-place
+(d) Quick: non-stable/in-place
+(d) Merge: stable/not in-place
+(d) Heap: non-stable/in-place</pre>
+  <h3>程式內容、變數與函式分析</h3>
+  <table><tr><th>變數 / 函式</th><th>中文說明</th></tr><tr><td><code>oneBubblePass</code></td><td>只執行 Bubble Sort 第一輪。</td></tr><tr><td><code>firstTwoInsertionSteps</code></td><td>只執行 Insertion Sort 前兩次插入。</td></tr><tr><td><code>firstQuickPartition</code></td><td>只做 Quick Sort 第一次 partition。</td></tr><tr><td><code>printVec</code></td><td>統一印出陣列。</td></tr></table>
+</div>
+</details>
+</div>
+<div class="footer">Chapter 7 Sorting review page · revised HTML</div>
+<script>
+const originalCode = {};
+document.querySelectorAll('textarea').forEach(t => originalCode[t.id] = t.value);
+function copyText(id){
+  const t=document.getElementById(id);
+  t.select();
+  document.execCommand('copy');
+  alert('已複製程式碼');
+}
+function resetCode(id){
+  document.getElementById(id).value = originalCode[id];
+}
+</script>
+</body>
+</html>

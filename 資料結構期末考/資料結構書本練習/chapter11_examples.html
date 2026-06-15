@@ -1,0 +1,1106 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CHAPTER 11 B-tree 範例程式教學</title><style>
+body{font-family:"Noto Sans TC","Microsoft JhengHei",Arial,sans-serif;margin:0;background:#f8fafc;color:#172033;line-height:1.7}header{background:linear-gradient(120deg,#1e3a8a,#2563eb);color:white;padding:32px 7vw}main{max-width:1180px;margin:auto;padding:24px}.card{background:white;border:1px solid #e2e8f0;border-radius:16px;margin:18px 0;padding:18px;box-shadow:0 6px 20px #0001}summary{cursor:pointer;font-size:1.15rem;list-style:none}summary::-webkit-details-marker{display:none}summary:before{content:"▶";display:inline-block;margin-right:8px;color:#2563eb}details[open] summary:before{content:"▼"}.editors{background:#ecfeff;border:1px solid #67e8f9;border-radius:14px;padding:14px;margin:14px 0}.editors a,.toc a{display:inline-block;margin:5px 8px 5px 0;padding:7px 12px;background:#e0f2fe;border-radius:999px;color:#075985;text-decoration:none}.toc{margin:16px 0}.note{background:#fff7ed;border-left:6px solid #fb923c;padding:12px;border-radius:8px}pre{background:#0f172a;color:#e2e8f0;padding:18px;border-radius:12px;overflow:auto;font-size:14px;line-height:1.55}code{font-family:Consolas,Menlo,monospace}table{width:100%;border-collapse:collapse;margin:12px 0;background:white}th{background:#dbeafe;color:#1e3a8a}td,th{border:1px solid #cbd5e1;padding:8px;vertical-align:top}.flow{width:100%;max-width:850px;background:#f8fafc;border-radius:12px;border:1px solid #e2e8f0}.structure{background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:12px}.structure ul{margin-top:6px}
+.codebox{position:relative;margin:12px 0}.codebox pre{margin:0}.copy-code-btn{position:absolute;right:10px;top:10px;z-index:5;border:0;border-radius:999px;padding:7px 12px;background:#38bdf8;color:#082f49;font-weight:700;cursor:pointer;box-shadow:0 2px 8px #0003}.copy-code-btn:hover{background:#7dd3fc}.copy-code-btn.copied{background:#22c55e;color:white}
+.principle-box{background:#f0fdf4;border-left:6px solid #22c55e;padding:14px 16px;border-radius:10px;margin:12px 0;color:#14532d}.principle-box p{margin:0;text-align:justify}.principle-list{margin:0;padding-left:1.4em}.principle-list li{margin:8px 0;padding-left:4px;text-align:justify}
+</style></head><body><header><h1>CHAPTER 11 B-tree 範例程式完整教學</h1><p>單一程式下拉式介面：程式碼、程式字典、流程圖、函式結構、函式與變數說明。</p></header><main><div class="editors"><b>三個 C++ 線上編輯器：</b> <a href="https://www.onlinegdb.com/online_c++_compiler" target="_blank" rel="noopener">OnlineGDB C++ 編輯器</a><a href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank" rel="noopener">Programiz C++ 編輯器</a><a href="https://www.jdoodle.com/online-compiler-c++" target="_blank" rel="noopener">JDoodle C++ 編輯器</a></div><p class="note">修改重點：中文註解已改為寫在程式行後面，並移除「//【中文註解】」標籤。每個程式都是獨立下拉式區塊。</p><div class="toc"><b>本章程式：</b><a href="#B-tree">B-tree.cpp</a><a href="#mWaySearchTree">mWaySearchTree.cpp</a></div>
+<section class="card" id="B-tree">
+<details><summary><b>B-tree.cpp</b>｜執行此範例的核心步驟｜點我展開單一程式教學</summary>
+<h3>0. 程式原理清楚說明（約一千字）</h3>
+<div class="principle-box"><ol class="principle-list">
+<li>本程式 <b>B-tree.cpp</b> 的主要目的，是把「CHAPTER 11 B-tree 範例程式完整教學」中的核心觀念轉成可以執行、可以追蹤、可以驗證的 C++ 範例。閱讀時不要只記語法，而要先看它想解決什麼問題，以及資料在程式中如何被建立、保存、更新與輸出。</li>
+<li>這個範例的核心資料結構可理解為：<b>資料結構表示、演算法流程、函式分工與資料更新規則</b>。程式會先準備必要的陣列、節點、索引、指標或輔助變數，接著透過主要函式把資料一步一步處理成最後結果。</li>
+<li>開始閱讀程式時，建議先找到 main 函式，因為 main 通常是整支程式的入口。main 會負責建立測試資料、呼叫核心函式、接收回傳結果，最後把結果印出來，因此它可以視為整個流程圖的最上層。</li>
+<li>若程式中有 class 或 struct，代表作者把資料與操作包裝在一起。資料成員負責記錄狀態，成員函式負責改變狀態。這種設計符合資料抽象與封裝觀念，也方便之後擴充或重複使用。</li>
+<li>若程式使用陣列，重點要放在索引範圍。陣列通常從 0 或 1 開始，迴圈條件若寫錯，很容易造成少處理一格或超出邊界。因此 trace 時要特別記錄每一次 i、j、k 或 current 的變化。</li>
+<li>若程式使用指標或 linked node，重點要放在 link 的方向。新增節點時通常要先配置新節點，再設定資料欄位，最後接上前後節點；刪除節點時則要先保留要刪除的位置，再修改連結，最後釋放記憶體。</li>
+<li>程式中的函式分工通常可以分成三類：第一類負責初始化資料，第二類負責執行核心演算法，第三類負責輸出或檢查結果。把函式依角色分類後，整支程式就不會看起來像一大段難懂的程式碼。</li>
+<li>變數命名通常反映它在演算法中的任務。例如 size、n、capacity 多半代表資料數量或容量；top、front、rear、current 多半代表目前位置；temp、p、q、prev 多半代表暫存或指標移動。</li>
+<li>核心迴圈是本程式最重要的地方。它通常會反覆檢查條件、更新索引、比較資料或搬移資料。理解迴圈時，要先問三件事：迴圈從哪裡開始、什麼時候停止、每次執行後哪些變數會改變。</li>
+<li>判斷式 if / else 是演算法決策點。它通常負責處理特殊情況，例如資料為空、找到目標、索引越界、需要交換、需要遞迴、需要往左或往右走。考試常會要求你說明某個 if 條件為什麼必要。</li>
+<li>如果程式使用遞迴，必須先找終止條件。終止條件通常對應最簡單情況，例如資料為空、左右邊界交錯、節點為 NULL 或只剩一個元素。沒有正確終止條件就會造成無窮遞迴。</li>
+<li>如果程式使用排序或搜尋，必須注意資料是否需要事先有序。像二元搜尋必須建立在排序後的資料上；若資料未排序，即使程式語法正確，結果仍可能錯誤。這也是資料結構題目常見陷阱。</li>
+<li>如果程式使用堆疊，重點是 LIFO：最後放入的資料最先取出。這種特性常用於括號配對、函式呼叫、DFS、回溯與運算式轉換。trace 時可以畫出 top 從哪裡移動到哪裡。</li>
+<li>如果程式使用佇列，重點是 FIFO：最早放入的資料最早取出。這種特性常用於 BFS、排程、等待線與層序走訪。trace 時要同時記錄 front 與 rear，避免混淆佇列頭尾。</li>
+<li>如果程式使用樹，必須注意每個節點與子節點的關係。二元搜尋樹依照 key 大小決定往左或往右；heap 則依照父子大小維持優先權；一般二元樹走訪則依照 LVR、VLR、LRV 決定輸出順序。</li>
+<li>如果程式使用圖，重點是 visited 陣列與相鄰節點。visited 可以避免重複拜訪或無限循環；相鄰表示法會影響時間複雜度。相鄰矩陣適合密集圖，相鄰串列適合稀疏圖。</li>
+<li>本程式的時間複雜度可以從「主要迴圈執行幾次」估計。如果只有單層掃描通常是 O(n)；雙層迴圈常是 O(n²)；每次把資料範圍折半常是 O(log n)；樹高控制得好時常接近 O(log n)。</li>
+<li>空間複雜度要看是否建立額外資料結構。若只使用少數變數，通常是 O(1)；若建立與輸入大小相同的陣列、堆疊、佇列或 visited，通常是 O(n)；二維矩陣常是 O(mn)。</li>
+<li>記憶體配置是本程式的重要觀察點。靜態陣列大小固定但簡單；動態陣列可依需求配置但要注意 delete；鏈結串列彈性高，但每個節點都需要額外指標空間。</li>
+<li>程式執行結果要和演算法目的互相對照。輸出不是只看有沒有跑出東西，而是要確認每一筆結果是否符合資料結構規則。例如排序結果是否遞增、搜尋位置是否正確、樹走訪順序是否合理。</li>
+<li>常見錯誤包含：陣列索引越界、指標沒有初始化、刪除節點後仍使用原指標、遞迴沒有終止條件、忘記更新 front/rear/top、比較條件寫反、或是沒有處理空資料結構。</li>
+<li>老師出 trace code 題目時，通常會要求你寫出每一步變數變化。建議用表格記錄迴圈次數、目前索引、比較對象、資料結構內容與輸出結果，這樣最不容易漏掉中間狀態。</li>
+<li>面試或考試常問這個程式的優缺點。優點通常是觀念清楚、容易實作、適合作為基本資料結構練習；缺點則可能是效率不一定最佳、記憶體使用較多、或遇到極端輸入時需要額外處理。</li>
+<li>實際應用上，這類程式可延伸到資料整理、搜尋系統、排程管理、模擬問題、路徑探索、資料索引與演算法效能比較。資料結構的重點不是背程式，而是知道什麼情境該使用什麼結構。</li>
+<li>讀完本程式後，最重要的練習是自己改一組輸入，手動推一次流程，再執行程式比較答案。只要能說清楚每個函式的任務、每個變數的角色、每個判斷式的目的，就代表你真正理解這支程式。</li>
+</ol></div>
+<h3>1. 程式碼：中文註解已放在程式後面</h3>
+<div class="codebox"><button class="copy-code-btn" type="button" onclick="copyProgramCode(this)">複製程式</button><pre><code>// File name: BTree.cpp
+// 利用 B-TREE來處理資料--新增、刪除、修改、查詢、輸出
+// July 5, 2021 
+
+#include &lt;iostream&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;ctype.h&gt;
+
+#define MAX 2    // 每一節點內至多可放資料筆數
+#define MIN 1    // 每一節點內至少需放資料筆數
+
+using namespace std;  // 宣告變數，用來保存演算法執行過程中的資料。
+
+typedef struct student {      // 資料結構
+    int count;                // 節點資料數  // 宣告變數，用來保存演算法執行過程中的資料。
+    int id[MAX+1];            // ID號碼--鍵值
+    char name[MAX+1][11];     // 姓名
+    int score[MAX+1];         // 分數
+    struct student *link[MAX+1];    // 子鏈結  // 定義資料結構類別，集中管理資料成員與操作函式。
+} Node_type;
+
+class Btree {  // 定義資料結構類別，集中管理資料成員與操作函式。
+private:
+    Node_type *root;
+public:
+    void init_f();  // 初始化函數
+    void insert_f(void);  // 新增函數
+    // 將新增資料加入B-tree中
+    Node_type *access(int, char *, int, Node_type *);
+    // 從根節點往下逐一尋找插入點，將資料新增的函數
+    int topdown(int, char *, int, Node_type *, int *,
+                                    char *, int *, Node_type **);
+    // 將資料置於某特定節點中
+    void putdata(int, char *, int, Node_type *, Node_type *, int);
+    // 將一節點劃分為二
+    void broken(int, char *, int, Node_type *, Node_type *,
+                                    int, int *, char *, int *, Node_type **);
+    void update_f(void);  // 修改函數
+    void delete_f(void);  // 刪除函數  // 釋放動態記憶體，避免記憶體洩漏。
+    Node_type *removing(int, Node_type *);  // 將資料從B-tree中刪除
+    int deldata(int, Node_type *);   // 刪除資料函數
+    void move(Node_type *, int);     // 將節點中的資料逐一往左移
+    void replace(Node_type *, int);  // 尋找替代節點
+    void restore(Node_type *, int);  // 資料刪除後的調整工作
+    void getleft(Node_type *, int);  // 向左兄弟節點借一筆資料
+    void getright(Node_type *, int); // 向右兄弟節點借一筆資料
+    void combine(Node_type *, int);  // 節點合併
+    void list_f(void);       // 輸出函數
+    void show(Node_type *);  // 以遞迴方式依序將資料輸出
+    void query_f(void);      // 查詢函數
+    void save(Node_type *);  // 儲存函數
+    void quit(void);         // 結束函數
+    Node_type *search(int, Node_type *, int *); // 依鍵值搜尋某特定節點函數
+    int search_node(int, Node_type *, int *);   // 依鍵值搜尋節點中某特定資料函數
+};
+
+void flushBuffer()  // 函式宣告或函式開始，負責執行一段可重複使用的演算法步驟。
+{
+	while(getchar()!=&#x27;\n&#x27;)   // while 迴圈，只要條件成立就持續執行。
+		continue;
+}
+
+void Btree::init_f()  // 函式宣告或函式開始，負責執行一段可重複使用的演算法步驟。
+{
+    root = NULL;  // 指定或更新變數值，改變目前資料狀態。
+}
+
+// 新增一筆資料，並調整為B-tree
+void Btree::insert_f(void)  // 函式宣告或函式開始，負責執行一段可重複使用的演算法步驟。
+{
+    int position, insert_id, insert_score; // position記錄資料在節點中新增的位置  // 宣告變數，用來保存演算法執行過程中的資料。
+    Node_type *node;
+    char ans, insert_name[11];  // 宣告變數，用來保存演算法執行過程中的資料。
+    cout &lt;&lt; &quot;\n  ---- INSERT ----\n&quot;;  // 輸出結果，將資料顯示或寫入檔案。
+    cout &lt;&lt; &quot;  Please enter detail data\n&quot;;  // 輸出結果，將資料顯示或寫入檔案。
+    cout &lt;&lt; &quot;  ID number: &quot;;  // 輸出結果，將資料顯示或寫入檔案。
+    cin &gt;&gt; insert_id;  // 讀入資料，可能來自鍵盤或檔案。
+    flushBuffer();
+    // 找尋新增資料是否已存在，若存在，則顯示錯誤
+    node = search(insert_id, root, &amp;position);  // 指定或更新變數值，改變目前資料狀態。
+    if (node != NULL)  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+        cout &lt;&lt; &quot;  ID number has existed!!\n&quot;;  // 輸出結果，將資料顯示或寫入檔案。
+    else {  // 否則分支，處理上一個條件不成立的情況。
+        cout &lt;&lt; &quot;  Name: &quot;;  // 要求輸入其他詳細資料  // 輸出結果，將資料顯示或寫入檔案。
+        cin &gt;&gt; insert_name;  // 讀入資料，可能來自鍵盤或檔案。
+        flushBuffer();
+        cout &lt;&lt; &quot;  Score: &quot;;  // 輸出結果，將資料顯示或寫入檔案。
+        cin &gt;&gt; insert_score;  // 讀入資料，可能來自鍵盤或檔案。
+        flushBuffer();
+        
+        cout &lt;&lt; &quot;  Are you sure? (Y/N): &quot;;  // 輸出結果，將資料顯示或寫入檔案。
+        ans = getchar();  // 指定或更新變數值，改變目前資料狀態。
+        flushBuffer();
+        ans = toupper(ans);  // 指定或更新變數值，改變目前資料狀態。
+        if(ans == &#x27;Y&#x27;) {  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+	        root = access(insert_id, insert_name, insert_score, root);  // 指定或更新變數值，改變目前資料狀態。
+            cout &lt;&lt; &quot;  Student id: &quot; &lt;&lt; insert_id &lt;&lt; &quot; has been inserted\n&quot;;  // 輸出結果，將資料顯示或寫入檔案。
+        }
+        else   // 否則分支，處理上一個條件不成立的情況。
+            cout &lt;&lt; &quot;  Student id: &quot; &lt;&lt; insert_id &lt;&lt; &quot; will be ignored\n&quot;;  // 輸出結果，將資料顯示或寫入檔案。
+    }
+}
+
+// 將新增資料加入B-TREE，node指加入節點，傳回值為root所在
+Node_type *Btree::access(int app_id, char *app_name, int app_score, Node_type *node)
+{
+    int x_id, x_score, pushup;  // pushup判斷節點是否需劃分而往上新增一節點  // 宣告變數，用來保存演算法執行過程中的資料。
+    char x_name[11];
+    Node_type *xr, *p;
+    pushup = topdown(app_id, app_name, app_score, node,  // 指定或更新變數值，改變目前資料狀態。
+                            &amp;x_id, x_name, &amp;x_score, &amp;xr);
+    if (pushup) { // 若pushup為1，則配置一個新節點，將資料放入  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+        p = new Node_type;  // 動態配置記憶體，建立新的陣列或節點。
+        p-&gt;link[0] = NULL;  // 指定或更新變數值，改變目前資料狀態。
+        p-&gt;link[1] = NULL;  // 指定或更新變數值，改變目前資料狀態。
+        p-&gt;link[2] = NULL;  // 指定或更新變數值，改變目前資料狀態。
+        p-&gt;count = 1;  // 指定或更新變數值，改變目前資料狀態。
+        p-&gt;id[1] = x_id;  // 指定或更新變數值，改變目前資料狀態。
+        strcpy(p-&gt;name[1], x_name);
+        p-&gt;score[1] = x_score;  // 指定或更新變數值，改變目前資料狀態。
+        p-&gt;link[0] = root;  // 指定或更新變數值，改變目前資料狀態。
+        p-&gt;link[1] = xr;  // 指定或更新變數值，改變目前資料狀態。
+        return p;  // 回傳函式結果，結束目前函式。
+    }
+    return node;  // 回傳函式結果，結束目前函式。
+}
+
+// 從樹根往下尋找資料加入節點，將資料新增於B-tree中，參數p為目前所在節點，
+// xr記錄資料所對應的子鏈結
+int Btree::topdown(int new_id, char *new_name, int new_score, Node_type *p,
+                      int *x_id, char *x_name, int *x_score, Node_type **xr)
+{
+    int k;          // 宣告變數，用來保存演算法執行過程中的資料。
+    if (p == NULL) { // p為NULL表示新增第一筆資料  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+        *x_id = new_id;
+        strcpy(x_name, new_name);
+        *x_score = new_score;
+        *xr = NULL;
+        return 1;  // 回傳函式結果，結束目前函式。
+    }
+    else {  // 否則分支，處理上一個條件不成立的情況。
+        if (search_node(new_id, p, &amp;k)) {   // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+		    //找尋新增資料鍵值是否重覆，若重覆則顯示錯誤
+            cout &lt;&lt; &quot;  ID number has existed!!\n\n&quot;;  // 輸出結果，將資料顯示或寫入檔案。
+            quit();
+            return 0;  // 回傳函式結果，結束目前函式。
+        }
+        // 繼續往下找尋新增節點
+        if(topdown(new_id, new_name, new_score, p-&gt;link[k],  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+                                x_id, x_name, x_score, xr))
+        {
+                // 若新增節點有足夠的空間存放資料，則將資料直接加入該節點
+            if (p-&gt;count &lt; MAX) {  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+                putdata(*x_id, x_name, *x_score, *xr, p, k);
+                return 0;  // 回傳函式結果，結束目前函式。
+            }
+            else { // 若無足夠空間，則須劃分節點  // 否則分支，處理上一個條件不成立的情況。
+                broken(*x_id, x_name, *x_score, *xr, p, k, x_id,
+                                            x_name, x_score, xr);
+                return 1;  // 回傳函式結果，結束目前函式。
+            }
+        }
+        else  // 否則分支，處理上一個條件不成立的情況。
+            return 0;  // 回傳函式結果，結束目前函式。
+    }
+}
+
+// 將新增資料直接加入於節點中，xr為新增資料對應的子鏈結所在，p為資料加入的節點
+void Btree::putdata(int x_id, char *x_name, int x_score, Node_type *xr,
+                                Node_type *p, int k)
+{
+    int i;  // 宣告變數，用來保存演算法執行過程中的資料。
+        
+    // 將節點中的資料逐一右移，以空出新增資料加入的位置
+    for (i = p-&gt;count; i &gt; k; i--) {  // for 迴圈，用固定範圍重複走訪資料。
+        p-&gt;id[i+1] = p-&gt;id[i];  // 指定或更新變數值，改變目前資料狀態。
+        strcpy(p-&gt;name[i+1], p-&gt;name[i]);
+        p-&gt;score[i+1] = p-&gt;score[i];  // 指定或更新變數值，改變目前資料狀態。
+        p-&gt;link[i+1] = p-&gt;link[i];  // 指定或更新變數值，改變目前資料狀態。
+    }
+    p-&gt;id[k+1] = x_id;  // 指定或更新變數值，改變目前資料狀態。
+    strcpy(p-&gt;name[k+1], x_name);
+    p-&gt;score[k+1] = x_score;  // 指定或更新變數值，改變目前資料狀態。
+    p-&gt;link[k+1] = xr;  // 指定或更新變數值，改變目前資料狀態。
+    p-&gt;count++;
+}
+
+// 將節點一分為二，yr為劃分後新增加的節點
+void Btree::broken(int x_id,char *x_name,int x_score,Node_type *xr,Node_type *p, 	
+		   int k, int *y_id, char *y_name, int *y_score, Node_type **yr)  // 宣告變數，用來保存演算法執行過程中的資料。
+{
+    int i;  // 宣告變數，用來保存演算法執行過程中的資料。
+    int median;  // median記錄從何處劃分節點  // 宣告變數，用來保存演算法執行過程中的資料。
+        
+    if (k &lt;= MIN)  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+        median = MIN;  // 指定或更新變數值，改變目前資料狀態。
+    else  // 否則分支，處理上一個條件不成立的情況。
+        median = MIN + 1;  // 指定或更新變數值，改變目前資料狀態。
+    *yr = (Node_type *) malloc(sizeof(Node_type));
+    // 將資料從劃分處開始搬移至新節點中
+    for (i = median + 1; i &lt;= MAX; i++) {  // for 迴圈，用固定範圍重複走訪資料。
+        (*yr)-&gt;id[i-median] = p-&gt;id[i];  // 指定或更新變數值，改變目前資料狀態。
+        strcpy((*yr)-&gt;name[i-median], p-&gt;name[i]);
+        (*yr)-&gt;score[i-median] = p-&gt;score[i];  // 指定或更新變數值，改變目前資料狀態。
+        (*yr)-&gt;link[i-median] = p-&gt;link[i];  // 指定或更新變數值，改變目前資料狀態。
+    }
+    (*yr)-&gt;count = MAX - median;  // 指定或更新變數值，改變目前資料狀態。
+    p-&gt;count = median;  // 指定或更新變數值，改變目前資料狀態。
+    if(k &lt;= MIN)  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+        putdata(x_id, x_name, x_score, xr, p, k);
+    else  // 否則分支，處理上一個條件不成立的情況。
+        putdata(x_id, x_name, x_score, xr, *yr, k - median);
+    *y_id = p-&gt;id[p-&gt;count];
+    strcpy(y_name, p-&gt;name[p-&gt;count]);
+    *y_score = p-&gt;score[p-&gt;count];
+    (*yr)-&gt;link[0] = p-&gt;link[p-&gt;count];  // 指定或更新變數值，改變目前資料狀態。
+    p-&gt;count--;
+}
+
+// 修改資料函數
+void Btree::update_f(void)  // 函式宣告或函式開始，負責執行一段可重複使用的演算法步驟。
+{
+    int update_id, update_score, position;  // 宣告變數，用來保存演算法執行過程中的資料。
+    char ans, update_name[11];  // 宣告變數，用來保存演算法執行過程中的資料。
+    Node_type *node;
+        
+    cout &lt;&lt; &quot;\n  ---- UPDATE ----\n&quot;;  // 輸出結果，將資料顯示或寫入檔案。
+	cout &lt;&lt; &quot;  Please enter ID number: &quot;;  // 輸出結果，將資料顯示或寫入檔案。
+    cin &gt;&gt; update_id;  // 讀入資料，可能來自鍵盤或檔案。
+    flushBuffer();
+    
+    node = search(update_id, root, &amp;position);  // 找尋欲修改資料所在節點位置  // 指定或更新變數值，改變目前資料狀態。
+    if (node != NULL) {  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+        cout &lt;&lt; &quot;  Original name: &quot; &lt;&lt; node-&gt;name[position] &lt;&lt; &quot;\n&quot;;  // 輸出結果，將資料顯示或寫入檔案。
+        cout &lt;&lt; &quot;  Please enter new name: &quot;;  // 動態配置記憶體，建立新的陣列或節點。
+        cin &gt;&gt; update_name;  // 讀入資料，可能來自鍵盤或檔案。
+        flushBuffer();
+        
+        cout &lt;&lt; &quot;  Original score: &quot; &lt;&lt; node-&gt;score[position] &lt;&lt; &quot;\n&quot;;  // 輸出結果，將資料顯示或寫入檔案。
+        cout &lt;&lt; &quot;  Please enter new score: &quot;;  // 動態配置記憶體，建立新的陣列或節點。
+        cin &gt;&gt; update_score;  // 讀入資料，可能來自鍵盤或檔案。
+        flushBuffer();
+        
+        cout &lt;&lt; &quot;  Are you sure? (Y/N): &quot;;  // 輸出結果，將資料顯示或寫入檔案。
+        ans = getchar();  // 指定或更新變數值，改變目前資料狀態。
+        flushBuffer();
+        ans = toupper(ans);  // 指定或更新變數值，改變目前資料狀態。
+        if(ans == &#x27;Y&#x27;) {              // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+			strcpy(node-&gt;name[position], update_name);
+            node-&gt;score[position] = update_score;  // 指定或更新變數值，改變目前資料狀態。
+            cout &lt;&lt; &quot;  Student id: &quot; &lt;&lt; update_id &lt;&lt; &quot; has been updated\n&quot;;  // 輸出結果，將資料顯示或寫入檔案。
+        }
+    }
+    else  // 否則分支，處理上一個條件不成立的情況。
+        cout &lt;&lt; &quot;  Student id: &quot; &lt;&lt; update_id &lt;&lt; &quot; is not found!!\n&quot;;  // 輸出結果，將資料顯示或寫入檔案。
+}
+
+// 刪除資料函數
+void Btree::delete_f(void)  // 函式宣告或函式開始，負責執行一段可重複使用的演算法步驟。
+{
+    int del_id, position;  // position記錄刪除資料在節點中的位置  // 宣告變數，用來保存演算法執行過程中的資料。
+    char ans;  // 宣告變數，用來保存演算法執行過程中的資料。
+    Node_type *node;
+        
+    cout &lt;&lt; &quot;\n  ---- DELETE ----\n&quot;;  // 輸出結果，將資料顯示或寫入檔案。
+    cout &lt;&lt; &quot;  Please enter ID number: &quot;;  // 輸出結果，將資料顯示或寫入檔案。
+    cin &gt;&gt; del_id;          // 讀入資料，可能來自鍵盤或檔案。
+	flushBuffer();
+    node = search(del_id, root, &amp;position);  // 指定或更新變數值，改變目前資料狀態。
+    if (node != NULL) {  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+        cout &lt;&lt; &quot;  Are you sure? (Y/N): &quot;;  // 輸出結果，將資料顯示或寫入檔案。
+        ans = getchar();  // 指定或更新變數值，改變目前資料狀態。
+        flushBuffer();
+        ans = toupper(ans);  // 指定或更新變數值，改變目前資料狀態。
+        if(ans == &#x27;Y&#x27;)  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+            root = removing(del_id, root);  // 指定或更新變數值，改變目前資料狀態。
+            cout &lt;&lt; &quot;  Student id: &quot; &lt;&lt; del_id &lt;&lt; &quot; had been deleted\n&quot;;  // 釋放動態記憶體，避免記憶體洩漏。
+        }
+        else  // 否則分支，處理上一個條件不成立的情況。
+            cout &lt;&lt; &quot;  Student id: &quot; &lt;&lt; del_id &lt;&lt; &quot; is not found!!\n&quot;;  // 輸出結果，將資料顯示或寫入檔案。
+}
+
+// 將資料從B-tree中刪除，若刪除後節點內資料筆數為0，則一併刪除該節點
+Node_type *Btree::removing(int del_id, Node_type *node)
+{
+    Node_type *p;
+        
+    if (!deldata(del_id, node));  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+    else if (node-&gt;count == 0) {  // 函式宣告或函式開始，負責執行一段可重複使用的演算法步驟。
+        p = node;  // 指定或更新變數值，改變目前資料狀態。
+        node = node-&gt;link[0];  // 指定或更新變數值，改變目前資料狀態。
+        free(p);
+    }
+    return node;  // 回傳函式結果，結束目前函式。
+}
+
+// 將資料從B-tree中移除，若刪除失敗則傳回0，否則傳回資料在節點中所在位置
+int Btree::deldata(int del_id, Node_type *p)  // 函式宣告或函式開始，負責執行一段可重複使用的演算法步驟。
+{
+    int k;  // 宣告變數，用來保存演算法執行過程中的資料。
+    int found;  // 宣告變數，用來保存演算法執行過程中的資料。
+        
+    if (p == NULL)  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+        return 0;  // 回傳函式結果，結束目前函式。
+    else {  // 否則分支，處理上一個條件不成立的情況。
+        if ((found = search_node(del_id, p, &amp;k)) != 0) {  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+        	if(p-&gt;link[k-1]) {  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+                replace(p, k);
+                if (!(found = deldata(p-&gt;id[k], p-&gt;link[k])))  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+                    cout &lt;&lt; &quot;  Key not found&quot;;  // 輸出結果，將資料顯示或寫入檔案。
+            }
+            else  // 否則分支，處理上一個條件不成立的情況。
+                move(p,k);
+        }
+        else  // 否則分支，處理上一個條件不成立的情況。
+            found = deldata(del_id, p-&gt;link[k]);  // 指定或更新變數值，改變目前資料狀態。
+            if (p-&gt;link[k] != NULL) {  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+                if(p-&gt;link[k]-&gt;count &lt; MIN)  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+                	restore(p, k);
+            }
+            return found;  // 回傳函式結果，結束目前函式。
+    }
+}
+
+// 將節點中的資料從k的位置逐一左移
+void Btree::move(Node_type *p, int k)  // 函式宣告或函式開始，負責執行一段可重複使用的演算法步驟。
+{
+    int i;  // 宣告變數，用來保存演算法執行過程中的資料。
+        
+    for (i = k+1; i &lt;= p-&gt;count; i++) {  // for 迴圈，用固定範圍重複走訪資料。
+        p-&gt;id[i-1] = p-&gt;id[i];  // 指定或更新變數值，改變目前資料狀態。
+        strcpy(p-&gt;name[i-1], p-&gt;name[i]);
+        p-&gt;score[i-1] = p-&gt;score[i];  // 指定或更新變數值，改變目前資料狀態。
+        p-&gt;link[i-1] = p-&gt;link[i];  // 指定或更新變數值，改變目前資料狀態。
+    }
+    p-&gt;count--;
+}
+
+// 尋找刪除非樹葉時的替代資料
+void Btree::replace(Node_type *p, int k)  // 函式宣告或函式開始，負責執行一段可重複使用的演算法步驟。
+{
+    Node_type *q;
+        
+    for (q = p-&gt;link[k]; q-&gt;link[0]; q = q-&gt;link[0]);  // for 迴圈，用固定範圍重複走訪資料。
+    p-&gt;id[k] = q-&gt;id[1];  // 指定或更新變數值，改變目前資料狀態。
+    strcpy(p-&gt;name[k], q-&gt;name[1]);
+    p-&gt;score[k] = q-&gt;score[1];  // 指定或更新變數值，改變目前資料狀態。
+}
+
+// 資料刪除後，重新調整為B-tree
+void Btree::restore(Node_type *p, int k)  // 函式宣告或函式開始，負責執行一段可重複使用的演算法步驟。
+{
+    if (k == 0) {  // 刪除資料為節點中的第一筆資料  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+        if (p-&gt;link[1]-&gt;count &gt; MIN)  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+            getright(p, 1);
+        else  // 否則分支，處理上一個條件不成立的情況。
+            combine(p, 1);
+    }
+    else if(k == p-&gt;count) { // 刪除資料為節點中的最後一筆資料  // 否則分支，處理上一個條件不成立的情況。
+        	if (p-&gt;link[k-1]-&gt;count &gt; MIN)  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+                getleft(p, k);
+            else  // 否則分支，處理上一個條件不成立的情況。
+                combine(p, k);
+    }
+    else if (p-&gt;link[k-1]-&gt;count &gt; MIN) // 刪除資料為節點中其他位置的資料  // 否則分支，處理上一個條件不成立的情況。
+        	getleft(p, k);
+    else if (p-&gt;link[k+1]-&gt;count &gt; MIN)  // 函式宣告或函式開始，負責執行一段可重複使用的演算法步驟。
+            getright(p, k+1);
+    else  // 否則分支，處理上一個條件不成立的情況。
+        combine(p, k);
+}
+
+// 向左兄弟節點借資料時，做資料右移的動作
+void Btree::getleft(Node_type *p, int k)  // 函式宣告或函式開始，負責執行一段可重複使用的演算法步驟。
+{
+    int c;  // 宣告變數，用來保存演算法執行過程中的資料。
+    Node_type *t;
+        
+    t = p-&gt;link[k];  // 指定或更新變數值，改變目前資料狀態。
+    for (c = t-&gt;count; c &gt; 0; c--) {  // for 迴圈，用固定範圍重複走訪資料。
+        t-&gt;id[c+1] = t-&gt;id[c];  // 指定或更新變數值，改變目前資料狀態。
+        strcpy(t-&gt;name[c+1], t-&gt;name[c]);
+        t-&gt;score[c+1] = t-&gt;score[c];  // 指定或更新變數值，改變目前資料狀態。
+        t-&gt;link[c+1] = t-&gt;link[c];  // 指定或更新變數值，改變目前資料狀態。
+    }
+    t-&gt;link[1] = t-&gt;link[0];  // 指定或更新變數值，改變目前資料狀態。
+    t-&gt;count++;
+    t-&gt;id[1] = p-&gt;id[k];  // 指定或更新變數值，改變目前資料狀態。
+    strcpy(t-&gt;name[1], p-&gt;name[k]);
+    t-&gt;score[1] = p-&gt;score[k];  // 指定或更新變數值，改變目前資料狀態。
+    t = p-&gt;link[k-1];  // 指定或更新變數值，改變目前資料狀態。
+    p-&gt;id[k] = t-&gt;id[t-&gt;count];  // 指定或更新變數值，改變目前資料狀態。
+    strcpy(p-&gt;name[k], t-&gt;name[t-&gt;count]);
+    p-&gt;score[k] = t-&gt;score[t-&gt;count];  // 指定或更新變數值，改變目前資料狀態。
+    p-&gt;link[k]-&gt;link[0] = t-&gt;link[t-&gt;count];  // 指定或更新變數值，改變目前資料狀態。
+    t-&gt;count--;
+}
+
+// 向右兄弟節點借資料時，做左移的動作
+void Btree::getright(Node_type *p, int k)  // 函式宣告或函式開始，負責執行一段可重複使用的演算法步驟。
+{
+	int c;  // 宣告變數，用來保存演算法執行過程中的資料。
+    Node_type *t;
+        
+    t = p-&gt;link[k-1];  // 指定或更新變數值，改變目前資料狀態。
+    t-&gt;count++;
+    t-&gt;id[t-&gt;count] = p-&gt;id[k];  // 指定或更新變數值，改變目前資料狀態。
+    strcpy(t-&gt;name[t-&gt;count], p-&gt;name[k]);
+    t-&gt;score[t-&gt;count] = p-&gt;score[k];  // 指定或更新變數值，改變目前資料狀態。
+    t-&gt;link[t-&gt;count] = p-&gt;link[k]-&gt;link[0];  // 指定或更新變數值，改變目前資料狀態。
+    t = p-&gt;link[k];  // 指定或更新變數值，改變目前資料狀態。
+    p-&gt;id[k] = t-&gt;id[1];  // 指定或更新變數值，改變目前資料狀態。
+    strcpy(p-&gt;name[k], t-&gt;name[1]);
+    p-&gt;score[k] = t-&gt;score[1];  // 指定或更新變數值，改變目前資料狀態。
+    t-&gt;link[0] = t-&gt;link[1];  // 指定或更新變數值，改變目前資料狀態。
+    t-&gt;count--;
+    for (c = 1; c &lt;= t-&gt;count; c++) {  // for 迴圈，用固定範圍重複走訪資料。
+        t-&gt;id[c] = t-&gt;id[c+1];  // 指定或更新變數值，改變目前資料狀態。
+        strcpy(t-&gt;name[c], t-&gt;name[c+1]);
+        t-&gt;score[c] = t-&gt;score[c+1];  // 指定或更新變數值，改變目前資料狀態。
+        t-&gt;link[c] = t-&gt;link[c+1];  // 指定或更新變數值，改變目前資料狀態。
+    }
+}
+
+// 將三個節點中的資料合併至一個節點中
+void Btree::combine(Node_type *p, int k)  // 函式宣告或函式開始，負責執行一段可重複使用的演算法步驟。
+{
+    int c;  // 宣告變數，用來保存演算法執行過程中的資料。
+    Node_type *l, *q;
+        
+    q = p-&gt;link[k];  // 指定或更新變數值，改變目前資料狀態。
+    l = p-&gt;link[k-1];  // 指定或更新變數值，改變目前資料狀態。
+    l-&gt;count++;
+    l-&gt;id[l-&gt;count] = p-&gt;id[k];  // 指定或更新變數值，改變目前資料狀態。
+    strcpy(l-&gt;name[l-&gt;count], p-&gt;name[k]);
+    l-&gt;score[l-&gt;count] = p-&gt;score[k];  // 指定或更新變數值，改變目前資料狀態。
+    l-&gt;link[l-&gt;count] = q-&gt;link[0];  // 指定或更新變數值，改變目前資料狀態。
+    for (c = 1; c &lt;= q-&gt;count; c++) {  // for 迴圈，用固定範圍重複走訪資料。
+        l-&gt;count++;
+        l-&gt;id[l-&gt;count] = q-&gt;id[c];  // 指定或更新變數值，改變目前資料狀態。
+        strcpy(l-&gt;name[l-&gt;count], q-&gt;name[c]);
+        l-&gt;score[l-&gt;count] = q-&gt;score[c];  // 指定或更新變數值，改變目前資料狀態。
+        l-&gt;link[l-&gt;count] = q-&gt;link[c];  // 指定或更新變數值，改變目前資料狀態。
+    }
+    for (c = k; c &lt; p-&gt;count; c++) {  // for 迴圈，用固定範圍重複走訪資料。
+        p-&gt;id[c] = p-&gt;id[c+1];  // 指定或更新變數值，改變目前資料狀態。
+        strcpy(p-&gt;name[c], p-&gt;name[c+1]);
+        p-&gt;score[c] = p-&gt;score[c+1];  // 指定或更新變數值，改變目前資料狀態。
+        p-&gt;link[c] = p-&gt;link[c+1];  // 指定或更新變數值，改變目前資料狀態。
+    }
+    p-&gt;count--;
+    delete q;  // 釋放動態記憶體，避免記憶體洩漏。
+}
+
+// 資料輸出函數
+void Btree::list_f(void)  // 函式宣告或函式開始，負責執行一段可重複使用的演算法步驟。
+{
+	if (root != NULL) {   // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+    	cout &lt;&lt; &quot;\n  ---- LIST ----\n&quot;;  // 輸出結果，將資料顯示或寫入檔案。
+    	cout &lt;&lt; &quot;  *******************************\n&quot;;  // 輸出結果，將資料顯示或寫入檔案。
+    	cout &lt;&lt; &quot;      ID     NAME       SCORE\n&quot;;  // 輸出結果，將資料顯示或寫入檔案。
+    	cout &lt;&lt; &quot;   =============================\n&quot;;  // 輸出結果，將資料顯示或寫入檔案。
+    	show(root);
+    	cout &lt;&lt; &quot;  *******************************\n&quot;;  // 輸出結果，將資料顯示或寫入檔案。
+    } 
+    else {  // 否則分支，處理上一個條件不成立的情況。
+    	cout &lt;&lt; &quot;  B-tree is empty\n&quot;;  // 輸出結果，將資料顯示或寫入檔案。
+	}
+}
+
+// 以遞迴方式輸出節點資料，輸出資料採中序法，nd為欲輸出資料的節點
+void Btree::show(Node_type *nd)  // 函式宣告或函式開始，負責執行一段可重複使用的演算法步驟。
+{
+    if (nd != NULL) {  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+        if(nd-&gt;count &gt; 0) {  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+            if(nd-&gt;count == 1) {  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+                show(nd-&gt;link[0]);
+                cout &lt;&lt; &quot;      &quot;;  // 輸出結果，將資料顯示或寫入檔案。
+                cout.setf(ios::left, ios::adjustfield);  // 輸出結果，將資料顯示或寫入檔案。
+                cout.width(6);  // 輸出結果，將資料顯示或寫入檔案。
+                cout &lt;&lt; nd-&gt;id[1] &lt;&lt; &quot; &quot;;  // 輸出結果，將資料顯示或寫入檔案。
+                cout.width(10);  // 輸出結果，將資料顯示或寫入檔案。
+                cout &lt;&lt; nd-&gt;name[1] &lt;&lt; &quot; &quot;;  // 輸出結果，將資料顯示或寫入檔案。
+                cout.setf(ios::right, ios::adjustfield);  // 輸出結果，將資料顯示或寫入檔案。
+                cout.width(4);  // 輸出結果，將資料顯示或寫入檔案。
+                cout &lt;&lt; nd-&gt;score[1] &lt;&lt; &quot;\n&quot;;  // 輸出結果，將資料顯示或寫入檔案。
+                show(nd-&gt;link[1]);
+            }
+            else if(nd-&gt;count == 2) {  // 函式宣告或函式開始，負責執行一段可重複使用的演算法步驟。
+                	show(nd-&gt;link[0]);
+                    cout &lt;&lt; &quot;      &quot;;  // 輸出結果，將資料顯示或寫入檔案。
+                    cout.setf(ios::left, ios::adjustfield);  // 輸出結果，將資料顯示或寫入檔案。
+                    cout.width(6);  // 輸出結果，將資料顯示或寫入檔案。
+                    cout &lt;&lt; nd-&gt;id[1] &lt;&lt; &quot; &quot;;  // 輸出結果，將資料顯示或寫入檔案。
+                    cout.width(10);  // 輸出結果，將資料顯示或寫入檔案。
+                    cout &lt;&lt; nd-&gt;name[1] &lt;&lt; &quot; &quot;;  // 輸出結果，將資料顯示或寫入檔案。
+                    cout.setf(ios::right, ios::adjustfield);  // 輸出結果，將資料顯示或寫入檔案。
+                    cout.width(4);  // 輸出結果，將資料顯示或寫入檔案。
+                    cout &lt;&lt; nd-&gt;score[1] &lt;&lt; &quot;\n&quot;;  // 輸出結果，將資料顯示或寫入檔案。
+                    show(nd-&gt;link[1]);
+                    cout &lt;&lt; &quot;      &quot;;  // 輸出結果，將資料顯示或寫入檔案。
+                    cout.setf(ios::left, ios::adjustfield);  // 輸出結果，將資料顯示或寫入檔案。
+                    cout.width(6);  // 輸出結果，將資料顯示或寫入檔案。
+                    cout &lt;&lt; nd-&gt;id[2] &lt;&lt; &quot; &quot;;  // 輸出結果，將資料顯示或寫入檔案。
+                    cout.width(10);  // 輸出結果，將資料顯示或寫入檔案。
+                    cout &lt;&lt; nd-&gt;name[2] &lt;&lt; &quot; &quot;;  // 輸出結果，將資料顯示或寫入檔案。
+                    cout.setf(ios::right, ios::adjustfield);  // 輸出結果，將資料顯示或寫入檔案。
+                    cout.width(4);  // 輸出結果，將資料顯示或寫入檔案。
+                    cout &lt;&lt; nd-&gt;score[2] &lt;&lt; &quot;\n&quot;;  // 輸出結果，將資料顯示或寫入檔案。
+                    show(nd-&gt;link[2]);
+            }
+        }
+    }
+}
+
+// 查詢某一特定資料
+void Btree::query_f(void)  // 函式宣告或函式開始，負責執行一段可重複使用的演算法步驟。
+{
+    int query_id, position;  // 宣告變數，用來保存演算法執行過程中的資料。
+    Node_type *quenode;
+        
+    cout &lt;&lt; &quot;\n  ---- QUERY ----\n&quot;;  // 輸出結果，將資料顯示或寫入檔案。
+    cout &lt;&lt; &quot;  Please enter ID number: &quot;;  // 輸出結果，將資料顯示或寫入檔案。
+    cin &gt;&gt; query_id;  // 讀入資料，可能來自鍵盤或檔案。
+ 	flushBuffer(); 
+    quenode = search(query_id, root, &amp;position);  // 指定或更新變數值，改變目前資料狀態。
+    if (quenode != NULL) {  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+        cout &lt;&lt; &quot;  ID number: &quot; &lt;&lt; quenode-&gt;id[position] &lt;&lt; &quot;\n&quot;;  // 輸出結果，將資料顯示或寫入檔案。
+        cout &lt;&lt; &quot;  Name: &quot; &lt;&lt; quenode-&gt;name[position] &lt;&lt; &quot;\n&quot;;  // 輸出結果，將資料顯示或寫入檔案。
+        cout &lt;&lt; &quot;  Score: &quot; &lt;&lt; quenode-&gt;score[position] &lt;&lt; &quot;\n&quot;;  // 輸出結果，將資料顯示或寫入檔案。
+    }
+    else  // 否則分支，處理上一個條件不成立的情況。
+        cout &lt;&lt; &quot;  ID number not found!!\n&quot;;  // 輸出結果，將資料顯示或寫入檔案。
+}
+
+// 結束本系統
+void Btree::quit(void)  // 函式宣告或函式開始，負責執行一段可重複使用的演算法步驟。
+{
+    cout &lt;&lt; &quot;\n  Thanks for using, bye bye!!\n&quot;;  // 輸出結果，將資料顯示或寫入檔案。
+}
+
+/* 搜尋某一鍵值在節點中的位置，target為搜尋鍵值，k記錄鍵值所在位置，傳回0表
+  示搜尋失敗，傳回1表示搜尋成功 */
+int Btree::search_node(int target, Node_type *p, int *k)  // 函式宣告或函式開始，負責執行一段可重複使用的演算法步驟。
+{
+    if (target &lt; p-&gt;id[1]) {  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+        *k = 0;
+        return 0;  // 回傳函式結果，結束目前函式。
+    }
+    else {  // 否則分支，處理上一個條件不成立的情況。
+        *k = p-&gt;count;
+        while ((target &lt; p-&gt;id[*k]) &amp;&amp; *k &gt; 1)  // while 迴圈，只要條件成立就持續執行。
+            (*k)--;
+        if (target == p-&gt;id[*k])  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+            return 1;  // 回傳函式結果，結束目前函式。
+        else  // 否則分支，處理上一個條件不成立的情況。
+            return 0;  // 回傳函式結果，結束目前函式。
+    }
+}
+
+// 搜尋某一鍵值所在節點，target為搜尋鍵值，傳回值為target所在節點指標，若沒有找
+// 到則傳回NULL
+Node_type *Btree::search(int target, Node_type *node, int *targetpos)
+{
+    if (node == NULL)  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+        return NULL;  // 回傳函式結果，結束目前函式。
+    else if (search_node(target, node, targetpos))  // 函式宣告或函式開始，負責執行一段可重複使用的演算法步驟。
+        return node;  // 回傳函式結果，結束目前函式。
+    else  // 否則分支，處理上一個條件不成立的情況。
+        return search(target, node-&gt;link[*targetpos], targetpos);  // 回傳函式結果，結束目前函式。
+}
+
+int main()  // 函式宣告或函式開始，負責執行一段可重複使用的演算法步驟。
+{
+    Btree obj;  // 宣告變數，用來保存演算法執行過程中的資料。
+    char choice, ans;  // 宣告變數，用來保存演算法執行過程中的資料。
+       
+    obj.init_f();
+    while (1) {  // while 迴圈，只要條件成立就持續執行。
+        do {  // do-while 區塊，先執行一次再檢查條件。
+            cout &lt;&lt; &quot;\n&quot;;  // 輸出結果，將資料顯示或寫入檔案。
+            cout &lt;&lt; &quot;  *********************\n&quot;;  // 輸出結果，將資料顯示或寫入檔案。
+            cout &lt;&lt; &quot;        1.insert\n&quot;;  // 輸出結果，將資料顯示或寫入檔案。
+            cout &lt;&lt; &quot;        2.update\n&quot;;  // 輸出結果，將資料顯示或寫入檔案。
+            cout &lt;&lt; &quot;        3.delete\n&quot;;  // 釋放動態記憶體，避免記憶體洩漏。
+            cout &lt;&lt; &quot;        4.list\n&quot;;  // 輸出結果，將資料顯示或寫入檔案。
+            cout &lt;&lt; &quot;        5.query\n&quot;;  // 輸出結果，將資料顯示或寫入檔案。
+            cout &lt;&lt; &quot;        6.quit\n&quot;;  // 輸出結果，將資料顯示或寫入檔案。
+            cout &lt;&lt; &quot;  *********************\n&quot;;  // 輸出結果，將資料顯示或寫入檔案。
+            cout &lt;&lt; &quot;  Please enter your choice(1..6): &quot;;  // 輸出結果，將資料顯示或寫入檔案。
+            choice = getchar();  // 指定或更新變數值，改變目前資料狀態。
+        	flushBuffer();
+        	
+            switch(choice) {  // 多分支判斷，依照不同值執行對應處理。
+                case &#x27;1&#x27;:  // 多分支判斷，依照不同值執行對應處理。
+						obj.insert_f();
+                    	break;
+                case &#x27;2&#x27;:   // 多分支判斷，依照不同值執行對應處理。
+						obj.update_f();
+                    	break;
+                case &#x27;3&#x27;:   // 多分支判斷，依照不同值執行對應處理。
+						obj.delete_f();  // 釋放動態記憶體，避免記憶體洩漏。
+                        break;
+                case &#x27;4&#x27;:   // 多分支判斷，依照不同值執行對應處理。
+						obj.list_f();
+                        break;
+                case &#x27;5&#x27;:   // 多分支判斷，依照不同值執行對應處理。
+						obj.query_f();
+                        break;
+                case &#x27;6&#x27;:   // 多分支判斷，依照不同值執行對應處理。
+						cout &lt;&lt; &quot;  Are you sure? (Y/N): &quot;;  // 輸出結果，將資料顯示或寫入檔案。
+                        ans = getchar();  // 指定或更新變數值，改變目前資料狀態。
+        				flushBuffer();
+                        ans = toupper(ans);  // 指定或更新變數值，改變目前資料狀態。
+                    	if (ans == &#x27;Y&#x27;) {   // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+                            obj.quit();
+                            exit(0);
+                        }
+                        else  // 否則分支，處理上一個條件不成立的情況。
+                            continue;    				
+                default: cout &lt;&lt; &quot;  Choice error!!\n&quot;;  // 輸出結果，將資料顯示或寫入檔案。
+            }
+        }  while(choice != &#x27;6&#x27;);
+    }
+}
+</code></pre></div>
+<h3>程式執行後的結果</h3>
+<pre><code>【程式執行後的結果範例】
+此程式執行後會依照 main() 中的流程讀入資料、呼叫核心函式，最後印出處理結果。
+請將程式複製到頁面上方的任一 C++ 編輯器執行，即可看到完整輸出。</code></pre>
+
+<h3>2. 程式字典說明</h3>
+<table><tr><th>關鍵字/概念</th><th>中文說明</th></tr><tr><td><code>class</code></td><td>類別：把資料與操作函式封裝在一起。</td></tr><tr><td><code>struct</code></td><td>結構：常用來定義節點或資料紀錄。</td></tr><tr><td><code>new</code></td><td>new：在執行期間動態建立記憶體空間。</td></tr><tr><td><code>delete</code></td><td>delete：釋放 new 建立的記憶體。</td></tr><tr><td><code>for</code></td><td>for：已知次數或範圍的重複迴圈。</td></tr><tr><td><code>while</code></td><td>while：條件成立就持續執行的迴圈。</td></tr><tr><td><code>if</code></td><td>if / else：根據條件決定程式分支。</td></tr><tr><td><code>return</code></td><td>return：回傳函式結果並結束函式。</td></tr><tr><td><code>pointer</code></td><td>指標 *：儲存記憶體位址，常用於 linked list / tree。</td></tr><tr><td><code>recursive</code></td><td>遞迴：函式呼叫自己，常用於樹與分治演算法。</td></tr></table>
+<h3>3. 程式流程圖</h3>
+<svg class="flow" viewBox="0 0 900 602" xmlns="http://www.w3.org/2000/svg"><defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#2563eb"/></marker></defs><rect x="230" y="24" width="440" height="54" rx="27" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/><text x="450.0" y="58" text-anchor="middle" font-size="18" fill="#1e3a8a">開始</text><line x1="450.0" y1="78" x2="450.0" y2="112" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow)"/><rect x="230" y="116" width="440" height="54" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/><text x="450.0" y="150" text-anchor="middle" font-size="18" fill="#1e3a8a">建立節點或樹狀結構</text><line x1="450.0" y1="170" x2="450.0" y2="204" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow)"/><rect x="230" y="208" width="440" height="54" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/><text x="450.0" y="242" text-anchor="middle" font-size="18" fill="#1e3a8a">比較 key 決定方向</text><line x1="450.0" y1="262" x2="450.0" y2="296" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow)"/><rect x="230" y="300" width="440" height="54" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/><text x="450.0" y="334" text-anchor="middle" font-size="18" fill="#1e3a8a">插入/刪除/調整節點</text><line x1="450.0" y1="354" x2="450.0" y2="388" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow)"/><rect x="230" y="392" width="440" height="54" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/><text x="450.0" y="426" text-anchor="middle" font-size="18" fill="#1e3a8a">執行走訪或輸出</text><line x1="450.0" y1="446" x2="450.0" y2="480" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow)"/><rect x="230" y="484" width="440" height="54" rx="27" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/><text x="450.0" y="518" text-anchor="middle" font-size="18" fill="#1e3a8a">結束</text></svg>
+<h3>4. 函式的結構</h3>
+<div class="structure"><p><b>函式結構：</b><code>main</code> 為主要入口或核心函式，其他函式負責分工處理初始化、資料操作、輸出或遞迴/迴圈運算。</p><ul><li><code>flushBuffer</code>：執行此範例的核心步驟。</li><li><code>Btree::init_f</code>：初始化。</li><li><code>Btree::insert_f</code>：插入。</li><li><code>Btree::topdown</code>：取得頂端元素。</li><li><code>Btree::putdata</code>：執行此範例的核心步驟。</li><li><code>Btree::broken</code>：執行此範例的核心步驟。</li><li><code>Btree::update_f</code>：執行此範例的核心步驟。</li><li><code>Btree::delete_f</code>：刪除。</li><li><code>Btree::deldata</code>：執行此範例的核心步驟。</li><li><code>Btree::move</code>：執行此範例的核心步驟。</li><li><code>Btree::replace</code>：執行此範例的核心步驟。</li><li><code>Btree::restore</code>：執行此範例的核心步驟。</li><li><code>Btree::getleft</code>：取得資料。</li><li><code>Btree::getright</code>：取得資料。</li><li><code>Btree::combine</code>：執行此範例的核心步驟。</li><li><code>Btree::list_f</code>：執行此範例的核心步驟。</li><li><code>Btree::show</code>：執行此範例的核心步驟。</li><li><code>Btree::query_f</code>：執行此範例的核心步驟。</li><li><code>Btree::quit</code>：執行此範例的核心步驟。</li><li><code>Btree::search_node</code>：搜尋。</li><li><code>main</code>：主程式入口。</li></ul></div>
+<h3>5. 函式完整說明</h3>
+<table><tr><th>函式</th><th>回傳型別</th><th>參數</th><th>中文說明</th></tr><tr><td><code>flushBuffer</code></td><td><code>void</code></td><td><code></code></td><td>執行此範例的核心步驟。</td></tr><tr><td><code>Btree::init_f</code></td><td><code>void</code></td><td><code></code></td><td>初始化。</td></tr><tr><td><code>Btree::insert_f</code></td><td><code>void</code></td><td><code>void</code></td><td>插入。</td></tr><tr><td><code>Btree::topdown</code></td><td><code>int</code></td><td><code>int new_id, char *new_name, int new_score, Node_type *p, int *x_id, char *x_name, int *x_score, Node_type **xr</code></td><td>取得頂端元素。</td></tr><tr><td><code>Btree::putdata</code></td><td><code>void</code></td><td><code>int x_id, char *x_name, int x_score, Node_type *xr, Node_type *p, int k</code></td><td>執行此範例的核心步驟。</td></tr><tr><td><code>Btree::broken</code></td><td><code>void</code></td><td><code>int x_id,char *x_name,int x_score,Node_type *xr,Node_type *p, int k, int *y_id, char *y_name, int *y_score, Node_type **yr</code></td><td>執行此範例的核心步驟。</td></tr><tr><td><code>Btree::update_f</code></td><td><code>void</code></td><td><code>void</code></td><td>執行此範例的核心步驟。</td></tr><tr><td><code>Btree::delete_f</code></td><td><code>void</code></td><td><code>void</code></td><td>刪除。</td></tr><tr><td><code>Btree::deldata</code></td><td><code>int</code></td><td><code>int del_id, Node_type *p</code></td><td>執行此範例的核心步驟。</td></tr><tr><td><code>Btree::move</code></td><td><code>void</code></td><td><code>Node_type *p, int k</code></td><td>執行此範例的核心步驟。</td></tr><tr><td><code>Btree::replace</code></td><td><code>void</code></td><td><code>Node_type *p, int k</code></td><td>執行此範例的核心步驟。</td></tr><tr><td><code>Btree::restore</code></td><td><code>void</code></td><td><code>Node_type *p, int k</code></td><td>執行此範例的核心步驟。</td></tr><tr><td><code>Btree::getleft</code></td><td><code>void</code></td><td><code>Node_type *p, int k</code></td><td>取得資料。</td></tr><tr><td><code>Btree::getright</code></td><td><code>void</code></td><td><code>Node_type *p, int k</code></td><td>取得資料。</td></tr><tr><td><code>Btree::combine</code></td><td><code>void</code></td><td><code>Node_type *p, int k</code></td><td>執行此範例的核心步驟。</td></tr><tr><td><code>Btree::list_f</code></td><td><code>void</code></td><td><code>void</code></td><td>執行此範例的核心步驟。</td></tr><tr><td><code>Btree::show</code></td><td><code>void</code></td><td><code>Node_type *nd</code></td><td>執行此範例的核心步驟。</td></tr><tr><td><code>Btree::query_f</code></td><td><code>void</code></td><td><code>void</code></td><td>執行此範例的核心步驟。</td></tr><tr><td><code>Btree::quit</code></td><td><code>void</code></td><td><code>void</code></td><td>執行此範例的核心步驟。</td></tr><tr><td><code>Btree::search_node</code></td><td><code>int</code></td><td><code>int target, Node_type *p, int *k</code></td><td>搜尋。</td></tr><tr><td><code>main</code></td><td><code>int</code></td><td><code></code></td><td>主程式入口。</td></tr></table>
+<h3>6. 變數完整說明</h3>
+<table><tr><th>變數</th><th>型別</th><th>用途說明</th></tr><tr><td><code>count</code></td><td><code>int</code></td><td>資料數量、計數器或目前處理規模。</td></tr><tr><td><code>id[]</code></td><td><code>int</code></td><td>程式中的資料、暫存值或控制變數。</td></tr><tr><td><code>name[][]</code></td><td><code>char</code></td><td>程式中的資料、暫存值或控制變數。</td></tr><tr><td><code>score[]</code></td><td><code>int</code></td><td>程式中的資料、暫存值或控制變數。</td></tr><tr><td><code>position</code></td><td><code>int</code></td><td>程式中的資料、暫存值或控制變數。</td></tr><tr><td><code>insert_id</code></td><td><code>int</code></td><td>程式中的資料、暫存值或控制變數。</td></tr><tr><td><code>insert_score</code></td><td><code>int</code></td><td>程式中的資料、暫存值或控制變數。</td></tr><tr><td><code>ans</code></td><td><code>char</code></td><td>儲存答案、輸出結果或使用者選擇。</td></tr><tr><td><code>insert_name[]</code></td><td><code>char</code></td><td>程式中的資料、暫存值或控制變數。</td></tr><tr><td><code>x_id</code></td><td><code>int</code></td><td>程式中的資料、暫存值或控制變數。</td></tr><tr><td><code>x_score</code></td><td><code>int</code></td><td>程式中的資料、暫存值或控制變數。</td></tr><tr><td><code>pushup</code></td><td><code>int</code></td><td>程式中的資料、暫存值或控制變數。</td></tr><tr><td><code>x_name[]</code></td><td><code>char</code></td><td>程式中的資料、暫存值或控制變數。</td></tr><tr><td><code>k</code></td><td><code>int</code></td><td>迴圈索引或暫存位置，用來走訪陣列、矩陣或節點。</td></tr><tr><td><code>i</code></td><td><code>int</code></td><td>迴圈索引或暫存位置，用來走訪陣列、矩陣或節點。</td></tr><tr><td><code>median</code></td><td><code>int</code></td><td>程式中的資料、暫存值或控制變數。</td></tr><tr><td><code>update_id</code></td><td><code>int</code></td><td>程式中的資料、暫存值或控制變數。</td></tr><tr><td><code>update_score</code></td><td><code>int</code></td><td>程式中的資料、暫存值或控制變數。</td></tr><tr><td><code>update_name[]</code></td><td><code>char</code></td><td>程式中的資料、暫存值或控制變數。</td></tr><tr><td><code>del_id</code></td><td><code>int</code></td><td>程式中的資料、暫存值或控制變數。</td></tr><tr><td><code>found</code></td><td><code>int</code></td><td>程式中的資料、暫存值或控制變數。</td></tr><tr><td><code>c</code></td><td><code>int</code></td><td>迴圈索引或暫存位置，用來走訪陣列、矩陣或節點。</td></tr><tr><td><code>query_id</code></td><td><code>int</code></td><td>程式中的資料、暫存值或控制變數。</td></tr><tr><td><code>choice</code></td><td><code>char</code></td><td>程式中的資料、暫存值或控制變數。</td></tr></table>
+</details></section>
+<section class="card" id="mWaySearchTree">
+<details><summary><b>mWaySearchTree.cpp</b>｜搜尋｜點我展開單一程式教學</summary>
+<h3>0. 程式原理清楚說明（約一千字）</h3>
+<div class="principle-box"><ol class="principle-list">
+<li>本程式 <b>mWaySearchTree.cpp</b> 的主要目的，是把「CHAPTER 11 B-tree 範例程式完整教學」中的核心觀念轉成可以執行、可以追蹤、可以驗證的 C++ 範例。閱讀時不要只記語法，而要先看它想解決什麼問題，以及資料在程式中如何被建立、保存、更新與輸出。</li>
+<li>這個範例的核心資料結構可理解為：<b>搜尋、索引範圍、比較策略與成功/失敗條件</b>。程式會先準備必要的陣列、節點、索引、指標或輔助變數，接著透過主要函式把資料一步一步處理成最後結果。</li>
+<li>開始閱讀程式時，建議先找到 main 函式，因為 main 通常是整支程式的入口。main 會負責建立測試資料、呼叫核心函式、接收回傳結果，最後把結果印出來，因此它可以視為整個流程圖的最上層。</li>
+<li>若程式中有 class 或 struct，代表作者把資料與操作包裝在一起。資料成員負責記錄狀態，成員函式負責改變狀態。這種設計符合資料抽象與封裝觀念，也方便之後擴充或重複使用。</li>
+<li>若程式使用陣列，重點要放在索引範圍。陣列通常從 0 或 1 開始，迴圈條件若寫錯，很容易造成少處理一格或超出邊界。因此 trace 時要特別記錄每一次 i、j、k 或 current 的變化。</li>
+<li>若程式使用指標或 linked node，重點要放在 link 的方向。新增節點時通常要先配置新節點，再設定資料欄位，最後接上前後節點；刪除節點時則要先保留要刪除的位置，再修改連結，最後釋放記憶體。</li>
+<li>程式中的函式分工通常可以分成三類：第一類負責初始化資料，第二類負責執行核心演算法，第三類負責輸出或檢查結果。把函式依角色分類後，整支程式就不會看起來像一大段難懂的程式碼。</li>
+<li>變數命名通常反映它在演算法中的任務。例如 size、n、capacity 多半代表資料數量或容量；top、front、rear、current 多半代表目前位置；temp、p、q、prev 多半代表暫存或指標移動。</li>
+<li>核心迴圈是本程式最重要的地方。它通常會反覆檢查條件、更新索引、比較資料或搬移資料。理解迴圈時，要先問三件事：迴圈從哪裡開始、什麼時候停止、每次執行後哪些變數會改變。</li>
+<li>判斷式 if / else 是演算法決策點。它通常負責處理特殊情況，例如資料為空、找到目標、索引越界、需要交換、需要遞迴、需要往左或往右走。考試常會要求你說明某個 if 條件為什麼必要。</li>
+<li>如果程式使用遞迴，必須先找終止條件。終止條件通常對應最簡單情況，例如資料為空、左右邊界交錯、節點為 NULL 或只剩一個元素。沒有正確終止條件就會造成無窮遞迴。</li>
+<li>如果程式使用排序或搜尋，必須注意資料是否需要事先有序。像二元搜尋必須建立在排序後的資料上；若資料未排序，即使程式語法正確，結果仍可能錯誤。這也是資料結構題目常見陷阱。</li>
+<li>如果程式使用堆疊，重點是 LIFO：最後放入的資料最先取出。這種特性常用於括號配對、函式呼叫、DFS、回溯與運算式轉換。trace 時可以畫出 top 從哪裡移動到哪裡。</li>
+<li>如果程式使用佇列，重點是 FIFO：最早放入的資料最早取出。這種特性常用於 BFS、排程、等待線與層序走訪。trace 時要同時記錄 front 與 rear，避免混淆佇列頭尾。</li>
+<li>如果程式使用樹，必須注意每個節點與子節點的關係。二元搜尋樹依照 key 大小決定往左或往右；heap 則依照父子大小維持優先權；一般二元樹走訪則依照 LVR、VLR、LRV 決定輸出順序。</li>
+<li>如果程式使用圖，重點是 visited 陣列與相鄰節點。visited 可以避免重複拜訪或無限循環；相鄰表示法會影響時間複雜度。相鄰矩陣適合密集圖，相鄰串列適合稀疏圖。</li>
+<li>本程式的時間複雜度可以從「主要迴圈執行幾次」估計。如果只有單層掃描通常是 O(n)；雙層迴圈常是 O(n²)；每次把資料範圍折半常是 O(log n)；樹高控制得好時常接近 O(log n)。</li>
+<li>空間複雜度要看是否建立額外資料結構。若只使用少數變數，通常是 O(1)；若建立與輸入大小相同的陣列、堆疊、佇列或 visited，通常是 O(n)；二維矩陣常是 O(mn)。</li>
+<li>記憶體配置是本程式的重要觀察點。靜態陣列大小固定但簡單；動態陣列可依需求配置但要注意 delete；鏈結串列彈性高，但每個節點都需要額外指標空間。</li>
+<li>程式執行結果要和演算法目的互相對照。輸出不是只看有沒有跑出東西，而是要確認每一筆結果是否符合資料結構規則。例如排序結果是否遞增、搜尋位置是否正確、樹走訪順序是否合理。</li>
+<li>常見錯誤包含：陣列索引越界、指標沒有初始化、刪除節點後仍使用原指標、遞迴沒有終止條件、忘記更新 front/rear/top、比較條件寫反、或是沒有處理空資料結構。</li>
+<li>老師出 trace code 題目時，通常會要求你寫出每一步變數變化。建議用表格記錄迴圈次數、目前索引、比較對象、資料結構內容與輸出結果，這樣最不容易漏掉中間狀態。</li>
+<li>面試或考試常問這個程式的優缺點。優點通常是觀念清楚、容易實作、適合作為基本資料結構練習；缺點則可能是效率不一定最佳、記憶體使用較多、或遇到極端輸入時需要額外處理。</li>
+<li>實際應用上，這類程式可延伸到資料整理、搜尋系統、排程管理、模擬問題、路徑探索、資料索引與演算法效能比較。資料結構的重點不是背程式，而是知道什麼情境該使用什麼結構。</li>
+<li>讀完本程式後，最重要的練習是自己改一組輸入，手動推一次流程，再執行程式比較答案。只要能說清楚每個函式的任務、每個變數的角色、每個判斷式的目的，就代表你真正理解這支程式。</li>
+</ol></div>
+<h3>1. 程式碼：中文註解已放在程式後面</h3>
+<div class="codebox"><button class="copy-code-btn" type="button" onclick="copyProgramCode(this)">複製程式</button><pre><code>// File name: mWaySearchTree.cpp
+// 利用 m-way search tree 搜尋樹處理資料的加入、刪除與輸出
+// July 5, 2021 
+
+#include &lt;iostream&gt;
+using namespace std;  // 宣告變數，用來保存演算法執行過程中的資料。
+
+#define MAX 3    /* 設定M-WAY TREE的最大節點數 */
+typedef struct mwayTree {         /* 定義資料欄位 */
+    char id;                      /* 輸出時識別節點 */  // 宣告變數，用來保存演算法執行過程中的資料。
+    int n;                        /* 節點內的鍵值數 */  // 宣告變數，用來保存演算法執行過程中的資料。
+    int key[MAX];                 /* 節點鍵值 */
+    struct mwayTree *link[MAX];   /* 節點子鏈節 */  // 定義資料結構類別，集中管理資料成員與操作函式。
+} NodeType;
+
+class Mwaytree {  // 定義資料結構類別，集中管理資料成員與操作函式。
+private:
+    NodeType *ptr, *root, *node, *prev, *parent, *replace;
+    char idSeq;  // 宣告變數，用來保存演算法執行過程中的資料。
+public:
+    Mwaytree();
+    void insertFunction(void);    /* 插入函數 */
+    void deleteFunction(void);    /* 刪除函數 */  // 釋放動態記憶體，避免記憶體洩漏。
+    void displayFunction(void);   /* 輸出函數 */
+    void create(int);             /* 加入資料後調整為M-WAY TREE */
+    void removes(NodeType *, int);  /* 移除資料後調整為M-WAY TREE */
+    void initial(void);           /* 節點初始化 */
+    int searchNum(int);           /* 搜尋鍵值所在節點位置 */
+    NodeType *searchNode(int);    /* 搜尋鍵值所在節點 */
+    void moveright(int, int);     /* 節點內資料往右移 */
+    void moveleft(int);           /* 節點內資料往左移 */
+    NodeType *findNext(NodeType *);  /* 尋找後繼節點 */
+    NodeType *findPrev(NodeType *);  /* 尋找前行節點 */
+    void preorderId(NodeType *);    /* 給予每個節點識別編號 */
+    void preorderNum(NodeType *);   /* 輸出節點 */
+};
+
+
+int main(void)  // 函式宣告或函式開始，負責執行一段可重複使用的演算法步驟。
+{
+    Mwaytree obj;  // 宣告變數，用來保存演算法執行過程中的資料。
+    char option;  // 宣告變數，用來保存演算法執行過程中的資料。
+    do {  // do-while 區塊，先執行一次再檢查條件。
+        cout &lt;&lt; &quot;\n ***************************\n&quot;;  // 輸出結果，將資料顯示或寫入檔案。
+        cout &lt;&lt; &quot;        &lt;1&gt; insert\n&quot;;  // 輸出結果，將資料顯示或寫入檔案。
+        cout &lt;&lt; &quot;        &lt;2&gt; delete\n&quot;;  // 釋放動態記憶體，避免記憶體洩漏。
+        cout &lt;&lt; &quot;        &lt;3&gt; display\n&quot;;  // 輸出結果，將資料顯示或寫入檔案。
+        cout &lt;&lt; &quot;        &lt;4&gt; quit\n&quot;;  // 輸出結果，將資料顯示或寫入檔案。
+        cout &lt;&lt; &quot; ***************************\n&quot;;  // 輸出結果，將資料顯示或寫入檔案。
+        cout &lt;&lt; &quot; Please enter your choice: &quot;;  // 輸出結果，將資料顯示或寫入檔案。
+        option = getchar();  // 指定或更新變數值，改變目前資料狀態。
+        while (getchar()!=&#x27;\n&#x27;)  // while 迴圈，只要條件成立就持續執行。
+            continue;
+        cout &lt;&lt; &quot;\n&quot;;  // 輸出結果，將資料顯示或寫入檔案。
+        switch(option) {  // 多分支判斷，依照不同值執行對應處理。
+            case &#x27;1&#x27;:  // 多分支判斷，依照不同值執行對應處理。
+                    obj.insertFunction();
+                    break;
+            case &#x27;2&#x27;:  // 多分支判斷，依照不同值執行對應處理。
+                    obj.deleteFunction();  // 釋放動態記憶體，避免記憶體洩漏。
+                    break;
+            case &#x27;3&#x27;:  // 多分支判斷，依照不同值執行對應處理。
+                    obj.displayFunction();
+                    break;
+            case &#x27;4&#x27;:  // 多分支判斷，依照不同值執行對應處理。
+                    break;
+            default:
+                    cout &lt;&lt; &quot;\n Option error!!\n&quot;;  // 輸出結果，將資料顯示或寫入檔案。
+        }
+    } while (option != &#x27;4&#x27;);
+    return 0;  // 回傳函式結果，結束目前函式。
+}
+
+Mwaytree::Mwaytree()
+{
+    root = NULL;  // 指定或更新變數值，改變目前資料狀態。
+}
+
+/* 插入函數--新增一筆資料 */
+void Mwaytree::insertFunction(void)  // 函式宣告或函式開始，負責執行一段可重複使用的演算法步驟。
+{
+    int addNum;  // 宣告變數，用來保存演算法執行過程中的資料。
+    printf(&quot;\n Please enter insert number: &quot;);
+    cin &gt;&gt; addNum;  // 讀入資料，可能來自鍵盤或檔案。
+    while (getchar()!=&#x27;\n&#x27;)  // while 迴圈，只要條件成立就持續執行。
+        continue;
+    create(addNum);
+    cout &lt;&lt; &quot; Number &quot; &lt;&lt; addNum &lt;&lt; &quot; has been inserted!\n&quot; ;  // 輸出結果，將資料顯示或寫入檔案。
+}
+
+/* 刪除函數--刪除一筆資料 */
+void Mwaytree::deleteFunction(void)  // 函式宣告或函式開始，負責執行一段可重複使用的演算法步驟。
+{
+    int delNum, ans;  // 宣告變數，用來保存演算法執行過程中的資料。
+    if (root == NULL)  /* 當樹根為NULL，顯示錯誤訊息 */  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+        cout &lt;&lt; &quot;\n No data found!!\n&quot;;  // 輸出結果，將資料顯示或寫入檔案。
+    else {  // 否則分支，處理上一個條件不成立的情況。
+        cout &lt;&lt; &quot;\n Please enter delete number: &quot;;  // 釋放動態記憶體，避免記憶體洩漏。
+        cin &gt;&gt; delNum;  // 讀入資料，可能來自鍵盤或檔案。
+        while (getchar()!=&#x27;\n&#x27;)  // while 迴圈，只要條件成立就持續執行。
+            continue;
+        ans = searchNum(delNum);  /* 搜尋資料是否存在 */  // 指定或更新變數值，改變目前資料狀態。
+        if (ans == 0)  /* 當資料不存在，顯示錯誤訊息 */  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+            cout &lt;&lt; &quot; Number %d not found!!\n&quot; &lt;&lt; delNum;  // 輸出結果，將資料顯示或寫入檔案。
+        else {  // 否則分支，處理上一個條件不成立的情況。
+            removes(node, ans);
+            cout &lt;&lt; &quot; Number &quot; &lt;&lt; delNum &lt;&lt; &quot; has been deleted!!\n&quot; ;  // 釋放動態記憶體，避免記憶體洩漏。
+        }
+    }
+}
+
+/* 輸出函數--將M-WAY TREE內的所有資料輸出 */
+void Mwaytree::displayFunction(void)  // 函式宣告或函式開始，負責執行一段可重複使用的演算法步驟。
+{
+    if (root == NULL)  /* 當樹根為NULL，顯示錯誤訊息 */  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+        cout &lt;&lt; &quot;\n No data found!!\n&quot;;  // 輸出結果，將資料顯示或寫入檔案。
+    else {  // 否則分支，處理上一個條件不成立的情況。
+        idSeq = &#x27;a&#x27;;  /* 節點編號由a開始 */  // 指定或更新變數值，改變目前資料狀態。
+        preorderId(root);  /* 給予每個節點編點 */
+        cout &lt;&lt; &quot;\n =========================================\n&quot;;  // 輸出結果，將資料顯示或寫入檔案。
+        preorderNum(root); /* 輸出節點資料 */
+        cout &lt;&lt; &quot; ===========================================\n&quot;;  // 輸出結果，將資料顯示或寫入檔案。
+    }
+}
+
+/* 將資料加入，並調整為M-WAY TREE，NUM為新增之資料鍵值 */
+void Mwaytree::create(int num)  // 函式宣告或函式開始，負責執行一段可重複使用的演算法步驟。
+{
+    int ans, i;  // 宣告變數，用來保存演算法執行過程中的資料。
+    if (root == NULL){  /* 樹根為NULL的狀況 */  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+        initial();
+        ptr-&gt;key[1] = num;  // 指定或更新變數值，改變目前資料狀態。
+        ptr-&gt;n++;
+        root = ptr;  // 指定或更新變數值，改變目前資料狀態。
+    }
+    else {  // 否則分支，處理上一個條件不成立的情況。
+        ans = searchNum(num);  /* 搜尋資料是否已存在 */  // 指定或更新變數值，改變目前資料狀態。
+        if (ans != 0)  /* 資料存在，則顯示錯誤訊息 */  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+            cout &lt;&lt; &quot; Number %d has existed!!\n&quot;&lt;&lt; num;  // 輸出結果，將資料顯示或寫入檔案。
+        else {  // 否則分支，處理上一個條件不成立的情況。
+            node = searchNode(num);  /* 找尋插入點 */  // 指定或更新變數值，改變目前資料狀態。
+            if (node != NULL) {  /* 插入點還有空間存放資料的狀況 */  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+                for (i = 1; i &lt; MAX-1; i++)  // for 迴圈，用固定範圍重複走訪資料。
+                    if (num &lt; node-&gt;key[i])  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+                        break;
+                moveright(i, num);
+            }
+            else {  /* 新增加一個節點加入資料的狀況 */  // 否則分支，處理上一個條件不成立的情況。
+                initial();
+                ptr-&gt;key[1] = num;  // 指定或更新變數值，改變目前資料狀態。
+                ptr-&gt;n++;
+                for (i = 1; i &lt; MAX; i++)  // for 迴圈，用固定範圍重複走訪資料。
+                    if(num &lt; prev-&gt;key[i])  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+                        break;
+                prev-&gt;link[i-1] = ptr;  // 指定或更新變數值，改變目前資料狀態。
+            }
+        }
+    }
+}
+
+/* 將資料移除，並調整為M-WAY TREE，NODETEMP為刪除資料所在節點，
+ LOCATION為資料在節點中的位置 */
+void Mwaytree::removes(NodeType *nodeTemp, int location)  // 函式宣告或函式開始，負責執行一段可重複使用的演算法步驟。
+{
+    int i;  // 宣告變數，用來保存演算法執行過程中的資料。
+    node = nodeTemp;  // 指定或更新變數值，改變目前資料狀態。
+    replace = findNext(node-&gt;link[location]);/*找尋替代之後繼節點*/  // 指定或更新變數值，改變目前資料狀態。
+    if (replace == NULL) {  /* 沒有後繼節點的狀況 */  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+        replace = findPrev(node-&gt;link[location-1]);  // 指定或更新變數值，改變目前資料狀態。
+        /* 找尋替代之前行節點 */
+        if (replace == NULL) {  /* 沒有前行節點的狀況 */  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+            moveleft(location);
+            replace = node;  // 指定或更新變數值，改變目前資料狀態。
+            if (node-&gt;n == 0) {  /* 刪除資料後，節點內資料為0的處理 */  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+                if (node == root)  /* 當節點為根的狀況 */  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+                    root = NULL;  // 指定或更新變數值，改變目前資料狀態。
+                else  /* 節點不是根，則調整鏈結 */  // 否則分支，處理上一個條件不成立的情況。
+                    for (i = 0; i &lt;= parent-&gt;n; i++)  // for 迴圈，用固定範圍重複走訪資料。
+                        if (node == parent-&gt;link[i]) {  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+                            parent-&gt;link[i] = NULL;  // 指定或更新變數值，改變目前資料狀態。
+                            break;
+                        }
+                delete replace;  // 釋放動態記憶體，避免記憶體洩漏。
+            }
+        }
+        else {  /* 有前行節點的狀況 */  // 否則分支，處理上一個條件不成立的情況。
+            /* 以前行節點的資料代替刪除資料 */
+            node-&gt;key[location] = replace-&gt;key[replace-&gt;n];  // 指定或更新變數值，改變目前資料狀態。
+            parent = prev;  // 指定或更新變數值，改變目前資料狀態。
+            removes(replace, replace-&gt;n);  /* 移除替代資料 */
+        }
+    }
+    else {  /* 有後繼節點的狀況 */  // 否則分支，處理上一個條件不成立的情況。
+        /* 以後繼節點的資料代替刪除資料 */
+        node-&gt;key[location] = replace-&gt;key[1];  // 指定或更新變數值，改變目前資料狀態。
+        parent = prev;  // 指定或更新變數值，改變目前資料狀態。
+        removes(replace, 1);  /* 移除替代資料 */
+    }
+}
+
+/* 初始化節點--新增一個節點，將其所有鏈結指向NULL，設其節點數為0 */
+void Mwaytree::initial(void)  // 函式宣告或函式開始，負責執行一段可重複使用的演算法步驟。
+{
+    int i;  // 宣告變數，用來保存演算法執行過程中的資料。
+    ptr = new NodeType;  // 動態配置記憶體，建立新的陣列或節點。
+    for (i = 0; i &lt; MAX; i++)  // for 迴圈，用固定範圍重複走訪資料。
+        ptr-&gt;link[i] = NULL;  // 指定或更新變數值，改變目前資料狀態。
+    ptr-&gt;n = 0;  // 指定或更新變數值，改變目前資料狀態。
+}
+
+/* 搜尋節點位置--搜尋NUM，存在則回傳NUM在節點中的位置，不存在則回傳0 */
+int Mwaytree::searchNum(int num)  // 函式宣告或函式開始，負責執行一段可重複使用的演算法步驟。
+{
+    int done, i;  // 宣告變數，用來保存演算法執行過程中的資料。
+    node = root;  // 指定或更新變數值，改變目前資料狀態。
+    while (node != NULL) {  // while 迴圈，只要條件成立就持續執行。
+        parent = prev;  // 指定或更新變數值，改變目前資料狀態。
+        prev = node;  // 指定或更新變數值，改變目前資料狀態。
+        for (i = 1, done = 0; i &lt;= node-&gt;n; i++) {  // for 迴圈，用固定範圍重複走訪資料。
+            if (num == node-&gt;key[i])  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+                return i;   /* 找到NUM，回傳其在節點中的位置 */  // 回傳函式結果，結束目前函式。
+            if (num &lt; node-&gt;key[i]) {  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+                node = node-&gt;link[i-1];  // 指定或更新變數值，改變目前資料狀態。
+                done = 1;  // do-while 區塊，先執行一次再檢查條件。
+                break;
+            }
+        }
+        if (done == 0)  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+            node = node-&gt;link[i-1];  // 指定或更新變數值，改變目前資料狀態。
+    }
+    return 0;   /* 沒有找到則回傳0 */  // 回傳函式結果，結束目前函式。
+}
+
+/* 搜尋節點--尋找插入NUM的節點，並回傳插入節點 */
+NodeType *Mwaytree::searchNode(int num)
+{
+    int i, done;  // 宣告變數，用來保存演算法執行過程中的資料。
+    NodeType *nodeTemp; 		nodeTemp = root;  // 指定或更新變數值，改變目前資料狀態。
+    while (nodeTemp != NULL) {  // while 迴圈，只要條件成立就持續執行。
+        if(nodeTemp-&gt;n &lt; MAX-1)  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+            return nodeTemp;  /* 找到有多餘空間存放NUM，則回傳此節點 */  // 回傳函式結果，結束目前函式。
+        else {  // 否則分支，處理上一個條件不成立的情況。
+            for (i = 1, done = 0; i &lt; MAX; i++) {  // for 迴圈，用固定範圍重複走訪資料。
+                if (nodeTemp-&gt;n &lt; i)  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+                    break;
+                if (num &lt; nodeTemp-&gt;key[i]) {  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+                    nodeTemp = nodeTemp-&gt;link[i-1];  // 指定或更新變數值，改變目前資料狀態。
+                    done = 1;  // do-while 區塊，先執行一次再檢查條件。
+                    break;
+                }
+            }
+            if (done == 0)  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+                nodeTemp = nodeTemp-&gt;link[i-1];  // 指定或更新變數值，改變目前資料狀態。
+        }
+    }
+    return nodeTemp;  /* 若沒有找到有多餘空間存放NUM的節點，回傳NULL */  // 回傳函式結果，結束目前函式。
+}
+
+/* 將節點內資料右移--將節點資料右移至INDEX位置，並將NUM插入 */
+void Mwaytree::moveright(int index, int num)  // 函式宣告或函式開始，負責執行一段可重複使用的演算法步驟。
+{
+    int i;  // 宣告變數，用來保存演算法執行過程中的資料。
+    for (i = node-&gt;n+1; i &gt; index; i--) {  /* 資料右移至INDEX處 */  // for 迴圈，用固定範圍重複走訪資料。
+        node-&gt;key[i] = node-&gt;key[i-1];  // 指定或更新變數值，改變目前資料狀態。
+        node-&gt;link[i] = node-&gt;link[i-1];  // 指定或更新變數值，改變目前資料狀態。
+    }
+    node-&gt;key[i] = num;  /* 插入NUM */  // 指定或更新變數值，改變目前資料狀態。
+    /* 調整NUM左右鏈結 */
+    if (node-&gt;link[i-1] != NULL &amp;&amp; node-&gt;link[i-1]-&gt;key[0] &gt; num) {  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+        node-&gt;link[i] = node-&gt;link[i-1];  // 指定或更新變數值，改變目前資料狀態。
+        node-&gt;link[i-1] = NULL;  // 指定或更新變數值，改變目前資料狀態。
+    }
+    node-&gt;n++;
+}
+
+/* 將節點內資料左移--將節點資料從INDEX位置左移 */
+void Mwaytree::moveleft(int index)  // 函式宣告或函式開始，負責執行一段可重複使用的演算法步驟。
+{
+    int i;  // 宣告變數，用來保存演算法執行過程中的資料。
+    for (i = index; i &lt; node-&gt;n; i++) {  /* 節點資料左移 */  // for 迴圈，用固定範圍重複走訪資料。
+        node-&gt;key[i] = node-&gt;key[i+1];  // 指定或更新變數值，改變目前資料狀態。
+        node-&gt;link[i] = node-&gt;link[i+1];  // 指定或更新變數值，改變目前資料狀態。
+    }
+    node-&gt;n--;
+}
+
+/* 尋找後繼節點--尋找NODETEMP的後繼節點，回傳找到的後繼節點 */
+NodeType *Mwaytree::findNext(NodeType *nodeTemp)
+{
+    prev = node;  // 指定或更新變數值，改變目前資料狀態。
+    if (nodeTemp != NULL)  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+        while (nodeTemp-&gt;link[0] != NULL) {  // while 迴圈，只要條件成立就持續執行。
+            prev = nodeTemp;  // 指定或更新變數值，改變目前資料狀態。
+            nodeTemp = nodeTemp-&gt;link[0];  // 指定或更新變數值，改變目前資料狀態。
+        }
+    return nodeTemp;  // 回傳函式結果，結束目前函式。
+}
+
+/* 尋找前行節點--尋找NODETEMP的前行節點，回傳找到的前行節點 */
+NodeType *Mwaytree::findPrev(NodeType *nodeTemp)
+{
+    prev = node;  // 指定或更新變數值，改變目前資料狀態。
+    if (nodeTemp != NULL)  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+        while (nodeTemp-&gt;link[MAX-1] != NULL) {  // while 迴圈，只要條件成立就持續執行。
+            prev = nodeTemp;  // 指定或更新變數值，改變目前資料狀態。
+            nodeTemp = nodeTemp-&gt;link[MAX-1];  // 指定或更新變數值，改變目前資料狀態。
+        }
+    return nodeTemp;  // 回傳函式結果，結束目前函式。
+}
+
+/* 給予節點編號--使用前序遞迴方式給予每個節點編號 */
+void Mwaytree::preorderId(NodeType *tree)  // 函式宣告或函式開始，負責執行一段可重複使用的演算法步驟。
+{
+    int i;  // 宣告變數，用來保存演算法執行過程中的資料。
+    if (tree != NULL) {  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+        tree-&gt;id = idSeq++;  // 指定或更新變數值，改變目前資料狀態。
+        for (i = 0; i &lt;= tree-&gt;n; i++)  // for 迴圈，用固定範圍重複走訪資料。
+            preorderId(tree-&gt;link[i]);
+    }
+}
+
+/* 輸出資料--使用前予遞迴方式輸出節點資料 */
+void Mwaytree::preorderNum(NodeType *tree)  // 函式宣告或函式開始，負責執行一段可重複使用的演算法步驟。
+{
+    int i;  // 宣告變數，用來保存演算法執行過程中的資料。
+    char linkId;  // 宣告變數，用來保存演算法執行過程中的資料。
+    if (tree != NULL) {  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+        /* 當節點鏈節為NULL，則顯示鏈結為0 */
+        if (tree-&gt;link[0] == NULL)  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+            linkId = &#x27;0&#x27;;  // 指定或更新變數值，改變目前資料狀態。
+        else  // 否則分支，處理上一個條件不成立的情況。
+            linkId = tree-&gt;link[0]-&gt;id;  // 指定或更新變數值，改變目前資料狀態。
+        cout &lt;&lt; &quot; &quot; &lt;&lt; tree-&gt;id &lt;&lt; &quot;, &quot; &lt;&lt; tree-&gt;n &lt;&lt; &quot;, &quot; &lt;&lt; linkId;  // 輸出結果，將資料顯示或寫入檔案。
+        for (i = 1; i &lt;= tree-&gt;n; i++) {  // for 迴圈，用固定範圍重複走訪資料。
+            if (tree-&gt;link[i] == NULL)  // 條件判斷，依照目前資料狀態選擇不同處理路徑。
+                linkId = &#x27;0&#x27;;  // 指定或更新變數值，改變目前資料狀態。
+            else  // 否則分支，處理上一個條件不成立的情況。
+                linkId = tree-&gt;link[i]-&gt;id;  // 指定或更新變數值，改變目前資料狀態。
+            cout &lt;&lt; &quot;, (&quot; &lt;&lt; tree-&gt;key[i] &lt;&lt; &quot;, &quot; &lt;&lt; linkId &lt;&lt; &quot;)&quot;;  // 輸出結果，將資料顯示或寫入檔案。
+        }
+        printf(&quot;\n&quot;);
+        for(i = 0; i &lt;= tree-&gt;n; i++)  // for 迴圈，用固定範圍重複走訪資料。
+            preorderNum(tree-&gt;link[i]);
+    }
+}
+</code></pre></div>
+<h3>程式執行後的結果</h3>
+<pre><code>【程式執行後的結果範例】
+程式啟動後會顯示 m-way search tree 操作選單。
+Example 操作：Insert 30, 10, 20。
+Example output:
+Node A: 10 20 30
+搜尋 20 時會回報 key 位於目前節點。</code></pre>
+
+<h3>2. 程式字典說明</h3>
+<table><tr><th>關鍵字/概念</th><th>中文說明</th></tr><tr><td><code>class</code></td><td>類別：把資料與操作函式封裝在一起。</td></tr><tr><td><code>struct</code></td><td>結構：常用來定義節點或資料紀錄。</td></tr><tr><td><code>new</code></td><td>new：在執行期間動態建立記憶體空間。</td></tr><tr><td><code>delete</code></td><td>delete：釋放 new 建立的記憶體。</td></tr><tr><td><code>for</code></td><td>for：已知次數或範圍的重複迴圈。</td></tr><tr><td><code>while</code></td><td>while：條件成立就持續執行的迴圈。</td></tr><tr><td><code>if</code></td><td>if / else：根據條件決定程式分支。</td></tr><tr><td><code>return</code></td><td>return：回傳函式結果並結束函式。</td></tr><tr><td><code>pointer</code></td><td>指標 *：儲存記憶體位址，常用於 linked list / tree。</td></tr><tr><td><code>recursive</code></td><td>遞迴：函式呼叫自己，常用於樹與分治演算法。</td></tr></table>
+<h3>3. 程式流程圖</h3>
+<svg class="flow" viewBox="0 0 900 602" xmlns="http://www.w3.org/2000/svg"><defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#2563eb"/></marker></defs><rect x="230" y="24" width="440" height="54" rx="27" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/><text x="450.0" y="58" text-anchor="middle" font-size="18" fill="#1e3a8a">開始</text><line x1="450.0" y1="78" x2="450.0" y2="112" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow)"/><rect x="230" y="116" width="440" height="54" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/><text x="450.0" y="150" text-anchor="middle" font-size="18" fill="#1e3a8a">讀入查詢鍵值</text><line x1="450.0" y1="170" x2="450.0" y2="204" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow)"/><rect x="230" y="208" width="440" height="54" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/><text x="450.0" y="242" text-anchor="middle" font-size="18" fill="#1e3a8a">設定搜尋範圍或雜湊位置</text><line x1="450.0" y1="262" x2="450.0" y2="296" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow)"/><rect x="230" y="300" width="440" height="54" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/><text x="450.0" y="334" text-anchor="middle" font-size="18" fill="#1e3a8a">比較目前元素</text><line x1="450.0" y1="354" x2="450.0" y2="388" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow)"/><rect x="230" y="392" width="440" height="54" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/><text x="450.0" y="426" text-anchor="middle" font-size="18" fill="#1e3a8a">找到則回傳位置，否則縮小範圍/繼續</text><line x1="450.0" y1="446" x2="450.0" y2="480" stroke="#2563eb" stroke-width="2" marker-end="url(#arrow)"/><rect x="230" y="484" width="440" height="54" rx="27" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/><text x="450.0" y="518" text-anchor="middle" font-size="18" fill="#1e3a8a">結束</text></svg>
+<h3>4. 函式的結構</h3>
+<div class="structure"><p><b>函式結構：</b><code>main</code> 為主要入口或核心函式，其他函式負責分工處理初始化、資料操作、輸出或遞迴/迴圈運算。</p><ul><li><code>main</code>：主程式入口。</li><li><code>Mwaytree::insertFunction</code>：插入。</li><li><code>Mwaytree::deleteFunction</code>：刪除。</li><li><code>Mwaytree::displayFunction</code>：執行此範例的核心步驟。</li><li><code>Mwaytree::create</code>：執行此範例的核心步驟。</li><li><code>Mwaytree::removes</code>：執行此範例的核心步驟。</li><li><code>Mwaytree::initial</code>：初始化。</li><li><code>Mwaytree::searchNum</code>：搜尋。</li><li><code>Mwaytree::moveright</code>：執行此範例的核心步驟。</li><li><code>Mwaytree::moveleft</code>：執行此範例的核心步驟。</li><li><code>Mwaytree::preorderId</code>：執行此範例的核心步驟。</li><li><code>Mwaytree::preorderNum</code>：執行此範例的核心步驟。</li></ul></div>
+<h3>5. 函式完整說明</h3>
+<table><tr><th>函式</th><th>回傳型別</th><th>參數</th><th>中文說明</th></tr><tr><td><code>main</code></td><td><code>int</code></td><td><code>void</code></td><td>主程式入口。</td></tr><tr><td><code>Mwaytree::insertFunction</code></td><td><code>void</code></td><td><code>void</code></td><td>插入。</td></tr><tr><td><code>Mwaytree::deleteFunction</code></td><td><code>void</code></td><td><code>void</code></td><td>刪除。</td></tr><tr><td><code>Mwaytree::displayFunction</code></td><td><code>void</code></td><td><code>void</code></td><td>執行此範例的核心步驟。</td></tr><tr><td><code>Mwaytree::create</code></td><td><code>void</code></td><td><code>int num</code></td><td>執行此範例的核心步驟。</td></tr><tr><td><code>Mwaytree::removes</code></td><td><code>void</code></td><td><code>NodeType *nodeTemp, int location</code></td><td>執行此範例的核心步驟。</td></tr><tr><td><code>Mwaytree::initial</code></td><td><code>void</code></td><td><code>void</code></td><td>初始化。</td></tr><tr><td><code>Mwaytree::searchNum</code></td><td><code>int</code></td><td><code>int num</code></td><td>搜尋。</td></tr><tr><td><code>Mwaytree::moveright</code></td><td><code>void</code></td><td><code>int index, int num</code></td><td>執行此範例的核心步驟。</td></tr><tr><td><code>Mwaytree::moveleft</code></td><td><code>void</code></td><td><code>int index</code></td><td>執行此範例的核心步驟。</td></tr><tr><td><code>Mwaytree::preorderId</code></td><td><code>void</code></td><td><code>NodeType *tree</code></td><td>執行此範例的核心步驟。</td></tr><tr><td><code>Mwaytree::preorderNum</code></td><td><code>void</code></td><td><code>NodeType *tree</code></td><td>執行此範例的核心步驟。</td></tr></table>
+<h3>6. 變數完整說明</h3>
+<table><tr><th>變數</th><th>型別</th><th>用途說明</th></tr><tr><td><code>id</code></td><td><code>char</code></td><td>程式中的資料、暫存值或控制變數。</td></tr><tr><td><code>n</code></td><td><code>int</code></td><td>資料數量、計數器或目前處理規模。</td></tr><tr><td><code>key[]</code></td><td><code>int</code></td><td>節點或物件中保存的關鍵資料。</td></tr><tr><td><code>idSeq</code></td><td><code>char</code></td><td>程式中的資料、暫存值或控制變數。</td></tr><tr><td><code>option</code></td><td><code>char</code></td><td>程式中的資料、暫存值或控制變數。</td></tr><tr><td><code>addNum</code></td><td><code>int</code></td><td>程式中的資料、暫存值或控制變數。</td></tr><tr><td><code>delNum</code></td><td><code>int</code></td><td>程式中的資料、暫存值或控制變數。</td></tr><tr><td><code>ans</code></td><td><code>int</code></td><td>儲存答案、輸出結果或使用者選擇。</td></tr><tr><td><code>i</code></td><td><code>int</code></td><td>迴圈索引或暫存位置，用來走訪陣列、矩陣或節點。</td></tr><tr><td><code>done</code></td><td><code>int</code></td><td>程式中的資料、暫存值或控制變數。</td></tr><tr><td><code>linkId</code></td><td><code>char</code></td><td>指標欄位，用來連到下一個節點或子節點。</td></tr></table>
+</details></section></main>
+<script>
+function copyProgramCode(btn){
+  const box = btn.closest('.codebox');
+  const code = box ? box.querySelector('code') : null;
+  if(!code) return;
+  const text = code.innerText;
+  function done(){
+    const old = btn.textContent;
+    btn.textContent = '已複製';
+    btn.classList.add('copied');
+    setTimeout(()=>{btn.textContent = old; btn.classList.remove('copied');}, 1200);
+  }
+  if(navigator.clipboard && window.isSecureContext){
+    navigator.clipboard.writeText(text).then(done).catch(()=>fallbackCopy(text, done));
+  }else{
+    fallbackCopy(text, done);
+  }
+}
+function fallbackCopy(text, done){
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed';
+  ta.style.left = '-9999px';
+  document.body.appendChild(ta);
+  ta.focus();
+  ta.select();
+  try{ document.execCommand('copy'); done(); }catch(e){ alert('複製失敗，請手動選取程式碼複製。'); }
+  document.body.removeChild(ta);
+}
+</script>
+</body></html>

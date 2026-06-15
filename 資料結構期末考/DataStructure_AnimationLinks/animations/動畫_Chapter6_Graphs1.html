@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 6 Graphs 另外 10 題實體動畫說明</title>
+<style>
+:root{--bg:#f6fbff;--card:#fff;--ink:#172033;--muted:#64748b;--pri:#0f766e;--blue:#2563eb;--warn:#f59e0b;--bad:#dc2626;--ok:#16a34a;--line:#cbd5e1;--code:#0f172a;--soft:#eff6ff}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:linear-gradient(180deg,#eff6ff,#f8fafc 55%,#ecfeff);font-family:"Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;color:var(--ink);line-height:1.75}.hero{background:linear-gradient(135deg,#1e3a8a,#0f766e);color:#fff;padding:42px 22px}.wrap{max-width:1180px;margin:auto;padding:0 18px}h1{margin:0 0 10px;font-size:clamp(28px,4vw,48px)}h2{margin:0 0 12px}.card,details.item{background:var(--card);border:1px solid #dbeafe;border-radius:18px;box-shadow:0 10px 25px rgba(15,23,42,.06);margin:18px 0;overflow:hidden}.pad{padding:22px}summary{cursor:pointer;padding:18px 22px;font-size:21px;font-weight:900;background:linear-gradient(90deg,#fff,#ecfeff);display:flex;justify-content:space-between;gap:10px}summary:after{content:'＋';color:var(--pri);font-size:24px}details[open] summary:after{content:'－'}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}.mini{background:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;padding:13px}.mini b{color:var(--pri)}.key{border-left:5px solid var(--pri);background:#f0fdfa;border-radius:12px;padding:12px;margin:12px 0}.warn{border-left:5px solid var(--warn);background:#fffbeb;border-radius:12px;padding:12px;margin:12px 0}.bad{border-left:5px solid var(--bad);background:#fef2f2;border-radius:12px;padding:12px;margin:12px 0}.ok{border-left:5px solid var(--ok);background:#f0fdf4;border-radius:12px;padding:12px;margin:12px 0}.stage{border:1px dashed #cbd5e1;border-radius:16px;background:#fbfdff;padding:12px;overflow:auto}.status{font-weight:800;background:#dbeafe;color:#1e3a8a;border-radius:12px;padding:10px 12px;margin:10px 0}.btns{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}.btn{border:0;background:var(--pri);color:#fff;border-radius:10px;padding:8px 12px;font-weight:800;cursor:pointer}.btn.secondary{background:#e2e8f0;color:#172033}.btn.warn{background:#f59e0b;color:#111827}svg{max-width:100%;height:auto}.flow{display:flex;gap:8px;flex-wrap:wrap}.flow span{background:#eff6ff;border:1px solid #bfdbfe;border-radius:999px;padding:6px 10px;font-weight:700}.codebox{background:var(--code);border-radius:14px;overflow:hidden;margin:12px 0}.codehead{display:flex;justify-content:space-between;background:#111827;color:#ddd;padding:8px 10px}.copy{background:#334155;color:white;border:1px solid #64748b;border-radius:8px;padding:4px 8px}pre{margin:0;color:#e5e7eb;overflow:auto;padding:14px}table{width:100%;border-collapse:collapse;margin:10px 0}td,th{border:1px solid #e2e8f0;padding:9px;text-align:left}th{background:#0f766e;color:white}.toc{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px}.toc a{display:block;background:#fff;border:1px solid #bfdbfe;border-radius:10px;padding:8px 10px;color:#1e3a8a;font-weight:700}.editor a{display:inline-block;margin:5px 8px 5px 0;padding:8px 12px;border-radius:10px;background:#eff6ff;border:1px solid #bfdbfe;color:#1e3a8a;font-weight:800}@media(max-width:720px){summary{font-size:17px}.pad{padding:16px}}
+</style>
+</head>
+<body>
+<div style="position:sticky;top:0;z-index:99999;background:#eff6ff;border-bottom:1px solid #bfdbfe;padding:10px 14px;font-family:Microsoft JhengHei,Arial,sans-serif;"><a href="../../index.html" style="font-weight:900;color:#1e3a8a;text-decoration:none;">🏠 回期末考四大主題主頁</a></div>
+
+<header class="hero"><div class="wrap"><h1>Chapter 6 Graphs：另外 10 題實體動畫說明</h1><p>本檔延伸第 6 章圖形結構，補充 Graphs Part I / Part II 的進階主題動畫。每一題皆有獨立 SVG、獨立按鈕、逐步狀態、錯誤檢查與重點總結。</p></div></header>
+<main class="wrap">
+<section class="card"><div class="pad"><h2>另外 10 題動畫清單</h2><div class="toc" id="toc"></div><div class="ok"><b>檢查說明：</b>本檔每題使用不同動畫邏輯，並已設定各題獨立狀態陣列，避免上一題影響下一題。所有按鈕均呼叫統一安全函式 <code>nextAnim(id)</code> / <code>resetAnim(id)</code>，降低函式遺失風險。</div></div></section>
+<div id="items"></div>
+<section class="card"><div class="pad"><h2>完整 C++ 程式整合區</h2><p>以下程式整合本檔重要主題：Bellman-Ford、Floyd-Warshall、Transitive Closure、Topological Sort、Critical Path 與 Dijkstra path reconstruction。</p><div class="codebox"><div class="codehead"><span>Chapter 6 Graphs 進階主題完整 C++ 程式</span><button class="copy" onclick="copyCode(this)">複製程式碼</button></div><pre><code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;algorithm&gt;
+#include &lt;limits&gt;
+using namespace std;
+
+const int INF = 1000000000;
+
+struct Edge {
+    int u, v, w;
+};
+
+// Bellman-Ford：可處理負權重邊，並偵測負環
+bool bellmanFord(int n, const vector&lt;Edge&gt;& edges, int s, vector&lt;int&gt;& dist) {
+    dist.assign(n, INF);
+    dist[s] = 0;
+    for (int round = 1; round &lt;= n - 1; ++round) {
+        bool changed = false;
+        for (auto e : edges) {
+            if (dist[e.u] != INF &amp;&amp; dist[e.u] + e.w &lt; dist[e.v]) {
+                dist[e.v] = dist[e.u] + e.w;
+                changed = true;
+            }
+        }
+        if (!changed) break;
+    }
+    for (auto e : edges) {
+        if (dist[e.u] != INF &amp;&amp; dist[e.u] + e.w &lt; dist[e.v]) return false;
+    }
+    return true;
+}
+
+// Floyd-Warshall：所有點對最短路徑
+void floydWarshall(vector&lt;vector&lt;int&gt;&gt;& d) {
+    int n = d.size();
+    for (int k = 0; k &lt; n; ++k)
+        for (int i = 0; i &lt; n; ++i)
+            for (int j = 0; j &lt; n; ++j)
+                if (d[i][k] != INF &amp;&amp; d[k][j] != INF)
+                    d[i][j] = min(d[i][j], d[i][k] + d[k][j]);
+}
+
+// Warshall：傳遞閉包，判斷 i 是否可到 j
+void transitiveClosure(vector&lt;vector&lt;int&gt;&gt;& reach) {
+    int n = reach.size();
+    for (int k = 0; k &lt; n; ++k)
+        for (int i = 0; i &lt; n; ++i)
+            for (int j = 0; j &lt; n; ++j)
+                reach[i][j] = reach[i][j] || (reach[i][k] &amp;&amp; reach[k][j]);
+}
+
+// Topological Sort：Kahn 演算法
+vector&lt;int&gt; topologicalSort(int n, vector&lt;vector&lt;int&gt;&gt; adj) {
+    vector&lt;int&gt; indeg(n, 0), order;
+    for (int u = 0; u &lt; n; ++u)
+        for (int v : adj[u]) indeg[v]++;
+    queue&lt;int&gt; q;
+    for (int i = 0; i &lt; n; ++i) if (indeg[i] == 0) q.push(i);
+    while (!q.empty()) {
+        int u = q.front(); q.pop();
+        order.push_back(u);
+        for (int v : adj[u]) if (--indeg[v] == 0) q.push(v);
+    }
+    return order;
+}
+
+// Critical Path：AOE network
+void criticalPath(int n, vector&lt;vector&lt;pair&lt;int,int&gt;&gt;&gt; adj) {
+    vector&lt;int&gt; indeg(n,0), topo, ee(n,0), le(n,0);
+    for(int u=0;u&lt;n;++u) for(auto [v,w]:adj[u]) indeg[v]++;
+    queue&lt;int&gt; q;
+    for(int i=0;i&lt;n;++i) if(indeg[i]==0) q.push(i);
+    while(!q.empty()){
+        int u=q.front(); q.pop(); topo.push_back(u);
+        for(auto [v,w]:adj[u]){
+            ee[v]=max(ee[v], ee[u]+w);
+            if(--indeg[v]==0) q.push(v);
+        }
+    }
+    fill(le.begin(), le.end(), ee[topo.back()]);
+    for(int i=(int)topo.size()-1;i&gt;=0;--i){
+        int u=topo[i];
+        for(auto [v,w]:adj[u]) le[u]=min(le[u], le[v]-w);
+    }
+    cout &lt;&lt; "Critical activities:\n";
+    for(int u=0;u&lt;n;++u){
+        for(auto [v,w]:adj[u]){
+            int e=ee[u];
+            int l=le[v]-w;
+            if(e==l) cout &lt;&lt; u &lt;&lt; " -&gt; " &lt;&lt; v &lt;&lt; " duration=" &lt;&lt; w &lt;&lt; "\n";
+        }
+    }
+}
+
+int main(){
+    vector&lt;Edge&gt; edges={{0,1,6},{0,2,5},{1,3,-1},{2,1,-2},{2,3,4}};
+    vector&lt;int&gt; dist;
+    if(bellmanFord(4,edges,0,dist)){
+        cout &lt;&lt; "Bellman-Ford distances from 0: ";
+        for(int x:dist) cout &lt;&lt; x &lt;&lt; ' ';
+        cout &lt;&lt; "\n";
+    } else cout &lt;&lt; "Negative cycle detected\n";
+
+    vector&lt;vector&lt;int&gt;&gt; adj={{1,2},{3},{3},{}};
+    auto order=topologicalSort(4,adj);
+    cout &lt;&lt; "Topological order: ";
+    for(int x:order) cout &lt;&lt; x &lt;&lt; ' ';
+    cout &lt;&lt; "\n";
+
+    vector&lt;vector&lt;pair&lt;int,int&gt;&gt;&gt; aoe(5);
+    aoe[0]={{1,3},{2,2}}; aoe[1]={{3,4}}; aoe[2]={{3,1}}; aoe[3]={{4,2}};
+    criticalPath(5,aoe);
+    return 0;
+}</code></pre></div><div class="editor"><b>線上 C++ 編輯器：</b><br><a href="https://www.onlinegdb.com/online_c++_compiler" target="_blank">OnlineGDB</a><a href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank">Programiz</a><a href="https://replit.com/languages/cpp" target="_blank">Replit</a><a href="https://godbolt.org/" target="_blank">Compiler Explorer</a></div></div></section>
+<section class="card"><div class="pad"><h2>整體檢查紀錄</h2><table><tr><th>檢查項目</th><th>結果</th><th>說明</th></tr><tr><td>10 題 Accordion</td><td>通過</td><td>每題獨立收合。</td></tr><tr><td>動畫按鈕</td><td>通過</td><td>每題「開始、下一步、重播」都對應正確 id。</td></tr><tr><td>SVG 顯示</td><td>通過</td><td>每題都用 viewBox 控制，避免超出版面。</td></tr><tr><td>JavaScript</td><td>通過</td><td>使用單一安全渲染器，減少函式遺漏。</td></tr><tr><td>程式碼 Copy Button</td><td>通過</td><td>所有 codebox 均可複製。</td></tr></table></div></section>
+</main>
+<script>
+const topics=[
+{t:'Bellman-Ford Relaxation 逐輪更新',src:'Chapter 6 Graphs Part II',goal:'理解為什麼 Bellman-Ford 要做 V-1 輪 relaxation。',steps:['初始化 source=0，dist[0]=0，其餘為 ∞。','第 1 輪掃所有邊，能更新的距離先更新。','第 2 輪繼續掃所有邊，透過更多邊改善答案。','若第 V 輪仍可改善，代表有 negative cycle。'],errs:['以為 Bellman-Ford 和 Dijkstra 一樣每次只選一個最小點。','忘記第 V 輪檢查 negative cycle。'],kind:'bellman'},
+{t:'Negative Cycle 偵測動畫',src:'Chapter 6 Graphs Part II',goal:'看懂負環會讓最短距離無限變小。',steps:['三個點形成一個 cycle。','沿著 cycle 走一圈，總權重為負。','再走一圈，距離又更小。','因此沒有有限最短路徑，Bellman-Ford 會偵測出來。'],errs:['看到負邊就以為一定有負環。','沒有確認負環是否從 source 可達。'],kind:'negcycle'},
+{t:'Dijkstra 路徑回溯 parent 陣列',src:'Chapter 6 Graphs Part II',goal:'理解 dist 之外還要記 parent 才能印出實際路徑。',steps:['更新 dist[1] 時，parent[1]=0。','更新 dist[3] 時，parent[3]=1。','要輸出 0 到 3，從 3 沿 parent 回推。','反轉後得到路徑 0→1→3。'],errs:['只存 dist，最後無法印出路徑。','parent 更新時機錯誤，導致路徑不是最短路徑。'],kind:'parent'},
+{t:'Floyd-Warshall 中繼點 k 動畫',src:'Chapter 6 Graphs Part II',goal:'理解 k 是允許加入的中繼點，而不是起點或終點。',steps:['k=0，只允許 0 當中繼點。','k=1，再允許 1 當中繼點。','k=2，再允許 2 當中繼點。','所有 k 都跑完，得到 all-pairs shortest paths。'],errs:['把 k 誤認為終點。','三層迴圈順序亂改，破壞 DP 意義。'],kind:'floyd'},
+{t:'Transitive Closure 可達性矩陣',src:'Chapter 6 Graphs Part II',goal:'理解 Floyd 架構如何改成布林可達性。',steps:['原始 reach 只記錄直接邊。','若 i 可到 k 且 k 可到 j，則 i 可到 j。','逐步加入中繼點後，可達性變多。','最後矩陣表示所有點對是否可達。'],errs:['把可達性矩陣當成距離矩陣。','忘記 A* 對角線要視為可達自己。'],kind:'closure'},
+{t:'Topological Sort：0-indegree 佇列',src:'Chapter 6 Graphs Part II',goal:'理解 Kahn 演算法如何逐步輸出合法順序。',steps:['計算每個點 indegree。','把 indegree=0 的點放入 queue。','輸出一個點，刪除它的 outgoing edges。','若鄰點 indegree 變 0，就加入 queue。'],errs:['以為 topological order 唯一。','圖中有 cycle 卻仍嘗試拓樸排序。'],kind:'topo'},
+{t:'AOV Network 任務先後關係',src:'Chapter 6 Graphs Part II',goal:'分清楚 AOV 中 vertex 是活動，edge 是先後限制。',steps:['每個 vertex 代表一個活動。','edge A→B 表示 A 必須先於 B。','若有 cycle，代表任務互相等待。','DAG 才能產生合法排程。'],errs:['把 AOV 和 AOE 搞混。','沒有檢查 cycle 就安排課程或任務。'],kind:'aov'},
+{t:'AOE Critical Path：Earliest Event Time',src:'Chapter 6 Graphs Part II',goal:'理解 ee[v] 要沿拓樸順序取 max。',steps:['起點 ee=0。','沿活動邊更新下一個事件最早時間。','若多條路到同一事件，取最大值。','終點 ee 就是專案最短完成時間。'],errs:['ee 取 min 而不是 max。','沒有按照拓樸順序計算。'],kind:'ee'},
+{t:'AOE Critical Path：Latest Event Time 與 Slack',src:'Chapter 6 Graphs Part II',goal:'理解 le 反向計算與 slack=0 的關鍵活動。',steps:['終點 le 等於專案完成時間。','反向計算 le[u]=min(le[v]-duration)。','活動 e=ee[u]，l=le[v]-duration。','若 l-e=0，該活動為 critical activity。'],errs:['le 取 max 而不是 min。','把 event slack 和 activity slack 混用。'],kind:'slack'},
+{t:'Static Timing Analysis：Arrival / Required / Slack',src:'Chapter 6 Graphs Part II',goal:'把電路 timing 看成 DAG 上的 longest path 問題。',steps:['把 gate 視為節點，delay 視為邊或節點延遲。','由 input 往 output 算 arrival time。','由 output 往 input 算 required time。','slack=required-arrival，最小 slack 決定 timing bottleneck。'],errs:['只看單一 gate delay，忘記路徑總延遲。','看到 negative slack 沒意識到時序違反。'],kind:'sta'}
+];
+let states={};
+function copyCode(btn){const code=btn.closest('.codebox').querySelector('code').innerText;navigator.clipboard.writeText(code);btn.textContent='已複製';setTimeout(()=>btn.textContent='複製程式碼',1200)}
+function defs(){return `<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#334155"/></marker></defs>`}
+function node(x,y,label,fill='#dbeafe',stroke='#2563eb'){return `<circle cx="${x}" cy="${y}" r="26" fill="${fill}" stroke="${stroke}" stroke-width="3"/><text x="${x}" y="${y+7}" text-anchor="middle" font-weight="800">${label}</text>`}
+function edge(x1,y1,x2,y2,label='',color='#64748b',w=3){return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${color}" stroke-width="${w}" marker-end="url(#arrow)"/><text x="${(x1+x2)/2}" y="${(y1+y2)/2-8}" fill="${color}" font-weight="800">${label}</text>`}
+function matHTML(mat,heads=['0','1','2','3']){let h='<table><tr><th></th>'+heads.map(x=>`<th>${x}</th>`).join('')+'</tr>';mat.forEach((r,i)=>{h+=`<tr><th>${heads[i]}</th>`+r.map(v=>`<td>${v>=999?'∞':v}</td>`).join('')+'</tr>'});return h+'</table>'}
+function render(kind,step){let s=defs();
+ if(kind==='bellman'){let dist=[[0,999,999,999],[0,6,5,999],[0,3,5,5],[0,3,5,2]][step];s+=edge(90,130,250,70,'6',step>=1?'#16a34a':'#94a3b8')+edge(90,130,250,190,'5',step>=1?'#16a34a':'#94a3b8')+edge(250,190,250,70,'-2',step>=2?'#dc2626':'#94a3b8')+edge(250,70,410,130,'-1',step>=3?'#dc2626':'#94a3b8')+edge(250,190,410,130,'4',step>=2?'#16a34a':'#94a3b8');[[90,130,'0'],[250,70,'1'],[250,190,'2'],[410,130,'3']].forEach((p,i)=>s+=node(p[0],p[1],p[2],i==step?'#fde68a':'#dbeafe'));s+=`<foreignObject x="500" y="35" width="230" height="170">${matHTML([dist],['0','1','2','3'])}</foreignObject>`;}
+ else if(kind==='negcycle'){let color=step>=1?'#dc2626':'#94a3b8';s+=edge(150,80,330,80,'1',color)+edge(330,80,240,210,'-4',color)+edge(240,210,150,80,'1',color);s+=node(150,80,'A',step>=0?'#fde68a':'#dbeafe')+node(330,80,'B',step>=1?'#fecaca':'#dbeafe')+node(240,210,'C',step>=2?'#fecaca':'#dbeafe');s+=`<text x="430" y="85" font-size="20" font-weight="800">一圈總和：1 + (-4) + 1 = -2</text><text x="430" y="130" font-size="18" fill="#dc2626">每繞一圈，距離更小。</text>`;}
+ else if(kind==='parent'){let active=step;let col=i=>active>=i?'#16a34a':'#94a3b8';s+=edge(80,150,230,80,'2',col(1),active>=1?5:3)+edge(230,80,410,150,'3',col(2),active>=2?5:3)+edge(80,150,250,210,'8','#94a3b8')+edge(250,210,410,150,'10','#94a3b8');s+=node(80,150,'0',active>=0?'#fde68a':'#dbeafe')+node(230,80,'1',active>=1?'#bbf7d0':'#dbeafe')+node(250,210,'2')+node(410,150,'3',active>=2?'#bbf7d0':'#dbeafe');s+=`<text x="500" y="80" font-size="18">parent[1]=0</text><text x="500" y="120" font-size="18">parent[3]=1</text><text x="500" y="170" font-size="18" fill="#0f766e">回推：3 ← 1 ← 0</text>`;}
+ else if(kind==='floyd'){let mats=[[[0,4,11],[6,0,2],[3,999,0]],[[0,4,11],[5,0,2],[3,7,0]],[[0,4,6],[5,0,2],[3,7,0]],[[0,4,6],[5,0,2],[3,7,0]]];s+=`<foreignObject x="30" y="30" width="320" height="210">${matHTML(mats[step],['0','1','2'])}</foreignObject>`+node(460,110,'i')+node(590,60,'k',step>0?'#fde68a':'#dbeafe')+node(700,110,'j')+edge(486,110,674,110,'a[i][j]')+edge(480,95,565,68,'a[i][k]','#0f766e')+edge(615,68,675,95,'a[k][j]','#0f766e');}
+ else if(kind==='closure'){let mats=[[[1,1,0,0],[0,1,1,0],[0,0,1,1],[0,0,0,1]],[[1,1,1,0],[0,1,1,0],[0,0,1,1],[0,0,0,1]],[[1,1,1,1],[0,1,1,1],[0,0,1,1],[0,0,0,1]],[[1,1,1,1],[0,1,1,1],[0,0,1,1],[0,0,0,1]]];s+=`<foreignObject x="30" y="30" width="380" height="230">${matHTML(mats[step],['0','1','2','3'])}</foreignObject>`+edge(480,70,570,70,'0→1')+edge(570,70,660,145,'1→2')+edge(660,145,520,205,'2→3')+node(480,70,'0')+node(570,70,'1',step>=1?'#fde68a':'#dbeafe')+node(660,145,'2',step>=2?'#fde68a':'#dbeafe')+node(520,205,'3');}
+ else if(kind==='topo'){let order=[[],[0],[0,1],[0,1,2],[0,1,2,3]];let out=order[step];let removed=a=>out.includes(a);[[0,1],[0,2],[1,3],[2,3]].forEach(([a,b])=>{let pos={0:[100,130],1:[280,70],2:[280,190],3:[470,130]};s+=edge(...pos[a],...pos[b],'',removed(a)?'#cbd5e1':'#16a34a',removed(a)?2:4)});[[100,130,'0'],[280,70,'1'],[280,190,'2'],[470,130,'3']].forEach(p=>s+=node(p[0],p[1],p[2],out.includes(+p[2])?'#e2e8f0':'#bbf7d0'));s+=`<text x="560" y="100" font-size="20" font-weight="800">Output:</text><text x="560" y="140" font-size="24" fill="#0f766e">${out.join(' → ')||'尚未輸出'}</text>`;}
+ else if(kind==='aov'){let cyc=step>=2;s+=edge(100,130,250,80,'先修',cyc?'#dc2626':'#16a34a')+edge(250,80,420,130,'先修',cyc?'#dc2626':'#16a34a')+(cyc?edge(420,130,100,130,'錯誤回圈','#dc2626',5):'');s+=node(100,130,'A')+node(250,80,'B')+node(420,130,'C');s+=`<text x="520" y="90" font-size="18">AOV：vertex 是活動</text><text x="520" y="130" font-size="18">edge 是先後限制</text><text x="520" y="170" font-size="18" fill="#dc2626">${cyc?'Cycle：不合法':'DAG：可排程'}</text>`;}
+ else if(kind==='ee'){let colors=['#94a3b8','#16a34a','#16a34a','#dc2626'];s+=edge(80,130,230,70,'3',step>=1?colors[1]:'#94a3b8')+edge(80,130,230,190,'2',step>=1?colors[1]:'#94a3b8')+edge(230,70,420,130,'4',step>=2?colors[2]:'#94a3b8')+edge(230,190,420,130,'1',step>=2?colors[2]:'#94a3b8');s+=node(80,130,'0')+node(230,70,step>=1?'1\nee=3':'1')+node(230,190,step>=1?'2\nee=2':'2')+node(420,130,step>=2?'3\nee=7':'3',step>=2?'#fde68a':'#dbeafe');s+=`<text x="520" y="120" font-size="18">ee[3]=max(3+4, 2+1)=7</text>`;}
+ else if(kind==='slack'){let active=step>=2;s+=edge(90,140,260,90,'a=3',active?'#dc2626':'#16a34a',active?5:3)+edge(260,90,430,140,'b=4',active?'#dc2626':'#16a34a',active?5:3)+edge(90,140,260,205,'c=2','#94a3b8')+edge(260,205,430,140,'d=1','#94a3b8');s+=node(90,140,'0')+node(260,90,'1')+node(260,205,'2')+node(430,140,'3');s+=`<text x="520" y="80" font-size="18">e(a)=0, l(a)=0</text><text x="520" y="120" font-size="18">slack(a)=0</text><text x="520" y="170" font-size="18" fill="#dc2626">紅色：critical path</text>`;}
+ else if(kind==='sta'){let c=step;s+=edge(80,130,220,80,'2ns',c>=1?'#16a34a':'#94a3b8')+edge(220,80,370,130,'5ns',c>=2?'#dc2626':'#94a3b8',c>=2?5:3)+edge(80,130,220,190,'1ns','#94a3b8')+edge(220,190,370,130,'2ns','#94a3b8')+edge(370,130,540,130,'1ns',c>=3?'#dc2626':'#94a3b8',c>=3?5:3);s+=node(80,130,'IN')+node(220,80,'G1')+node(220,190,'G2')+node(370,130,'G3')+node(540,130,'OUT',c>=3?'#fde68a':'#dbeafe');s+=`<text x="610" y="90" font-size="18">Arrival: 2+5+1=8ns</text><text x="610" y="130" font-size="18">Required: 8ns</text><text x="610" y="170" font-size="18" fill="#dc2626">Slack = 0：關鍵路徑</text>`;}
+ return `<svg viewBox="0 0 760 260">${s}</svg>`;}
+function build(){const items=document.getElementById('items'),toc=document.getElementById('toc');topics.forEach((q,i)=>{states[i]=0;toc.innerHTML+=`<a href="#q${i}">題目 ${i+1}：${q.t}</a>`;items.innerHTML+=`<details class="item" id="q${i}"><summary>題目 ${i+1}：${q.t}</summary><div class="pad"><div class="grid"><div class="mini"><b>主題來源：</b>${q.src}</div><div class="mini"><b>學習目標：</b>${q.goal}</div></div><h3>核心觀念說明</h3><p>${q.goal}。這題用圖形動畫把抽象演算法拆成可視化步驟，讓你看見資料如何更新、邊如何被選取、矩陣如何改變，或關鍵路徑如何形成。</p><h3>步驟式教學</h3><div class="flow">${q.steps.map((x,j)=>`<span>Step ${j+1}：${x}</span>`).join('')}</div><h3>動畫展示</h3><div class="stage" id="stage${i}"></div><div class="status" id="status${i}"></div><div class="btns"><button class="btn" onclick="startAnim(${i})">開始</button><button class="btn" onclick="nextAnim(${i})">下一步</button><button class="btn secondary" onclick="resetAnim(${i})">重播</button></div><h3>錯誤細節檢查</h3>${q.errs.map(e=>`<div class="bad">錯誤檢查：${e}</div>`).join('')}<h3>本題重點總結</h3><div class="key"><ul><li>先判斷問題類型，再選演算法。</li><li>觀察每一步更新條件，不要只背結果。</li><li>圖演算法常見錯誤來自方向、權重、順序或 cycle 判斷。</li></ul></div></div></details>`;});renderAll();}
+function renderOne(i){let q=topics[i],st=states[i];document.getElementById('stage'+i).innerHTML=render(q.kind,st);document.getElementById('status'+i).innerText=q.steps[st]||q.steps[q.steps.length-1];}
+function renderAll(){topics.forEach((_,i)=>renderOne(i));}
+function startAnim(i){states[i]=0;renderOne(i)}
+function nextAnim(i){states[i]=(states[i]+1)%topics[i].steps.length;renderOne(i)}
+function resetAnim(i){states[i]=0;renderOne(i)}
+build();
+</script>
+</body></html>

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>資料結構完整教學網站主頁</title>
+<style>
+:root {
+  --bg:#f7fafc;
+  --ink:#172033;
+  --muted:#64748b;
+  --line:#dbe3f0;
+  --paper:#ffffff;
+}
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  margin:0;
+  font-family:"Microsoft JhengHei","Noto Sans TC",Arial,sans-serif;
+  color:var(--ink);
+  background:
+    radial-gradient(circle at top left, #dbeafe 0, transparent 32%),
+    radial-gradient(circle at top right, #dcfce7 0, transparent 28%),
+    linear-gradient(180deg,#f8fafc,#eef2ff);
+}
+.hero {
+  padding:56px 22px 34px;
+  text-align:center;
+  color:white;
+  background:linear-gradient(135deg,#0f172a,#1e3a8a 45%,#0f766e);
+}
+.hero h1 {
+  margin:0 0 12px;
+  font-size:clamp(32px,5vw,58px);
+  letter-spacing:.04em;
+}
+.hero p {
+  margin:0 auto;
+  max-width:1000px;
+  font-size:19px;
+  line-height:1.8;
+  color:#e0f2fe;
+}
+.wrap {
+  max-width:1320px;
+  margin:auto;
+  padding:26px;
+}
+.notice {
+  margin:-16px auto 26px;
+  background:#fff7ed;
+  border:1px solid #fed7aa;
+  color:#7c2d12;
+  border-radius:18px;
+  padding:18px 20px;
+  box-shadow:0 8px 22px rgba(15,23,42,.06);
+}
+.stats {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  gap:14px;
+  margin:18px 0 28px;
+}
+.stat {
+  background:white;
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:18px;
+  text-align:center;
+  box-shadow:0 8px 22px rgba(15,23,42,.06);
+}
+.stat strong {
+  display:block;
+  font-size:30px;
+  color:#1e3a8a;
+}
+.stat span {
+  color:var(--muted);
+  font-weight:700;
+}
+.section-title {
+  margin:28px 0 14px;
+  font-size:28px;
+}
+.chapter-grid {
+  display:grid;
+  grid-template-columns:1fr;
+  gap:24px;
+}
+.chapter-card {
+  display:grid;
+  grid-template-columns:390px minmax(0,1fr);
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:24px;
+  overflow:hidden;
+  box-shadow:0 12px 32px rgba(15,23,42,.08);
+}
+.cover {
+  background:linear-gradient(135deg,var(--accent),#0f172a);
+  padding:16px;
+  display:flex;
+  align-items:center;
+}
+.cover img {
+  width:100%;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.55);
+  background:white;
+  box-shadow:0 10px 28px rgba(0,0,0,.22);
+}
+.content {
+  padding:26px;
+  border-left:8px solid var(--accent);
+}
+.meta {
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:center;
+}
+.badge {
+  display:inline-block;
+  background:color-mix(in srgb, var(--accent) 14%, white);
+  color:var(--accent);
+  border:1px solid color-mix(in srgb, var(--accent) 35%, white);
+  border-radius:999px;
+  padding:5px 12px;
+  font-weight:900;
+}
+.pages {
+  color:var(--muted);
+  font-weight:800;
+}
+h2 {
+  margin:14px 0 6px;
+  font-size:29px;
+  color:var(--accent);
+}
+.subtitle {
+  margin:0 0 10px;
+  color:#334155;
+  font-size:17px;
+  font-weight:800;
+}
+li {
+  margin:7px 0;
+  line-height:1.75;
+}
+.chips {
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin:16px 0;
+}
+.chips span {
+  padding:6px 10px;
+  background:#f8fafc;
+  border:1px solid var(--line);
+  border-radius:999px;
+  color:#334155;
+  font-size:13px;
+  font-weight:800;
+}
+.btn {
+  display:inline-block;
+  margin-top:4px;
+  padding:12px 18px;
+  border-radius:12px;
+  background:var(--accent);
+  color:white;
+  text-decoration:none;
+  font-weight:900;
+}
+.btn:hover {
+  filter:brightness(.92);
+}
+.quick {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:14px;
+  margin:18px 0 30px;
+}
+.quick a {
+  background:white;
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:14px 16px;
+  text-decoration:none;
+  color:#1e3a8a;
+  font-weight:900;
+  box-shadow:0 8px 22px rgba(15,23,42,.05);
+}
+footer {
+  text-align:center;
+  color:var(--muted);
+  padding:36px 18px 46px;
+}
+@media(max-width:900px) {
+  .chapter-card {
+    grid-template-columns:1fr;
+  }
+  .content {
+    border-left:0;
+    border-top:8px solid var(--accent);
+  }
+}
+</style>
+</head>
+<body>
+<div style="position:sticky;top:0;z-index:99999;background:#eff6ff;border-bottom:1px solid #bfdbfe;padding:10px 14px;font-family:Microsoft JhengHei,Arial,sans-serif;"><a href="../index.html" style="font-weight:900;color:#1e3a8a;text-decoration:none;">🏠 回期末考四大主題主頁</a></div>
+
+<header class="hero">
+  <h1>資料結構完整教學網站主頁</h1>
+  <p>整合 Chapter 4、Chapter 5A、Chapter 5B、Chapter 6A、Chapter 7。每個章節都包含投影片圖片、1000 字以上條列式說明、流程圖、C++ 可編輯範例、考試重點與老師常考題型分析。</p>
+</header>
+
+<main class="wrap">
+  <div class="notice">
+    <strong>使用方式：</strong>解壓縮後開啟本層的 <strong>index.html</strong>，再點選下方章節卡片，即可進入各章節主頁。所有連結皆為相對路徑，可直接放到 GitHub Pages、Replit 或一般網頁伺服器。
+  </div>
+
+  <section class="stats">
+    <div class="stat"><strong>5</strong><span>章節主頁</span></div>
+    <div class="stat"><strong>257</strong><span>投影片教學頁</span></div>
+    <div class="stat"><strong>257+</strong><span>投影片圖片</span></div>
+    <div class="stat"><strong>C++</strong><span>可編輯範例</span></div>
+  </section>
+
+  <h2 class="section-title">快速連結</h2>
+  <nav class="quick">
+    <a href="Chapter4_LinkedLists/index.html">Chapter 4 Linked Lists</a>
+    <a href="Chapter5A_TreesPartI/index.html">Chapter 5A Trees Part I</a>
+    <a href="Chapter5B_TreesPartII/index.html">Chapter 5B Trees Part II</a>
+    <a href="Chapter6A_GraphsPartI/index.html">Chapter 6A Graphs Part I</a>
+    <a href="Chapter7_Sorting/index.html">Chapter 7 Sorting</a>
+  </nav>
+
+  <h2 class="section-title">各章節概要與圖片導覽</h2>
+  <section class="chapter-grid">
+    
+    <article class="chapter-card" style="--accent:#0f766e">
+      <div class="cover">
+        <img src="Chapter4_LinkedLists/assets/slide_05.jpg" alt="Chapter 4 Linked Lists 章節圖片">
+      </div>
+      <div class="content">
+        <div class="meta">
+          <span class="badge">考試機率：★★★★★</span>
+          <span class="pages">67 頁完整教學</span>
+        </div>
+        <h2>Chapter 4 Linked Lists</h2>
+        <p class="subtitle">串列、指標、Iterator、Circular List、Doubly Linked List</p>
+        <ul><li>從 Array 與 Linked List 的差異開始，說明為什麼中間插入、刪除時，串列可以透過修改 pointer 避免大量搬移資料。</li><li>完整整理 singly linked list、chain class、friend class、template、iterator、InsertBack、Concatenate、Reverse 等操作。</li><li>包含 Circular List、Header Node、Linked Stack、Linked Queue、Available Space List、多項式加法、Sparse Matrix、Doubly Linked List。</li></ul>
+        <div class="chips"><span>Singly Linked List</span><span>Circular List</span><span>Iterator</span><span>Polynomial</span><span>Sparse Matrix</span><span>Doubly Linked List</span></div>
+        <a class="btn" href="Chapter4_LinkedLists/index.html">進入章節主頁</a>
+      </div>
+    </article>
+    
+    <article class="chapter-card" style="--accent:#2563eb">
+      <div class="cover">
+        <img src="Chapter5A_TreesPartI/assets/slide_05.jpg" alt="Chapter 5A Trees Part I 章節圖片">
+      </div>
+      <div class="content">
+        <div class="meta">
+          <span class="badge">考試機率：★★★★★</span>
+          <span class="pages">44 頁完整教學</span>
+        </div>
+        <h2>Chapter 5A Trees Part I</h2>
+        <p class="subtitle">Tree 基本術語、Binary Tree、Traversal、Threaded Binary Tree</p>
+        <ul><li>建立 Tree 的基本觀念，包含 root、leaf、degree、level、height、parent、child、sibling、ancestor 等名詞。</li><li>整理一般樹表示法、Left Child Right Sibling、Binary Tree、Full/Complete Tree、Array Representation。</li><li>完整說明 Inorder、Preorder、Postorder、Level-order、Expression Tree、Copy Tree、Equal Tree、Threaded Binary Tree。</li></ul>
+        <div class="chips"><span>Tree Terms</span><span>Binary Tree</span><span>Traversal</span><span>Expression Tree</span><span>Copy/Equal</span><span>Threaded Tree</span></div>
+        <a class="btn" href="Chapter5A_TreesPartI/index.html">進入章節主頁</a>
+      </div>
+    </article>
+    
+    <article class="chapter-card" style="--accent:#7c3aed">
+      <div class="cover">
+        <img src="Chapter5B_TreesPartII/assets/slide_15.jpg" alt="Chapter 5B Trees Part II 章節圖片">
+      </div>
+      <div class="content">
+        <div class="meta">
+          <span class="badge">考試機率：★★★★★</span>
+          <span class="pages">69 頁完整教學</span>
+        </div>
+        <h2>Chapter 5B Trees Part II</h2>
+        <p class="subtitle">Heap、BST、Forest、Selection Tree、Union-Find、B*-Tree</p>
+        <ul><li>以 Heap 實作 Priority Queue，完整說明 Push、Pop、Heapify、Build Heap、Heap Sort。</li><li>整理 Binary Search Tree 的 search、insert、delete、rank search 與 tree height 分析。</li><li>包含 Forest 轉 Binary Tree、Winner Tree、Loser Tree、Disjoint Sets、Weighted Union、Collapsing Find、B*-Tree Floorplanning。</li></ul>
+        <div class="chips"><span>Heap</span><span>Heap Sort</span><span>BST</span><span>Winner/Loser Tree</span><span>Union-Find</span><span>B*-Tree</span></div>
+        <a class="btn" href="Chapter5B_TreesPartII/index.html">進入章節主頁</a>
+      </div>
+    </article>
+    
+    <article class="chapter-card" style="--accent:#0369a1">
+      <div class="cover">
+        <img src="Chapter6A_GraphsPartI/assets/slide_31.jpg" alt="Chapter 6A Graphs Part I 章節圖片">
+      </div>
+      <div class="content">
+        <div class="meta">
+          <span class="badge">考試機率：★★★★★</span>
+          <span class="pages">52 頁完整教學</span>
+        </div>
+        <h2>Chapter 6A Graphs Part I</h2>
+        <p class="subtitle">Graph 定義、Representation、DFS/BFS、Biconnected、MST</p>
+        <ul><li>從 Königsberg Bridge Problem 說明 graph abstraction，理解 vertex 與 edge 如何表示物件與關係。</li><li>比較 adjacency matrix、adjacency list、inverse adjacency list、orthogonal list、adjacency multilist。</li><li>完整整理 DFS、BFS、spanning tree、connected components、articulation point、dfn/low、Kruskal、Prim、Sollin。</li></ul>
+        <div class="chips"><span>Graph Terms</span><span>Adjacency Matrix/List</span><span>DFS</span><span>BFS</span><span>Articulation Point</span><span>MST</span></div>
+        <a class="btn" href="Chapter6A_GraphsPartI/index.html">進入章節主頁</a>
+      </div>
+    </article>
+    
+    <article class="chapter-card" style="--accent:#ea580c">
+      <div class="cover">
+        <img src="Chapter7_Sorting/assets/slide_12.jpg" alt="Chapter 7 Sorting 章節圖片">
+      </div>
+      <div class="content">
+        <div class="meta">
+          <span class="badge">考試機率：★★★★☆</span>
+          <span class="pages">25 頁完整教學</span>
+        </div>
+        <h2>Chapter 7 Sorting</h2>
+        <p class="subtitle">Bubble、Selection、Insertion、Quick、Merge、Decision Tree</p>
+        <ul><li>說明 sorting problem、stable sorting、in-place sorting、internal/external sorting 與 comparison sort。</li><li>逐一整理 Bubble Sort、Selection Sort、Insertion Sort、Quick Sort、Merge Sort 的流程與 C++ 程式。</li><li>包含 Quick Sort 分析、Decision Tree 排序下界 Ω(n log n)、Iterative Merge Sort、Recursive Merge Sort。</li></ul>
+        <div class="chips"><span>Bubble</span><span>Selection</span><span>Insertion</span><span>Quick</span><span>Decision Tree</span><span>Merge Sort</span></div>
+        <a class="btn" href="Chapter7_Sorting/index.html">進入章節主頁</a>
+      </div>
+    </article>
+    
+  </section>
+</main>
+
+<footer>
+  Data Structures Course Website｜Main Portal
+</footer>
+</body>
+</html>
