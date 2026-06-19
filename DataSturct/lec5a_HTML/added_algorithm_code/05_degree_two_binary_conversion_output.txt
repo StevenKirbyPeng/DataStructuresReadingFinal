@@ -1,0 +1,1 @@
+Binary representation preorder: A B E C D

@@ -1,0 +1,5 @@
+Root = A
+Degree(A) = 3
+Total nodes = 5
+Leaves = 3
+Height = 3

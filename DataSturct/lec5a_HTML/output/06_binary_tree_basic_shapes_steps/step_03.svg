@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="700" viewBox="0 0 1120 700">
+<rect width="100%" height="100%" fill="white"/>
+<style>.title{font:700 28px Arial;fill:#111}.sub{font:17px Arial;fill:#333}.small{font:13px Arial;fill:#333}.num{font:18px Arial;text-anchor:middle;dominant-baseline:middle}.box{fill:#E8F4FF;stroke:#333;stroke-width:1.5}.hot{fill:#F8CECC;stroke:#C00000;stroke-width:2}.ok{fill:#D5E8D4;stroke:#2E7D32;stroke-width:2}.note{fill:#FFF2CC;stroke:#555;stroke-width:1.5}.null{fill:#eee;stroke:#777;stroke-width:1}.edge{stroke:#333;stroke-width:2;fill:none}.red{stroke:red;stroke-width:3;fill:none}.green{stroke:#00A651;stroke-width:3;fill:none}.dash{stroke:#777;stroke-width:2;fill:none;stroke-dasharray:6 5}.ptr{stroke:#333;stroke-width:2;fill:none;marker-end:url(#arrow)}.rptr{stroke:red;stroke-width:2.5;fill:none;marker-end:url(#arrowRed)}</style>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#333"/></marker><marker id="arrowRed" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="red"/></marker></defs>
+<text x="30" y="42" class="title">06 Binary Tree Shapes Step by Step</text>
+<rect x="30" y="55" width="180" height="42" rx="8" class="note"/>
+<text x="120" y="76" class="num">Step 3 / 9</text>
+<text x="230" y="83" class="sub" text-anchor="start">skewed tree step 2</text>
+<circle cx="120" cy="160" r="24" class="box"/>
+<text x="120" y="160" class="num">A</text>
+<circle cx="120" cy="250" r="24" class="hot"/>
+<text x="120" y="250" class="num">B</text>
+<line x1="120" y1="184" x2="120" y2="226" class="edge"/>
+<circle cx="120" cy="340" r="24" class="box"/>
+<text x="120" y="340" class="num">C</text>
+<line x1="120" y1="274" x2="120" y2="316" class="edge"/>
+<circle cx="120" cy="430" r="24" class="box"/>
+<text x="120" y="430" class="num">D</text>
+<line x1="120" y1="364" x2="120" y2="406" class="edge"/>
+<text x="70" y="520" class="sub" text-anchor="start">Skewed</text>
+<circle cx="540" cy="160" r="24" class="ok"/>
+<text x="540" y="160" class="num">1</text>
+<circle cx="440" cy="260" r="24" class="ok"/>
+<text x="440" y="260" class="num">2</text>
+<circle cx="640" cy="260" r="24" class="ok"/>
+<text x="640" y="260" class="num">3</text>
+<circle cx="390" cy="360" r="24" class="ok"/>
+<text x="390" y="360" class="num">4</text>
+<circle cx="490" cy="360" r="24" class="ok"/>
+<text x="490" y="360" class="num">5</text>
+<circle cx="590" cy="360" r="24" class="ok"/>
+<text x="590" y="360" class="num">6</text>
+<line x1="540" y1="184" x2="440" y2="236" class="edge"/>
+<line x1="540" y1="184" x2="640" y2="236" class="edge"/>
+<line x1="440" y1="284" x2="390" y2="336" class="edge"/>
+<line x1="440" y1="284" x2="490" y2="336" class="edge"/>
+<line x1="640" y1="284" x2="590" y2="336" class="edge"/>
+<text x="460" y="520" class="sub" text-anchor="start">Complete</text>
+<circle cx="910" cy="160" r="24" class="box"/>
+<text x="910" y="160" class="num">1</text>
+<circle cx="820" cy="260" r="24" class="box"/>
+<text x="820" y="260" class="num">2</text>
+<circle cx="1000" cy="260" r="24" class="box"/>
+<text x="1000" y="260" class="num">3</text>
+<circle cx="770" cy="360" r="24" class="box"/>
+<text x="770" y="360" class="num">4</text>
+<circle cx="870" cy="360" r="24" class="box"/>
+<text x="870" y="360" class="num">5</text>
+<circle cx="950" cy="360" r="24" class="box"/>
+<text x="950" y="360" class="num">6</text>
+<circle cx="1050" cy="360" r="24" class="box"/>
+<text x="1050" y="360" class="num">7</text>
+<line x1="910" y1="184" x2="820" y2="236" class="edge"/>
+<line x1="910" y1="184" x2="1000" y2="236" class="edge"/>
+<line x1="820" y1="284" x2="770" y2="336" class="edge"/>
+<line x1="820" y1="284" x2="870" y2="336" class="edge"/>
+<line x1="1000" y1="284" x2="950" y2="336" class="edge"/>
+<line x1="1000" y1="284" x2="1050" y2="336" class="edge"/>
+<text x="860" y="520" class="sub" text-anchor="start">Full</text>
+<rect x="70" y="600" width="900" height="50" rx="8" class="note"/>
+<text x="520" y="625" class="num">Skewed: one chain; Complete: filled left-to-right; Full: each internal node has exactly two children.</text>
+</svg>

@@ -1,0 +1,21 @@
+lec6a 程式碼演算法檢查修正報告
+
+檢查與修正內容：
+1. 確認每個下拉式主題都有 1 個 C++ 程式碼區塊。
+2. 原先部分程式偏向 SVG 產生器，已改成真正對應各主題的圖論演算法程式。
+3. 每份程式都有中文註解、輸出結果、變數說明、函式說明。
+4. 其他 HTML / CSS / JS / 圖片 / SVG 動畫 / 表格 / 主題說明均未改動。
+
+編譯檢查：
+✅ 01_konigsberg_bridge: 編譯成功，輸出 7 行
+✅ 02_graph_basic_samples: 編譯成功，輸出 10 行
+✅ 03_adjacency_matrix_list: 編譯成功，輸出 12 行
+✅ 04_weighted_network: 編譯成功，輸出 6 行
+✅ 05_dfs_traversal_tree: 編譯成功，輸出 2 行
+✅ 06_bfs_traversal_tree: 編譯成功，輸出 1 行
+✅ 07_connected_components: 編譯成功，輸出 4 行
+✅ 08_articulation_dfn_low: 編譯成功，輸出 7 行
+✅ 09_kruskal_mst: 編譯成功，輸出 6 行
+✅ 10_prim_mst: 編譯成功，輸出 7 行
+✅ 11_sollin_boruvka_mst: 編譯成功，輸出 6 行
+✅ 12_static_timing_graph: 編譯成功，輸出 9 行

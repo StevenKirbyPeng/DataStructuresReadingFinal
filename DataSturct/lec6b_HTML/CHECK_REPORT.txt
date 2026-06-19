@@ -1,0 +1,24 @@
+lec6b 動畫步驟分析與程式內容檢查報告
+
+檢查項目：
+1. 動畫步驟分析是否為各主題專屬內容。
+2. C++ 程式是否與主題相符。
+3. C++ 程式是否可用 g++ -std=c++17 編譯。
+4. 其他 HTML 架構、CSS、JavaScript、SVG、圖片、表格、按鈕與連結未做主動修改。
+
+檢查結果：
+- 9 個主題皆已補成專屬動畫步驟分析，不再使用泛用文字。
+- 9 個 C++ 程式皆已改成對應主題的完整範例。
+- 9 個 C++ 程式皆可編譯通過。
+- SVG 動畫檔案未修改。
+- HTML 控制播放功能未修改。
+
+Shortest Paths: compile PASS
+Dijkstra Algorithm: compile PASS
+Bellman-Ford Algorithm: compile PASS
+All-Pairs Shortest Paths: compile PASS
+Transitive Closure: compile PASS
+AOV Network: compile PASS
+Topological Sort: compile PASS
+AOE Critical Path: compile PASS
+Static Timing Analysis: compile PASS

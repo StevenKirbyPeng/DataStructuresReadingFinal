@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="700" viewBox="0 0 1120 700">
+<rect width="100%" height="100%" fill="white"/>
+<style>.title{font:700 28px Arial;fill:#111}.sub{font:17px Arial;fill:#333}.small{font:13px Arial;fill:#333}.num{font:18px Arial;text-anchor:middle;dominant-baseline:middle}.box{fill:#E8F4FF;stroke:#333;stroke-width:1.5}.hot{fill:#F8CECC;stroke:#C00000;stroke-width:2}.ok{fill:#D5E8D4;stroke:#2E7D32;stroke-width:2}.note{fill:#FFF2CC;stroke:#555;stroke-width:1.5}.null{fill:#eee;stroke:#777;stroke-width:1}.edge{stroke:#333;stroke-width:2;fill:none}.red{stroke:red;stroke-width:3;fill:none}.green{stroke:#00A651;stroke-width:3;fill:none}.dash{stroke:#777;stroke-width:2;fill:none;stroke-dasharray:6 5}.ptr{stroke:#333;stroke-width:2;fill:none;marker-end:url(#arrow)}.rptr{stroke:red;stroke-width:2.5;fill:none;marker-end:url(#arrowRed)}</style>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#333"/></marker><marker id="arrowRed" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="red"/></marker></defs>
+<text x="30" y="42" class="title">08 Array Representation Step by Step</text>
+<rect x="30" y="55" width="180" height="42" rx="8" class="note"/>
+<text x="120" y="76" class="num">Step 1 / 10</text>
+<text x="230" y="83" class="sub" text-anchor="start">reserve index 0 empty</text>
+<line x1="550" y1="154" x2="370" y2="236" class="edge"/>
+<line x1="550" y1="154" x2="730" y2="236" class="edge"/>
+<line x1="370" y1="284" x2="280" y2="366" class="edge"/>
+<line x1="370" y1="284" x2="460" y2="366" class="edge"/>
+<line x1="730" y1="284" x2="640" y2="366" class="edge"/>
+<line x1="730" y1="284" x2="820" y2="366" class="edge"/>
+<circle cx="550" cy="130" r="24" class="hot"/>
+<text x="550" y="130" class="num">A</text>
+<circle cx="370" cy="260" r="24" class="box"/>
+<text x="370" y="260" class="num">B</text>
+<circle cx="730" cy="260" r="24" class="box"/>
+<text x="730" y="260" class="num">C</text>
+<circle cx="280" cy="390" r="24" class="box"/>
+<text x="280" y="390" class="num">D</text>
+<circle cx="460" cy="390" r="24" class="box"/>
+<text x="460" y="390" class="num">E</text>
+<circle cx="640" cy="390" r="24" class="box"/>
+<text x="640" y="390" class="num">F</text>
+<circle cx="820" cy="390" r="24" class="box"/>
+<text x="820" y="390" class="num">G</text>
+<rect x="110" y="560" width="52" height="42" rx="8" class="hot"/>
+<text x="136" y="581" class="num">-</text>
+<text x="136" y="552" class="small" text-anchor="middle">[0]</text>
+<rect x="174" y="560" width="52" height="42" rx="8" class="box"/>
+<text x="200" y="581" class="num">A</text>
+<text x="200" y="552" class="small" text-anchor="middle">[1]</text>
+<rect x="238" y="560" width="52" height="42" rx="8" class="box"/>
+<text x="264" y="581" class="num">B</text>
+<text x="264" y="552" class="small" text-anchor="middle">[2]</text>
+<rect x="302" y="560" width="52" height="42" rx="8" class="box"/>
+<text x="328" y="581" class="num">C</text>
+<text x="328" y="552" class="small" text-anchor="middle">[3]</text>
+<rect x="366" y="560" width="52" height="42" rx="8" class="box"/>
+<text x="392" y="581" class="num">D</text>
+<text x="392" y="552" class="small" text-anchor="middle">[4]</text>
+<rect x="430" y="560" width="52" height="42" rx="8" class="box"/>
+<text x="456" y="581" class="num">E</text>
+<text x="456" y="552" class="small" text-anchor="middle">[5]</text>
+<rect x="494" y="560" width="52" height="42" rx="8" class="box"/>
+<text x="520" y="581" class="num">F</text>
+<text x="520" y="552" class="small" text-anchor="middle">[6]</text>
+<rect x="558" y="560" width="52" height="42" rx="8" class="box"/>
+<text x="584" y="581" class="num">G</text>
+<text x="584" y="552" class="small" text-anchor="middle">[7]</text>
+<rect x="622" y="560" width="52" height="42" rx="8" class="box"/>
+<text x="648" y="581" class="num">H</text>
+<text x="648" y="552" class="small" text-anchor="middle">[8]</text>
+<rect x="686" y="560" width="52" height="42" rx="8" class="box"/>
+<text x="712" y="581" class="num">I</text>
+<text x="712" y="552" class="small" text-anchor="middle">[9]</text>
+<rect x="760" y="560" width="300" height="55" rx="8" class="note"/>
+<text x="910" y="587" class="num">parent=i/2; left=2i; right=2i+1</text>
+</svg>
