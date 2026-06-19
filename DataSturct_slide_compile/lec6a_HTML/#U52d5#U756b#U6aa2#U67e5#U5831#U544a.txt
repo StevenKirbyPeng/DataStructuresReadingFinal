@@ -1,0 +1,20 @@
+lec6a new version 動畫檢查報告
+
+本版本已重新製作 12 個主題的 SVG step-by-step 動畫，避免原本多數動畫只換文字、圖形高度重複的問題。
+
+已修正重點：
+01 Königsberg：加入真實橋梁抽象、七條邊、多重邊、degree、Euler 判斷。
+02 Graph Basic Samples：區分 undirected / directed / tree / cycle / subgraph。
+03 Adjacency Matrix/List：同一張圖逐步填 matrix 與 adjacency list。
+04 Weighted Network：邊上加入 weight，顯示 path cost 比較。
+05 DFS：顯示 DFS tree edge、visited、recursion/stack、backtracking 概念。
+06 BFS：顯示 queue、level 0/1/2、逐層展開。
+07 Connected Components：分三個 components，逐一掃描未拜訪頂點。
+08 Articulation：顯示 DFS tree、dfn/low、cut vertex 判斷規則。
+09 Kruskal：顯示 sorted edge list、逐邊選取、cycle 檢查概念。
+10 Prim：顯示 MST set S、crossing edges、由一點向外擴張。
+11 Boruvka：顯示每個 component 同時選 cheapest outgoing edge。
+12 Static Timing：顯示 DAG、delay、arrival time、critical/longest path。
+
+結論：
+本版本動畫已與各主題一一對應，且每個主題的圖形結構、重點標示與逐格變化不同，不再使用同一套圖重複替換文字。

@@ -1,0 +1,20 @@
+lec6a 程式碼檢查修正報告
+1. 已檢查 index.html 與 auto_generated_index.html。
+2. 修正前問題：所有程式碼區塊被放在第一個下拉主題內，其他主題沒有程式碼。
+3. 修正後：12 個下拉式主題，每個主題各 1 個 C++ 程式碼區塊。
+4. 每個程式皆以該主題演算法或核心概念為主，不使用 SVG 產圖程式取代演算法。
+5. 每個程式均含中文註解、輸出結果、函式說明、變數說明。
+6. 其他主題說明、動畫說明、HTML/CSS/JS、SVG、圖片與原本資料未修改。
+
+- Königsberg Bridge Problem：編譯通過，已加入對應程式。
+- Graph Basic Samples：編譯通過，已加入對應程式。
+- Adjacency Matrix / List：編譯通過，已加入對應程式。
+- Weighted Network：編譯通過，已加入對應程式。
+- DFS Traversal Tree：編譯通過，已加入對應程式。
+- BFS Traversal Tree：編譯通過，已加入對應程式。
+- Connected Components：編譯通過，已加入對應程式。
+- Articulation DFN / LOW：編譯通過，已加入對應程式。
+- Kruskal MST：編譯通過，已加入對應程式。
+- Prim MST：編譯通過，已加入對應程式。
+- Sollin / Boruvka MST：編譯通過，已加入對應程式。
+- Static Timing Graph：編譯通過，已加入對應程式。

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="700" viewBox="0 0 1120 700">
+<rect width="100%" height="100%" fill="white"/>
+<style>.title{font:700 28px Arial;fill:#111}.sub{font:17px Arial;fill:#333}.small{font:13px Arial;fill:#333}.num{font:18px Arial;text-anchor:middle;dominant-baseline:middle}.box{fill:#E8F4FF;stroke:#333;stroke-width:1.5}.hot{fill:#F8CECC;stroke:#C00000;stroke-width:2}.ok{fill:#D5E8D4;stroke:#2E7D32;stroke-width:2}.note{fill:#FFF2CC;stroke:#555;stroke-width:1.5}.null{fill:#eee;stroke:#777;stroke-width:1}.edge{stroke:#333;stroke-width:2;fill:none}.red{stroke:red;stroke-width:3;fill:none}.green{stroke:#00A651;stroke-width:3;fill:none}.dash{stroke:#777;stroke-width:2;fill:none;stroke-dasharray:6 5}.ptr{stroke:#333;stroke-width:2;fill:none;marker-end:url(#arrow)}.rptr{stroke:red;stroke-width:2.5;fill:none;marker-end:url(#arrowRed)}</style>
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#333"/></marker><marker id="arrowRed" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="red"/></marker></defs>
+<text x="30" y="42" class="title">09 Linked Representation Step by Step</text>
+<rect x="30" y="55" width="180" height="42" rx="8" class="note"/>
+<text x="120" y="76" class="num">Step 2 / 8</text>
+<text x="230" y="83" class="sub" text-anchor="start">root pointer points to A</text>
+<line x1="550" y1="154" x2="370" y2="236" class="edge"/>
+<line x1="550" y1="154" x2="730" y2="236" class="edge"/>
+<line x1="370" y1="284" x2="280" y2="366" class="edge"/>
+<line x1="370" y1="284" x2="460" y2="366" class="edge"/>
+<line x1="730" y1="284" x2="640" y2="366" class="edge"/>
+<line x1="730" y1="284" x2="820" y2="366" class="edge"/>
+<circle cx="550" cy="130" r="24" class="hot"/>
+<text x="550" y="130" class="num">A</text>
+<circle cx="370" cy="260" r="24" class="box"/>
+<text x="370" y="260" class="num">B</text>
+<circle cx="730" cy="260" r="24" class="box"/>
+<text x="730" y="260" class="num">C</text>
+<circle cx="280" cy="390" r="24" class="box"/>
+<text x="280" y="390" class="num">D</text>
+<circle cx="460" cy="390" r="24" class="box"/>
+<text x="460" y="390" class="num">E</text>
+<circle cx="640" cy="390" r="24" class="box"/>
+<text x="640" y="390" class="num">F</text>
+<circle cx="820" cy="390" r="24" class="box"/>
+<text x="820" y="390" class="num">G</text>
+<rect x="760" y="105" width="120" height="48" rx="8" class="box"/>
+<text x="820" y="129" class="num">TreeNode</text>
+<rect x="760" y="153" width="60" height="38" class="null"/><rect x="820" y="153" width="60" height="38" class="null"/>
+<text x="790" y="172" class="small" text-anchor="middle">left</text><text x="850" y="172" class="small" text-anchor="middle">right</text>
+<rect x="720" y="370" width="330" height="80" rx="8" class="note"/>
+<text x="885" y="410" class="num">Linked representation stores only existing child pointers; NULL means no child.</text>
+</svg>
