@@ -1,20 +1,10 @@
-<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>lec4 Linked Lists SVG Animation</title><style>body{font-family:Arial,'Microsoft JhengHei',sans-serif;background:#f5f7fb;margin:0;color:#111}.wrap{max-width:1180px;margin:24px auto;padding:0 16px}h1{background:#123b63;color:white;padding:18px 22px;border-radius:14px}.card{background:white;border:1px solid #d7e0ea;border-radius:14px;margin:16px 0;box-shadow:0 2px 10px #0001}summary{font-size:22px;font-weight:700;padding:18px;cursor:pointer}.inner{padding:0 20px 22px}.desc{background:#eef6ff;border-left:6px solid #2b73bd;padding:14px 18px;border-radius:10px;margin:12px 0;line-height:1.8}.animdesc{background:#fff7d6;border-left:6px solid #d9a300;padding:14px 18px;border-radius:10px;margin:12px 0;line-height:1.8}.viewer{border:1px solid #d0dae6;border-radius:12px;background:#fff;padding:12px;margin-top:12px}.frame{width:100%;max-height:720px;object-fit:contain;border:1px solid #dde5ef;border-radius:10px;background:white}.controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:12px 0}.btn{border:0;background:#1f6feb;color:white;padding:8px 14px;border-radius:8px;cursor:pointer}.btn.secondary{background:#475569}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}.thumb{border:1px solid #d0dae6;border-radius:10px;background:white;padding:8px}.thumb img{width:100%;height:160px;object-fit:contain}
-/* Added: C++ editor buttons and copy buttons */
-.editor-links{display:flex;gap:14px;flex-wrap:wrap;margin:14px 0 20px 0}
-.editor-btn{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:#fff;background:linear-gradient(135deg,#2563eb,#1d4ed8);padding:10px 18px;border-radius:999px;font-weight:800;box-shadow:0 6px 14px rgba(37,99,235,.25);transition:.18s ease}
-.editor-btn:hover{transform:translateY(-2px);box-shadow:0 10px 20px rgba(37,99,235,.32)}
-.editor-btn:nth-child(2){background:linear-gradient(135deg,#16a34a,#15803d)}
-.editor-btn:nth-child(3){background:linear-gradient(135deg,#f97316,#ea580c)}
-.copy-code-btn{float:right;margin:0 0 8px 10px;border:0;border-radius:999px;background:linear-gradient(135deg,#0ea5e9,#2563eb);color:white;padding:8px 14px;font-weight:800;cursor:pointer;box-shadow:0 5px 12px rgba(37,99,235,.25);transition:.18s ease}
-.copy-code-btn:hover{transform:translateY(-1px);box-shadow:0 8px 18px rgba(37,99,235,.32)}
-.copy-code-btn.copied{background:linear-gradient(135deg,#22c55e,#16a34a)}
-</style></head><body><div class="wrap"><h1>lec4 Linked Lists - C++ 產生 SVG 動畫、PowerShell 產生 HTML</h1><div class="editor-links"><a class="editor-btn" href="https://www.onlinegdb.com/online_c++_compiler" target="_blank" rel="noopener">💻 OnlineGDB C++</a><a class="editor-btn" href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank" rel="noopener">🚀 Programiz C++</a><a class="editor-btn" href="https://cpp.sh/" target="_blank" rel="noopener">⚙️ cpp.sh</a></div><details class='card'><summary>Sequential vs. Linked Representation</summary><div class='inner'><div class='desc'><b>非常詳細主題說明：</b><br>比較連續記憶體與鏈結記憶體；示範插入造成搬移或改 pointer；理解 O(n) 與 O(1) 差異。本主題屬於 Linked Lists 章節，重點在理解資料不一定連續放在記憶體中，而是透過 link/pointer 將節點串起來。考試常要求畫出操作前後的指標變化、判斷時間複雜度，以及說明 first、last、header、front、rear、iterator 等角色。</div><div class='desc topic-extra'><b>主題背景：</b><br>本主題比較 sequential representation 與 linked representation。Sequential 以陣列連續儲存，能用 index 直接存取；linked 則用節點與 pointer 串接，資料在記憶體中不必連續。Linked Lists 章節的核心就是理解「位置關係」不一定來自實體相鄰，而可以由 link 欄位描述。
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>lec4 Linked Lists SVG Animation</title><style>body{font-family:Arial,'Microsoft JhengHei',sans-serif;background:#f5f7fb;margin:0;color:#111}.wrap{max-width:1180px;margin:24px auto;padding:0 16px}h1{background:#123b63;color:white;padding:18px 22px;border-radius:14px}.card{background:white;border:1px solid #d7e0ea;border-radius:14px;margin:16px 0;box-shadow:0 2px 10px #0001}summary{font-size:22px;font-weight:700;padding:18px;cursor:pointer}.inner{padding:0 20px 22px}.desc{background:#eef6ff;border-left:6px solid #2b73bd;padding:14px 18px;border-radius:10px;margin:12px 0;line-height:1.8}.animdesc{background:#fff7d6;border-left:6px solid #d9a300;padding:14px 18px;border-radius:10px;margin:12px 0;line-height:1.8}.viewer{border:1px solid #d0dae6;border-radius:12px;background:#fff;padding:12px;margin-top:12px}.frame{width:100%;max-height:720px;object-fit:contain;border:1px solid #dde5ef;border-radius:10px;background:white}.controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:12px 0}.btn{border:0;background:#1f6feb;color:white;padding:8px 14px;border-radius:8px;cursor:pointer}.btn.secondary{background:#475569}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}.thumb{border:1px solid #d0dae6;border-radius:10px;background:white;padding:8px}.thumb img{width:100%;height:160px;object-fit:contain}</style></head><body><div class="wrap"><h1>lec4 Linked Lists - C++ 產生 SVG 動畫、PowerShell 產生 HTML</h1><details class='card'><summary>Sequential vs. Linked Representation</summary><div class='inner'><div class='desc'><b>非常詳細主題說明：</b><br>比較連續記憶體與鏈結記憶體；示範插入造成搬移或改 pointer；理解 O(n) 與 O(1) 差異。本主題屬於 Linked Lists 章節，重點在理解資料不一定連續放在記憶體中，而是透過 link/pointer 將節點串起來。考試常要求畫出操作前後的指標變化、判斷時間複雜度，以及說明 first、last、header、front、rear、iterator 等角色。</div><div class='desc topic-extra'><b>主題背景：</b><br>本主題比較 sequential representation 與 linked representation。Sequential 以陣列連續儲存，能用 index 直接存取；linked 則用節點與 pointer 串接，資料在記憶體中不必連續。Linked Lists 章節的核心就是理解「位置關係」不一定來自實體相鄰，而可以由 link 欄位描述。
 <br><br><b>核心概念：</b><ul><li>sequential mapping</li><li>array index</li><li>linked representation</li><li>node</li><li>pointer/link</li><li>insert/delete cost</li></ul>
 <b>運作原理：</b><br>陣列插入中間元素時，後方資料通常要整批右移；刪除時也要左移補洞。Linked list 插入或刪除某節點後方資料時，只要找到前一個節點並更新 link，即可改變串列順序。
 <br><br><b>複雜度分析：</b><br>陣列隨機存取為 O(1)，但中間插入刪除常為 O(n)。Linked list 若已知前一節點，插入刪除為 O(1)，但搜尋第 i 個節點通常要 O(n)。
 <br><br><b>優缺點：</b><ul><li>優點：Linked representation 適合頻繁插入刪除，不必搬移大量資料。</li><li>缺點：Linked list 不能直接用 index 隨機存取，且每個節點需要額外 pointer 空間。</li></ul>
 <b>老師上課重點：</b><br>老師通常會用 EAT、FAT、HAT、GAT 這類圖示說明陣列搬移與 pointer 改接的差異。
-<br><br><b>期末考重點：</b><br>期末常考操作前後圖形、時間複雜度比較，以及為什麼 linked insert/delete 可以是 O(1)。</div><div class='animdesc'><b>非常詳細動畫說明：</b><br>動畫目的：比較陣列連續儲存與 linked list 非連續儲存的差異。Frame 1 先呈現原始資料列；Frame 2 強調 sequential representation 可用 index 找元素；Frame 3 顯示中間插入時陣列後方元素需要搬移；Frame 4 對照 linked representation 只要改變 link；Frame 5 到 Frame 8 逐步標示 first、node、link 與 NULL 的關係。觀察重點是「陣列靠位置」、「串列靠指標」。考試常要求畫出插入 GAT 或刪除 GAT 後，陣列搬移與 link 改接的差異。</div><div class='desc code-extra'><b>C++ 程式範例：</b><br><button class="copy-code-btn" onclick="copyCodeBlock('cpp_code_1', this)">📋 複製程式碼</button><pre id="cpp_code_1" style="background:#102030;color:#f8fafc;padding:14px;border-radius:10px;overflow:auto;line-height:1.55">#include &lt;iostream&gt;
+<br><br><b>期末考重點：</b><br>期末常考操作前後圖形、時間複雜度比較，以及為什麼 linked insert/delete 可以是 O(1)。</div><div class='animdesc'><b>非常詳細動畫說明：</b><br>動畫目的：比較陣列連續儲存與 linked list 非連續儲存的差異。Frame 1 先呈現原始資料列；Frame 2 強調 sequential representation 可用 index 找元素；Frame 3 顯示中間插入時陣列後方元素需要搬移；Frame 4 對照 linked representation 只要改變 link；Frame 5 到 Frame 8 逐步標示 first、node、link 與 NULL 的關係。觀察重點是「陣列靠位置」、「串列靠指標」。考試常要求畫出插入 GAT 或刪除 GAT 後，陣列搬移與 link 改接的差異。</div><div class='desc code-extra'><b>C++ 程式範例：</b><br><pre style="background:#102030;color:#f8fafc;padding:14px;border-radius:10px;overflow:auto;line-height:1.55">#include &lt;iostream&gt;
 #include &lt;vector&gt;
 using namespace std;
 
@@ -46,7 +36,7 @@ Linked 插入後: EAT -&gt; FAT -&gt; GAT -&gt; HAT -&gt; NULL</pre>
 <br><br><b>複雜度分析：</b><br>走訪整條 chain 為 O(n)。若已知插入位置前一節點，插入為 O(1)；若要先搜尋位置，總時間為 O(n)。空間為 O(n)。
 <br><br><b>優缺點：</b><ul><li>優點：結構簡單，適合理解 linked list 的所有 pointer 操作。</li><li>缺點：只能單方向前進，無法直接回到前一節點。</li></ul>
 <b>老師上課重點：</b><br>老師重點通常在 first、link、NULL 的角色，以及每次 current 移動後指到哪裡。
-<br><br><b>期末考重點：</b><br>常考畫出節點與 link、trace traversal，以及刪除節點時 link 更新順序。</div><div class='animdesc'><b>非常詳細動畫說明：</b><br>動畫目的：說明單向 linked chain 的節點如何由 data 與 link 組成。Frame 1 建立 head/first；Frame 2 加入第一個節點；Frame 3 顯示 link 指向下一節點；Frame 4 到 Frame 6 逐步形成 EAT → FAT → HAT → NULL；Frame 7 強調最後節點 link 為 NULL；Frame 8 完成整條 chain。觀察重點是每個節點只有一個向後 link，因此只能由 first 往後走，不能直接往回。</div><div class='desc code-extra'><b>C++ 程式範例：</b><br><button class="copy-code-btn" onclick="copyCodeBlock('cpp_code_2', this)">📋 複製程式碼</button><pre id="cpp_code_2" style="background:#102030;color:#f8fafc;padding:14px;border-radius:10px;overflow:auto;line-height:1.55">#include &lt;iostream&gt;
+<br><br><b>期末考重點：</b><br>常考畫出節點與 link、trace traversal，以及刪除節點時 link 更新順序。</div><div class='animdesc'><b>非常詳細動畫說明：</b><br>動畫目的：說明單向 linked chain 的節點如何由 data 與 link 組成。Frame 1 建立 head/first；Frame 2 加入第一個節點；Frame 3 顯示 link 指向下一節點；Frame 4 到 Frame 6 逐步形成 EAT → FAT → HAT → NULL；Frame 7 強調最後節點 link 為 NULL；Frame 8 完成整條 chain。觀察重點是每個節點只有一個向後 link，因此只能由 first 往後走，不能直接往回。</div><div class='desc code-extra'><b>C++ 程式範例：</b><br><pre style="background:#102030;color:#f8fafc;padding:14px;border-radius:10px;overflow:auto;line-height:1.55">#include &lt;iostream&gt;
 using namespace std;
 
 struct Node {
@@ -81,7 +71,7 @@ int main() {
 <br><br><b>複雜度分析：</b><br>Node 建立為 O(1)，串列整體空間為節點數 O(n)。封裝不改變漸近複雜度，但會提高程式安全性。
 <br><br><b>優缺點：</b><ul><li>優點：類別設計清楚，能把資料與指標封裝成可重用結構。</li><li>缺點：若權限或建構子設計不好，容易造成外部無法操作或過度暴露細節。</li></ul>
 <b>老師上課重點：</b><br>老師可能會問 data 與 link 是 Node 的欄位，而 first 是 List 的欄位。
-<br><br><b>期末考重點：</b><br>常考 class 宣告、private/public、Node* link 的意義，以及 has-a 和 is-a 差異。</div><div class='animdesc'><b>非常詳細動畫說明：</b><br>動畫目的：說明 C++ node class 的欄位設計與 has-a 關係。Frame 1 顯示 Node 物件；Frame 2 將 data 欄位標出；Frame 3 將 link pointer 標出；Frame 4 說明 node has data、has link；Frame 5 到 Frame 8 展示多個 Node 物件如何透過 link 形成結構。重點是理解 class 不是只有資料，也包含指向其他物件的關係。</div><div class='desc code-extra'><b>C++ 程式範例：</b><br><button class="copy-code-btn" onclick="copyCodeBlock('cpp_code_3', this)">📋 複製程式碼</button><pre id="cpp_code_3" style="background:#102030;color:#f8fafc;padding:14px;border-radius:10px;overflow:auto;line-height:1.55">#include &lt;iostream&gt;
+<br><br><b>期末考重點：</b><br>常考 class 宣告、private/public、Node* link 的意義，以及 has-a 和 is-a 差異。</div><div class='animdesc'><b>非常詳細動畫說明：</b><br>動畫目的：說明 C++ node class 的欄位設計與 has-a 關係。Frame 1 顯示 Node 物件；Frame 2 將 data 欄位標出；Frame 3 將 link pointer 標出；Frame 4 說明 node has data、has link；Frame 5 到 Frame 8 展示多個 Node 物件如何透過 link 形成結構。重點是理解 class 不是只有資料，也包含指向其他物件的關係。</div><div class='desc code-extra'><b>C++ 程式範例：</b><br><pre style="background:#102030;color:#f8fafc;padding:14px;border-radius:10px;overflow:auto;line-height:1.55">#include &lt;iostream&gt;
 using namespace std;
 
 class Node {
@@ -127,7 +117,7 @@ int main() {
 <br><br><b>複雜度分析：</b><br>單次 pointer 指派為 O(1)，但找到目標位置通常需要 O(n)。
 <br><br><b>優缺點：</b><ul><li>優點：更新 pointer 可以快速完成結構調整，不需要搬移資料。</li><li>缺點：容易出現 lost node、dangling pointer、memory leak 等錯誤。</li></ul>
 <b>老師上課重點：</b><br>老師常要求一步一步畫出 pointer 改變，而不是只寫最後結果。
-<br><br><b>期末考重點：</b><br>常考插入與刪除的正確語句順序，尤其是 temp 指標何時需要保存。</div><div class='animdesc'><b>非常詳細動畫說明：</b><br>動畫目的：示範 linked list 操作最容易出錯的 pointer 改接。Frame 1 顯示原始 prev → current → next；Frame 2 建立 newNode；Frame 3 先令 newNode-&gt;link 指向 current 或 next；Frame 4 再令 prev-&gt;link 指向 newNode；Frame 5 到 Frame 8 檢查是否有節點遺失。重點是 pointer 更新順序，若先覆蓋 prev-&gt;link，可能失去後續節點位址。</div><div class='desc code-extra'><b>C++ 程式範例：</b><br><button class="copy-code-btn" onclick="copyCodeBlock('cpp_code_4', this)">📋 複製程式碼</button><pre id="cpp_code_4" style="background:#102030;color:#f8fafc;padding:14px;border-radius:10px;overflow:auto;line-height:1.55">#include &lt;iostream&gt;
+<br><br><b>期末考重點：</b><br>常考插入與刪除的正確語句順序，尤其是 temp 指標何時需要保存。</div><div class='animdesc'><b>非常詳細動畫說明：</b><br>動畫目的：示範 linked list 操作最容易出錯的 pointer 改接。Frame 1 顯示原始 prev → current → next；Frame 2 建立 newNode；Frame 3 先令 newNode-&gt;link 指向 current 或 next；Frame 4 再令 prev-&gt;link 指向 newNode；Frame 5 到 Frame 8 檢查是否有節點遺失。重點是 pointer 更新順序，若先覆蓋 prev-&gt;link，可能失去後續節點位址。</div><div class='desc code-extra'><b>C++ 程式範例：</b><br><pre style="background:#102030;color:#f8fafc;padding:14px;border-radius:10px;overflow:auto;line-height:1.55">#include &lt;iostream&gt;
 using namespace std;
 
 struct Node {
@@ -163,7 +153,7 @@ int main() {
 <br><br><b>複雜度分析：</b><br>若已知位置，插入刪除為 O(1)；若必須搜尋值或位置，為 O(n)。空間依節點數為 O(n)。
 <br><br><b>優缺點：</b><ul><li>優點：能動態增減資料量，不需事先固定容量。</li><li>缺點：必須手動處理記憶體與指標，容易出現錯誤。</li></ul>
 <b>老師上課重點：</b><br>老師會強調插入順序不能反，刪除前要保留欲刪節點位址。
-<br><br><b>期末考重點：</b><br>常考給一段程式碼判斷刪除後串列結果，或補上缺少的 pointer 語句。</div><div class='animdesc'><b>非常詳細動畫說明：</b><br>動畫目的：完整示範建立、插入與刪除 chain。Frame 1 是空串列；Frame 2 建立第一個節點；Frame 3 到 Frame 4 追加節點；Frame 5 插入新節點；Frame 6 顯示刪除前需找到前一節點；Frame 7 改接 link 跳過刪除節點；Frame 8 完成並釋放或忽略被刪節點。考試要能畫出每一步指標變化。</div><div class='desc code-extra'><b>C++ 程式範例：</b><br><button class="copy-code-btn" onclick="copyCodeBlock('cpp_code_5', this)">📋 複製程式碼</button><pre id="cpp_code_5" style="background:#102030;color:#f8fafc;padding:14px;border-radius:10px;overflow:auto;line-height:1.55">#include &lt;iostream&gt;
+<br><br><b>期末考重點：</b><br>常考給一段程式碼判斷刪除後串列結果，或補上缺少的 pointer 語句。</div><div class='animdesc'><b>非常詳細動畫說明：</b><br>動畫目的：完整示範建立、插入與刪除 chain。Frame 1 是空串列；Frame 2 建立第一個節點；Frame 3 到 Frame 4 追加節點；Frame 5 插入新節點；Frame 6 顯示刪除前需找到前一節點；Frame 7 改接 link 跳過刪除節點；Frame 8 完成並釋放或忽略被刪節點。考試要能畫出每一步指標變化。</div><div class='desc code-extra'><b>C++ 程式範例：</b><br><pre style="background:#102030;color:#f8fafc;padding:14px;border-radius:10px;overflow:auto;line-height:1.55">#include &lt;iostream&gt;
 using namespace std;
 
 struct Node {
@@ -199,7 +189,7 @@ int main() {
 <br><br><b>複雜度分析：</b><br>iterator 前進一步為 O(1)，走訪全部為 O(n)。Template 不改變時間複雜度，只增加泛型能力。
 <br><br><b>優缺點：</b><ul><li>優點：程式可重用，串列不再限制單一資料型態。</li><li>缺點：語法較複雜，iterator 若指到 NULL 再解參考會錯誤。</li></ul>
 <b>老師上課重點：</b><br>老師常把 template 和 iterator 與 STL 概念連在一起。
-<br><br><b>期末考重點：</b><br>常考 iterator 如何移動、*it 代表什麼，以及 template 參數 T 的意義。</div><div class='animdesc'><b>非常詳細動畫說明：</b><br>動畫目的：說明 template chain 與 iterator 如何把節點走訪泛型化。Frame 1 顯示 Chain&lt;T&gt;；Frame 2 顯示 first；Frame 3 顯示 iterator 指向第一個節點；Frame 4 到 Frame 7 iterator 逐步移動到下一個節點；Frame 8 到達 NULL 停止。重點是 iterator 封裝 pointer 移動，讓使用者像走訪容器一樣讀取 linked list。</div><div class='desc code-extra'><b>C++ 程式範例：</b><br><button class="copy-code-btn" onclick="copyCodeBlock('cpp_code_6', this)">📋 複製程式碼</button><pre id="cpp_code_6" style="background:#102030;color:#f8fafc;padding:14px;border-radius:10px;overflow:auto;line-height:1.55">#include &lt;iostream&gt;
+<br><br><b>期末考重點：</b><br>常考 iterator 如何移動、*it 代表什麼，以及 template 參數 T 的意義。</div><div class='animdesc'><b>非常詳細動畫說明：</b><br>動畫目的：說明 template chain 與 iterator 如何把節點走訪泛型化。Frame 1 顯示 Chain&lt;T&gt;；Frame 2 顯示 first；Frame 3 顯示 iterator 指向第一個節點；Frame 4 到 Frame 7 iterator 逐步移動到下一個節點；Frame 8 到達 NULL 停止。重點是 iterator 封裝 pointer 移動，讓使用者像走訪容器一樣讀取 linked list。</div><div class='desc code-extra'><b>C++ 程式範例：</b><br><pre style="background:#102030;color:#f8fafc;padding:14px;border-radius:10px;overflow:auto;line-height:1.55">#include &lt;iostream&gt;
 using namespace std;
 
 template &lt;class T&gt;
@@ -232,7 +222,7 @@ int main() {
 <br><br><b>複雜度分析：</b><br>InsertBack 有 last 為 O(1)，沒有 last 需 O(n)。Concatenate 若已知尾端為 O(1)，否則 O(n)。Reverse 為 O(n)，空間 O(1)。
 <br><br><b>優缺點：</b><ul><li>優點：能有效操作整條串列，特別是 reverse 可原地完成。</li><li>缺點：反轉時若沒有先保存 next，容易斷掉尚未處理的節點。</li></ul>
 <b>老師上課重點：</b><br>老師常要求畫出 reverse 每一步 prev、current、next 的位置。
-<br><br><b>期末考重點：</b><br>常考反轉後的 link 方向、concatenate 後 first/last 應如何更新。</div><div class='animdesc'><b>非常詳細動畫說明：</b><br>動畫目的：把三個常見操作放在同一個 linked list 情境中。Frame 1 顯示原串列；Frame 2 InsertBack 找到尾端；Frame 3 將最後節點 link 指向新節點；Frame 4 Concatenate 將第一條串列尾端接到第二條串列 first；Frame 5 到 Frame 8 Reverse 逐步把 link 方向反轉。觀察重點是 last、first、prev、cur、next 的角色。</div><div class='desc code-extra'><b>C++ 程式範例：</b><br><button class="copy-code-btn" onclick="copyCodeBlock('cpp_code_7', this)">📋 複製程式碼</button><pre id="cpp_code_7" style="background:#102030;color:#f8fafc;padding:14px;border-radius:10px;overflow:auto;line-height:1.55">#include &lt;iostream&gt;
+<br><br><b>期末考重點：</b><br>常考反轉後的 link 方向、concatenate 後 first/last 應如何更新。</div><div class='animdesc'><b>非常詳細動畫說明：</b><br>動畫目的：把三個常見操作放在同一個 linked list 情境中。Frame 1 顯示原串列；Frame 2 InsertBack 找到尾端；Frame 3 將最後節點 link 指向新節點；Frame 4 Concatenate 將第一條串列尾端接到第二條串列 first；Frame 5 到 Frame 8 Reverse 逐步把 link 方向反轉。觀察重點是 last、first、prev、cur、next 的角色。</div><div class='desc code-extra'><b>C++ 程式範例：</b><br><pre style="background:#102030;color:#f8fafc;padding:14px;border-radius:10px;overflow:auto;line-height:1.55">#include &lt;iostream&gt;
 using namespace std;
 
 struct Node {
@@ -275,7 +265,7 @@ int main() {
 <br><br><b>複雜度分析：</b><br>已知 last 時，取得 first 為 O(1)，尾端插入可 O(1)。完整走訪仍為 O(n)。
 <br><br><b>優缺點：</b><ul><li>優點：從 last 可快速找到 first，適合輪流處理或環狀資料。</li><li>缺點：走訪停止條件較難，若寫錯可能無限迴圈。</li></ul>
 <b>老師上課重點：</b><br>老師常問為什麼 circular list 可以只用 last 表示整條串列。
-<br><br><b>期末考重點：</b><br>常考 last-&gt;link 指向誰，以及插入第一個節點與一般節點時的差異。</div><div class='animdesc'><b>非常詳細動畫說明：</b><br>動畫目的：說明 circular list 使用 last pointer 的好處。Frame 1 顯示線性串列尾端指向 NULL；Frame 2 將尾端 link 改成指回 first；Frame 3 標示 last；Frame 4 顯示 first 可由 last-&gt;link 取得；Frame 5 到 Frame 8 展示插入尾端與走訪一圈後回到起點。重點是 circular list 沒有 NULL 結尾，停止條件要改成是否回到起始節點。</div><div class='desc code-extra'><b>C++ 程式範例：</b><br><button class="copy-code-btn" onclick="copyCodeBlock('cpp_code_8', this)">📋 複製程式碼</button><pre id="cpp_code_8" style="background:#102030;color:#f8fafc;padding:14px;border-radius:10px;overflow:auto;line-height:1.55">#include &lt;iostream&gt;
+<br><br><b>期末考重點：</b><br>常考 last-&gt;link 指向誰，以及插入第一個節點與一般節點時的差異。</div><div class='animdesc'><b>非常詳細動畫說明：</b><br>動畫目的：說明 circular list 使用 last pointer 的好處。Frame 1 顯示線性串列尾端指向 NULL；Frame 2 將尾端 link 改成指回 first；Frame 3 標示 last；Frame 4 顯示 first 可由 last-&gt;link 取得；Frame 5 到 Frame 8 展示插入尾端與走訪一圈後回到起點。重點是 circular list 沒有 NULL 結尾，停止條件要改成是否回到起始節點。</div><div class='desc code-extra'><b>C++ 程式範例：</b><br><pre style="background:#102030;color:#f8fafc;padding:14px;border-radius:10px;overflow:auto;line-height:1.55">#include &lt;iostream&gt;
 using namespace std;
 
 struct Node {
@@ -318,7 +308,7 @@ int main() {
 <br><br><b>複雜度分析：</b><br>走訪 O(n)，已知位置插入刪除 O(1)。Header node 需要額外 O(1) 空間。
 <br><br><b>優缺點：</b><ul><li>優點：簡化空串列、刪除第一節點等特殊情況。</li><li>缺點：需要辨識 header 不是真正資料，輸出時不可把 header 當元素。</li></ul>
 <b>老師上課重點：</b><br>老師常強調 empty list 時 header-&gt;link == header。
-<br><br><b>期末考重點：</b><br>常考空 circular header list 的圖形，以及走訪何時停止。</div><div class='animdesc'><b>非常詳細動畫說明：</b><br>動畫目的：說明 header node 如何簡化 circular list 的邊界情況。Frame 1 建立 header；Frame 2 空串列時 header 指向自己；Frame 3 插入第一個資料節點；Frame 4 到 Frame 6 插入更多節點；Frame 7 顯示最後節點指回 header；Frame 8 完成 circular header list。重點是 header 不存真正資料，而是讓空串列、插入、刪除更一致。</div><div class='desc code-extra'><b>C++ 程式範例：</b><br><button class="copy-code-btn" onclick="copyCodeBlock('cpp_code_9', this)">📋 複製程式碼</button><pre id="cpp_code_9" style="background:#102030;color:#f8fafc;padding:14px;border-radius:10px;overflow:auto;line-height:1.55">#include &lt;iostream&gt;
+<br><br><b>期末考重點：</b><br>常考空 circular header list 的圖形，以及走訪何時停止。</div><div class='animdesc'><b>非常詳細動畫說明：</b><br>動畫目的：說明 header node 如何簡化 circular list 的邊界情況。Frame 1 建立 header；Frame 2 空串列時 header 指向自己；Frame 3 插入第一個資料節點；Frame 4 到 Frame 6 插入更多節點；Frame 7 顯示最後節點指回 header；Frame 8 完成 circular header list。重點是 header 不存真正資料，而是讓空串列、插入、刪除更一致。</div><div class='desc code-extra'><b>C++ 程式範例：</b><br><pre style="background:#102030;color:#f8fafc;padding:14px;border-radius:10px;overflow:auto;line-height:1.55">#include &lt;iostream&gt;
 using namespace std;
 
 struct Node {
@@ -351,7 +341,7 @@ int main() {
 <br><br><b>複雜度分析：</b><br>若維護 top/front/rear，push/pop/enqueue/dequeue 都可 O(1)。空間為 O(n)。
 <br><br><b>優缺點：</b><ul><li>優點：容量可動態成長，不需固定陣列大小。</li><li>缺點：每個元素有額外 pointer 成本，且要小心空結構操作。</li></ul>
 <b>老師上課重點：</b><br>老師常比較 stack 與 queue 操作端點不同。
-<br><br><b>期末考重點：</b><br>常考操作序列後 top/front/rear 指向誰，以及空佇列刪除最後一個元素後如何更新。</div><div class='animdesc'><b>非常詳細動畫說明：</b><br>動畫目的：比較 linked stack 與 linked queue 的操作端點。Frame 1 顯示 stack top；Frame 2 push 新節點到 top；Frame 3 pop 移除 top；Frame 4 顯示 queue front/rear；Frame 5 enqueue 接到 rear；Frame 6 dequeue 從 front 移除；Frame 7 到 Frame 8 比較 LIFO 與 FIFO。考試常考 top、front、rear 更新是否正確。</div><div class='desc code-extra'><b>C++ 程式範例：</b><br><button class="copy-code-btn" onclick="copyCodeBlock('cpp_code_10', this)">📋 複製程式碼</button><pre id="cpp_code_10" style="background:#102030;color:#f8fafc;padding:14px;border-radius:10px;overflow:auto;line-height:1.55">#include &lt;iostream&gt;
+<br><br><b>期末考重點：</b><br>常考操作序列後 top/front/rear 指向誰，以及空佇列刪除最後一個元素後如何更新。</div><div class='animdesc'><b>非常詳細動畫說明：</b><br>動畫目的：比較 linked stack 與 linked queue 的操作端點。Frame 1 顯示 stack top；Frame 2 push 新節點到 top；Frame 3 pop 移除 top；Frame 4 顯示 queue front/rear；Frame 5 enqueue 接到 rear；Frame 6 dequeue 從 front 移除；Frame 7 到 Frame 8 比較 LIFO 與 FIFO。考試常考 top、front、rear 更新是否正確。</div><div class='desc code-extra'><b>C++ 程式範例：</b><br><pre style="background:#102030;color:#f8fafc;padding:14px;border-radius:10px;overflow:auto;line-height:1.55">#include &lt;iostream&gt;
 #include &lt;queue&gt;
 #include &lt;stack&gt;
 using namespace std;
@@ -382,7 +372,7 @@ Queue pop: 10</pre>
 <br><br><b>複雜度分析：</b><br>從 free list 取出或放回一個節點通常為 O(1)。整體能降低頻繁配置釋放的成本。
 <br><br><b>優缺點：</b><ul><li>優點：提高節點重用效率，適合大量動態節點操作。</li><li>缺點：需要額外管理 free list；若管理錯誤可能造成重複使用或記憶體錯亂。</li></ul>
 <b>老師上課重點：</b><br>老師可能會把 available list 與多項式、稀疏矩陣節點回收連結。
-<br><br><b>期末考重點：</b><br>常考刪除節點後是否進入 available list，以及下一次配置從哪裡取得節點。</div><div class='animdesc'><b>非常詳細動畫說明：</b><br>動畫目的：說明可用空間串列如何管理被釋放的節點。Frame 1 顯示使用中的 linked list；Frame 2 刪除一個節點；Frame 3 被刪節點接入 avail list；Frame 4 需要新節點時先從 avail 取出；Frame 5 到 Frame 8 展示配置與回收循環。重點是節點不一定馬上消失，而可能被回收到可再利用的 free list。</div><div class='desc code-extra'><b>C++ 程式範例：</b><br><button class="copy-code-btn" onclick="copyCodeBlock('cpp_code_11', this)">📋 複製程式碼</button><pre id="cpp_code_11" style="background:#102030;color:#f8fafc;padding:14px;border-radius:10px;overflow:auto;line-height:1.55">#include &lt;iostream&gt;
+<br><br><b>期末考重點：</b><br>常考刪除節點後是否進入 available list，以及下一次配置從哪裡取得節點。</div><div class='animdesc'><b>非常詳細動畫說明：</b><br>動畫目的：說明可用空間串列如何管理被釋放的節點。Frame 1 顯示使用中的 linked list；Frame 2 刪除一個節點；Frame 3 被刪節點接入 avail list；Frame 4 需要新節點時先從 avail 取出；Frame 5 到 Frame 8 展示配置與回收循環。重點是節點不一定馬上消失，而可能被回收到可再利用的 free list。</div><div class='desc code-extra'><b>C++ 程式範例：</b><br><pre style="background:#102030;color:#f8fafc;padding:14px;border-radius:10px;overflow:auto;line-height:1.55">#include &lt;iostream&gt;
 using namespace std;
 
 struct Node {
@@ -425,7 +415,7 @@ int main() {
 <br><br><b>複雜度分析：</b><br>走訪 m 項多項式為 O(m)。插入一項若要維持排序，可能需要 O(m)。空間與非零項數成正比。
 <br><br><b>優缺點：</b><ul><li>優點：適合稀疏多項式，只儲存非零項。</li><li>缺點：若項數很多且需要隨機存取特定指數，linked list 搜尋較慢。</li></ul>
 <b>老師上課重點：</b><br>老師常強調 coef 與 exp 是一個 term 的兩個重要欄位。
-<br><br><b>期末考重點：</b><br>常考把多項式畫成 chain，或判斷節點排序是否正確。</div><div class='animdesc'><b>非常詳細動畫說明：</b><br>動畫目的：說明 polynomial 可用 chain 儲存非零項。Frame 1 顯示多項式；Frame 2 將每一項拆成 coef 與 exp；Frame 3 建立第一個 term node；Frame 4 到 Frame 7 按 exponent 串接多個 term；Frame 8 完成 polynomial chain。重點是只存非零項，節省 sparse polynomial 的空間。</div><div class='desc code-extra'><b>C++ 程式範例：</b><br><button class="copy-code-btn" onclick="copyCodeBlock('cpp_code_12', this)">📋 複製程式碼</button><pre id="cpp_code_12" style="background:#102030;color:#f8fafc;padding:14px;border-radius:10px;overflow:auto;line-height:1.55">#include &lt;iostream&gt;
+<br><br><b>期末考重點：</b><br>常考把多項式畫成 chain，或判斷節點排序是否正確。</div><div class='animdesc'><b>非常詳細動畫說明：</b><br>動畫目的：說明 polynomial 可用 chain 儲存非零項。Frame 1 顯示多項式；Frame 2 將每一項拆成 coef 與 exp；Frame 3 建立第一個 term node；Frame 4 到 Frame 7 按 exponent 串接多個 term；Frame 8 完成 polynomial chain。重點是只存非零項，節省 sparse polynomial 的空間。</div><div class='desc code-extra'><b>C++ 程式範例：</b><br><pre style="background:#102030;color:#f8fafc;padding:14px;border-radius:10px;overflow:auto;line-height:1.55">#include &lt;iostream&gt;
 using namespace std;
 
 struct Term {
@@ -460,7 +450,7 @@ int main() {
 <br><br><b>複雜度分析：</b><br>若 A 有 m 項、B 有 n 項，時間 O(m+n)，結果空間最多 O(m+n)。
 <br><br><b>優缺點：</b><ul><li>優點：效率高，能利用已排序 exponent 線性完成。</li><li>缺點：若原多項式未排序，必須先排序或插入時維持排序。</li></ul>
 <b>老師上課重點：</b><br>老師常用 polynomial addition 測試 merge 思維與 linked list 建立新節點。
-<br><br><b>期末考重點：</b><br>常考同次方合併、係數為 0 時刪除，以及最後結果 chain。</div><div class='animdesc'><b>非常詳細動畫說明：</b><br>動畫目的：示範兩個 polynomial chain 如何相加。Frame 1 顯示 A 與 B 兩條多項式；Frame 2 使用兩個 pointer 指向目前項；Frame 3 比較 exponent；Frame 4 exponent 相同則係數相加；Frame 5 exponent 較大者先輸出；Frame 6 到 Frame 7 移動 pointer；Frame 8 得到結果多項式。重點是類似 merge 的雙指標流程。</div><div class='desc code-extra'><b>C++ 程式範例：</b><br><button class="copy-code-btn" onclick="copyCodeBlock('cpp_code_13', this)">📋 複製程式碼</button><pre id="cpp_code_13" style="background:#102030;color:#f8fafc;padding:14px;border-radius:10px;overflow:auto;line-height:1.55">#include &lt;iostream&gt;
+<br><br><b>期末考重點：</b><br>常考同次方合併、係數為 0 時刪除，以及最後結果 chain。</div><div class='animdesc'><b>非常詳細動畫說明：</b><br>動畫目的：示範兩個 polynomial chain 如何相加。Frame 1 顯示 A 與 B 兩條多項式；Frame 2 使用兩個 pointer 指向目前項；Frame 3 比較 exponent；Frame 4 exponent 相同則係數相加；Frame 5 exponent 較大者先輸出；Frame 6 到 Frame 7 移動 pointer；Frame 8 得到結果多項式。重點是類似 merge 的雙指標流程。</div><div class='desc code-extra'><b>C++ 程式範例：</b><br><pre style="background:#102030;color:#f8fafc;padding:14px;border-radius:10px;overflow:auto;line-height:1.55">#include &lt;iostream&gt;
 using namespace std;
 
 struct Term {
@@ -500,7 +490,7 @@ int main() {
 <br><br><b>複雜度分析：</b><br>空間與非零元素數量 nz 成正比。走訪所有非零元素為 O(nz)。若搜尋特定列或欄，成本取決於該列或欄非零數。
 <br><br><b>優缺點：</b><ul><li>優點：非常適合稀疏矩陣，節省大量零元素空間。</li><li>缺點：結構比單鏈結串列複雜，需要同時維護 row 與 column 方向。</li></ul>
 <b>老師上課重點：</b><br>老師常要求學生分清楚 right 與 down 指標用途。
-<br><br><b>期末考重點：</b><br>常考由矩陣畫出 orthogonal list，或新增非零元素時兩個方向如何連接。</div><div class='animdesc'><b>非常詳細動畫說明：</b><br>動畫目的：說明 sparse matrix 的 orthogonal list 同時有 row link 與 column link。Frame 1 顯示稀疏矩陣；Frame 2 建立非零元素節點；Frame 3 標示 row、col、value；Frame 4 加入 right link；Frame 5 加入 down link；Frame 6 到 Frame 8 顯示 row header 與 column header 如何連接所有非零元素。重點是同一個節點同時屬於某一列與某一行。</div><div class='desc code-extra'><b>C++ 程式範例：</b><br><button class="copy-code-btn" onclick="copyCodeBlock('cpp_code_14', this)">📋 複製程式碼</button><pre id="cpp_code_14" style="background:#102030;color:#f8fafc;padding:14px;border-radius:10px;overflow:auto;line-height:1.55">#include &lt;iostream&gt;
+<br><br><b>期末考重點：</b><br>常考由矩陣畫出 orthogonal list，或新增非零元素時兩個方向如何連接。</div><div class='animdesc'><b>非常詳細動畫說明：</b><br>動畫目的：說明 sparse matrix 的 orthogonal list 同時有 row link 與 column link。Frame 1 顯示稀疏矩陣；Frame 2 建立非零元素節點；Frame 3 標示 row、col、value；Frame 4 加入 right link；Frame 5 加入 down link；Frame 6 到 Frame 8 顯示 row header 與 column header 如何連接所有非零元素。重點是同一個節點同時屬於某一列與某一行。</div><div class='desc code-extra'><b>C++ 程式範例：</b><br><pre style="background:#102030;color:#f8fafc;padding:14px;border-radius:10px;overflow:auto;line-height:1.55">#include &lt;iostream&gt;
 using namespace std;
 
 struct MatrixNode {
@@ -531,7 +521,7 @@ int main() {
 <br><br><b>複雜度分析：</b><br>建立成本與非零元素數 nz 及插入搜尋成本相關。釋放所有節點為 O(nz)。
 <br><br><b>優缺點：</b><ul><li>優點：能完整管理稀疏矩陣生命週期，符合 C++ 資源管理要求。</li><li>缺點：釋放順序若錯誤可能重複 delete 或遺失節點。</li></ul>
 <b>老師上課重點：</b><br>老師可能會強調有 new 就要有對應 delete，尤其在複雜 linked structure 中。
-<br><br><b>期末考重點：</b><br>常考 destructor 為何需要逐節點釋放，以及 input triple 如何變成節點。</div><div class='animdesc'><b>非常詳細動畫說明：</b><br>動畫目的：說明 sparse matrix 從輸入建立到 destructor 釋放記憶體。Frame 1 顯示輸入三元組；Frame 2 建立 header nodes；Frame 3 到 Frame 5 插入非零元素；Frame 6 顯示 row/column links；Frame 7 destructor 逐列釋放節點；Frame 8 完成清除。重點是動態配置結構必須正確釋放，避免 memory leak。</div><div class='desc code-extra'><b>C++ 程式範例：</b><br><button class="copy-code-btn" onclick="copyCodeBlock('cpp_code_15', this)">📋 複製程式碼</button><pre id="cpp_code_15" style="background:#102030;color:#f8fafc;padding:14px;border-radius:10px;overflow:auto;line-height:1.55">#include &lt;iostream&gt;
+<br><br><b>期末考重點：</b><br>常考 destructor 為何需要逐節點釋放，以及 input triple 如何變成節點。</div><div class='animdesc'><b>非常詳細動畫說明：</b><br>動畫目的：說明 sparse matrix 從輸入建立到 destructor 釋放記憶體。Frame 1 顯示輸入三元組；Frame 2 建立 header nodes；Frame 3 到 Frame 5 插入非零元素；Frame 6 顯示 row/column links；Frame 7 destructor 逐列釋放節點；Frame 8 完成清除。重點是動態配置結構必須正確釋放，避免 memory leak。</div><div class='desc code-extra'><b>C++ 程式範例：</b><br><pre style="background:#102030;color:#f8fafc;padding:14px;border-radius:10px;overflow:auto;line-height:1.55">#include &lt;iostream&gt;
 #include &lt;vector&gt;
 using namespace std;
 
@@ -569,7 +559,7 @@ destructor 釋放完成</pre>
 <br><br><b>複雜度分析：</b><br>已知節點時插入刪除為 O(1)，走訪為 O(n)。每個節點需要兩個 pointer，空間常數較高。
 <br><br><b>優缺點：</b><ul><li>優點：可以向前與向後走訪，刪除已知節點更方便。</li><li>缺點：每次更新要處理兩個方向，指標錯誤機會增加。</li></ul>
 <b>老師上課重點：</b><br>老師常比較 singly 與 doubly linked list 的刪除差異。
-<br><br><b>期末考重點：</b><br>常考插入節點時四條 pointer 的更新順序，以及刪除節點後 prev/next 是否一致。</div><div class='animdesc'><b>非常詳細動畫說明：</b><br>動畫目的：說明 doubly linked list 每個節點同時具有 llink 與 rlink。Frame 1 顯示單向串列；Frame 2 加入 backward link；Frame 3 插入新節點時設定 new-&gt;llink 與 new-&gt;rlink；Frame 4 更新前後節點的 link；Frame 5 到 Frame 7 示範刪除節點時前後改接；Frame 8 完成雙向走訪。重點是插入刪除要同時維護兩個方向。</div><div class='desc code-extra'><b>C++ 程式範例：</b><br><button class="copy-code-btn" onclick="copyCodeBlock('cpp_code_16', this)">📋 複製程式碼</button><pre id="cpp_code_16" style="background:#102030;color:#f8fafc;padding:14px;border-radius:10px;overflow:auto;line-height:1.55">#include &lt;iostream&gt;
+<br><br><b>期末考重點：</b><br>常考插入節點時四條 pointer 的更新順序，以及刪除節點後 prev/next 是否一致。</div><div class='animdesc'><b>非常詳細動畫說明：</b><br>動畫目的：說明 doubly linked list 每個節點同時具有 llink 與 rlink。Frame 1 顯示單向串列；Frame 2 加入 backward link；Frame 3 插入新節點時設定 new-&gt;llink 與 new-&gt;rlink；Frame 4 更新前後節點的 link；Frame 5 到 Frame 7 示範刪除節點時前後改接；Frame 8 完成雙向走訪。重點是插入刪除要同時維護兩個方向。</div><div class='desc code-extra'><b>C++ 程式範例：</b><br><pre style="background:#102030;color:#f8fafc;padding:14px;border-radius:10px;overflow:auto;line-height:1.55">#include &lt;iostream&gt;
 using namespace std;
 
 struct Node {

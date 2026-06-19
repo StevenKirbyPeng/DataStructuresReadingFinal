@@ -1,18 +1,4 @@
-<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><title>lec6b Graphs Part II 詳細說明版</title><style>body{font-family:"Microsoft JhengHei",Arial,sans-serif;background:#f4f7fb;margin:0;color:#1f2937}.wrap{max-width:1180px;margin:auto;padding:24px}h1{background:#1f3763;color:white;padding:24px;border-radius:16px}.topic{background:white;margin:18px 0;border-radius:14px;box-shadow:0 4px 16px #0001;overflow:hidden}summary{cursor:pointer;font-size:24px;font-weight:800;padding:20px;background:#e9f2ff}.content{padding:22px}.viewer{border:1px solid #cbd5e1;border-radius:12px;padding:12px;background:#fff}.viewer img{width:100%;max-height:620px;object-fit:contain}.controls button{margin:6px;padding:8px 14px;border:0;border-radius:8px;background:#1f6fbf;color:white}.detail,.animdetail{background:#fbfdff;border-left:6px solid #1f6fbf;padding:16px;margin:18px 0;border-radius:10px;line-height:1.85}pre{background:#0f172a;color:#e2e8f0;padding:16px;border-radius:12px;overflow:auto}.copy{float:right;background:#d35400!important}a.btn{display:inline-block;background:#16a34a;color:#fff;padding:8px 12px;border-radius:8px;text-decoration:none;margin:5px}table{border-collapse:collapse;width:100%;background:white}td,th{border:1px solid #cbd5e1;padding:8px}th{background:#e9f2ff}
-.editor-toolbar{margin:18px 0 6px;padding:16px 18px;border-radius:18px;background:linear-gradient(135deg,#0f2f57,#1f6fbf);box-shadow:0 8px 22px rgba(15,47,87,.22);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.editor-toolbar .editor-title{color:#fff;font-weight:900;margin-right:4px;letter-spacing:.5px}
-.editor-toolbar .editor-btn{display:inline-flex;align-items:center;gap:7px;background:#ffffff;color:#12335a;padding:10px 16px;border-radius:999px;text-decoration:none;font-weight:800;box-shadow:0 4px 12px rgba(0,0,0,.18);transition:.2s ease;border:1px solid rgba(255,255,255,.65)}
-.editor-toolbar .editor-btn:hover{transform:translateY(-2px);background:#eaf4ff;color:#0f2f57}
-.copy{float:right!important;background:linear-gradient(135deg,#f97316,#d35400)!important;color:white!important;border:0!important;border-radius:999px!important;padding:9px 16px!important;font-weight:900!important;cursor:pointer!important;box-shadow:0 5px 14px rgba(211,84,0,.28)!important;transition:.2s ease!important}
-.copy:hover{transform:translateY(-2px);filter:brightness(1.06)}
-.copy.copied{background:linear-gradient(135deg,#16a34a,#15803d)!important}
-pre{clear:both}
-</style></head><body><div class="wrap"><h1>lec6b Graphs Part II：主題動畫詳細說明版</h1><div class="editor-toolbar">
-<span class="editor-title">C++ 線上編輯器：</span>
-<a class="editor-btn" href="https://www.onlinegdb.com/online_c++_compiler" target="_blank">🚀 OnlineGDB</a>
-<a class="editor-btn" href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank">💻 Programiz</a>
-<a class="editor-btn" href="https://cpp.sh/" target="_blank">⚡ cpp.sh</a>
-</div><p>格式依照 lec5a_HTML_主題動畫詳細說明版：每個下拉主題包含 SVG 動畫、主題詳細說明、動畫詳細說明、表格、程式碼與連結。</p>
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><title>lec6b Graphs Part II 詳細說明版</title><style>body{font-family:"Microsoft JhengHei",Arial,sans-serif;background:#f4f7fb;margin:0;color:#1f2937}.wrap{max-width:1180px;margin:auto;padding:24px}h1{background:#1f3763;color:white;padding:24px;border-radius:16px}.topic{background:white;margin:18px 0;border-radius:14px;box-shadow:0 4px 16px #0001;overflow:hidden}summary{cursor:pointer;font-size:24px;font-weight:800;padding:20px;background:#e9f2ff}.content{padding:22px}.viewer{border:1px solid #cbd5e1;border-radius:12px;padding:12px;background:#fff}.viewer img{width:100%;max-height:620px;object-fit:contain}.controls button{margin:6px;padding:8px 14px;border:0;border-radius:8px;background:#1f6fbf;color:white}.detail,.animdetail{background:#fbfdff;border-left:6px solid #1f6fbf;padding:16px;margin:18px 0;border-radius:10px;line-height:1.85}pre{background:#0f172a;color:#e2e8f0;padding:16px;border-radius:12px;overflow:auto}.copy{float:right;background:#d35400!important}a.btn{display:inline-block;background:#16a34a;color:#fff;padding:8px 12px;border-radius:8px;text-decoration:none;margin:5px}table{border-collapse:collapse;width:100%;background:white}td,th{border:1px solid #cbd5e1;padding:8px}th{background:#e9f2ff}</style></head><body><div class="wrap"><h1>lec6b Graphs Part II：主題動畫詳細說明版</h1><p>格式依照 lec5a_HTML_主題動畫詳細說明版：每個下拉主題包含 SVG 動畫、主題詳細說明、動畫詳細說明、表格、程式碼與連結。</p>
 <details class="topic" open><summary>1. Shortest Paths</summary><div class="content"><div class="viewer"><img id="img_1" data-n="1" data-base="output/01_shortest_paths_steps" src="output/01_shortest_paths_steps/step_01.svg"><div class="controls"><button onclick="prevFrame(1,7)">上一張</button><button onclick="nextFrame(1,7)">下一張</button><span id="cap_1">Frame 1 / 7</span></div></div><section class="detail"><h3>📖 主題詳細說明</h3>
 <ul>
 <li><b>主題背景：</b>Shortest Paths 是 Graphs Part II 的核心單元，主要處理有向圖、權重、路徑、可達性與排程限制。這類問題不是只問兩個頂點是否相鄰，而是進一步問「能不能到」、「怎麼到最短」、「哪些步驟必須先做」、「哪條路徑決定整體完成時間」。</li>
@@ -44,7 +30,7 @@ pre{clear:both}
 <p>Shortest Paths 是問題類型，不等於單一演算法。若是 unweighted graph，可用 BFS，時間複雜度 O(V+E)。若是 nonnegative edge weights，通常用 Dijkstra；若允許負邊但沒有負 cycle，可用 Bellman-Ford；若要 all-pairs shortest paths，可用 Floyd-Warshall。動畫中的每一步都在說明 dist 值、path cost 與 predecessor 如何支撐後續演算法。</p>
 <h4>動畫總結</h4>
 <p>本動畫符合 Shortest Paths 主題，因為它先建立加權有向圖，再逐步展示 source、candidate path、edge weight 累加、最小 cost 選擇與 shortest path tree。這不是 Dijkstra 的完整執行細節，而是最短路徑問題的總覽。</p></section>
-<h3>表格模擬</h3><table><tr><th>項目</th><th>內容</th></tr><tr><td>主題</td><td>Shortest Paths</td></tr><tr><td>核心資料</td><td>Graph、Edge、Array、Queue / Matrix</td></tr><tr><td>考試方向</td><td>Trace、填表、畫結果圖、複雜度</td></tr></table><h3>C++ 程式範例</h3><button class="copy" onclick="copyCode(\'code1\', this)">複製程式碼</button><pre id="code1">#include &lt;bits/stdc++.h&gt;
+<h3>表格模擬</h3><table><tr><th>項目</th><th>內容</th></tr><tr><td>主題</td><td>Shortest Paths</td></tr><tr><td>核心資料</td><td>Graph、Edge、Array、Queue / Matrix</td></tr><tr><td>考試方向</td><td>Trace、填表、畫結果圖、複雜度</td></tr></table><h3>C++ 程式範例</h3><button class="copy" onclick="copyCode('code1')">Copy Code</button><pre id="code1">#include &lt;bits/stdc++.h&gt;
 using namespace std;
 
 // Shortest Paths 總覽：列舉 source 到 destination 的簡單路徑，並計算總權重。
@@ -154,7 +140,7 @@ Shortest distance = &quot; &lt;&lt; bestCost &lt;&lt; &#x27;
 <p>每次 ExtractMin 決定一個 vertex 的最短距離；每條 edge 最多被 relax 一次。若使用 min-heap priority queue，時間複雜度通常為 O(E log V)；若用 adjacency matrix 和線性找最小值，為 O(V²)。空間主要是 adjacency list、dist、predecessor、visited 與 priority queue。</p>
 <h4>動畫總結</h4>
 <p>動畫內容符合 Dijkstra 主題，因為它明確呈現初始化、ExtractMin、Relax、dist 固定與 shortest path tree。考試最常考的是給一張圖，要求逐輪寫出 dist[] 與 predecessor[]。</p></section>
-<h3>表格模擬</h3><table><tr><th>項目</th><th>內容</th></tr><tr><td>主題</td><td>Dijkstra Algorithm</td></tr><tr><td>核心資料</td><td>Graph、Edge、Array、Queue / Matrix</td></tr><tr><td>考試方向</td><td>Trace、填表、畫結果圖、複雜度</td></tr></table><h3>C++ 程式範例</h3><button class="copy" onclick="copyCode(\'code2\', this)">複製程式碼</button><pre id="code2">#include &lt;bits/stdc++.h&gt;
+<h3>表格模擬</h3><table><tr><th>項目</th><th>內容</th></tr><tr><td>主題</td><td>Dijkstra Algorithm</td></tr><tr><td>核心資料</td><td>Graph、Edge、Array、Queue / Matrix</td></tr><tr><td>考試方向</td><td>Trace、填表、畫結果圖、複雜度</td></tr></table><h3>C++ 程式範例</h3><button class="copy" onclick="copyCode('code2')">Copy Code</button><pre id="code2">#include &lt;bits/stdc++.h&gt;
 using namespace std;
 
 // Dijkstra Algorithm
@@ -263,7 +249,7 @@ Final shortest distances from source 0:
 <p>Bellman-Ford 的時間複雜度是 O(VE)，因為要做 V-1 輪，每輪掃 E 條 edge，再加一次負 cycle 檢查。空間複雜度為 O(V)，主要用於 dist 與 predecessor。它比 Dijkstra 慢，但能處理負邊。</p>
 <h4>動畫總結</h4>
 <p>動畫符合 Bellman-Ford 主題，因為它突出「多輪 relax」、「允許負邊」、「V-1 輪」與「負 cycle 檢查」。考試常考逐輪 dist table 與負 cycle 判斷。</p></section>
-<h3>表格模擬</h3><table><tr><th>項目</th><th>內容</th></tr><tr><td>主題</td><td>Bellman-Ford Algorithm</td></tr><tr><td>核心資料</td><td>Graph、Edge、Array、Queue / Matrix</td></tr><tr><td>考試方向</td><td>Trace、填表、畫結果圖、複雜度</td></tr></table><h3>C++ 程式範例</h3><button class="copy" onclick="copyCode(\'code3\', this)">複製程式碼</button><pre id="code3">#include &lt;bits/stdc++.h&gt;
+<h3>表格模擬</h3><table><tr><th>項目</th><th>內容</th></tr><tr><td>主題</td><td>Bellman-Ford Algorithm</td></tr><tr><td>核心資料</td><td>Graph、Edge、Array、Queue / Matrix</td></tr><tr><td>考試方向</td><td>Trace、填表、畫結果圖、複雜度</td></tr></table><h3>C++ 程式範例</h3><button class="copy" onclick="copyCode('code3')">Copy Code</button><pre id="code3">#include &lt;bits/stdc++.h&gt;
 using namespace std;
 
 // Bellman-Ford Algorithm
@@ -374,7 +360,7 @@ Final distances:
 <p>Floyd-Warshall 的時間複雜度為 O(V³)，因為有 k、i、j 三層迴圈。空間可用 O(V²) 原地更新距離矩陣。它適合頂點數不大、需要 all-pairs 結果的情況。</p>
 <h4>動畫總結</h4>
 <p>動畫符合 All-Pairs Shortest Paths 主題，因為它以矩陣形式呈現初始化、逐步加入中繼點與 DP 更新公式。此動畫不同於 Transitive Closure，因為這裡更新的是距離數值，不是布林可達性。</p></section>
-<h3>表格模擬</h3><table><tr><th>項目</th><th>內容</th></tr><tr><td>主題</td><td>All-Pairs Shortest Paths</td></tr><tr><td>核心資料</td><td>Graph、Edge、Array、Queue / Matrix</td></tr><tr><td>考試方向</td><td>Trace、填表、畫結果圖、複雜度</td></tr></table><h3>C++ 程式範例</h3><button class="copy" onclick="copyCode(\'code4\', this)">複製程式碼</button><pre id="code4">#include &lt;bits/stdc++.h&gt;
+<h3>表格模擬</h3><table><tr><th>項目</th><th>內容</th></tr><tr><td>主題</td><td>All-Pairs Shortest Paths</td></tr><tr><td>核心資料</td><td>Graph、Edge、Array、Queue / Matrix</td></tr><tr><td>考試方向</td><td>Trace、填表、畫結果圖、複雜度</td></tr></table><h3>C++ 程式範例</h3><button class="copy" onclick="copyCode('code4')">Copy Code</button><pre id="code4">#include &lt;bits/stdc++.h&gt;
 using namespace std;
 
 // Floyd-Warshall Algorithm
@@ -456,7 +442,7 @@ Final all-pairs shortest distance matrix:
 <p>Transitive Closure 的 Warshall 演算法時間複雜度為 O(V³)，空間為 O(V²)。它與 Floyd-Warshall 結構相似，但 Floyd 使用 min-plus 更新距離，而 Closure 使用 boolean OR-AND 更新可達性。</p>
 <h4>動畫總結</h4>
 <p>動畫符合 Transitive Closure 主題，因為它把重點放在 reach matrix 的 0/1 更新，不是距離矩陣。考試常考公式差異：Floyd 是 min，Closure 是 OR 和 AND。</p></section>
-<h3>表格模擬</h3><table><tr><th>項目</th><th>內容</th></tr><tr><td>主題</td><td>Transitive Closure</td></tr><tr><td>核心資料</td><td>Graph、Edge、Array、Queue / Matrix</td></tr><tr><td>考試方向</td><td>Trace、填表、畫結果圖、複雜度</td></tr></table><h3>C++ 程式範例</h3><button class="copy" onclick="copyCode(\'code5\', this)">複製程式碼</button><pre id="code5">#include &lt;bits/stdc++.h&gt;
+<h3>表格模擬</h3><table><tr><th>項目</th><th>內容</th></tr><tr><td>主題</td><td>Transitive Closure</td></tr><tr><td>核心資料</td><td>Graph、Edge、Array、Queue / Matrix</td></tr><tr><td>考試方向</td><td>Trace、填表、畫結果圖、複雜度</td></tr></table><h3>C++ 程式範例</h3><button class="copy" onclick="copyCode('code5')">Copy Code</button><pre id="code5">#include &lt;bits/stdc++.h&gt;
 using namespace std;
 
 // Warshall Algorithm for Transitive Closure
@@ -539,7 +525,7 @@ Transitive closure matrix:
 <p>AOV Network 的建模重點是 vertex、edge、predecessor、successor 與 indegree。若要檢查是否可排程，可使用 topological sort，時間複雜度 O(V+E)。</p>
 <h4>動畫總結</h4>
 <p>動畫符合 AOV 主題，因為它只強調活動與先修關係，而不是 shortest path 或 critical path。考試常考 AOV 是否有 cycle，以及如何由 AOV 進入 topological sort。</p></section>
-<h3>表格模擬</h3><table><tr><th>項目</th><th>內容</th></tr><tr><td>主題</td><td>AOV Network</td></tr><tr><td>核心資料</td><td>Graph、Edge、Array、Queue / Matrix</td></tr><tr><td>考試方向</td><td>Trace、填表、畫結果圖、複雜度</td></tr></table><h3>C++ 程式範例</h3><button class="copy" onclick="copyCode(\'code6\', this)">複製程式碼</button><pre id="code6">#include &lt;bits/stdc++.h&gt;
+<h3>表格模擬</h3><table><tr><th>項目</th><th>內容</th></tr><tr><td>主題</td><td>AOV Network</td></tr><tr><td>核心資料</td><td>Graph、Edge、Array、Queue / Matrix</td></tr><tr><td>考試方向</td><td>Trace、填表、畫結果圖、複雜度</td></tr></table><h3>C++ 程式範例</h3><button class="copy" onclick="copyCode('code6')">Copy Code</button><pre id="code6">#include &lt;bits/stdc++.h&gt;
 using namespace std;
 
 // AOV Network
@@ -626,7 +612,7 @@ Activities with zero indegree can be scheduled first:
 <p>Topological Sort 使用 adjacency list 與 indegree 陣列時，時間複雜度為 O(V+E)，空間複雜度為 O(V+E)。每個 vertex 進出 queue 一次，每條 edge 在 indegree 更新時處理一次。</p>
 <h4>動畫總結</h4>
 <p>動畫符合 Topological Sort 主題，因為它明確展示 indegree、zero-indegree queue、刪邊與輸出順序。此動畫與 AOV 不同：AOV 是模型，Topological Sort 是演算法。</p></section>
-<h3>表格模擬</h3><table><tr><th>項目</th><th>內容</th></tr><tr><td>主題</td><td>Topological Sort</td></tr><tr><td>核心資料</td><td>Graph、Edge、Array、Queue / Matrix</td></tr><tr><td>考試方向</td><td>Trace、填表、畫結果圖、複雜度</td></tr></table><h3>C++ 程式範例</h3><button class="copy" onclick="copyCode(\'code7\', this)">複製程式碼</button><pre id="code7">#include &lt;bits/stdc++.h&gt;
+<h3>表格模擬</h3><table><tr><th>項目</th><th>內容</th></tr><tr><td>主題</td><td>Topological Sort</td></tr><tr><td>核心資料</td><td>Graph、Edge、Array、Queue / Matrix</td></tr><tr><td>考試方向</td><td>Trace、填表、畫結果圖、複雜度</td></tr></table><h3>C++ 程式範例</h3><button class="copy" onclick="copyCode('code7')">Copy Code</button><pre id="code7">#include &lt;bits/stdc++.h&gt;
 using namespace std;
 
 // Topological Sort using Kahn&#x27;s Algorithm
@@ -727,7 +713,7 @@ Topological order:
 <p>AOE Critical Path 需先確認圖是 DAG，通常先做 topological sort。接著做一次 forward pass 算 ee，再做一次 backward pass 算 le，最後掃描所有 edge 算 slack。時間複雜度 O(V+E)。</p>
 <h4>動畫總結</h4>
 <p>動畫符合 AOE Critical Path 主題，因為它清楚區分事件與活動，並呈現 ee、le、slack、critical activity 與 project duration。考試常考手算 earliest/latest table。</p></section>
-<h3>表格模擬</h3><table><tr><th>項目</th><th>內容</th></tr><tr><td>主題</td><td>AOE Critical Path</td></tr><tr><td>核心資料</td><td>Graph、Edge、Array、Queue / Matrix</td></tr><tr><td>考試方向</td><td>Trace、填表、畫結果圖、複雜度</td></tr></table><h3>C++ 程式範例</h3><button class="copy" onclick="copyCode(\'code8\', this)">複製程式碼</button><pre id="code8">#include &lt;bits/stdc++.h&gt;
+<h3>表格模擬</h3><table><tr><th>項目</th><th>內容</th></tr><tr><td>主題</td><td>AOE Critical Path</td></tr><tr><td>核心資料</td><td>Graph、Edge、Array、Queue / Matrix</td></tr><tr><td>考試方向</td><td>Trace、填表、畫結果圖、複雜度</td></tr></table><h3>C++ 程式範例</h3><button class="copy" onclick="copyCode('code8')">Copy Code</button><pre id="code8">#include &lt;bits/stdc++.h&gt;
 using namespace std;
 
 // AOE Critical Path
@@ -845,7 +831,7 @@ int main() {
 <p>Static Timing Analysis 在 DAG 上通常需要一次拓撲 forward pass 與一次 reverse pass，時間複雜度 O(V+E)。資料結構包含 adjacency list、arrival、required、slack 與 topological order。</p>
 <h4>動畫總結</h4>
 <p>動畫符合 Static Timing Analysis 主題，因為它呈現電路轉 DAG、arrival、required、slack 與 critical path。它不是一般 shortest path，而是 longest-delay 與 timing margin 分析。</p></section>
-<h3>表格模擬</h3><table><tr><th>項目</th><th>內容</th></tr><tr><td>主題</td><td>Static Timing Analysis</td></tr><tr><td>核心資料</td><td>Graph、Edge、Array、Queue / Matrix</td></tr><tr><td>考試方向</td><td>Trace、填表、畫結果圖、複雜度</td></tr></table><h3>C++ 程式範例</h3><button class="copy" onclick="copyCode(\'code9\', this)">複製程式碼</button><pre id="code9">#include &lt;bits/stdc++.h&gt;
+<h3>表格模擬</h3><table><tr><th>項目</th><th>內容</th></tr><tr><td>主題</td><td>Static Timing Analysis</td></tr><tr><td>核心資料</td><td>Graph、Edge、Array、Queue / Matrix</td></tr><tr><td>考試方向</td><td>Trace、填表、畫結果圖、複雜度</td></tr></table><h3>C++ 程式範例</h3><button class="copy" onclick="copyCode('code9')">Copy Code</button><pre id="code9">#include &lt;bits/stdc++.h&gt;
 using namespace std;
 
 // Static Timing Analysis on a DAG
@@ -936,21 +922,4 @@ Critical path delay = &quot; &lt;&lt; arrival[5] &lt;&lt; &#x27;
 &#x27;;
     return 0;
 }</pre><a class="btn" href="https://www.onlinegdb.com/online_c++_compiler" target="_blank">OnlineGDB</a><a class="btn" href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank">Programiz</a><a class="btn" href="https://cpp.sh/" target="_blank">cpp.sh</a></div></details>
-<script>function nextFrame(id,total){let im=document.getElementById('img_'+id);let n=parseInt(im.dataset.n||'1');n=n%total+1;im.dataset.n=n;im.src=im.dataset.base+'/step_'+String(n).padStart(2,'0')+'.svg';document.getElementById('cap_'+id).innerText='Frame '+n+' / '+total;}function prevFrame(id,total){let im=document.getElementById('img_'+id);let n=parseInt(im.dataset.n||'1');n=(n+total-2)%total+1;im.dataset.n=n;im.src=im.dataset.base+'/step_'+String(n).padStart(2,'0')+'.svg';document.getElementById('cap_'+id).innerText='Frame '+n+' / '+total;}function copyCode(id,btn){
- const el=document.getElementById(id);
- if(!el)return;
- const text=el.innerText;
- if(navigator.clipboard&&navigator.clipboard.writeText){
-   navigator.clipboard.writeText(text).then(()=>showCopied(btn));
- }else{
-   const ta=document.createElement('textarea');
-   ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);showCopied(btn);
- }
-}
-function showCopied(btn){
- if(!btn)return;
- const old=btn.textContent;
- btn.textContent='已複製 ✓';
- btn.classList.add('copied');
- setTimeout(()=>{btn.textContent=old;btn.classList.remove('copied');},1200);
-}</script></div></body></html>
+<script>function nextFrame(id,total){let im=document.getElementById('img_'+id);let n=parseInt(im.dataset.n||'1');n=n%total+1;im.dataset.n=n;im.src=im.dataset.base+'/step_'+String(n).padStart(2,'0')+'.svg';document.getElementById('cap_'+id).innerText='Frame '+n+' / '+total;}function prevFrame(id,total){let im=document.getElementById('img_'+id);let n=parseInt(im.dataset.n||'1');n=(n+total-2)%total+1;im.dataset.n=n;im.src=im.dataset.base+'/step_'+String(n).padStart(2,'0')+'.svg';document.getElementById('cap_'+id).innerText='Frame '+n+' / '+total;}function copyCode(id){navigator.clipboard.writeText(document.getElementById(id).innerText);}</script></div></body></html>

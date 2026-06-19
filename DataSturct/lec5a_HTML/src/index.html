@@ -1,10 +1,6 @@
 <!DOCTYPE html>
-<html lang="zh-Hant"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>lec5_a Step-by-Step SVG Animation</title><style>body{font-family:"Microsoft JhengHei",Arial,sans-serif;margin:0;background:#f4f7fb;color:#1f2937;line-height:1.75}header{background:#1f4e79;color:white;padding:28px 36px}header h1{margin:0;font-size:28px}header p{margin:8px 0 0;color:#e5eef7}main{max-width:1180px;margin:24px auto;padding:0 18px}.note{background:white;border-left:6px solid #1f4e79;border-radius:12px;padding:16px 20px;margin-bottom:18px;box-shadow:0 3px 12px rgba(0,0,0,.08)}.topic{background:white;border-radius:14px;margin:18px 0;box-shadow:0 3px 14px rgba(0,0,0,.10);overflow:hidden}summary{cursor:pointer;font-weight:800;font-size:20px;padding:18px 22px;background:#eef5fb;display:flex;justify-content:space-between;align-items:center}summary span{font-size:14px;background:#1f4e79;color:white;border-radius:999px;padding:4px 10px}.panel{padding:20px}.explain{padding:18px 20px;background:#fffdf5;border:1px solid #f3dfb8;border-left:6px solid #d97706;border-radius:12px;margin-bottom:16px}.explain h3{margin:0 0 8px;color:#92400e}.explain p{margin:0;text-align:justify}.topbtn{border:0;border-radius:9px;background:#1f4e79;color:white;padding:8px 14px;font-weight:700;cursor:pointer}.controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px}.controls button,.steps button{border:0;border-radius:9px;background:#1f4e79;color:white;padding:8px 14px;font-weight:700;cursor:pointer}.controls button:hover,.steps button:hover,.topbtn:hover{background:#15385c}.controls label{font-weight:700}.speed{padding:7px;border-radius:8px;border:1px solid #cbd5e1}.counter{font-weight:800;color:#1f4e79;background:#eaf2fb;border-radius:999px;padding:5px 12px}.viewer{border:1px solid #dbe3ef;border-radius:14px;background:#fff;min-height:420px;display:flex;align-items:center;justify-content:center;padding:14px}.mainFrame{max-width:100%;height:auto;max-height:720px}.steps{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}.steps button{background:#e6eef9;color:#1f4e79;padding:6px 10px}.steps button.activeStep{background:#1f4e79;color:white}.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}.frameCard{border:1px solid #dbe3ef;border-radius:12px;background:white;padding:10px}.frameCard h4{margin:0 0 8px;color:#1f4e79}.frameCard img{width:100%;height:auto;border:1px solid #e5e7eb;border-radius:8px}footer{text-align:center;color:#6b7280;padding:24px}.editor-links{display:flex;gap:12px;flex-wrap:wrap;margin:16px 0 4px}.editor-btn{display:inline-flex;align-items:center;gap:8px;text-decoration:none;border:1px solid rgba(255,255,255,.35);border-radius:999px;background:linear-gradient(135deg,#38bdf8,#2563eb);color:white;padding:10px 16px;font-weight:800;box-shadow:0 8px 18px rgba(15,23,42,.22);transition:transform .18s ease,box-shadow .18s ease,filter .18s ease}.editor-btn:hover{transform:translateY(-2px);box-shadow:0 12px 24px rgba(15,23,42,.28);filter:brightness(1.05)}.copy-code-btn{float:right;margin:0 0 10px 12px;border:0;border-radius:999px;background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;padding:8px 14px;font-weight:800;cursor:pointer;box-shadow:0 6px 14px rgba(37,99,235,.28);transition:transform .18s ease,box-shadow .18s ease,filter .18s ease}.copy-code-btn:hover{transform:translateY(-1px);box-shadow:0 10px 20px rgba(37,99,235,.36);filter:brightness(1.06)}.copy-code-btn.copied{background:linear-gradient(135deg,#16a34a,#059669)}</style></head><body>
-<header><h1>lec5_a Step-by-Step SVG Animation</h1><p>index.html: one-step-at-a-time player with previous/next, speed selection, and autoplay.</p><p><button class="topbtn" onclick="openAll()">全部展開</button> <button class="topbtn" onclick="closeAll()">全部收合</button></p><div class="editor-links">
-<a class="editor-btn" href="https://www.onlinegdb.com/online_c++_compiler" target="_blank" rel="noopener">💻 OnlineGDB</a>
-<a class="editor-btn" href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank" rel="noopener">⚙️ Programiz C++</a>
-<a class="editor-btn" href="https://cpp.sh/" target="_blank" rel="noopener">🚀 cpp.sh</a>
-</div></header><main>
+<html lang="zh-Hant"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>lec5_a Step-by-Step SVG Animation</title><style>body{font-family:"Microsoft JhengHei",Arial,sans-serif;margin:0;background:#f4f7fb;color:#1f2937;line-height:1.75}header{background:#1f4e79;color:white;padding:28px 36px}header h1{margin:0;font-size:28px}header p{margin:8px 0 0;color:#e5eef7}main{max-width:1180px;margin:24px auto;padding:0 18px}.note{background:white;border-left:6px solid #1f4e79;border-radius:12px;padding:16px 20px;margin-bottom:18px;box-shadow:0 3px 12px rgba(0,0,0,.08)}.topic{background:white;border-radius:14px;margin:18px 0;box-shadow:0 3px 14px rgba(0,0,0,.10);overflow:hidden}summary{cursor:pointer;font-weight:800;font-size:20px;padding:18px 22px;background:#eef5fb;display:flex;justify-content:space-between;align-items:center}summary span{font-size:14px;background:#1f4e79;color:white;border-radius:999px;padding:4px 10px}.panel{padding:20px}.explain{padding:18px 20px;background:#fffdf5;border:1px solid #f3dfb8;border-left:6px solid #d97706;border-radius:12px;margin-bottom:16px}.explain h3{margin:0 0 8px;color:#92400e}.explain p{margin:0;text-align:justify}.topbtn{border:0;border-radius:9px;background:#1f4e79;color:white;padding:8px 14px;font-weight:700;cursor:pointer}.controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px}.controls button,.steps button{border:0;border-radius:9px;background:#1f4e79;color:white;padding:8px 14px;font-weight:700;cursor:pointer}.controls button:hover,.steps button:hover,.topbtn:hover{background:#15385c}.controls label{font-weight:700}.speed{padding:7px;border-radius:8px;border:1px solid #cbd5e1}.counter{font-weight:800;color:#1f4e79;background:#eaf2fb;border-radius:999px;padding:5px 12px}.viewer{border:1px solid #dbe3ef;border-radius:14px;background:#fff;min-height:420px;display:flex;align-items:center;justify-content:center;padding:14px}.mainFrame{max-width:100%;height:auto;max-height:720px}.steps{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}.steps button{background:#e6eef9;color:#1f4e79;padding:6px 10px}.steps button.activeStep{background:#1f4e79;color:white}.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}.frameCard{border:1px solid #dbe3ef;border-radius:12px;background:white;padding:10px}.frameCard h4{margin:0 0 8px;color:#1f4e79}.frameCard img{width:100%;height:auto;border:1px solid #e5e7eb;border-radius:8px}footer{text-align:center;color:#6b7280;padding:24px}</style></head><body>
+<header><h1>lec5_a Step-by-Step SVG Animation</h1><p>index.html: one-step-at-a-time player with previous/next, speed selection, and autoplay.</p><p><button class="topbtn" onclick="openAll()">全部展開</button> <button class="topbtn" onclick="closeAll()">全部收合</button></p></header><main>
 <div class="note"><strong>使用方式：</strong>此檔案只顯示目前步驟圖片，不會一次列出所有圖片。可使用上一張、下一張、自動播放與時間選定。</div>
 <details class="topic" open=""><summary>01 tree definition terminology <span>10 steps</span></summary><div class="panel">
 <div class="added-topic-background" style="padding:18px 20px;background:#f0f9ff;border:1px solid #bae6fd;border-left:6px solid #0284c7;border-radius:12px;margin-bottom:16px;">
@@ -49,7 +45,6 @@
 <h4>變數說明</h4>
 <p>root：目前子樹根節點。children：子節點串列。maxChildHeight：目前找到的最大子樹高度。</p>
 <h4>完整 C++ 程式碼</h4>
-<button class="copy-code-btn" onclick="copyNearestCode(this)" type="button">📋 複製程式碼</button>
 <pre style="white-space:pre-wrap;background:#0f172a;color:#e5e7eb;padding:16px;border-radius:10px;overflow:auto;"><code>#include &lt;iostream&gt;
 #include &lt;vector&gt;
 using namespace std;
@@ -153,7 +148,6 @@ Height = 3</code></pre>
 <h4>變數說明</h4>
 <p>tree：adjacency list。root：目前節點。level：目前深度，用來控制縮排。</p>
 <h4>完整 C++ 程式碼</h4>
-<button class="copy-code-btn" onclick="copyNearestCode(this)" type="button">📋 複製程式碼</button>
 <pre style="white-space:pre-wrap;background:#0f172a;color:#e5e7eb;padding:16px;border-radius:10px;overflow:auto;"><code>#include &lt;iostream&gt;
 #include &lt;vector&gt;
 using namespace std;
@@ -229,7 +223,6 @@ Node 0
 <h4>變數說明</h4>
 <p>degree：每個節點實際 child 數。k：每個節點保留的 child 指標欄位數。wasted：未使用欄位總數。</p>
 <h4>完整 C++ 程式碼</h4>
-<button class="copy-code-btn" onclick="copyNearestCode(this)" type="button">📋 複製程式碼</button>
 <pre style="white-space:pre-wrap;background:#0f172a;color:#e5e7eb;padding:16px;border-radius:10px;overflow:auto;"><code>#include &lt;iostream&gt;
 #include &lt;vector&gt;
 using namespace std;
@@ -302,7 +295,6 @@ Wasted pointer fields = 22</code></pre>
 <h4>變數說明</h4>
 <p>leftChild：第一個孩子。rightSibling：下一個兄弟。level：輸出層級。</p>
 <h4>完整 C++ 程式碼</h4>
-<button class="copy-code-btn" onclick="copyNearestCode(this)" type="button">📋 複製程式碼</button>
 <pre style="white-space:pre-wrap;background:#0f172a;color:#e5e7eb;padding:16px;border-radius:10px;overflow:auto;"><code>#include &lt;iostream&gt;
 using namespace std;
 
@@ -388,7 +380,6 @@ A
 <h4>變數說明</h4>
 <p>left：first child。right：next sibling。A/B/C/D/E：示範節點。</p>
 <h4>完整 C++ 程式碼</h4>
-<button class="copy-code-btn" onclick="copyNearestCode(this)" type="button">📋 複製程式碼</button>
 <pre style="white-space:pre-wrap;background:#0f172a;color:#e5e7eb;padding:16px;border-radius:10px;overflow:auto;"><code>#include &lt;iostream&gt;
 using namespace std;
 
@@ -471,7 +462,6 @@ int main() {
 <h4>變數說明</h4>
 <p>seenNull：是否已遇到空位置。q：level-order 檢查用佇列。</p>
 <h4>完整 C++ 程式碼</h4>
-<button class="copy-code-btn" onclick="copyNearestCode(this)" type="button">📋 複製程式碼</button>
 <pre style="white-space:pre-wrap;background:#0f172a;color:#e5e7eb;padding:16px;border-radius:10px;overflow:auto;"><code>#include &lt;iostream&gt;
 #include &lt;queue&gt;
 using namespace std;
@@ -564,7 +554,6 @@ Is complete? Yes</code></pre>
 <h4>變數說明</h4>
 <p>n：總節點數。leaves：葉節點數。internal：非葉節點數。</p>
 <h4>完整 C++ 程式碼</h4>
-<button class="copy-code-btn" onclick="copyNearestCode(this)" type="button">📋 複製程式碼</button>
 <pre style="white-space:pre-wrap;background:#0f172a;color:#e5e7eb;padding:16px;border-radius:10px;overflow:auto;"><code>#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
 using namespace std;
@@ -657,7 +646,6 @@ Height = 3</code></pre>
 <h4>變數說明</h4>
 <p>tree：1-based array。i：要查詢的節點索引。</p>
 <h4>完整 C++ 程式碼</h4>
-<button class="copy-code-btn" onclick="copyNearestCode(this)" type="button">📋 複製程式碼</button>
 <pre style="white-space:pre-wrap;background:#0f172a;color:#e5e7eb;padding:16px;border-radius:10px;overflow:auto;"><code>#include &lt;iostream&gt;
 #include &lt;vector&gt;
 using namespace std;
@@ -736,7 +724,6 @@ Right child index = 7</code></pre>
 <h4>變數說明</h4>
 <p>data：節點資料。left/right：左右子節點指標。</p>
 <h4>完整 C++ 程式碼</h4>
-<button class="copy-code-btn" onclick="copyNearestCode(this)" type="button">📋 複製程式碼</button>
 <pre style="white-space:pre-wrap;background:#0f172a;color:#e5e7eb;padding:16px;border-radius:10px;overflow:auto;"><code>#include &lt;iostream&gt;
 using namespace std;
 
@@ -814,7 +801,6 @@ int main() {
 <h4>變數說明</h4>
 <p>root：目前節點。left/right：左右子樹。</p>
 <h4>完整 C++ 程式碼</h4>
-<button class="copy-code-btn" onclick="copyNearestCode(this)" type="button">📋 複製程式碼</button>
 <pre style="white-space:pre-wrap;background:#0f172a;color:#e5e7eb;padding:16px;border-radius:10px;overflow:auto;"><code>#include &lt;iostream&gt;
 using namespace std;
 
@@ -908,7 +894,6 @@ Postorder: D E B C A</code></pre>
 <h4>變數說明</h4>
 <p>st：建立樹用 stack。postfix：後序運算式。node：新建立節點。</p>
 <h4>完整 C++ 程式碼</h4>
-<button class="copy-code-btn" onclick="copyNearestCode(this)" type="button">📋 複製程式碼</button>
 <pre style="white-space:pre-wrap;background:#0f172a;color:#e5e7eb;padding:16px;border-radius:10px;overflow:auto;"><code>#include &lt;iostream&gt;
 #include &lt;stack&gt;
 #include &lt;string&gt;
@@ -1006,7 +991,6 @@ Infix expression = ((a+b)*c)</code></pre>
 <h4>變數說明</h4>
 <p>st：儲存尚未輸出的祖先節點。cur：目前走訪節點。</p>
 <h4>完整 C++ 程式碼</h4>
-<button class="copy-code-btn" onclick="copyNearestCode(this)" type="button">📋 複製程式碼</button>
 <pre style="white-space:pre-wrap;background:#0f172a;color:#e5e7eb;padding:16px;border-radius:10px;overflow:auto;"><code>#include &lt;iostream&gt;
 #include &lt;stack&gt;
 using namespace std;
@@ -1090,7 +1074,6 @@ int main() {
 <h4>變數說明</h4>
 <p>q：BFS 佇列。cur：目前被取出的節點。</p>
 <h4>完整 C++ 程式碼</h4>
-<button class="copy-code-btn" onclick="copyNearestCode(this)" type="button">📋 複製程式碼</button>
 <pre style="white-space:pre-wrap;background:#0f172a;color:#e5e7eb;padding:16px;border-radius:10px;overflow:auto;"><code>#include &lt;iostream&gt;
 #include &lt;queue&gt;
 using namespace std;
@@ -1175,7 +1158,6 @@ int main() {
 <h4>變數說明</h4>
 <p>L/R：左右子樹布林值。data：T、F、&amp;、|。</p>
 <h4>完整 C++ 程式碼</h4>
-<button class="copy-code-btn" onclick="copyNearestCode(this)" type="button">📋 複製程式碼</button>
 <pre style="white-space:pre-wrap;background:#0f172a;color:#e5e7eb;padding:16px;border-radius:10px;overflow:auto;"><code>#include &lt;iostream&gt;
 using namespace std;
 
@@ -1265,7 +1247,6 @@ SAT result = True</code></pre>
 <h4>變數說明</h4>
 <p>rightThread：right 是否為 thread。cur：目前節點。</p>
 <h4>完整 C++ 程式碼</h4>
-<button class="copy-code-btn" onclick="copyNearestCode(this)" type="button">📋 複製程式碼</button>
 <pre style="white-space:pre-wrap;background:#0f172a;color:#e5e7eb;padding:16px;border-radius:10px;overflow:auto;"><code>#include &lt;iostream&gt;
 using namespace std;
 
@@ -1352,7 +1333,6 @@ int main() {
 <h4>變數說明</h4>
 <p>parent：插入位置。child：新節點。rightThread：是否為線索指標。</p>
 <h4>完整 C++ 程式碼</h4>
-<button class="copy-code-btn" onclick="copyNearestCode(this)" type="button">📋 複製程式碼</button>
 <pre style="white-space:pre-wrap;background:#0f172a;color:#e5e7eb;padding:16px;border-radius:10px;overflow:auto;"><code>#include &lt;iostream&gt;
 using namespace std;
 
@@ -1408,29 +1388,4 @@ document.addEventListener('change',e=>{if(e.target.classList.contains('speed')){
 function openAll(){document.querySelectorAll('details.topic').forEach(d=>d.open=true)}
 function closeAll(){document.querySelectorAll('details.topic').forEach(d=>d.open=false)}
 document.addEventListener('DOMContentLoaded',()=>{document.querySelectorAll('.anim').forEach(a=>showFrame(a.id,0));});
-
-function copyNearestCode(btn){
-  const section=btn.closest('.code-added-section')||btn.parentElement;
-  const code=section.querySelector('pre code');
-  if(!code) return;
-  const text=code.innerText;
-  navigator.clipboard.writeText(text).then(()=>{
-    const old=btn.textContent;
-    btn.textContent='✅ 已複製';
-    btn.classList.add('copied');
-    setTimeout(()=>{btn.textContent=old;btn.classList.remove('copied');},1400);
-  }).catch(()=>{
-    const range=document.createRange();
-    range.selectNodeContents(code);
-    const sel=window.getSelection();
-    sel.removeAllRanges();
-    sel.addRange(range);
-    document.execCommand('copy');
-    sel.removeAllRanges();
-    const old=btn.textContent;
-    btn.textContent='✅ 已複製';
-    btn.classList.add('copied');
-    setTimeout(()=>{btn.textContent=old;btn.classList.remove('copied');},1400);
-  });
-}
 </script></body></html>
