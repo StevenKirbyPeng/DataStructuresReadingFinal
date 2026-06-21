@@ -1,0 +1,4 @@
+k = 4
+Number of nodes = 7
+Total child pointer fields = 28
+Wasted pointer fields = 22

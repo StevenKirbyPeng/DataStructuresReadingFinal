@@ -1,0 +1,22 @@
+lec6a 程式碼新增檢查報告
+
+處理內容：
+1. 每個下拉式主題已新增 C++ 程式碼。
+2. 每份 C++ 程式碼已加入中文註解。
+3. 每個主題已新增輸出結果。
+4. 每個主題已新增變數說明與函式說明。
+5. 原本 HTML/CSS/JS/SVG/圖片/動畫說明/主題說明皆保留，僅新增程式碼相關區塊與必要的程式碼區塊樣式。
+
+編譯檢查：
+01_konigsberg_bridge: Generated 7 SVG frames: output/01_konigsberg_bridge_steps
+02_graph_basic_samples: Generated 7 SVG frames: output/02_graph_basic_samples_steps
+03_adjacency_matrix_list: Generated 8 SVG frames: output/03_adjacency_matrix_list_steps
+04_weighted_network: Generated 7 SVG frames: output/04_weighted_network_steps
+05_dfs_traversal_tree: Generated 8 SVG frames: output/05_dfs_traversal_tree_steps
+06_bfs_traversal_tree: Generated 8 SVG frames: output/06_bfs_traversal_tree_steps
+07_connected_components: Generated 7 SVG frames: output/07_connected_components_steps
+08_articulation_dfn_low: Generated 8 SVG frames: output/08_articulation_dfn_low_steps
+09_kruskal_mst: Generated 8 SVG frames: output/09_kruskal_mst_steps
+10_prim_mst: Generated 8 SVG frames: output/10_prim_mst_steps
+11_sollin_boruvka_mst: Generated 8 SVG frames: output/11_sollin_boruvka_mst_steps
+12_static_timing_graph: Generated 8 SVG frames: output/12_static_timing_graph_steps

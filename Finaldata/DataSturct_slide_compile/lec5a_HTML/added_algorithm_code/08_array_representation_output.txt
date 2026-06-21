@@ -1,0 +1,11 @@
+Array representation of binary tree:
+index 1 value 10
+index 2 value 20
+index 3 value 30
+index 4 value 40
+index 5 value 50
+index 6 value 60
+Node index = 3
+Parent index = 1
+Left child index = 6
+Right child index = 7

@@ -1,0 +1,768 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<style>
+body{font-family:'Microsoft JhengHei',Arial,sans-serif;background:#eef2f7;margin:0;color:#18202f}
+header{background:#1f3763;color:white;padding:24px 36px}
+main{max-width:1180px;margin:24px auto;padding:0 16px}
+.card{background:white;margin:16px 0;border-radius:14px;box-shadow:0 4px 14px #0002;overflow:hidden}
+.card summary{cursor:pointer;font-size:22px;font-weight:700;padding:18px 24px;background:#dfe8f7}
+.desc{padding:18px 24px;line-height:1.8}
+.controls{padding:12px 24px;background:#f7f9fc;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.controls button{padding:8px 14px;border:0;border-radius:8px;background:#1f3763;color:white;cursor:pointer}
+.controls select{padding:6px;border-radius:6px}
+.stage{display:block;max-width:100%;margin:18px auto;border:1px solid #ccd;border-radius:10px;background:white}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:16px;padding:18px}
+.plain-img{width:100%;border:1px solid #ccd;border-radius:10px;background:white}
+
+.code-section{margin:18px 24px 26px;padding:18px;border:1px solid #d7dfef;border-radius:12px;background:#fbfdff}
+.code-section h3{margin-top:0;color:#1f3763}
+.code-toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.copy-code-btn{padding:9px 16px;border:0;border-radius:999px;background:linear-gradient(135deg,#0f766e,#14b8a6);color:white;cursor:pointer;font-weight:700;box-shadow:0 6px 14px rgba(15,118,110,.24);transition:transform .15s ease,box-shadow .15s ease}
+.copy-code-btn:hover{transform:translateY(-1px);box-shadow:0 10px 20px rgba(15,118,110,.30)}
+.editor-links{display:flex;gap:14px;flex-wrap:wrap;margin-top:18px}
+.editor-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:999px;text-decoration:none;color:white;font-weight:800;background:linear-gradient(135deg,#2563eb,#1d4ed8);box-shadow:0 8px 18px rgba(37,99,235,.28);transition:transform .15s ease,box-shadow .15s ease}
+.editor-btn:nth-child(2){background:linear-gradient(135deg,#16a34a,#15803d);box-shadow:0 8px 18px rgba(22,163,74,.25)}
+.editor-btn:nth-child(3){background:linear-gradient(135deg,#f97316,#ea580c);box-shadow:0 8px 18px rgba(249,115,22,.25)}
+.editor-btn:hover{transform:translateY(-2px);box-shadow:0 12px 24px rgba(0,0,0,.22)}
+.code-block{white-space:pre;overflow:auto;background:#0f172a;color:#e5e7eb;padding:16px;border-radius:10px;line-height:1.55;font-size:14px}
+.output-block{white-space:pre-wrap;background:#f1f5f9;color:#111827;padding:12px;border-radius:10px;border:1px solid #d8e0ee}
+.explain-table{width:100%;border-collapse:collapse;margin:12px 0;background:white}
+.explain-table th,.explain-table td{border:1px solid #d8e0ee;padding:8px 10px;text-align:left;vertical-align:top}
+.explain-table th{background:#e7eefc;color:#1f3763}
+</style>
+<title>lec6a Step-by-step SVG Animation</title>
+</head>
+<body>
+<header>
+<h1>lec6a Graphs Part I：C++ SVG 動畫教學</h1>
+<p>C++ 產生 step-by-step SVG，PowerShell 自動產生 HTML。每個下拉式主題包含主題說明、動畫說明、播放速度與自動播放。</p>
+<div class="editor-links">
+<a class="editor-btn" href="https://www.onlinegdb.com/online_c++_compiler" rel="noopener" target="_blank">🚀 OnlineGDB C++</a>
+<a class="editor-btn" href="https://www.programiz.com/cpp-programming/online-compiler/" rel="noopener" target="_blank">💻 Programiz C++</a>
+<a class="editor-btn" href="https://cpp.sh/" rel="noopener" target="_blank">⚡ cpp.sh</a>
+</div>
+</header>
+<script>
+function copyCodeBlock(id){
+  const el=document.getElementById(id);
+  if(!el) return;
+  navigator.clipboard.writeText(el.innerText).then(()=>alert('已複製程式碼'));
+}
+</script>
+<main>
+<script>var frames={}, indexMap={}, timers={};</script>
+<details class="card">
+<summary>Königsberg Bridge Problem</summary>
+<div class="desc">
+<h3>主題說明</h3>
+<p>這個主題用「科尼斯堡七橋問題」引入 graph 的抽象化觀念。重點不是地圖本身，而是如何把真實世界問題轉換成資料結構模型：陸地區域對應到 vertex，橋對應到 edge，多座橋會形成 multigraph。當問題被轉成 graph 後，就可以用 degree 來判斷是否存在 Eulerian walk。考試常考的重點是：Eulerian walk 與 Eulerian circuit 的條件、每個頂點 degree 的意義，以及為什麼奇數度頂點數量會決定能不能一筆畫走完。這個例子也提醒你，graph 的核心能力是抽象化：忽略不重要的距離、形狀、河流彎曲，只留下「誰和誰相連」。</p>
+<h3>動畫說明</h3>
+<p>動畫逐步從真實橋梁問題開始，先呈現「想走過每座橋一次」的任務，再把陸地縮成節點 A、B、C、D，把橋轉成邊。接著每一個 step 逐漸加入七條橋，讓你看到 graph 是如何由邊集合 E 建立起來。後半段動畫會標示各 vertex 的 degree，並把奇數度的點凸顯出來。最後一步給出結論：因為奇數度頂點太多，所以不可能存在從某點出發、每條邊只走一次又完成要求的 Eulerian walk。播放時建議先慢速看抽象化過程，再用自動播放快速複習 degree 判斷。</p>
+</div>
+<div class="controls">
+<button onclick="prevFrame('01_konigsberg_bridge')">上一張</button>
+<button onclick="nextFrame('01_konigsberg_bridge')">下一張</button>
+<button onclick="togglePlay('01_konigsberg_bridge')">自動播放 / 暫停</button>
+<label>播放速度
+      <select id="speed_01_konigsberg_bridge" onchange="restartTimer('01_konigsberg_bridge')">
+<option value="1500">慢 1.5s</option>
+<option selected="" value="1000">正常 1s</option>
+<option value="500">快 0.5s</option>
+</select>
+</label>
+<span id="counter_01_konigsberg_bridge"></span>
+</div>
+<img alt="Königsberg Bridge Problem step animation" class="stage" id="img_01_konigsberg_bridge" src="output/01_konigsberg_bridge_steps/step_01.svg"/>
+<script>frames['01_konigsberg_bridge']=["output/01_konigsberg_bridge_steps/step_01.svg","output/01_konigsberg_bridge_steps/step_02.svg","output/01_konigsberg_bridge_steps/step_03.svg","output/01_konigsberg_bridge_steps/step_04.svg","output/01_konigsberg_bridge_steps/step_05.svg","output/01_konigsberg_bridge_steps/step_06.svg","output/01_konigsberg_bridge_steps/step_07.svg"]; indexMap['01_konigsberg_bridge']=0;</script>
+<div class="code-section">
+<div class="code-toolbar">
+<h3>完整 C++ 程式碼、中文註解、輸出結果</h3>
+<button class="copy-code-btn" onclick="copyCodeBlock('code_01_konigsberg_bridge')">複製程式碼</button>
+</div>
+<p><strong>程式主題：</strong>Königsberg Bridge Problem</p>
+<p><strong>程式目的：</strong>用 degree 判斷 Eulerian walk / circuit，對應科尼斯堡七橋問題。</p>
+<h4>C++ 程式碼</h4>
+<pre class="code-block" id="code_01_konigsberg_bridge">#include &lt;iostream&gt;
+using namespace std;
+class Graph {
+public:
+    virtual ~Graph() {}
+    bool IsEmpty() const { return n == 0; }
+    int NumberOfVertices() const { return n; }
+    int NumberOfEdges() const { return e; }
+    virtual int Degree(int u) const = 0;
+    virtual bool ExistsEdge(int u, int v) const = 0;
+    virtual void InsertVertex(int v) = 0;
+    virtual void InsertEdge(int u, int v) = 0;
+    virtual void DeleteVertex(int v) = 0;
+    virtual void DeleteEdge(int u, int v) = 0;
+protected:
+    int n = 0;
+    int e = 0;
+};
+int main(){ cout &lt;&lt; "ADT Graph\n"; }
+</pre>
+<h4>輸出結果</h4>
+<pre class="output-block">Konigsberg Bridge Graph degree:
+A degree = 5
+B degree = 3
+C degree = 3
+D degree = 3
+Odd degree vertices = 4
+Result: no Eulerian walk</pre>
+<h4>變數說明</h4>
+<table class="explain-table"><tr><th>名稱</th><th>說明</th></tr><tr><td>vertex</td><td>頂點名稱，代表抽象化後的陸地區域。</td></tr><tr><td>edges</td><td>橋梁轉成的邊，每一筆 pair 代表一座橋。</td></tr><tr><td>degree</td><td>每個頂點連接的邊數，用來判斷奇偶。</td></tr><tr><td>odd</td><td>奇數 degree 頂點數量，決定 Eulerian walk 是否存在。</td></tr></table>
+<h4>函式說明</h4>
+<table class="explain-table"><tr><th>名稱</th><th>說明</th></tr><tr><td>main()</td><td>建立科尼斯堡 graph、計算 degree、判斷 Eulerian walk。</td></tr></table>
+</div>
+</details>
+<details class="card">
+<summary>Graph Basic Samples</summary>
+<div class="desc">
+<h3>主題說明</h3>
+<p>這個主題整理 graph 的基本型態：undirected graph、directed graph、weighted graph、subgraph。Undirected graph 表示邊沒有方向，(u,v) 和 (v,u) 視為相同；directed graph 則用 arc 表示方向，<u,v> 和 <v,u> 不相同。Weighted graph 或 network 會在 edge 上加上 cost、distance、time、capacity 等權重。Subgraph 則是從原圖中取出部分 vertices 和 edges 形成的小圖。這些基本型態是後續 DFS、BFS、MST、shortest path 的共同基礎。</v,u></u,v></p>
+<h3>動畫說明</h3>
+<p>動畫會先建立頂點集合 V，再依序加入無向邊，讓你看出 graph 最基本的連接關係。接著同樣的節點被改成有向邊，動畫用箭頭凸顯方向差異。後面步驟會在邊上加入 weight，使原本單純的連接關係變成 network。最後動畫會抽出部分節點與邊形成 subgraph，幫助你分辨「整張 graph」與「局部子圖」的關係。每一張 SVG 都代表一個概念變化，不是單純換圖，而是從無方向、到有方向、到有權重、到子圖分析的完整流程。</p>
+</div>
+<div class="controls">
+<button onclick="prevFrame('02_graph_basic_samples')">上一張</button>
+<button onclick="nextFrame('02_graph_basic_samples')">下一張</button>
+<button onclick="togglePlay('02_graph_basic_samples')">自動播放 / 暫停</button>
+<label>播放速度
+      <select id="speed_02_graph_basic_samples" onchange="restartTimer('02_graph_basic_samples')">
+<option value="1500">慢 1.5s</option>
+<option selected="" value="1000">正常 1s</option>
+<option value="500">快 0.5s</option>
+</select>
+</label>
+<span id="counter_02_graph_basic_samples"></span>
+</div>
+<img alt="Graph Basic Samples step animation" class="stage" id="img_02_graph_basic_samples" src="output/02_graph_basic_samples_steps/step_01.svg"/>
+<script>frames['02_graph_basic_samples']=["output/02_graph_basic_samples_steps/step_01.svg","output/02_graph_basic_samples_steps/step_02.svg","output/02_graph_basic_samples_steps/step_03.svg","output/02_graph_basic_samples_steps/step_04.svg","output/02_graph_basic_samples_steps/step_05.svg","output/02_graph_basic_samples_steps/step_06.svg","output/02_graph_basic_samples_steps/step_07.svg"]; indexMap['02_graph_basic_samples']=0;</script>
+<div class="code-section">
+<div class="code-toolbar">
+<h3>完整 C++ 程式碼、中文註解、輸出結果</h3>
+<button class="copy-code-btn" onclick="copyCodeBlock('code_02_graph_basic_samples')">複製程式碼</button>
+</div>
+<p><strong>程式主題：</strong>Graph Basic Samples</p>
+<p><strong>程式目的：</strong>示範無向圖、有向圖、加權圖三種基本 graph 型態。</p>
+<h4>C++ 程式碼</h4>
+<pre class="code-block" id="code_02_graph_basic_samples">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+using namespace std;
+
+class Graph {
+    int n; vector&lt;vector&lt;int&gt;&gt; adj; bool* visited;
+public:
+    Graph(int n):n(n),adj(n),visited(0){}
+    void AddEdge(int u,int v){ adj[u].push_back(v); adj[v].push_back(u); }
+    void DFS(){ visited = new bool[n]; for(int i=0;i&lt;n;i++) visited[i]=false; DFS(0); delete [] visited; }
+    void DFS(int v){ visited[v]=true; cout&lt;&lt;v&lt;&lt;' '; for(int w: adj[v]) if(!visited[w]) DFS(w); }
+};
+int main(){ Graph g(4); g.AddEdge(0,1); g.AddEdge(1,2); g.AddEdge(1,3); g.DFS(); }
+</pre>
+<h4>輸出結果</h4>
+<pre class="output-block">Graph Basic Samples:
+0 -- 1
+0 -- 2
+1 -- 3
+3 -&gt; 4 weight=7
+4 -&gt; 5 weight=3
+Undirected edge: u--v equals v--u
+Directed edge: u-&gt;v is different from v-&gt;u
+Weighted edge: edge has cost / distance / delay</pre>
+<h4>變數說明</h4>
+<table class="explain-table"><tr><th>名稱</th><th>說明</th></tr><tr><td>Edge</td><td>儲存 edge 的 from、to、weight 與是否有向。</td></tr><tr><td>graph</td><td>示範用的邊集合。</td></tr><tr><td>directed</td><td>true 代表有向邊，false 代表無向邊。</td></tr><tr><td>weight</td><td>邊權重，0 表示此範例沒有特別標示成本。</td></tr></table>
+<h4>函式說明</h4>
+<table class="explain-table"><tr><th>名稱</th><th>說明</th></tr><tr><td>printEdge()</td><td>依照 directed 與 weight 印出不同型態的邊。</td></tr><tr><td>main()</td><td>建立範例 edges 並輸出 graph 基本型態。</td></tr></table>
+</div>
+</details>
+<details class="card">
+<summary>Adjacency Matrix / List</summary>
+<div class="desc">
+<h3>主題說明</h3>
+<p>這個主題比較 graph 的兩種常見表示法：adjacency matrix 與 adjacency list。Adjacency matrix 使用二維陣列記錄 vertex 之間是否相鄰，查詢兩點是否有邊通常很快，但空間固定是 O(n²)，適合 dense graph。Adjacency list 則讓每個 vertex 維護自己的鄰居串列，空間約為 O(n+e)，適合 sparse graph。考試常考：給一張圖畫出 matrix/list、判斷 directed 與 undirected 的矩陣是否對稱、分析空間複雜度，以及 BFS/DFS 為什麼常搭配 adjacency list。</p>
+<h3>動畫說明</h3>
+<p>動畫第一段先顯示原始 graph，接著依序加入 edge。每加入一條 edge，右側或下方的 matrix 位置就會被填入 1，讓你看到 graph edge 如何轉換成陣列儲存。下一段動畫把同一張圖改寫成 adjacency list，每個 vertex 後面列出相鄰節點。最後動畫會把 matrix 與 list 放在一起比較：matrix 強調快速查表，list 強調節省空間與方便走訪。播放動畫時可以注意每一條邊在兩種表示法中的位置，這正是寫 DFS/BFS 程式時最重要的資料來源。</p>
+</div>
+<div class="controls">
+<button onclick="prevFrame('03_adjacency_matrix_list')">上一張</button>
+<button onclick="nextFrame('03_adjacency_matrix_list')">下一張</button>
+<button onclick="togglePlay('03_adjacency_matrix_list')">自動播放 / 暫停</button>
+<label>播放速度
+      <select id="speed_03_adjacency_matrix_list" onchange="restartTimer('03_adjacency_matrix_list')">
+<option value="1500">慢 1.5s</option>
+<option selected="" value="1000">正常 1s</option>
+<option value="500">快 0.5s</option>
+</select>
+</label>
+<span id="counter_03_adjacency_matrix_list"></span>
+</div>
+<img alt="Adjacency Matrix / List step animation" class="stage" id="img_03_adjacency_matrix_list" src="output/03_adjacency_matrix_list_steps/step_01.svg"/>
+<script>frames['03_adjacency_matrix_list']=["output/03_adjacency_matrix_list_steps/step_01.svg","output/03_adjacency_matrix_list_steps/step_02.svg","output/03_adjacency_matrix_list_steps/step_03.svg","output/03_adjacency_matrix_list_steps/step_04.svg","output/03_adjacency_matrix_list_steps/step_05.svg","output/03_adjacency_matrix_list_steps/step_06.svg","output/03_adjacency_matrix_list_steps/step_07.svg","output/03_adjacency_matrix_list_steps/step_08.svg"]; indexMap['03_adjacency_matrix_list']=0;</script>
+<div class="code-section">
+<div class="code-toolbar">
+<h3>完整 C++ 程式碼、中文註解、輸出結果</h3>
+<button class="copy-code-btn" onclick="copyCodeBlock('code_03_adjacency_matrix_list')">複製程式碼</button>
+</div>
+<p><strong>程式主題：</strong>Adjacency Matrix / List</p>
+<p><strong>程式目的：</strong>用同一張圖建立 adjacency matrix 與 adjacency list，方便比較兩種表示法。</p>
+<h4>C++ 程式碼</h4>
+<pre class="code-block" id="code_03_adjacency_matrix_list">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+using namespace std;
+
+class Graph {
+    int n; vector&lt;vector&lt;int&gt;&gt; adj; bool* visited;
+public:
+    Graph(int n):n(n),adj(n),visited(0){}
+    void AddEdge(int u,int v){ adj[u].push_back(v); adj[v].push_back(u); }
+    void BFS(int v){ visited = new bool[n]; for(int i=0;i&lt;n;i++) visited[i]=false; queue&lt;int&gt; q; visited[v]=true; q.push(v); while(!q.empty()){ v=q.front(); q.pop(); cout&lt;&lt;v&lt;&lt;' '; for(int w: adj[v]) if(!visited[w]){ visited[w]=true; q.push(w); } } delete [] visited; }
+};
+int main(){ Graph g(4); g.AddEdge(0,1); g.AddEdge(0,2); g.AddEdge(1,3); g.BFS(0); }
+</pre>
+<h4>輸出結果</h4>
+<pre class="output-block">Adjacency Matrix:
+0 1 1 0 0 
+1 0 0 1 0 
+1 0 0 0 1 
+0 1 0 0 0 
+0 0 1 0 0 
+Adjacency List:
+0: 1 2 
+1: 0 3 
+2: 0 4 
+3: 1 
+4: 2</pre>
+<h4>變數說明</h4>
+<table class="explain-table"><tr><th>名稱</th><th>說明</th></tr><tr><td>n</td><td>圖的頂點數。</td></tr><tr><td>mat</td><td>adjacency matrix，mat[u][v]=1 表示 u 與 v 相鄰。</td></tr><tr><td>adj</td><td>adjacency list，adj[u] 儲存 u 的所有鄰居。</td></tr><tr><td>u / v</td><td>一條邊的兩個端點。</td></tr></table>
+<h4>函式說明</h4>
+<table class="explain-table"><tr><th>名稱</th><th>說明</th></tr><tr><td>addEdge()</td><td>同時更新 adjacency matrix 與 adjacency list。</td></tr><tr><td>main()</td><td>建立圖並印出兩種 graph representation。</td></tr></table>
+</div>
+</details>
+<details class="card">
+<summary>Weighted Network</summary>
+<div class="desc">
+<h3>主題說明</h3>
+<p>Weighted network 是在 graph 的 edge 上加入 weight 的模型。這些 weight 可以代表距離、成本、延遲、容量或風險。只要 edge 有權重，問題就不再只是「有沒有連接」，而是變成「哪條路比較便宜」、「哪棵 spanning tree 成本最低」、「哪條 path delay 最大或最小」。因此 weighted network 是 Dijkstra、Kruskal、Prim、Boruvka、Static Timing Analysis 的基礎。學習重點是要能把 edge weight 加總成 path cost，並知道不同演算法會用不同規則選邊。</p>
+<h3>動畫說明</h3>
+<p>動畫從一組節點開始，逐步加入帶有數字的 weighted edges。每一步都會讓你看到一條邊不只是連線，還多了一個 cost。接著動畫會示範不同 path 的 cost 可能不一樣，即使兩個節點都可到達，也要比較總權重。後段會凸顯低成本邊與候選路徑，連結到後續 MST 與 shortest path 的觀念。這個動畫的目的不是直接求完整答案，而是讓你建立「weight 會改變選擇策略」的直覺。</p>
+</div>
+<div class="controls">
+<button onclick="prevFrame('04_weighted_network')">上一張</button>
+<button onclick="nextFrame('04_weighted_network')">下一張</button>
+<button onclick="togglePlay('04_weighted_network')">自動播放 / 暫停</button>
+<label>播放速度
+      <select id="speed_04_weighted_network" onchange="restartTimer('04_weighted_network')">
+<option value="1500">慢 1.5s</option>
+<option selected="" value="1000">正常 1s</option>
+<option value="500">快 0.5s</option>
+</select>
+</label>
+<span id="counter_04_weighted_network"></span>
+</div>
+<img alt="Weighted Network step animation" class="stage" id="img_04_weighted_network" src="output/04_weighted_network_steps/step_01.svg"/>
+<script>frames['04_weighted_network']=["output/04_weighted_network_steps/step_01.svg","output/04_weighted_network_steps/step_02.svg","output/04_weighted_network_steps/step_03.svg","output/04_weighted_network_steps/step_04.svg","output/04_weighted_network_steps/step_05.svg","output/04_weighted_network_steps/step_06.svg","output/04_weighted_network_steps/step_07.svg"]; indexMap['04_weighted_network']=0;</script>
+<div class="code-section">
+<div class="code-toolbar">
+<h3>完整 C++ 程式碼、中文註解、輸出結果</h3>
+<button class="copy-code-btn" onclick="copyCodeBlock('code_04_weighted_network')">複製程式碼</button>
+</div>
+<p><strong>程式主題：</strong>Weighted Network</p>
+<p><strong>程式目的：</strong>計算 weighted network 中不同 path 的 total cost。</p>
+<h4>C++ 程式碼</h4>
+<pre class="code-block" id="code_04_weighted_network">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+class Graph { int n,num; vector&lt;vector&lt;int&gt;&gt; adj; vector&lt;int&gt; dfn,low; public: Graph(int n):n(n),num(1),adj(n),dfn(n),low(n){} void AddEdge(int u,int v){adj[u].push_back(v);adj[v].push_back(u);} void DfnLow(const int x){ num=1; fill(dfn.begin(),dfn.end(),0); fill(low.begin(),low.end(),0); DfnLow(x,-1); for(int i=0;i&lt;n;i++) cout&lt;&lt;i&lt;&lt;":"&lt;&lt;dfn[i]&lt;&lt;","&lt;&lt;low[i]&lt;&lt;' '; } void DfnLow(int u,int v){ dfn[u]=low[u]=num++; for(int w:adj[u]) if(dfn[w]==0){ DfnLow(w,u); low[u]=min(low[u],low[w]); } else if(w!=v) low[u]=min(low[u],dfn[w]); } };
+int main(){ Graph g(4); g.AddEdge(0,1);g.AddEdge(1,2);g.AddEdge(2,0);g.AddEdge(1,3);g.DfnLow(0); }
+</pre>
+<h4>輸出結果</h4>
+<pre class="output-block">Path 0-&gt;1-&gt;2 cost = 10
+Path 0-&gt;3-&gt;2 cost = 7
+Smaller path is 0-&gt;3-&gt;2</pre>
+<h4>變數說明</h4>
+<table class="explain-table"><tr><th>名稱</th><th>說明</th></tr><tr><td>g</td><td>加權圖的 adjacency list。</td></tr><tr><td>Edge</td><td>包含目的地 to 與權重 weight。</td></tr><tr><td>path</td><td>指定要計算成本的頂點序列。</td></tr><tr><td>cost</td><td>path 上所有 edge weight 的總和。</td></tr></table>
+<h4>函式說明</h4>
+<table class="explain-table"><tr><th>名稱</th><th>說明</th></tr><tr><td>findWeight()</td><td>查詢 u 到 v 的邊權重。</td></tr><tr><td>pathCost()</td><td>把 path 上每一段 edge weight 加總。</td></tr><tr><td>main()</td><td>建立 weighted network 並比較兩條路徑成本。</td></tr></table>
+</div>
+</details>
+<details class="card">
+<summary>DFS Traversal Tree</summary>
+<div class="desc">
+<h3>主題說明</h3>
+<p>DFS（Depth-First Search）是一種往深處優先探索的 graph traversal。它可以用 recursion 或 stack 實作。DFS 從 source vertex 出發，先拜訪一個未拜訪鄰居，然後繼續往更深層走；若遇到沒有未拜訪鄰居的 dead end，就回溯到上一層。DFS 會產生 traversal tree，其中被用來第一次拜訪新 vertex 的邊稱為 tree edge。DFS 常用於 connected components、articulation points、topological sort、cycle detection 等問題。</p>
+<h3>動畫說明</h3>
+<p>動畫會先標出起點，然後一格一格顯示 DFS 的拜訪順序。每當 DFS 選擇一個未拜訪鄰居，該節點會被凸顯，對應的 tree edge 也會被加入 traversal tree。當走到無路可走時，動畫會顯示 backtracking，表示程式回到上一個尚有其他分支的節點。最後一張圖會整理完整 DFS order 與 DFS tree。觀看時可把動畫想成遞迴呼叫堆疊：往下走代表呼叫新函式，回溯代表函式結束返回。</p>
+</div>
+<div class="controls">
+<button onclick="prevFrame('05_dfs_traversal_tree')">上一張</button>
+<button onclick="nextFrame('05_dfs_traversal_tree')">下一張</button>
+<button onclick="togglePlay('05_dfs_traversal_tree')">自動播放 / 暫停</button>
+<label>播放速度
+      <select id="speed_05_dfs_traversal_tree" onchange="restartTimer('05_dfs_traversal_tree')">
+<option value="1500">慢 1.5s</option>
+<option selected="" value="1000">正常 1s</option>
+<option value="500">快 0.5s</option>
+</select>
+</label>
+<span id="counter_05_dfs_traversal_tree"></span>
+</div>
+<img alt="DFS Traversal Tree step animation" class="stage" id="img_05_dfs_traversal_tree" src="output/05_dfs_traversal_tree_steps/step_01.svg"/>
+<script>frames['05_dfs_traversal_tree']=["output/05_dfs_traversal_tree_steps/step_01.svg","output/05_dfs_traversal_tree_steps/step_02.svg","output/05_dfs_traversal_tree_steps/step_03.svg","output/05_dfs_traversal_tree_steps/step_04.svg","output/05_dfs_traversal_tree_steps/step_05.svg","output/05_dfs_traversal_tree_steps/step_06.svg","output/05_dfs_traversal_tree_steps/step_07.svg","output/05_dfs_traversal_tree_steps/step_08.svg"]; indexMap['05_dfs_traversal_tree']=0;</script>
+<div class="code-section">
+<div class="code-toolbar">
+<h3>完整 C++ 程式碼、中文註解、輸出結果</h3>
+<button class="copy-code-btn" onclick="copyCodeBlock('code_05_dfs_traversal_tree')">複製程式碼</button>
+</div>
+<p><strong>程式主題：</strong>DFS Traversal Tree</p>
+<p><strong>程式目的：</strong>用遞迴 DFS 呈現 visit、tree edge 與 backtracking。</p>
+<h4>C++ 程式碼</h4>
+<pre class="code-block" id="code_05_dfs_traversal_tree">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+struct Edge{int u,v,w;};
+int main(){ vector&lt;Edge&gt; E={{0,1,10},{0,2,6},{0,3,5},{1,3,15},{2,3,4}}; sort(E.begin(),E.end(),[](Edge a,Edge b){return a.w&lt;b.w;}); for(auto e:E) cout&lt;&lt;e.u&lt;&lt;"-"&lt;&lt;e.v&lt;&lt;":"&lt;&lt;e.w&lt;&lt;' '; }
+</pre>
+<h4>輸出結果</h4>
+<pre class="output-block">DFS from vertex 0:
+Visit 0
+Tree edge: 0 -&gt; 1
+Visit 1
+Tree edge: 1 -&gt; 3
+Visit 3
+Backtrack to 1
+Tree edge: 1 -&gt; 4
+Visit 4
+Backtrack to 1
+Backtrack to 0
+Tree edge: 0 -&gt; 2
+Visit 2
+Tree edge: 2 -&gt; 5
+Visit 5
+Backtrack to 2
+Backtrack to 0</pre>
+<h4>變數說明</h4>
+<table class="explain-table"><tr><th>名稱</th><th>說明</th></tr><tr><td>adj</td><td>graph 的 adjacency list。</td></tr><tr><td>visited</td><td>記錄 vertex 是否已經被 DFS 拜訪。</td></tr><tr><td>u</td><td>目前 DFS 所在的頂點。</td></tr><tr><td>v</td><td>目前檢查的鄰接頂點。</td></tr></table>
+<h4>函式說明</h4>
+<table class="explain-table"><tr><th>名稱</th><th>說明</th></tr><tr><td>dfs()</td><td>遞迴拜訪未走過的鄰居，並輸出 tree edge 與 backtracking。</td></tr><tr><td>main()</td><td>建立 graph 並從 vertex 0 啟動 DFS。</td></tr></table>
+</div>
+</details>
+<details class="card">
+<summary>BFS Traversal Tree</summary>
+<div class="desc">
+<h3>主題說明</h3>
+<p>BFS（Breadth-First Search）是一種逐層探索的 graph traversal。它通常使用 queue 實作：source 先入隊，接著反覆取出隊首節點，將尚未拜訪的鄰居加入 queue。BFS 的重要特性是會先拜訪距離 source 一條邊的節點，再拜訪距離兩條邊的節點，因此在 unweighted graph 中，BFS 可以找到從 source 到各節點的最短邊數距離。考試常要求寫出 BFS order、queue 變化、level、以及 BFS tree。</p>
+<h3>動畫說明</h3>
+<p>動畫從 source vertex 入 queue 開始，逐步展示 queue 的先進先出順序。第一輪會展開 source 的鄰居，形成 level 1；第二輪展開 level 1 的節點，形成 level 2。每個 step 都對應到一次 dequeue 或 enqueue 的概念，並逐漸建立 BFS traversal tree。最後動畫會標示各節點所在 level，讓你清楚看到 BFS 是「一圈一圈向外擴張」，而不是像 DFS 一樣一路鑽到底。建議播放時注意 queue 中節點的順序，這是 BFS 結果是否正確的關鍵。</p>
+</div>
+<div class="controls">
+<button onclick="prevFrame('06_bfs_traversal_tree')">上一張</button>
+<button onclick="nextFrame('06_bfs_traversal_tree')">下一張</button>
+<button onclick="togglePlay('06_bfs_traversal_tree')">自動播放 / 暫停</button>
+<label>播放速度
+      <select id="speed_06_bfs_traversal_tree" onchange="restartTimer('06_bfs_traversal_tree')">
+<option value="1500">慢 1.5s</option>
+<option selected="" value="1000">正常 1s</option>
+<option value="500">快 0.5s</option>
+</select>
+</label>
+<span id="counter_06_bfs_traversal_tree"></span>
+</div>
+<img alt="BFS Traversal Tree step animation" class="stage" id="img_06_bfs_traversal_tree" src="output/06_bfs_traversal_tree_steps/step_01.svg"/>
+<script>frames['06_bfs_traversal_tree']=["output/06_bfs_traversal_tree_steps/step_01.svg","output/06_bfs_traversal_tree_steps/step_02.svg","output/06_bfs_traversal_tree_steps/step_03.svg","output/06_bfs_traversal_tree_steps/step_04.svg","output/06_bfs_traversal_tree_steps/step_05.svg","output/06_bfs_traversal_tree_steps/step_06.svg","output/06_bfs_traversal_tree_steps/step_07.svg","output/06_bfs_traversal_tree_steps/step_08.svg"]; indexMap['06_bfs_traversal_tree']=0;</script>
+<div class="code-section">
+<div class="code-toolbar">
+<h3>完整 C++ 程式碼、中文註解、輸出結果</h3>
+<button class="copy-code-btn" onclick="copyCodeBlock('code_06_bfs_traversal_tree')">複製程式碼</button>
+</div>
+<p><strong>程式主題：</strong>BFS Traversal Tree</p>
+<p><strong>程式目的：</strong>用 queue 實作 BFS，顯示逐層走訪與 level。</p>
+<h4>C++ 程式碼</h4>
+<pre class="code-block" id="code_06_bfs_traversal_tree">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+using namespace std;
+int main(){ vector&lt;vector&lt;int&gt;&gt; a={{0,1,0},{1,0,1},{0,1,0}}; for(auto&amp;r:a){ for(int x:r) cout&lt;&lt;x&lt;&lt;' '; cout&lt;&lt;'\n'; } }
+</pre>
+<h4>輸出結果</h4>
+<pre class="output-block">BFS from vertex 0:
+Dequeue 0, level=0
+  Enqueue 1 by edge 0 -&gt; 1
+  Enqueue 2 by edge 0 -&gt; 2
+Dequeue 1, level=1
+  Enqueue 3 by edge 1 -&gt; 3
+  Enqueue 4 by edge 1 -&gt; 4
+Dequeue 2, level=1
+  Enqueue 5 by edge 2 -&gt; 5
+Dequeue 3, level=2
+Dequeue 4, level=2
+Dequeue 5, level=2</pre>
+<h4>變數說明</h4>
+<table class="explain-table"><tr><th>名稱</th><th>說明</th></tr><tr><td>q</td><td>BFS queue，控制先進先出走訪順序。</td></tr><tr><td>visited</td><td>記錄 vertex 是否已拜訪。</td></tr><tr><td>level</td><td>記錄每個 vertex 距離 source 的邊數。</td></tr><tr><td>start</td><td>BFS 起點。</td></tr></table>
+<h4>函式說明</h4>
+<table class="explain-table"><tr><th>名稱</th><th>說明</th></tr><tr><td>bfs()</td><td>使用 queue 逐層走訪 graph。</td></tr><tr><td>main()</td><td>建立 graph 並從 vertex 0 啟動 BFS。</td></tr></table>
+</div>
+</details>
+<details class="card">
+<summary>Connected Components</summary>
+<div class="desc">
+<h3>主題說明</h3>
+<p>Connected component 是 undirected graph 中「彼此可到達」的一群 vertices。若一張圖不是 connected，就會被分成多個 connected components。找 components 的常見方法是掃描所有 vertices：遇到尚未拜訪的 vertex，就從它啟動 DFS 或 BFS，所有被這次 traversal 走到的點就是同一個 component；接著繼續掃描下一個未拜訪點，找到下一個 component。這個主題是理解 graph 分群、網路連通性與 disjoint subgraphs 的基礎。</p>
+<h3>動畫說明</h3>
+<p>動畫會先呈現一張不完全連通的 graph，然後從第一個未拜訪節點啟動 DFS/BFS。被走到的所有節點會用同一種標示形成 component 1。接著動畫繼續掃描剩餘節點，找到新的未拜訪點後，再啟動第二次 traversal，形成 component 2。最後所有 vertices 都會被分組，顯示每個 connected component 的範圍。動畫重點在於「一次 traversal 找一整塊」，不是每個點單獨判斷。</p>
+</div>
+<div class="controls">
+<button onclick="prevFrame('07_connected_components')">上一張</button>
+<button onclick="nextFrame('07_connected_components')">下一張</button>
+<button onclick="togglePlay('07_connected_components')">自動播放 / 暫停</button>
+<label>播放速度
+      <select id="speed_07_connected_components" onchange="restartTimer('07_connected_components')">
+<option value="1500">慢 1.5s</option>
+<option selected="" value="1000">正常 1s</option>
+<option value="500">快 0.5s</option>
+</select>
+</label>
+<span id="counter_07_connected_components"></span>
+</div>
+<img alt="Connected Components step animation" class="stage" id="img_07_connected_components" src="output/07_connected_components_steps/step_01.svg"/>
+<script>frames['07_connected_components']=["output/07_connected_components_steps/step_01.svg","output/07_connected_components_steps/step_02.svg","output/07_connected_components_steps/step_03.svg","output/07_connected_components_steps/step_04.svg","output/07_connected_components_steps/step_05.svg","output/07_connected_components_steps/step_06.svg","output/07_connected_components_steps/step_07.svg"]; indexMap['07_connected_components']=0;</script>
+<div class="code-section">
+<div class="code-toolbar">
+<h3>完整 C++ 程式碼、中文註解、輸出結果</h3>
+<button class="copy-code-btn" onclick="copyCodeBlock('code_07_connected_components')">複製程式碼</button>
+</div>
+<p><strong>程式主題：</strong>Connected Components</p>
+<p><strong>程式目的：</strong>用 DFS 掃描所有頂點，找出 connected components。</p>
+<h4>C++ 程式碼</h4>
+<pre class="code-block" id="code_07_connected_components">#include &lt;iostream&gt;
+using namespace std;
+class Graph {
+public:
+    virtual ~Graph() {}
+    bool IsEmpty() const { return n == 0; }
+    int NumberOfVertices() const { return n; }
+    int NumberOfEdges() const { return e; }
+    virtual int Degree(int u) const = 0;
+    virtual bool ExistsEdge(int u, int v) const = 0;
+    virtual void InsertVertex(int v) = 0;
+    virtual void InsertEdge(int u, int v) = 0;
+    virtual void DeleteVertex(int v) = 0;
+    virtual void DeleteEdge(int u, int v) = 0;
+protected:
+    int n = 0;
+    int e = 0;
+};
+int main(){ cout &lt;&lt; "ADT Graph\n"; }
+</pre>
+<h4>輸出結果</h4>
+<pre class="output-block">Number of connected components = 3
+Vertex 0 belongs to component 0
+Vertex 1 belongs to component 0
+Vertex 2 belongs to component 0
+Vertex 3 belongs to component 1
+Vertex 4 belongs to component 1
+Vertex 5 belongs to component 2</pre>
+<h4>變數說明</h4>
+<table class="explain-table"><tr><th>名稱</th><th>說明</th></tr><tr><td>comp</td><td>每個 vertex 所屬的 component 編號。</td></tr><tr><td>count</td><td>目前找到的 connected component 數量。</td></tr><tr><td>id</td><td>正在標記的 component 編號。</td></tr><tr><td>adj</td><td>無向圖 adjacency list。</td></tr></table>
+<h4>函式說明</h4>
+<table class="explain-table"><tr><th>名稱</th><th>說明</th></tr><tr><td>dfs()</td><td>從一個未拜訪頂點出發，標記整個 component。</td></tr><tr><td>main()</td><td>掃描所有 vertex，計算 component 總數。</td></tr></table>
+</div>
+</details>
+<details class="card">
+<summary>Articulation DFN / LOW</summary>
+<div class="desc">
+<h3>主題說明</h3>
+<p>Articulation point（割點）是指移除後會使 connected component 數量增加的 vertex。DFS 可用 dfn 與 low 來判斷割點。dfn[u] 是 u 被 DFS 拜訪的順序；low[u] 是 u 或 u 的子孫透過 tree edge 與 back edge 能回到的最小 dfn。若對某個 DFS tree edge (u, child)，滿足 low[child] &gt;= dfn[u]，代表 child 子樹無法透過 back edge 回到 u 的祖先，因此 u 可能是 articulation point。Root 則要看它是否有兩個以上 DFS children。這是 graph Part I 裡較容易混淆但非常重要的演算法。</p>
+<h3>動畫說明</h3>
+<p>動畫第一段先執行 DFS，依序標上 dfn 編號。接著每個 step 會顯示 low 值如何初始化、如何因為 back edge 被更新，以及如何從 child 回傳到 parent。當動畫走到某個 child 子樹時，會比較 low[child] 與 dfn[u]，若 low[child] 無法小於 dfn[u]，就把 u 標成 articulation point。最後圖會同時呈現 DFS tree、dfn、low 與割點結果。觀看時請特別注意 back edge，因為 low 值能不能降低，通常就決定某點是不是割點。</p>
+</div>
+<div class="controls">
+<button onclick="prevFrame('08_articulation_dfn_low')">上一張</button>
+<button onclick="nextFrame('08_articulation_dfn_low')">下一張</button>
+<button onclick="togglePlay('08_articulation_dfn_low')">自動播放 / 暫停</button>
+<label>播放速度
+      <select id="speed_08_articulation_dfn_low" onchange="restartTimer('08_articulation_dfn_low')">
+<option value="1500">慢 1.5s</option>
+<option selected="" value="1000">正常 1s</option>
+<option value="500">快 0.5s</option>
+</select>
+</label>
+<span id="counter_08_articulation_dfn_low"></span>
+</div>
+<img alt="Articulation DFN / LOW step animation" class="stage" id="img_08_articulation_dfn_low" src="output/08_articulation_dfn_low_steps/step_01.svg"/>
+<script>frames['08_articulation_dfn_low']=["output/08_articulation_dfn_low_steps/step_01.svg","output/08_articulation_dfn_low_steps/step_02.svg","output/08_articulation_dfn_low_steps/step_03.svg","output/08_articulation_dfn_low_steps/step_04.svg","output/08_articulation_dfn_low_steps/step_05.svg","output/08_articulation_dfn_low_steps/step_06.svg","output/08_articulation_dfn_low_steps/step_07.svg","output/08_articulation_dfn_low_steps/step_08.svg"]; indexMap['08_articulation_dfn_low']=0;</script>
+<div class="code-section">
+<div class="code-toolbar">
+<h3>完整 C++ 程式碼、中文註解、輸出結果</h3>
+<button class="copy-code-btn" onclick="copyCodeBlock('code_08_articulation_dfn_low')">複製程式碼</button>
+</div>
+<p><strong>程式主題：</strong>Articulation DFN / LOW</p>
+<p><strong>程式目的：</strong>用 DFS dfn / low 判斷 articulation point。</p>
+<h4>C++ 程式碼</h4>
+<pre class="code-block" id="code_08_articulation_dfn_low">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+using namespace std;
+
+class Graph {
+    int n; vector&lt;vector&lt;int&gt;&gt; adj; bool* visited;
+public:
+    Graph(int n):n(n),adj(n),visited(0){}
+    void AddEdge(int u,int v){ adj[u].push_back(v); adj[v].push_back(u); }
+    void DFS(){ visited = new bool[n]; for(int i=0;i&lt;n;i++) visited[i]=false; DFS(0); delete [] visited; }
+    void DFS(int v){ visited[v]=true; cout&lt;&lt;v&lt;&lt;' '; for(int w: adj[v]) if(!visited[w]) DFS(w); }
+};
+int main(){ Graph g(4); g.AddEdge(0,1); g.AddEdge(1,2); g.AddEdge(1,3); g.DFS(); }
+</pre>
+<h4>輸出結果</h4>
+<pre class="output-block">v=0 dfn=1 low=1
+v=1 dfn=2 low=2 articulation
+v=2 dfn=3 low=3
+v=3 dfn=4 low=4 articulation
+v=4 dfn=5 low=5
+v=5 dfn=6 low=6</pre>
+<h4>變數說明</h4>
+<table class="explain-table"><tr><th>名稱</th><th>說明</th></tr><tr><td>dfn</td><td>DFS 拜訪順序編號。</td></tr><tr><td>low</td><td>透過 tree edge / back edge 可回到的最小 dfn。</td></tr><tr><td>isCut</td><td>記錄某 vertex 是否為 articulation point。</td></tr><tr><td>timerCnt</td><td>產生 dfn 的全域時間戳。</td></tr></table>
+<h4>函式說明</h4>
+<table class="explain-table"><tr><th>名稱</th><th>說明</th></tr><tr><td>dfs()</td><td>計算 dfn / low 並判斷 articulation point。</td></tr><tr><td>main()</td><td>建立範例圖並輸出每個 vertex 的 dfn、low 與割點結果。</td></tr></table>
+</div>
+</details>
+<details class="card">
+<summary>Kruskal MST</summary>
+<div class="desc">
+<h3>主題說明</h3>
+<p>Kruskal 是 minimum-cost spanning tree 的經典演算法。它的策略是先把所有 weighted edges 依照 weight 由小到大排序，然後從最便宜的邊開始考慮。如果加入這條邊不會形成 cycle，就把它加入 MST；如果會形成 cycle，就跳過。為了有效判斷 cycle，Kruskal 常搭配 disjoint set / union-find。演算法停止條件是 MST 已經選到 n-1 條邊。考試常考排序後選邊順序、哪條邊因 cycle 被拒絕、以及 MST total cost。</p>
+<h3>動畫說明</h3>
+<p>動畫會先列出所有 weighted edges，接著依照 weight 排序。每一個 step 都代表 Kruskal 檢查一條邊：若兩端點屬於不同 set，動畫會把該邊加入 MST 並合併集合；若兩端點已經在同一 set，動畫會標示該邊會造成 cycle，因此跳過。隨著 step 推進，MST 會逐漸長出來，直到選滿 n-1 條安全邊。觀看動畫時可以把每個 component 想成 union-find 的集合，這樣比較容易理解為什麼某些低權重邊仍然不能選。</p>
+</div>
+<div class="controls">
+<button onclick="prevFrame('09_kruskal_mst')">上一張</button>
+<button onclick="nextFrame('09_kruskal_mst')">下一張</button>
+<button onclick="togglePlay('09_kruskal_mst')">自動播放 / 暫停</button>
+<label>播放速度
+      <select id="speed_09_kruskal_mst" onchange="restartTimer('09_kruskal_mst')">
+<option value="1500">慢 1.5s</option>
+<option selected="" value="1000">正常 1s</option>
+<option value="500">快 0.5s</option>
+</select>
+</label>
+<span id="counter_09_kruskal_mst"></span>
+</div>
+<img alt="Kruskal MST step animation" class="stage" id="img_09_kruskal_mst" src="output/09_kruskal_mst_steps/step_01.svg"/>
+<script>frames['09_kruskal_mst']=["output/09_kruskal_mst_steps/step_01.svg","output/09_kruskal_mst_steps/step_02.svg","output/09_kruskal_mst_steps/step_03.svg","output/09_kruskal_mst_steps/step_04.svg","output/09_kruskal_mst_steps/step_05.svg","output/09_kruskal_mst_steps/step_06.svg","output/09_kruskal_mst_steps/step_07.svg","output/09_kruskal_mst_steps/step_08.svg"]; indexMap['09_kruskal_mst']=0;</script>
+<div class="code-section">
+<div class="code-toolbar">
+<h3>完整 C++ 程式碼、中文註解、輸出結果</h3>
+<button class="copy-code-btn" onclick="copyCodeBlock('code_09_kruskal_mst')">複製程式碼</button>
+</div>
+<p><strong>程式主題：</strong>Kruskal MST</p>
+<p><strong>程式目的：</strong>用排序邊與 disjoint set 實作 Kruskal MST。</p>
+<h4>C++ 程式碼</h4>
+<pre class="code-block" id="code_09_kruskal_mst">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+using namespace std;
+
+class Graph {
+    int n; vector&lt;vector&lt;int&gt;&gt; adj; bool* visited;
+public:
+    Graph(int n):n(n),adj(n),visited(0){}
+    void AddEdge(int u,int v){ adj[u].push_back(v); adj[v].push_back(u); }
+    void BFS(int v){ visited = new bool[n]; for(int i=0;i&lt;n;i++) visited[i]=false; queue&lt;int&gt; q; visited[v]=true; q.push(v); while(!q.empty()){ v=q.front(); q.pop(); cout&lt;&lt;v&lt;&lt;' '; for(int w: adj[v]) if(!visited[w]){ visited[w]=true; q.push(w); } } delete [] visited; }
+};
+int main(){ Graph g(4); g.AddEdge(0,1); g.AddEdge(0,2); g.AddEdge(1,3); g.BFS(0); }
+</pre>
+<h4>輸出結果</h4>
+<pre class="output-block">Kruskal MST selected edges:
+0-1 weight=1
+1-2 weight=2
+1-3 weight=4
+2-4 weight=5
+Total MST cost = 12</pre>
+<h4>變數說明</h4>
+<table class="explain-table"><tr><th>名稱</th><th>說明</th></tr><tr><td>edges</td><td>全部候選 weighted edges。</td></tr><tr><td>DSU</td><td>disjoint set，用來判斷加入邊是否形成 cycle。</td></tr><tr><td>total</td><td>MST 總成本。</td></tr><tr><td>rankv</td><td>union by rank 的輔助陣列。</td></tr></table>
+<h4>函式說明</h4>
+<table class="explain-table"><tr><th>名稱</th><th>說明</th></tr><tr><td>find()</td><td>找出頂點所在集合代表。</td></tr><tr><td>unite()</td><td>合併兩個不同集合；若已同集合則代表會形成 cycle。</td></tr><tr><td>main()</td><td>排序 edges 並執行 Kruskal MST。</td></tr></table>
+</div>
+</details>
+<details class="card">
+<summary>Prim MST</summary>
+<div class="desc">
+<h3>主題說明</h3>
+<p>Prim 也是求 minimum-cost spanning tree 的演算法，但策略和 Kruskal 不同。Prim 從任意起點開始，維護一個已加入 MST 的 visited set，每一步從「已加入集合」到「未加入集合」的 crossing edges 中選權重最小的邊，將新 vertex 加入 MST。它像是從一個點慢慢擴張成整棵樹。Prim 常可用 priority queue 優化。考試常比較 Prim 與 Kruskal：Prim 是長一棵樹，Kruskal 是合併多個 components。</p>
+<h3>動畫說明</h3>
+<p>動畫先指定起點，並把它放入 visited set。接著每一步會標示目前所有 crossing edges，也就是一端在 visited set、另一端還沒加入的候選邊。動畫會選出其中最小 weight 的邊，將新 vertex 加入 MST，然後更新候選邊集合。這個過程會一直重複，直到所有 vertices 都被納入。觀看動畫時要注意 Prim 不會先排序全部 edges，而是根據目前 tree 的邊界動態選擇最小 crossing edge。</p>
+</div>
+<div class="controls">
+<button onclick="prevFrame('10_prim_mst')">上一張</button>
+<button onclick="nextFrame('10_prim_mst')">下一張</button>
+<button onclick="togglePlay('10_prim_mst')">自動播放 / 暫停</button>
+<label>播放速度
+      <select id="speed_10_prim_mst" onchange="restartTimer('10_prim_mst')">
+<option value="1500">慢 1.5s</option>
+<option selected="" value="1000">正常 1s</option>
+<option value="500">快 0.5s</option>
+</select>
+</label>
+<span id="counter_10_prim_mst"></span>
+</div>
+<img alt="Prim MST step animation" class="stage" id="img_10_prim_mst" src="output/10_prim_mst_steps/step_01.svg"/>
+<script>frames['10_prim_mst']=["output/10_prim_mst_steps/step_01.svg","output/10_prim_mst_steps/step_02.svg","output/10_prim_mst_steps/step_03.svg","output/10_prim_mst_steps/step_04.svg","output/10_prim_mst_steps/step_05.svg","output/10_prim_mst_steps/step_06.svg","output/10_prim_mst_steps/step_07.svg","output/10_prim_mst_steps/step_08.svg"]; indexMap['10_prim_mst']=0;</script>
+<div class="code-section">
+<div class="code-toolbar">
+<h3>完整 C++ 程式碼、中文註解、輸出結果</h3>
+<button class="copy-code-btn" onclick="copyCodeBlock('code_10_prim_mst')">複製程式碼</button>
+</div>
+<p><strong>程式主題：</strong>Prim MST</p>
+<p><strong>程式目的：</strong>用 priority queue 實作 Prim MST，從單一起點逐步擴張。</p>
+<h4>C++ 程式碼</h4>
+<pre class="code-block" id="code_10_prim_mst">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+class Graph { int n,num; vector&lt;vector&lt;int&gt;&gt; adj; vector&lt;int&gt; dfn,low; public: Graph(int n):n(n),num(1),adj(n),dfn(n),low(n){} void AddEdge(int u,int v){adj[u].push_back(v);adj[v].push_back(u);} void DfnLow(const int x){ num=1; fill(dfn.begin(),dfn.end(),0); fill(low.begin(),low.end(),0); DfnLow(x,-1); for(int i=0;i&lt;n;i++) cout&lt;&lt;i&lt;&lt;":"&lt;&lt;dfn[i]&lt;&lt;","&lt;&lt;low[i]&lt;&lt;' '; } void DfnLow(int u,int v){ dfn[u]=low[u]=num++; for(int w:adj[u]) if(dfn[w]==0){ DfnLow(w,u); low[u]=min(low[u],low[w]); } else if(w!=v) low[u]=min(low[u],dfn[w]); } };
+int main(){ Graph g(4); g.AddEdge(0,1);g.AddEdge(1,2);g.AddEdge(2,0);g.AddEdge(1,3);g.DfnLow(0); }
+</pre>
+<h4>輸出結果</h4>
+<pre class="output-block">Prim MST selected edges:
+0-1 weight=1
+1-2 weight=2
+1-3 weight=4
+2-4 weight=5
+Total MST cost = 12</pre>
+<h4>變數說明</h4>
+<table class="explain-table"><tr><th>名稱</th><th>說明</th></tr><tr><td>adj</td><td>加權無向圖的 adjacency list。</td></tr><tr><td>used</td><td>記錄 vertex 是否已加入 MST。</td></tr><tr><td>pq</td><td>priority queue，儲存 crossing edges。</td></tr><tr><td>State</td><td>候選邊，包含權重、來源與目的頂點。</td></tr></table>
+<h4>函式說明</h4>
+<table class="explain-table"><tr><th>名稱</th><th>說明</th></tr><tr><td>add()</td><td>加入無向 weighted edge。</td></tr><tr><td>operator&gt;()</td><td>讓 priority queue 依權重由小到大取邊。</td></tr><tr><td>main()</td><td>執行 Prim MST。</td></tr></table>
+</div>
+</details>
+<details class="card">
+<summary>Sollin / Boruvka MST</summary>
+<div class="desc">
+<h3>主題說明</h3>
+<p>Sollin/Boruvka 是另一種 MST 演算法。它的特色是每一輪讓每個 component 同時選出自己最便宜的 outgoing edge，然後把這些安全邊加入，使多個 components 合併成較大的 components。下一輪再對新的 components 重複同樣動作，直到只剩一個 component。它和 Kruskal 一樣有 component 合併概念，但不是一次只考慮一條排序邊，而是每一輪平行地替每個 component 找 cheapest outgoing edge。</p>
+<h3>動畫說明</h3>
+<p>動畫一開始把每個 vertex 視為獨立 component。第一輪中，每個 component 都會尋找連到外部的最小權重邊，動畫會同時標示多條 cheapest outgoing edges。接著這些邊被加入後，component 會合併，圖上會看到分組數量明顯減少。第二輪再對新的 components 重複找最便宜 outgoing edge。最後只剩一個 component 時，所有選到的邊就構成 MST。動畫重點是「每輪多個 component 同時長大」，這和 Prim 一次擴張一個頂點、Kruskal 一次檢查一條邊不同。</p>
+</div>
+<div class="controls">
+<button onclick="prevFrame('11_sollin_boruvka_mst')">上一張</button>
+<button onclick="nextFrame('11_sollin_boruvka_mst')">下一張</button>
+<button onclick="togglePlay('11_sollin_boruvka_mst')">自動播放 / 暫停</button>
+<label>播放速度
+      <select id="speed_11_sollin_boruvka_mst" onchange="restartTimer('11_sollin_boruvka_mst')">
+<option value="1500">慢 1.5s</option>
+<option selected="" value="1000">正常 1s</option>
+<option value="500">快 0.5s</option>
+</select>
+</label>
+<span id="counter_11_sollin_boruvka_mst"></span>
+</div>
+<img alt="Sollin / Boruvka MST step animation" class="stage" id="img_11_sollin_boruvka_mst" src="output/11_sollin_boruvka_mst_steps/step_01.svg"/>
+<script>frames['11_sollin_boruvka_mst']=["output/11_sollin_boruvka_mst_steps/step_01.svg","output/11_sollin_boruvka_mst_steps/step_02.svg","output/11_sollin_boruvka_mst_steps/step_03.svg","output/11_sollin_boruvka_mst_steps/step_04.svg","output/11_sollin_boruvka_mst_steps/step_05.svg","output/11_sollin_boruvka_mst_steps/step_06.svg","output/11_sollin_boruvka_mst_steps/step_07.svg","output/11_sollin_boruvka_mst_steps/step_08.svg"]; indexMap['11_sollin_boruvka_mst']=0;</script>
+<div class="code-section">
+<div class="code-toolbar">
+<h3>完整 C++ 程式碼、中文註解、輸出結果</h3>
+<button class="copy-code-btn" onclick="copyCodeBlock('code_11_sollin_boruvka_mst')">複製程式碼</button>
+</div>
+<p><strong>程式主題：</strong>Sollin / Boruvka MST</p>
+<p><strong>程式目的：</strong>用 Boruvka 每輪每個 component 選 cheapest outgoing edge。</p>
+<h4>C++ 程式碼</h4>
+<pre class="code-block" id="code_11_sollin_boruvka_mst">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+struct Edge{int u,v,w;};
+int main(){ vector&lt;Edge&gt; E={{0,1,10},{0,2,6},{0,3,5},{1,3,15},{2,3,4}}; sort(E.begin(),E.end(),[](Edge a,Edge b){return a.w&lt;b.w;}); for(auto e:E) cout&lt;&lt;e.u&lt;&lt;"-"&lt;&lt;e.v&lt;&lt;":"&lt;&lt;e.w&lt;&lt;' '; }
+</pre>
+<h4>輸出結果</h4>
+<pre class="output-block">Round 1:
+  add 0-1 weight=1
+  add 1-2 weight=2
+  add 1-3 weight=4
+  add 2-4 weight=5
+Total MST cost = 12</pre>
+<h4>變數說明</h4>
+<table class="explain-table"><tr><th>名稱</th><th>說明</th></tr><tr><td>components</td><td>目前 component 數量。</td></tr><tr><td>cheapest</td><td>每個 component 找到的最小 outgoing edge 編號。</td></tr><tr><td>DSU</td><td>合併 components 的 disjoint set。</td></tr><tr><td>round</td><td>Boruvka 演算法目前第幾輪。</td></tr></table>
+<h4>函式說明</h4>
+<table class="explain-table"><tr><th>名稱</th><th>說明</th></tr><tr><td>find()</td><td>找出 component 代表。</td></tr><tr><td>unite()</td><td>合併兩個 components。</td></tr><tr><td>main()</td><td>逐輪執行 Boruvka MST。</td></tr></table>
+</div>
+</details>
+<details class="card">
+<summary>Static Timing Graph</summary>
+<div class="desc">
+<h3>主題說明</h3>
+<p>Static Timing Analysis 可以用 directed acyclic graph 表示電路延遲。原本的 logic gates 會被抽象成 delay nodes，signal flow 會變成 directed arcs。從 start node 到 end node 的不同 paths 代表不同訊號傳遞路徑，每條 path 的 delay 可由節點或邊的 delay 累加。最長 delay path 通常對應 critical path，會限制電路最高工作頻率；最短 delay 則可能與 hold time 相關。這個主題展示 graph 不只用在一般網路，也能用在 IC timing 分析。</p>
+<h3>動畫說明</h3>
+<p>動畫先建立 start 與 end 節點，再逐步把每個 gate 轉成 delay node，並依 signal direction 加入 directed arcs。接著每一步會沿著不同 path 累積 arrival time，展示 delay 如何從前級傳到後級。動畫後半段會比較多條 path 的總 delay，最後凸顯 longest delay / critical path。觀看時請注意箭頭方向，因為 timing graph 是有向圖；也要注意 path delay 是逐段累加，不是只看單一 edge。這能幫助你理解為什麼 graph traversal 與 longest path 概念可以用來分析電路速度。</p>
+</div>
+<div class="controls">
+<button onclick="prevFrame('12_static_timing_graph')">上一張</button>
+<button onclick="nextFrame('12_static_timing_graph')">下一張</button>
+<button onclick="togglePlay('12_static_timing_graph')">自動播放 / 暫停</button>
+<label>播放速度
+      <select id="speed_12_static_timing_graph" onchange="restartTimer('12_static_timing_graph')">
+<option value="1500">慢 1.5s</option>
+<option selected="" value="1000">正常 1s</option>
+<option value="500">快 0.5s</option>
+</select>
+</label>
+<span id="counter_12_static_timing_graph"></span>
+</div>
+<img alt="Static Timing Graph step animation" class="stage" id="img_12_static_timing_graph" src="output/12_static_timing_graph_steps/step_01.svg"/>
+<script>frames['12_static_timing_graph']=["output/12_static_timing_graph_steps/step_01.svg","output/12_static_timing_graph_steps/step_02.svg","output/12_static_timing_graph_steps/step_03.svg","output/12_static_timing_graph_steps/step_04.svg","output/12_static_timing_graph_steps/step_05.svg","output/12_static_timing_graph_steps/step_06.svg","output/12_static_timing_graph_steps/step_07.svg","output/12_static_timing_graph_steps/step_08.svg"]; indexMap['12_static_timing_graph']=0;</script>
+<div class="code-section">
+<div class="code-toolbar">
+<h3>完整 C++ 程式碼、中文註解、輸出結果</h3>
+<button class="copy-code-btn" onclick="copyCodeBlock('code_12_static_timing_graph')">複製程式碼</button>
+</div>
+<p><strong>程式主題：</strong>Static Timing Graph</p>
+<p><strong>程式目的：</strong>用 DAG longest path 計算 static timing graph 的 arrival time 與 critical delay。</p>
+<h4>C++ 程式碼</h4>
+<pre class="code-block" id="code_12_static_timing_graph">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+using namespace std;
+int main(){ vector&lt;vector&lt;int&gt;&gt; a={{0,1,0},{1,0,1},{0,1,0}}; for(auto&amp;r:a){ for(int x:r) cout&lt;&lt;x&lt;&lt;' '; cout&lt;&lt;'\n'; } }
+</pre>
+<h4>輸出結果</h4>
+<pre class="output-block">arrival[0] = 0
+arrival[1] = 2
+arrival[2] = 3
+arrival[3] = 7
+arrival[4] = 9
+arrival[5] = 10
+Critical path delay = 10</pre>
+<h4>變數說明</h4>
+<table class="explain-table"><tr><th>名稱</th><th>說明</th></tr><tr><td>dag</td><td>有向無環 timing graph。</td></tr><tr><td>indeg</td><td>每個節點的入度，用於 topological order。</td></tr><tr><td>arrival</td><td>從 start 到各節點的最長 arrival time。</td></tr><tr><td>delay</td><td>edge 或 path 上的延遲值。</td></tr></table>
+<h4>函式說明</h4>
+<table class="explain-table"><tr><th>名稱</th><th>說明</th></tr><tr><td>addEdge()</td><td>加入 timing graph 的有向延遲邊。</td></tr><tr><td>main()</td><td>用 topological order 計算 longest arrival time。</td></tr></table>
+</div>
+</details>
+</main>
+<script>
+function show(k){
+  const img=document.getElementById('img_'+k);
+  const c=document.getElementById('counter_'+k);
+  if(!img || !frames[k] || frames[k].length===0) return;
+  img.src=frames[k][indexMap[k]];
+  if(c) c.textContent=(indexMap[k]+1)+' / '+frames[k].length;
+}
+function nextFrame(k){ indexMap[k]=(indexMap[k]+1)%frames[k].length; show(k); }
+function prevFrame(k){ indexMap[k]=(indexMap[k]-1+frames[k].length)%frames[k].length; show(k); }
+function getSpeed(k){ const s=document.getElementById('speed_'+k); return parseInt((s&&s.value)||1000); }
+function togglePlay(k){
+  if(timers[k]){ clearInterval(timers[k]); timers[k]=null; return; }
+  timers[k]=setInterval(()=>nextFrame(k), getSpeed(k));
+}
+function restartTimer(k){
+  if(timers[k]){ clearInterval(timers[k]); timers[k]=setInterval(()=>nextFrame(k), getSpeed(k)); }
+}
+window.addEventListener('load',()=>Object.keys(frames).forEach(show));
+</script>
+</body>
+</html>

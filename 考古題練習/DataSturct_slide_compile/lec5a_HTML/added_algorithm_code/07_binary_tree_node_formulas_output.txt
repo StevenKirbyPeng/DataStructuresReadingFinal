@@ -1,0 +1,4 @@
+Total nodes = 5
+Leaf nodes = 3
+Internal nodes = 2
+Height = 3

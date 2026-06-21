@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><title>Chapter 4 Linked Lists 多步驟 SVG HTML</title><style>
+body{margin:0;font-family:"Microsoft JhengHei",Arial,sans-serif;background:#f6f7fb;color:#1f2937;line-height:1.75}header{background:linear-gradient(135deg,#0f766e,#1d4ed8);color:white;padding:28px 36px;position:sticky;top:0;z-index:10}h1{margin:0;font-size:30px}.links a,.nav a{display:inline-block;margin:8px 8px 0 0;padding:9px 14px;border-radius:999px;background:white;color:#075985;text-decoration:none;font-weight:700}.nav{padding:14px 28px;background:#e0f2fe}main{max-width:1180px;margin:24px auto;padding:0 18px}.intro,.card{background:white;border-radius:18px;box-shadow:0 6px 18px #0001;border:1px solid #e5e7eb}.intro{padding:18px 22px}.card{margin:14px 0;overflow:hidden}summary{cursor:pointer;padding:18px 22px;font-size:22px;display:flex;gap:14px;align-items:center;background:#f8fafc}summary span{font-size:14px;color:#0f766e;font-weight:800}.content{padding:20px 24px}.note{background:#ecfeff;border-left:6px solid #06b6d4;padding:12px 14px;border-radius:10px;margin:12px 0}.svgbox{width:100%;max-width:980px;min-height:190px;background:#fff;border:1px solid #cbd5e1;border-radius:14px;margin:10px 0}.svgtitle{font-size:18px;font-weight:800;fill:#0f172a}.stepbox{border:1px solid #dbeafe;background:#f8fbff;border-radius:16px;padding:14px;margin:14px 0}.stepbuttons{margin:8px 0 12px}.stepbtn{border:0;background:#2563eb;color:white;border-radius:999px;padding:7px 12px;margin:4px;font-weight:700;cursor:pointer}.stepbtn.active{background:#0f766e}.codebox{position:relative}.codebox button{position:absolute;right:10px;top:10px;background:#16a34a;color:white;border:0;border-radius:999px;padding:8px 12px;font-weight:800;cursor:pointer}textarea{width:100%;min-height:430px;font-family:Consolas,monospace;font-size:14px;border-radius:12px;border:1px solid #cbd5e1;background:#0f172a;color:#e5e7eb;padding:46px 14px 14px;box-sizing:border-box}.output{background:#f1f5f9;border-radius:12px;padding:12px;margin-top:10px}pre{white-space:pre-wrap}table{border-collapse:collapse;width:100%;margin:12px 0}th,td{border:1px solid #cbd5e1;padding:8px 10px}th{background:#e0f2fe}
+</style></head><body><header><h1>資料結構 Chapter 4 Linked Lists 下拉式複習網站（多步驟 SVG 校正版）</h1><div class="links"><a href="https://www.onlinegdb.com/online_c++_compiler" target="_blank">OnlineGDB C++</a><a href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank">Programiz C++</a><a href="https://cpp.sh/" target="_blank">cpp.sh</a></div></header><nav class="nav"><a href="index.html">總入口</a> <a href="ch4.html" style="background:#0f766e;color:white">Chapter 4</a> <a href="ch5.html">Chapter 5</a> <a href="ch6.html">Chapter 6</a> <a href="ch7.html">Chapter 7</a> </nav><div class="nav"><a href="#t1">Array vs List</a><a href="#t2">Singly Chain</a><a href="#t3">Doubly Linked</a><a href="#t4">STL list</a><a href="#t5">Polynomial</a></div><main><section class="intro"><h2>製作說明</h2><p>本 ZIP 只做第四章，每個議題一個下拉式區塊。其餘資料保留，並把原本單張 SVG 加強成多步驟 SVG：每個議題至少 3～5 張 Step 圖，讓插入、刪除、指標改變、iterator 走訪與應用能逐步講解。</p></section><section class="intro" id="validation-report"><h2>本版檢查與修正</h2><p>已重新檢查章節連結、SVG 附註文字與主題對應。每個章節導覽列皆可連回總入口與 Chapter 4、5、6、7；每個多步驟 SVG 的附加講解已改為該議題專用說明。</p></section>
+<details class="card" id="t1" open="">
+<summary><span>Chapter 4 Linked Lists</span><b>Array vs. List</b></summary>
+<div class="content">
+<h3>詳細中文解說</h3>
+<p>投影片先比較 sequential representation 與 linked representation。Array 的優點是可用 index 或位址直接找到第 i 個元素，因此查詢任意位置通常是 O(1)；缺點是若要在中間插入或刪除，後面的元素常需要整批搬移，所以成本是 O(n)。Linked list 的節點由 data 與 link pointer 組成，first 指到第一個節點，最後節點指到 0。只要已經找到插入或刪除位置，操作本身主要是改變 link，因此可做到 O(1)。這個主題在考試常搭配圖形，要求判斷插入 GAT 或刪除 GAT 時哪些指標改變。</p>
+<div class="note"><b>保留與加強：</b>保留原本主題、中文解說、程式、輸出結果與 Copy Code；本版把 SVG 改成多步驟分解圖，每個 Step 可切換檢視。</div>
+<h3>多步驟 SVG 圖解</h3>
+<div class="stepbox"><h4>Array vs. List 多步驟講解</h4><div class="stepbuttons"><button class="stepbtn" onclick="showStep(this,0)">Step 1</button><button class="stepbtn" onclick="showStep(this,1)">Step 2</button><button class="stepbtn" onclick="showStep(this,2)">Step 3</button><button class="stepbtn" onclick="showStep(this,3)">Step 4</button></div><div class="stepitem" style="display:block"><svg class="svgbox" viewbox="0 0 980 220"><defs><marker id="arrow" markerheight="10" markerwidth="10" orient="auto" refx="8" refy="3"><path d="M0,0 L0,6 L9,3 z" fill="#1f2937"></path></marker></defs><text class="svgtitle" x="20" y="30">Step 1：Array 連續儲存，可用 index 直接查詢</text><rect fill="#fde68a" height="54" stroke="#1f2937" width="68" x="90" y="76"></rect><text font-size="18" text-anchor="middle" x="124.0" y="110">EAT</text><text fill="#475569" font-size="14" text-anchor="middle" x="124.0" y="152">0</text><rect fill="#fde68a" height="54" stroke="#1f2937" width="68" x="158" y="76"></rect><text font-size="18" text-anchor="middle" x="192.0" y="110">FAT</text><text fill="#475569" font-size="14" text-anchor="middle" x="192.0" y="152">1</text><rect fill="#fde68a" height="54" stroke="#1f2937" width="68" x="226" y="76"></rect><text font-size="18" text-anchor="middle" x="260.0" y="110">HAT</text><text fill="#475569" font-size="14" text-anchor="middle" x="260.0" y="152">2</text><rect fill="#dbeafe" height="54" stroke="#1f2937" width="68" x="294" y="76"></rect><text font-size="18" text-anchor="middle" x="328.0" y="110"></text><text fill="#475569" font-size="14" text-anchor="middle" x="328.0" y="152">3</text><rect fill="#dbeafe" height="54" stroke="#1f2937" width="68" x="362" y="76"></rect><text font-size="18" text-anchor="middle" x="396.0" y="110"></text><text fill="#475569" font-size="14" text-anchor="middle" x="396.0" y="152">4</text><text fill="#334155" font-size="15" x="90" y="190">第 i 格的位置可直接由 base + i * size 算出。</text></svg><p class="stepExplain" style="margin:8px 2px;color:#075985;font-weight:700">正確：此圖對應 sequential representation，強調 array 查詢 O(1)。</p></div><div class="stepitem" style="display:none"><svg class="svgbox" viewbox="0 0 980 220"><defs><marker id="arrow" markerheight="10" markerwidth="10" orient="auto" refx="8" refy="3"><path d="M0,0 L0,6 L9,3 z" fill="#1f2937"></path></marker></defs><text class="svgtitle" x="20" y="30">Step 2：Array 中間插入前，後方元素必須右移</text><rect fill="#dbeafe" height="54" stroke="#1f2937" width="68" x="90" y="76"></rect><text font-size="18" text-anchor="middle" x="124.0" y="110">EAT</text><text fill="#475569" font-size="14" text-anchor="middle" x="124.0" y="152">0</text><rect fill="#dbeafe" height="54" stroke="#1f2937" width="68" x="158" y="76"></rect><text font-size="18" text-anchor="middle" x="192.0" y="110">FAT</text><text fill="#475569" font-size="14" text-anchor="middle" x="192.0" y="152">1</text><rect fill="#fde68a" height="54" stroke="#1f2937" width="68" x="226" y="76"></rect><text font-size="18" text-anchor="middle" x="260.0" y="110"></text><text fill="#475569" font-size="14" text-anchor="middle" x="260.0" y="152">2</text><rect fill="#fde68a" height="54" stroke="#1f2937" width="68" x="294" y="76"></rect><text font-size="18" text-anchor="middle" x="328.0" y="110">HAT</text><text fill="#475569" font-size="14" text-anchor="middle" x="328.0" y="152">3</text><rect fill="#dbeafe" height="54" stroke="#1f2937" width="68" x="362" y="76"></rect><text font-size="18" text-anchor="middle" x="396.0" y="110"></text><text fill="#475569" font-size="14" text-anchor="middle" x="396.0" y="152">4</text><path d="M260.0,66 C260.0,31 328.0,31 328.0,66" fill="none" marker-end="url(#arrow)" stroke="#dc2626" stroke-width="3"></path><text fill="#dc2626" font-size="14" x="276.0" y="24">搬移</text><text fill="#334155" font-size="15" x="90" y="190">為了保留連續空間，HAT 必須移到後面。</text></svg><p class="stepExplain" style="margin:8px 2px;color:#075985;font-weight:700">正確：中間插入需要搬移後續元素，因此成本可能是 O(n)。</p></div><div class="stepitem" style="display:none"><svg class="svgbox" viewbox="0 0 980 220"><defs><marker id="arrow" markerheight="10" markerwidth="10" orient="auto" refx="8" refy="3"><path d="M0,0 L0,6 L9,3 z" fill="#1f2937"></path></marker></defs><text class="svgtitle" x="20" y="30">Step 3：Array 插入完成，但搬移成本可能是 O(n)</text><rect fill="#dbeafe" height="54" stroke="#1f2937" width="68" x="90" y="76"></rect><text font-size="18" text-anchor="middle" x="124.0" y="110">EAT</text><text fill="#475569" font-size="14" text-anchor="middle" x="124.0" y="152">0</text><rect fill="#dbeafe" height="54" stroke="#1f2937" width="68" x="158" y="76"></rect><text font-size="18" text-anchor="middle" x="192.0" y="110">FAT</text><text fill="#475569" font-size="14" text-anchor="middle" x="192.0" y="152">1</text><rect fill="#fde68a" height="54" stroke="#1f2937" width="68" x="226" y="76"></rect><text font-size="18" text-anchor="middle" x="260.0" y="110">GAT</text><text fill="#475569" font-size="14" text-anchor="middle" x="260.0" y="152">2</text><rect fill="#dbeafe" height="54" stroke="#1f2937" width="68" x="294" y="76"></rect><text font-size="18" text-anchor="middle" x="328.0" y="110">HAT</text><text fill="#475569" font-size="14" text-anchor="middle" x="328.0" y="152">3</text><rect fill="#dbeafe" height="54" stroke="#1f2937" width="68" x="362" y="76"></rect><text font-size="18" text-anchor="middle" x="396.0" y="110"></text><text fill="#475569" font-size="14" text-anchor="middle" x="396.0" y="152">4</text><text fill="#334155" font-size="15" x="90" y="190">若插入位置越前面，需要搬移的元素越多。</text></svg><p class="stepExplain" style="margin:8px 2px;color:#075985;font-weight:700">正確：陣列仍維持連續位置，但插入不是單純 O(1)。</p></div><div class="stepitem" style="display:none"><svg aria-label="Step 4：Linked List 插入只改 link，不搬移資料" class="svgbox" role="img" viewbox="0 0 980 230"><defs><marker id="arrow" markerheight="10" markerwidth="10" orient="auto" refx="8" refy="3"><path d="M0,0 L0,6 L9,3 z" fill="#1f2937"></path></marker><marker id="arrowRed" markerheight="10" markerwidth="10" orient="auto" refx="8" refy="3"><path d="M0,0 L0,6 L9,3 z" fill="#dc2626"></path></marker></defs><text class="svgtitle" x="20" y="30">Step 4：Linked List 插入 GAT，只需調整 FAT 與 GAT 的 link</text><text font-size="16" x="24" y="123">first</text><line marker-end="url(#arrow)" stroke="#1f2937" stroke-width="2" x1="65" x2="92" y1="118" y2="118"></line><rect fill="#dbeafe" height="52" rx="10" stroke="#1f2937" width="100" x="100" y="92"></rect><line stroke="#64748b" x1="172" x2="172" y1="92" y2="144"></line><text font-size="18" font-weight="700" text-anchor="middle" x="136" y="125">EAT</text><text font-size="14" text-anchor="middle" x="186" y="125">link</text><rect fill="#dbeafe" height="52" rx="10" stroke="#1f2937" width="100" x="250" y="92"></rect><line stroke="#64748b" x1="322" x2="322" y1="92" y2="144"></line><text font-size="18" font-weight="700" text-anchor="middle" x="286" y="125">FAT</text><text font-size="14" text-anchor="middle" x="336" y="125">link</text><rect fill="#fde68a" height="52" rx="10" stroke="#1f2937" width="100" x="400" y="92"></rect><line stroke="#64748b" x1="472" x2="472" y1="92" y2="144"></line><text font-size="18" font-weight="700" text-anchor="middle" x="436" y="125">GAT</text><text font-size="14" text-anchor="middle" x="486" y="125">link</text><rect fill="#dbeafe" height="52" rx="10" stroke="#1f2937" width="100" x="550" y="92"></rect><line stroke="#64748b" x1="622" x2="622" y1="92" y2="144"></line><text font-size="18" font-weight="700" text-anchor="middle" x="586" y="125">HAT</text><text font-size="14" text-anchor="middle" x="636" y="125">link</text><line marker-end="url(#arrow)" stroke="#1f2937" stroke-width="2" x1="200" x2="242" y1="118" y2="118"></line><line marker-end="url(#arrow)" stroke="#1f2937" stroke-width="2" x1="350" x2="392" y1="118" y2="118"></line><line marker-end="url(#arrow)" stroke="#1f2937" stroke-width="2" x1="500" x2="542" y1="118" y2="118"></line><text font-size="18" x="688" y="125">0</text><text fill="#334155" font-size="15" x="80" y="178">已找到 FAT 後，只要 new GAT，讓 FAT-&gt;GAT、GAT-&gt;HAT。</text></svg><p class="stepExplain" style="margin:8px 2px;color:#075985;font-weight:700">正確：linked list 已知位置後只修改 link，不搬移資料。</p></div></div>
+<h3>程式範例：可編輯 C++</h3>
+<div class="codebox"><button onclick="copyCode('code1')">Copy Code 複製程式</button><textarea id="code1" spellcheck="false">#include &lt;iostream&gt;
+#include &lt;string&gt;
+using namespace std;
+
+// ChainNode 對應投影片的「data + link(pointer)」節點結構
+template &lt;class T&gt;
+class Chain;
+
+template &lt;class T&gt;
+class ChainNode {
+    friend class Chain&lt;T&gt;;       // 讓 Chain 可以操作 private 的 data 與 link
+private:
+    T data;                      // 節點資料欄位
+    ChainNode&lt;T&gt;* link;          // 指向下一個節點的指標
+};
+
+template &lt;class T&gt;
+class Chain {
+public:
+    Chain() : first(nullptr) {}
+
+    // 在串列最前面插入資料，對應 first 指標更新
+    void InsertFront(const T&amp; e) {
+        ChainNode&lt;T&gt;* newNode = new ChainNode&lt;T&gt;;
+        newNode-&gt;data = e;
+        newNode-&gt;link = first;
+        first = newNode;
+    }
+
+    // 刪除第一個節點，示範 link 改變後釋放記憶體
+    void DeleteFront() {
+        if (!first) return;
+        ChainNode&lt;T&gt;* old = first;
+        first = first-&gt;link;
+        delete old;
+    }
+
+    // 從 first 開始逐一輸出到 link 為 0/nullptr
+    void Output() const {
+        for (ChainNode&lt;T&gt;* current = first; current; current = current-&gt;link)
+            cout &lt;&lt; current-&gt;data &lt;&lt; " -&gt; ";
+        cout &lt;&lt; "0\n";
+    }
+private:
+    ChainNode&lt;T&gt;* first;         // 指向第一個節點；空串列時為 nullptr
+};
+
+int main() {
+    Chain&lt;string&gt; list;
+    list.InsertFront("HAT");
+    list.InsertFront("FAT");
+    list.InsertFront("EAT");
+    cout &lt;&lt; "原始串列：";
+    list.Output();
+
+    list.DeleteFront();
+    cout &lt;&lt; "刪除第一個節點後：";
+    list.Output();
+    return 0;
+}</textarea></div>
+<div class="output"><b>輸出結果：</b><pre>原始串列：EAT -&gt; FAT -&gt; HAT -&gt; 0
+刪除第一個節點後：FAT -&gt; HAT -&gt; 0</pre></div>
+<h3>函式與變數說明</h3>
+<table><tr><th>名稱</th><th>用途</th></tr><tr><td>first</td><td>串列入口，指向第一個節點；空串列時為 0/nullptr。</td></tr><tr><td>data / coef / exp</td><td>節點中的資料欄位，可是字串、數字或多項式項目。</td></tr><tr><td>link / llink / rlink</td><td>節點指標欄位；單向串列用 link，雙向串列用 llink 與 rlink。</td></tr><tr><td>current / p / it</td><td>走訪串列時的目前位置。</td></tr></table>
+</div>
+</details>
+<details class="card" id="t2" open="">
+<summary><span>Chapter 4 Linked Lists</span><b>Singly Linked List / Chain</b></summary>
+<div class="content">
+<h3>詳細中文解說</h3>
+<p>單向串列 Chain 是第四章的主體。投影片中的 ChainNode 常用 private data 與 link，並讓 Chain 成為 friend class。這樣外部使用者不能直接碰節點細節，但 Chain 的成員函式可以操作節點。first 是整條鏈的入口，若 first=0 表示空串列。插入節點時要先 new 一個節點，填入 data，再把新節點 link 指向原本位置，最後修改前一個節點或 first。刪除節點時要保留被刪節點前一個節點，先跳過被刪節點，再 delete。</p>
+<div class="note"><b>保留與加強：</b>保留原本主題、中文解說、程式、輸出結果與 Copy Code；本版把 SVG 改成多步驟分解圖，每個 Step 可切換檢視。</div>
+<h3>多步驟 SVG 圖解</h3>
+<div class="stepbox"><h4>Singly Linked List / Chain 多步驟講解</h4><div class="stepbuttons"><button class="stepbtn" onclick="showStep(this,0)">Step 1</button><button class="stepbtn" onclick="showStep(this,1)">Step 2</button><button class="stepbtn" onclick="showStep(this,2)">Step 3</button><button class="stepbtn" onclick="showStep(this,3)">Step 4</button><button class="stepbtn" onclick="showStep(this,4)">Step 5</button></div><div class="stepitem" style="display:block"><svg aria-label="Step 1：空的 Chain，first = 0" class="svgbox" role="img" viewbox="0 0 980 230"><defs><marker id="arrow" markerheight="10" markerwidth="10" orient="auto" refx="8" refy="3"><path d="M0,0 L0,6 L9,3 z" fill="#1f2937"></path></marker><marker id="arrowRed" markerheight="10" markerwidth="10" orient="auto" refx="8" refy="3"><path d="M0,0 L0,6 L9,3 z" fill="#dc2626"></path></marker></defs><text class="svgtitle" x="20" y="30">Step 1：空串列 first = 0/nullptr</text><text font-size="16" x="24" y="123">first</text><line marker-end="url(#arrow)" stroke="#1f2937" stroke-width="2" x1="65" x2="92" y1="118" y2="118"></line><text fill="#334155" font-size="15" x="80" y="178">空串列：first 不指向任何節點。</text></svg><p class="stepExplain" style="margin:8px 2px;color:#075985;font-weight:700">正確：空 Chain 沒有節點，first 不指向任何 ChainNode。</p></div><div class="stepitem" style="display:none"><svg aria-label="Step 2：InsertFront(HAT)" class="svgbox" role="img" viewbox="0 0 980 230"><defs><marker id="arrow" markerheight="10" markerwidth="10" orient="auto" refx="8" refy="3"><path d="M0,0 L0,6 L9,3 z" fill="#1f2937"></path></marker><marker id="arrowRed" markerheight="10" markerwidth="10" orient="auto" refx="8" refy="3"><path d="M0,0 L0,6 L9,3 z" fill="#dc2626"></path></marker></defs><text class="svgtitle" x="20" y="30">Step 2：建立第一個節點 HAT，first 指向新節點</text><text font-size="16" x="24" y="123">first</text><line marker-end="url(#arrow)" stroke="#1f2937" stroke-width="2" x1="65" x2="92" y1="118" y2="118"></line><rect fill="#fde68a" height="52" rx="10" stroke="#1f2937" width="100" x="100" y="92"></rect><line stroke="#64748b" x1="172" x2="172" y1="92" y2="144"></line><text font-size="18" font-weight="700" text-anchor="middle" x="136" y="125">HAT</text><text font-size="14" text-anchor="middle" x="186" y="125">link</text><text font-size="18" x="238" y="125">0</text><text fill="#334155" font-size="15" x="80" y="178">newNode-&gt;link = first，然後 first = newNode。</text></svg><p class="stepExplain" style="margin:8px 2px;color:#075985;font-weight:700">正確：第一個節點的 link 指向 0/nullptr，first 成為入口。</p></div><div class="stepitem" style="display:none"><svg aria-label="Step 3：InsertFront(FAT)" class="svgbox" role="img" viewbox="0 0 980 230"><defs><marker id="arrow" markerheight="10" markerwidth="10" orient="auto" refx="8" refy="3"><path d="M0,0 L0,6 L9,3 z" fill="#1f2937"></path></marker><marker id="arrowRed" markerheight="10" markerwidth="10" orient="auto" refx="8" refy="3"><path d="M0,0 L0,6 L9,3 z" fill="#dc2626"></path></marker></defs><text class="svgtitle" x="20" y="30">Step 3：InsertFront(FAT)，FAT-&gt;link 指向原本 first</text><text font-size="16" x="24" y="123">first</text><line marker-end="url(#arrow)" stroke="#1f2937" stroke-width="2" x1="65" x2="92" y1="118" y2="118"></line><rect fill="#fde68a" height="52" rx="10" stroke="#1f2937" width="100" x="100" y="92"></rect><line stroke="#64748b" x1="172" x2="172" y1="92" y2="144"></line><text font-size="18" font-weight="700" text-anchor="middle" x="136" y="125">FAT</text><text font-size="14" text-anchor="middle" x="186" y="125">link</text><rect fill="#dbeafe" height="52" rx="10" stroke="#1f2937" width="100" x="250" y="92"></rect><line stroke="#64748b" x1="322" x2="322" y1="92" y2="144"></line><text font-size="18" font-weight="700" text-anchor="middle" x="286" y="125">HAT</text><text font-size="14" text-anchor="middle" x="336" y="125">link</text><line marker-end="url(#arrow)" stroke="#1f2937" stroke-width="2" x1="200" x2="242" y1="118" y2="118"></line><text font-size="18" x="388" y="125">0</text><text fill="#334155" font-size="15" x="80" y="178">FAT 的 link 指向原本 first，也就是 HAT。</text></svg><p class="stepExplain" style="margin:8px 2px;color:#075985;font-weight:700">正確：先接舊 first，再更新 first，避免遺失原串列。</p></div><div class="stepitem" style="display:none"><svg aria-label="Step 4：InsertFront(EAT)，形成 EAT -&gt; FAT -&gt; HAT -&gt; 0" class="svgbox" role="img" viewbox="0 0 980 230"><defs><marker id="arrow" markerheight="10" markerwidth="10" orient="auto" refx="8" refy="3"><path d="M0,0 L0,6 L9,3 z" fill="#1f2937"></path></marker><marker id="arrowRed" markerheight="10" markerwidth="10" orient="auto" refx="8" refy="3"><path d="M0,0 L0,6 L9,3 z" fill="#dc2626"></path></marker></defs><text class="svgtitle" x="20" y="30">Step 4：InsertFront(EAT)，first 改指向 EAT</text><text font-size="16" x="24" y="123">first</text><line marker-end="url(#arrow)" stroke="#1f2937" stroke-width="2" x1="65" x2="92" y1="118" y2="118"></line><rect fill="#fde68a" height="52" rx="10" stroke="#1f2937" width="100" x="100" y="92"></rect><line stroke="#64748b" x1="172" x2="172" y1="92" y2="144"></line><text font-size="18" font-weight="700" text-anchor="middle" x="136" y="125">EAT</text><text font-size="14" text-anchor="middle" x="186" y="125">link</text><rect fill="#dbeafe" height="52" rx="10" stroke="#1f2937" width="100" x="250" y="92"></rect><line stroke="#64748b" x1="322" x2="322" y1="92" y2="144"></line><text font-size="18" font-weight="700" text-anchor="middle" x="286" y="125">FAT</text><text font-size="14" text-anchor="middle" x="336" y="125">link</text><rect fill="#dbeafe" height="52" rx="10" stroke="#1f2937" width="100" x="400" y="92"></rect><line stroke="#64748b" x1="472" x2="472" y1="92" y2="144"></line><text font-size="18" font-weight="700" text-anchor="middle" x="436" y="125">HAT</text><text font-size="14" text-anchor="middle" x="486" y="125">link</text><line marker-end="url(#arrow)" stroke="#1f2937" stroke-width="2" x1="200" x2="242" y1="118" y2="118"></line><line marker-end="url(#arrow)" stroke="#1f2937" stroke-width="2" x1="350" x2="392" y1="118" y2="118"></line><text font-size="18" x="538" y="125">0</text><text fill="#334155" font-size="15" x="80" y="178">first 改指向 EAT，串列入口更新。</text></svg><p class="stepExplain" style="margin:8px 2px;color:#075985;font-weight:700">正確：串列順序變成 EAT -&gt; FAT -&gt; HAT -&gt; 0。</p></div><div class="stepitem" style="display:none"><svg aria-label="Step 5：DeleteFront()，first 跳到 FAT" class="svgbox" role="img" viewbox="0 0 980 230"><defs><marker id="arrow" markerheight="10" markerwidth="10" orient="auto" refx="8" refy="3"><path d="M0,0 L0,6 L9,3 z" fill="#1f2937"></path></marker><marker id="arrowRed" markerheight="10" markerwidth="10" orient="auto" refx="8" refy="3"><path d="M0,0 L0,6 L9,3 z" fill="#dc2626"></path></marker></defs><text class="svgtitle" x="20" y="30">Step 5：DeleteFront()，first 跳到下一個節點 FAT</text><text font-size="16" x="24" y="123">first</text><line marker-end="url(#arrow)" stroke="#1f2937" stroke-width="2" x1="65" x2="92" y1="118" y2="118"></line><rect fill="#fde68a" height="52" rx="10" stroke="#1f2937" width="100" x="100" y="92"></rect><line stroke="#64748b" x1="172" x2="172" y1="92" y2="144"></line><text font-size="18" font-weight="700" text-anchor="middle" x="136" y="125">FAT</text><text font-size="14" text-anchor="middle" x="186" y="125">link</text><rect fill="#dbeafe" height="52" rx="10" stroke="#1f2937" width="100" x="250" y="92"></rect><line stroke="#64748b" x1="322" x2="322" y1="92" y2="144"></line><text font-size="18" font-weight="700" text-anchor="middle" x="286" y="125">HAT</text><text font-size="14" text-anchor="middle" x="336" y="125">link</text><line marker-end="url(#arrow)" stroke="#1f2937" stroke-width="2" x1="200" x2="242" y1="118" y2="118"></line><text font-size="18" x="388" y="125">0</text><text fill="#334155" font-size="15" x="80" y="178">old = first；first = first-&gt;link；delete old。</text></svg><p class="stepExplain" style="margin:8px 2px;color:#075985;font-weight:700">正確：刪除需保存 old，再更新 first，最後 delete old。</p></div></div>
+<h3>程式範例：可編輯 C++</h3>
+<div class="codebox"><button onclick="copyCode('code2')">Copy Code 複製程式</button><textarea id="code2" spellcheck="false">#include &lt;iostream&gt;
+#include &lt;string&gt;
+using namespace std;
+
+// ChainNode 對應投影片的「data + link(pointer)」節點結構
+template &lt;class T&gt;
+class Chain;
+
+template &lt;class T&gt;
+class ChainNode {
+    friend class Chain&lt;T&gt;;       // 讓 Chain 可以操作 private 的 data 與 link
+private:
+    T data;                      // 節點資料欄位
+    ChainNode&lt;T&gt;* link;          // 指向下一個節點的指標
+};
+
+template &lt;class T&gt;
+class Chain {
+public:
+    Chain() : first(nullptr) {}
+
+    // 在串列最前面插入資料，對應 first 指標更新
+    void InsertFront(const T&amp; e) {
+        ChainNode&lt;T&gt;* newNode = new ChainNode&lt;T&gt;;
+        newNode-&gt;data = e;
+        newNode-&gt;link = first;
+        first = newNode;
+    }
+
+    // 刪除第一個節點，示範 link 改變後釋放記憶體
+    void DeleteFront() {
+        if (!first) return;
+        ChainNode&lt;T&gt;* old = first;
+        first = first-&gt;link;
+        delete old;
+    }
+
+    // 從 first 開始逐一輸出到 link 為 0/nullptr
+    void Output() const {
+        for (ChainNode&lt;T&gt;* current = first; current; current = current-&gt;link)
+            cout &lt;&lt; current-&gt;data &lt;&lt; " -&gt; ";
+        cout &lt;&lt; "0\n";
+    }
+private:
+    ChainNode&lt;T&gt;* first;         // 指向第一個節點；空串列時為 nullptr
+};
+
+int main() {
+    Chain&lt;string&gt; list;
+    list.InsertFront("HAT");
+    list.InsertFront("FAT");
+    list.InsertFront("EAT");
+    cout &lt;&lt; "原始串列：";
+    list.Output();
+
+    list.DeleteFront();
+    cout &lt;&lt; "刪除第一個節點後：";
+    list.Output();
+    return 0;
+}</textarea></div>
+<div class="output"><b>輸出結果：</b><pre>原始串列：EAT -&gt; FAT -&gt; HAT -&gt; 0
+刪除第一個節點後：FAT -&gt; HAT -&gt; 0</pre></div>
+<h3>函式與變數說明</h3>
+<table><tr><th>名稱</th><th>用途</th></tr><tr><td>first</td><td>串列入口，指向第一個節點；空串列時為 0/nullptr。</td></tr><tr><td>data / coef / exp</td><td>節點中的資料欄位，可是字串、數字或多項式項目。</td></tr><tr><td>link / llink / rlink</td><td>節點指標欄位；單向串列用 link，雙向串列用 llink 與 rlink。</td></tr><tr><td>current / p / it</td><td>走訪串列時的目前位置。</td></tr></table>
+</div>
+</details>
+<details class="card" id="t3" open="">
+<summary><span>Chapter 4 Linked Lists</span><b>Doubly Linked List</b></summary>
+<div class="content">
+<h3>詳細中文解說</h3>
+<p>雙向串列在每個節點中同時保存 llink 與 rlink。rlink 指向下一個節點，llink 指向前一個節點，因此比單向串列更容易向前走、刪除目前節點也比較方便。不過每次插入或刪除要更新兩個方向的指標，所以要特別小心順序。投影片常用 header node 或 circular doubly linked list 減少邊界情況；基本概念仍是 data、llink、rlink 三欄。考試若畫圖，要把左右兩條箭頭都畫清楚。</p>
+<div class="note"><b>保留與加強：</b>保留原本主題、中文解說、程式、輸出結果與 Copy Code；本版把 SVG 改成多步驟分解圖，每個 Step 可切換檢視。</div>
+<h3>多步驟 SVG 圖解</h3>
+<div class="stepbox"><h4>Doubly Linked List 多步驟講解</h4><div class="stepbuttons"><button class="stepbtn" onclick="showStep(this,0)">Step 1</button><button class="stepbtn" onclick="showStep(this,1)">Step 2</button><button class="stepbtn" onclick="showStep(this,2)">Step 3</button><button class="stepbtn" onclick="showStep(this,3)">Step 4</button></div><div class="stepitem" style="display:block"><svg aria-label="Step 1：雙向串列有 llink 與 rlink" class="svgbox" role="img" viewbox="0 0 980 230"><defs><marker id="arrow" markerheight="10" markerwidth="10" orient="auto" refx="8" refy="3"><path d="M0,0 L0,6 L9,3 z" fill="#1f2937"></path></marker><marker id="arrowRed" markerheight="10" markerwidth="10" orient="auto" refx="8" refy="3"><path d="M0,0 L0,6 L9,3 z" fill="#dc2626"></path></marker></defs><text class="svgtitle" x="20" y="30">Step 1：雙向節點包含 llink、data、rlink</text><text font-size="16" x="24" y="123">first</text><line marker-end="url(#arrow)" stroke="#1f2937" stroke-width="2" x1="65" x2="92" y1="118" y2="118"></line><rect fill="#dbeafe" height="52" rx="10" stroke="#1f2937" width="100" x="100" y="92"></rect><line stroke="#64748b" x1="172" x2="172" y1="92" y2="144"></line><text font-size="18" font-weight="700" text-anchor="middle" x="136" y="125">EAT</text><text font-size="14" text-anchor="middle" x="186" y="125">link</text><rect fill="#dbeafe" height="52" rx="10" stroke="#1f2937" width="100" x="250" y="92"></rect><line stroke="#64748b" x1="322" x2="322" y1="92" y2="144"></line><text font-size="18" font-weight="700" text-anchor="middle" x="286" y="125">FAT</text><text font-size="14" text-anchor="middle" x="336" y="125">link</text><rect fill="#dbeafe" height="52" rx="10" stroke="#1f2937" width="100" x="400" y="92"></rect><line stroke="#64748b" x1="472" x2="472" y1="92" y2="144"></line><text font-size="18" font-weight="700" text-anchor="middle" x="436" y="125">HAT</text><text font-size="14" text-anchor="middle" x="486" y="125">link</text><line marker-end="url(#arrow)" stroke="#1f2937" stroke-width="2" x1="200" x2="242" y1="118" y2="118"></line><line marker-end="url(#arrowRed)" stroke="#dc2626" stroke-width="2" x1="250" x2="208" y1="134" y2="134"></line><line marker-end="url(#arrow)" stroke="#1f2937" stroke-width="2" x1="350" x2="392" y1="118" y2="118"></line><line marker-end="url(#arrowRed)" stroke="#dc2626" stroke-width="2" x1="400" x2="358" y1="134" y2="134"></line><text font-size="18" x="538" y="125">0</text><text fill="#334155" font-size="15" x="80" y="178">黑色箭頭：rlink 往後；紅色箭頭：llink 往前。</text></svg><p class="stepExplain" style="margin:8px 2px;color:#075985;font-weight:700">正確：doubly linked list 可往前與往後走。</p></div><div class="stepitem" style="display:none"><svg aria-label="Step 2：準備在 EAT 與 FAT 中間插入 GAT" class="svgbox" role="img" viewbox="0 0 980 230"><defs><marker id="arrow" markerheight="10" markerwidth="10" orient="auto" refx="8" refy="3"><path d="M0,0 L0,6 L9,3 z" fill="#1f2937"></path></marker><marker id="arrowRed" markerheight="10" markerwidth="10" orient="auto" refx="8" refy="3"><path d="M0,0 L0,6 L9,3 z" fill="#dc2626"></path></marker></defs><text class="svgtitle" x="20" y="30">Step 2：插入新節點時先接左右鄰居</text><text font-size="16" x="24" y="123">first</text><line marker-end="url(#arrow)" stroke="#1f2937" stroke-width="2" x1="65" x2="92" y1="118" y2="118"></line><rect fill="#dbeafe" height="52" rx="10" stroke="#1f2937" width="100" x="100" y="92"></rect><line stroke="#64748b" x1="172" x2="172" y1="92" y2="144"></line><text font-size="18" font-weight="700" text-anchor="middle" x="136" y="125">EAT</text><text font-size="14" text-anchor="middle" x="186" y="125">link</text><rect fill="#fde68a" height="52" rx="10" stroke="#1f2937" width="100" x="250" y="92"></rect><line stroke="#64748b" x1="322" x2="322" y1="92" y2="144"></line><text font-size="18" font-weight="700" text-anchor="middle" x="286" y="125">FAT</text><text font-size="14" text-anchor="middle" x="336" y="125">link</text><rect fill="#dbeafe" height="52" rx="10" stroke="#1f2937" width="100" x="400" y="92"></rect><line stroke="#64748b" x1="472" x2="472" y1="92" y2="144"></line><text font-size="18" font-weight="700" text-anchor="middle" x="436" y="125">HAT</text><text font-size="14" text-anchor="middle" x="486" y="125">link</text><line marker-end="url(#arrow)" stroke="#1f2937" stroke-width="2" x1="200" x2="242" y1="118" y2="118"></line><line marker-end="url(#arrowRed)" stroke="#dc2626" stroke-width="2" x1="250" x2="208" y1="134" y2="134"></line><line marker-end="url(#arrow)" stroke="#1f2937" stroke-width="2" x1="350" x2="392" y1="118" y2="118"></line><line marker-end="url(#arrowRed)" stroke="#dc2626" stroke-width="2" x1="400" x2="358" y1="134" y2="134"></line><text font-size="18" x="538" y="125">0</text><text fill="#334155" font-size="15" x="80" y="178">需要同時處理前後兩側節點的指標。</text></svg><p class="stepExplain" style="margin:8px 2px;color:#075985;font-weight:700">正確：插入順序要避免斷鏈。</p></div><div class="stepitem" style="display:none"><svg aria-label="Step 3：先建立 GAT，GAT-&gt;llink=EAT，GAT-&gt;rlink=FAT" class="svgbox" role="img" viewbox="0 0 980 230"><defs><marker id="arrow" markerheight="10" markerwidth="10" orient="auto" refx="8" refy="3"><path d="M0,0 L0,6 L9,3 z" fill="#1f2937"></path></marker><marker id="arrowRed" markerheight="10" markerwidth="10" orient="auto" refx="8" refy="3"><path d="M0,0 L0,6 L9,3 z" fill="#dc2626"></path></marker></defs><text class="svgtitle" x="20" y="30">Step 3：更新前一節點 rlink 指向新節點</text><text font-size="16" x="24" y="123">first</text><line marker-end="url(#arrow)" stroke="#1f2937" stroke-width="2" x1="65" x2="92" y1="118" y2="118"></line><rect fill="#dbeafe" height="52" rx="10" stroke="#1f2937" width="100" x="100" y="92"></rect><line stroke="#64748b" x1="172" x2="172" y1="92" y2="144"></line><text font-size="18" font-weight="700" text-anchor="middle" x="136" y="125">EAT</text><text font-size="14" text-anchor="middle" x="186" y="125">link</text><rect fill="#fde68a" height="52" rx="10" stroke="#1f2937" width="100" x="250" y="92"></rect><line stroke="#64748b" x1="322" x2="322" y1="92" y2="144"></line><text font-size="18" font-weight="700" text-anchor="middle" x="286" y="125">GAT</text><text font-size="14" text-anchor="middle" x="336" y="125">link</text><rect fill="#dbeafe" height="52" rx="10" stroke="#1f2937" width="100" x="400" y="92"></rect><line stroke="#64748b" x1="472" x2="472" y1="92" y2="144"></line><text font-size="18" font-weight="700" text-anchor="middle" x="436" y="125">FAT</text><text font-size="14" text-anchor="middle" x="486" y="125">link</text><rect fill="#dbeafe" height="52" rx="10" stroke="#1f2937" width="100" x="550" y="92"></rect><line stroke="#64748b" x1="622" x2="622" y1="92" y2="144"></line><text font-size="18" font-weight="700" text-anchor="middle" x="586" y="125">HAT</text><text font-size="14" text-anchor="middle" x="636" y="125">link</text><line marker-end="url(#arrow)" stroke="#1f2937" stroke-width="2" x1="200" x2="242" y1="118" y2="118"></line><line marker-end="url(#arrowRed)" stroke="#dc2626" stroke-width="2" x1="250" x2="208" y1="134" y2="134"></line><line marker-end="url(#arrow)" stroke="#1f2937" stroke-width="2" x1="350" x2="392" y1="118" y2="118"></line><line marker-end="url(#arrowRed)" stroke="#dc2626" stroke-width="2" x1="400" x2="358" y1="134" y2="134"></line><line marker-end="url(#arrow)" stroke="#1f2937" stroke-width="2" x1="500" x2="542" y1="118" y2="118"></line><line marker-end="url(#arrowRed)" stroke="#dc2626" stroke-width="2" x1="550" x2="508" y1="134" y2="134"></line><text font-size="18" x="688" y="125">0</text><text fill="#334155" font-size="15" x="80" y="178">新節點左右方向先接好。</text></svg><p class="stepExplain" style="margin:8px 2px;color:#075985;font-weight:700">正確：左鄰居的 rlink 必須指到新節點。</p></div><div class="stepitem" style="display:none"><svg aria-label="Step 4：修正 EAT-&gt;rlink 與 FAT-&gt;llink，插入完成" class="svgbox" role="img" viewbox="0 0 980 230"><defs><marker id="arrow" markerheight="10" markerwidth="10" orient="auto" refx="8" refy="3"><path d="M0,0 L0,6 L9,3 z" fill="#1f2937"></path></marker><marker id="arrowRed" markerheight="10" markerwidth="10" orient="auto" refx="8" refy="3"><path d="M0,0 L0,6 L9,3 z" fill="#dc2626"></path></marker></defs><text class="svgtitle" x="20" y="30">Step 4：更新後一節點 llink 指向新節點</text><text font-size="16" x="24" y="123">first</text><line marker-end="url(#arrow)" stroke="#1f2937" stroke-width="2" x1="65" x2="92" y1="118" y2="118"></line><rect fill="#dbeafe" height="52" rx="10" stroke="#1f2937" width="100" x="100" y="92"></rect><line stroke="#64748b" x1="172" x2="172" y1="92" y2="144"></line><text font-size="18" font-weight="700" text-anchor="middle" x="136" y="125">EAT</text><text font-size="14" text-anchor="middle" x="186" y="125">link</text><rect fill="#fde68a" height="52" rx="10" stroke="#1f2937" width="100" x="250" y="92"></rect><line stroke="#64748b" x1="322" x2="322" y1="92" y2="144"></line><text font-size="18" font-weight="700" text-anchor="middle" x="286" y="125">GAT</text><text font-size="14" text-anchor="middle" x="336" y="125">link</text><rect fill="#dbeafe" height="52" rx="10" stroke="#1f2937" width="100" x="400" y="92"></rect><line stroke="#64748b" x1="472" x2="472" y1="92" y2="144"></line><text font-size="18" font-weight="700" text-anchor="middle" x="436" y="125">FAT</text><text font-size="14" text-anchor="middle" x="486" y="125">link</text><rect fill="#dbeafe" height="52" rx="10" stroke="#1f2937" width="100" x="550" y="92"></rect><line stroke="#64748b" x1="622" x2="622" y1="92" y2="144"></line><text font-size="18" font-weight="700" text-anchor="middle" x="586" y="125">HAT</text><text font-size="14" text-anchor="middle" x="636" y="125">link</text><line marker-end="url(#arrow)" stroke="#1f2937" stroke-width="2" x1="200" x2="242" y1="118" y2="118"></line><line marker-end="url(#arrowRed)" stroke="#dc2626" stroke-width="2" x1="250" x2="208" y1="134" y2="134"></line><line marker-end="url(#arrow)" stroke="#1f2937" stroke-width="2" x1="350" x2="392" y1="118" y2="118"></line><line marker-end="url(#arrowRed)" stroke="#dc2626" stroke-width="2" x1="400" x2="358" y1="134" y2="134"></line><line marker-end="url(#arrow)" stroke="#1f2937" stroke-width="2" x1="500" x2="542" y1="118" y2="118"></line><line marker-end="url(#arrowRed)" stroke="#dc2626" stroke-width="2" x1="550" x2="508" y1="134" y2="134"></line><text font-size="18" x="688" y="125">0</text><text fill="#334155" font-size="15" x="80" y="178">雙向串列插入至少要顧到四個方向關係。</text></svg><p class="stepExplain" style="margin:8px 2px;color:#075985;font-weight:700">正確：右鄰居的 llink 必須指回新節點。</p></div></div>
+<h3>程式範例：可編輯 C++</h3>
+<div class="codebox"><button onclick="copyCode('code3')">Copy Code 複製程式</button><textarea id="code3" spellcheck="false">#include &lt;iostream&gt;
+#include &lt;string&gt;
+using namespace std;
+
+// 雙向串列節點：比單向串列多一個 llink，可以往前走
+template &lt;class T&gt;
+class DblListNode {
+public:
+    T data;                       // 節點資料
+    DblListNode&lt;T&gt;* llink;        // 指向前一個節點
+    DblListNode&lt;T&gt;* rlink;        // 指向下一個節點
+    DblListNode(const T&amp; e) : data(e), llink(nullptr), rlink(nullptr) {}
+};
+
+template &lt;class T&gt;
+class DblList {
+public:
+    DblList() : first(nullptr), last(nullptr) {}
+
+    // 從尾端插入：必須同時更新 last-&gt;rlink 與 node-&gt;llink
+    void PushBack(const T&amp; e) {
+        DblListNode&lt;T&gt;* node = new DblListNode&lt;T&gt;(e);
+        if (!first) first = last = node;
+        else {
+            last-&gt;rlink = node;
+            node-&gt;llink = last;
+            last = node;
+        }
+    }
+
+    void PrintForward() const {
+        for (auto p = first; p; p = p-&gt;rlink) cout &lt;&lt; p-&gt;data &lt;&lt; " -&gt; ";
+        cout &lt;&lt; "0\n";
+    }
+
+    void PrintBackward() const {
+        for (auto p = last; p; p = p-&gt;llink) cout &lt;&lt; p-&gt;data &lt;&lt; " -&gt; ";
+        cout &lt;&lt; "0\n";
+    }
+private:
+    DblListNode&lt;T&gt;* first;         // 第一個節點
+    DblListNode&lt;T&gt;* last;          // 最後一個節點
+};
+
+int main() {
+    DblList&lt;string&gt; list;
+    list.PushBack("EAT");
+    list.PushBack("FAT");
+    list.PushBack("HAT");
+    cout &lt;&lt; "往後走："; list.PrintForward();
+    cout &lt;&lt; "往前走："; list.PrintBackward();
+    return 0;
+}</textarea></div>
+<div class="output"><b>輸出結果：</b><pre>往後走：EAT -&gt; FAT -&gt; HAT -&gt; 0
+往前走：HAT -&gt; FAT -&gt; EAT -&gt; 0</pre></div>
+<h3>函式與變數說明</h3>
+<table><tr><th>名稱</th><th>用途</th></tr><tr><td>first</td><td>串列入口，指向第一個節點；空串列時為 0/nullptr。</td></tr><tr><td>data / coef / exp</td><td>節點中的資料欄位，可是字串、數字或多項式項目。</td></tr><tr><td>link / llink / rlink</td><td>節點指標欄位；單向串列用 link，雙向串列用 llink 與 rlink。</td></tr><tr><td>current / p / it</td><td>走訪串列時的目前位置。</td></tr></table>
+</div>
+</details>
+<details class="card" id="t4" open="">
+<summary><span>Chapter 4 Linked Lists</span><b>C++ STL list / iterators</b></summary>
+<div class="content">
+<h3>詳細中文解說</h3>
+<p>第四章也連到 C++ STL list 與 iterator。list 是雙向串列，因此支援 bidirectional iterator：可以 ++ 往後，也可以 -- 往前，但不能像 vector 一樣用 it+5 做 random access。iterator 的考點常是知道不同容器的走訪能力，以及 insert/erase 後哪些 iterator 可能失效。若教學網站要讓學生理解，最好把 iterator 畫成一個指向節點的游標，而不是單純數字 index。</p>
+<div class="note"><b>保留與加強：</b>保留原本主題、中文解說、程式、輸出結果與 Copy Code；本版把 SVG 改成多步驟分解圖，每個 Step 可切換檢視。</div>
+<h3>多步驟 SVG 圖解</h3>
+<div class="stepbox"><h4>C++ STL list / iterators 多步驟講解</h4><div class="stepbuttons"><button class="stepbtn" onclick="showStep(this,0)">Step 1</button><button class="stepbtn" onclick="showStep(this,1)">Step 2</button><button class="stepbtn" onclick="showStep(this,2)">Step 3</button></div><div class="stepitem" style="display:block"><svg aria-label="Step 1：STL list 的 iterator 指到某個節點" class="svgbox" role="img" viewbox="0 0 980 230"><defs><marker id="arrow" markerheight="10" markerwidth="10" orient="auto" refx="8" refy="3"><path d="M0,0 L0,6 L9,3 z" fill="#1f2937"></path></marker><marker id="arrowRed" markerheight="10" markerwidth="10" orient="auto" refx="8" refy="3"><path d="M0,0 L0,6 L9,3 z" fill="#dc2626"></path></marker></defs><text class="svgtitle" x="20" y="30">Step 1：list 是雙向串列容器</text><text font-size="16" x="24" y="123">first</text><line marker-end="url(#arrow)" stroke="#1f2937" stroke-width="2" x1="65" x2="92" y1="118" y2="118"></line><rect fill="#dbeafe" height="52" rx="10" stroke="#1f2937" width="100" x="100" y="92"></rect><line stroke="#64748b" x1="172" x2="172" y1="92" y2="144"></line><text font-size="18" font-weight="700" text-anchor="middle" x="136" y="125">10</text><text font-size="14" text-anchor="middle" x="186" y="125">link</text><rect fill="#fde68a" height="52" rx="10" stroke="#1f2937" width="100" x="250" y="92"></rect><line stroke="#64748b" x1="322" x2="322" y1="92" y2="144"></line><text font-size="18" font-weight="700" text-anchor="middle" x="286" y="125">20</text><text font-size="14" text-anchor="middle" x="336" y="125">link</text><rect fill="#dbeafe" height="52" rx="10" stroke="#1f2937" width="100" x="400" y="92"></rect><line stroke="#64748b" x1="472" x2="472" y1="92" y2="144"></line><text font-size="18" font-weight="700" text-anchor="middle" x="436" y="125">40</text><text font-size="14" text-anchor="middle" x="486" y="125">link</text><line marker-end="url(#arrow)" stroke="#1f2937" stroke-width="2" x1="200" x2="242" y1="118" y2="118"></line><line marker-end="url(#arrowRed)" stroke="#dc2626" stroke-width="2" x1="250" x2="208" y1="134" y2="134"></line><line marker-end="url(#arrow)" stroke="#1f2937" stroke-width="2" x1="350" x2="392" y1="118" y2="118"></line><line marker-end="url(#arrowRed)" stroke="#dc2626" stroke-width="2" x1="400" x2="358" y1="134" y2="134"></line><text font-size="18" x="538" y="125">0</text><text fill="#334155" font-size="15" x="80" y="178">iterator 不是陣列 index，而是抽象化的節點位置。</text></svg><p class="stepExplain" style="margin:8px 2px;color:#075985;font-weight:700">正確：STL list 對應 linked representation。</p></div><div class="stepitem" style="display:none"><svg aria-label="Step 2：++it 可從 20 走到 40" class="svgbox" role="img" viewbox="0 0 980 230"><defs><marker id="arrow" markerheight="10" markerwidth="10" orient="auto" refx="8" refy="3"><path d="M0,0 L0,6 L9,3 z" fill="#1f2937"></path></marker><marker id="arrowRed" markerheight="10" markerwidth="10" orient="auto" refx="8" refy="3"><path d="M0,0 L0,6 L9,3 z" fill="#dc2626"></path></marker></defs><text class="svgtitle" x="20" y="30">Step 2：iterator 指向目前節點</text><text font-size="16" x="24" y="123">first</text><line marker-end="url(#arrow)" stroke="#1f2937" stroke-width="2" x1="65" x2="92" y1="118" y2="118"></line><rect fill="#dbeafe" height="52" rx="10" stroke="#1f2937" width="100" x="100" y="92"></rect><line stroke="#64748b" x1="172" x2="172" y1="92" y2="144"></line><text font-size="18" font-weight="700" text-anchor="middle" x="136" y="125">10</text><text font-size="14" text-anchor="middle" x="186" y="125">link</text><rect fill="#dbeafe" height="52" rx="10" stroke="#1f2937" width="100" x="250" y="92"></rect><line stroke="#64748b" x1="322" x2="322" y1="92" y2="144"></line><text font-size="18" font-weight="700" text-anchor="middle" x="286" y="125">20</text><text font-size="14" text-anchor="middle" x="336" y="125">link</text><rect fill="#fde68a" height="52" rx="10" stroke="#1f2937" width="100" x="400" y="92"></rect><line stroke="#64748b" x1="472" x2="472" y1="92" y2="144"></line><text font-size="18" font-weight="700" text-anchor="middle" x="436" y="125">40</text><text font-size="14" text-anchor="middle" x="486" y="125">link</text><line marker-end="url(#arrow)" stroke="#1f2937" stroke-width="2" x1="200" x2="242" y1="118" y2="118"></line><line marker-end="url(#arrowRed)" stroke="#dc2626" stroke-width="2" x1="250" x2="208" y1="134" y2="134"></line><line marker-end="url(#arrow)" stroke="#1f2937" stroke-width="2" x1="350" x2="392" y1="118" y2="118"></line><line marker-end="url(#arrowRed)" stroke="#dc2626" stroke-width="2" x1="400" x2="358" y1="134" y2="134"></line><text font-size="18" x="538" y="125">0</text><text fill="#334155" font-size="15" x="80" y="178">list iterator 可前進，也可用 --it 後退。</text></svg><p class="stepExplain" style="margin:8px 2px;color:#075985;font-weight:700">正確：iterator 不是陣列 index。</p></div><div class="stepitem" style="display:none"><svg aria-label="Step 3：insert(it,30) 在 40 前面插入" class="svgbox" role="img" viewbox="0 0 980 230"><defs><marker id="arrow" markerheight="10" markerwidth="10" orient="auto" refx="8" refy="3"><path d="M0,0 L0,6 L9,3 z" fill="#1f2937"></path></marker><marker id="arrowRed" markerheight="10" markerwidth="10" orient="auto" refx="8" refy="3"><path d="M0,0 L0,6 L9,3 z" fill="#dc2626"></path></marker></defs><text class="svgtitle" x="20" y="30">Step 3：++iterator 走向下一個節點</text><text font-size="16" x="24" y="123">first</text><line marker-end="url(#arrow)" stroke="#1f2937" stroke-width="2" x1="65" x2="92" y1="118" y2="118"></line><rect fill="#dbeafe" height="52" rx="10" stroke="#1f2937" width="100" x="100" y="92"></rect><line stroke="#64748b" x1="172" x2="172" y1="92" y2="144"></line><text font-size="18" font-weight="700" text-anchor="middle" x="136" y="125">10</text><text font-size="14" text-anchor="middle" x="186" y="125">link</text><rect fill="#dbeafe" height="52" rx="10" stroke="#1f2937" width="100" x="250" y="92"></rect><line stroke="#64748b" x1="322" x2="322" y1="92" y2="144"></line><text font-size="18" font-weight="700" text-anchor="middle" x="286" y="125">20</text><text font-size="14" text-anchor="middle" x="336" y="125">link</text><rect fill="#fde68a" height="52" rx="10" stroke="#1f2937" width="100" x="400" y="92"></rect><line stroke="#64748b" x1="472" x2="472" y1="92" y2="144"></line><text font-size="18" font-weight="700" text-anchor="middle" x="436" y="125">30</text><text font-size="14" text-anchor="middle" x="486" y="125">link</text><rect fill="#dbeafe" height="52" rx="10" stroke="#1f2937" width="100" x="550" y="92"></rect><line stroke="#64748b" x1="622" x2="622" y1="92" y2="144"></line><text font-size="18" font-weight="700" text-anchor="middle" x="586" y="125">40</text><text font-size="14" text-anchor="middle" x="636" y="125">link</text><line marker-end="url(#arrow)" stroke="#1f2937" stroke-width="2" x1="200" x2="242" y1="118" y2="118"></line><line marker-end="url(#arrowRed)" stroke="#dc2626" stroke-width="2" x1="250" x2="208" y1="134" y2="134"></line><line marker-end="url(#arrow)" stroke="#1f2937" stroke-width="2" x1="350" x2="392" y1="118" y2="118"></line><line marker-end="url(#arrowRed)" stroke="#dc2626" stroke-width="2" x1="400" x2="358" y1="134" y2="134"></line><line marker-end="url(#arrow)" stroke="#1f2937" stroke-width="2" x1="500" x2="542" y1="118" y2="118"></line><line marker-end="url(#arrowRed)" stroke="#dc2626" stroke-width="2" x1="550" x2="508" y1="134" y2="134"></line><text font-size="18" x="688" y="125">0</text><text fill="#334155" font-size="15" x="80" y="178">不搬移資料，只調整節點指標。</text></svg><p class="stepExplain" style="margin:8px 2px;color:#075985;font-weight:700">正確：bidirectional iterator 可前進與後退。</p></div></div>
+<h3>程式範例：可編輯 C++</h3>
+<div class="codebox"><button onclick="copyCode('code4')">Copy Code 複製程式</button><textarea id="code4" spellcheck="false">#include &lt;iostream&gt;
+#include &lt;list&gt;
+using namespace std;
+
+int main() {
+    // C++ STL list 是雙向串列，iterator 屬於 bidirectional iterator
+    list&lt;int&gt; L = {10, 20, 40};
+
+    // 找到 20 後面的位置，插入 30
+    auto it = L.begin();
+    ++it;          // it 指到 20
+    ++it;          // it 指到 40，也就是插入位置
+    L.insert(it, 30);
+
+    // 用 iterator 從前往後走訪
+    cout &lt;&lt; "正向走訪：";
+    for (auto p = L.begin(); p != L.end(); ++p) cout &lt;&lt; *p &lt;&lt; ' ';
+    cout &lt;&lt; "\n";
+
+    // 用 reverse_iterator 從後往前走訪
+    cout &lt;&lt; "反向走訪：";
+    for (auto p = L.rbegin(); p != L.rend(); ++p) cout &lt;&lt; *p &lt;&lt; ' ';
+    cout &lt;&lt; "\n";
+    return 0;
+}</textarea></div>
+<div class="output"><b>輸出結果：</b><pre>正向走訪：10 20 30 40
+反向走訪：40 30 20 10</pre></div>
+<h3>函式與變數說明</h3>
+<table><tr><th>名稱</th><th>用途</th></tr><tr><td>first</td><td>串列入口，指向第一個節點；空串列時為 0/nullptr。</td></tr><tr><td>data / coef / exp</td><td>節點中的資料欄位，可是字串、數字或多項式項目。</td></tr><tr><td>link / llink / rlink</td><td>節點指標欄位；單向串列用 link，雙向串列用 llink 與 rlink。</td></tr><tr><td>current / p / it</td><td>走訪串列時的目前位置。</td></tr></table>
+</div>
+</details>
+<details class="card" id="t5" open="">
+<summary><span>Chapter 4 Linked Lists</span><b>Applications: Polynomial by linked list</b></summary>
+<div class="content">
+<h3>詳細中文解說</h3>
+<p>串列的應用之一是多項式表示。每個節點可以存 coef 與 exp，代表一項，例如 3x^4。若多項式很稀疏，用 linked list 只存非零項，比陣列存每個次方更節省空間。合併兩個多項式時，通常比較兩個串列目前節點的 exp：次方大的先輸出，次方相同則係數相加。這也呼應投影片對 Array vs Linked 的比較：陣列查詢快，但稀疏資料可能浪費；串列適合動態項目與稀疏資料。</p>
+<div class="note"><b>保留與加強：</b>保留原本主題、中文解說、程式、輸出結果與 Copy Code；本版把 SVG 改成多步驟分解圖，每個 Step 可切換檢視。</div>
+<h3>多步驟 SVG 圖解</h3>
+<div class="stepbox"><h4>Applications: Polynomial by linked list 多步驟講解</h4><div class="stepbuttons"><button class="stepbtn" onclick="showStep(this,0)">Step 1</button><button class="stepbtn" onclick="showStep(this,1)">Step 2</button><button class="stepbtn" onclick="showStep(this,2)">Step 3</button></div><div class="stepitem" style="display:block"><svg aria-label="Step 1：多項式每一項用一個節點表示" class="svgbox" role="img" viewbox="0 0 980 230"><defs><marker id="arrow" markerheight="10" markerwidth="10" orient="auto" refx="8" refy="3"><path d="M0,0 L0,6 L9,3 z" fill="#1f2937"></path></marker><marker id="arrowRed" markerheight="10" markerwidth="10" orient="auto" refx="8" refy="3"><path d="M0,0 L0,6 L9,3 z" fill="#dc2626"></path></marker></defs><text class="svgtitle" x="20" y="30">Step 1：多項式每一項以 coef 與 exp 儲存</text><text font-size="16" x="24" y="123">first</text><line marker-end="url(#arrow)" stroke="#1f2937" stroke-width="2" x1="65" x2="92" y1="118" y2="118"></line><rect fill="#dbeafe" height="52" rx="10" stroke="#1f2937" width="100" x="100" y="92"></rect><line stroke="#64748b" x1="172" x2="172" y1="92" y2="144"></line><text font-size="18" font-weight="700" text-anchor="middle" x="136" y="125">3x^4</text><text font-size="14" text-anchor="middle" x="186" y="125">link</text><rect fill="#dbeafe" height="52" rx="10" stroke="#1f2937" width="100" x="250" y="92"></rect><line stroke="#64748b" x1="322" x2="322" y1="92" y2="144"></line><text font-size="18" font-weight="700" text-anchor="middle" x="286" y="125">2x^2</text><text font-size="14" text-anchor="middle" x="336" y="125">link</text><rect fill="#dbeafe" height="52" rx="10" stroke="#1f2937" width="100" x="400" y="92"></rect><line stroke="#64748b" x1="472" x2="472" y1="92" y2="144"></line><text font-size="18" font-weight="700" text-anchor="middle" x="436" y="125">7x^0</text><text font-size="14" text-anchor="middle" x="486" y="125">link</text><line marker-end="url(#arrow)" stroke="#1f2937" stroke-width="2" x1="200" x2="242" y1="118" y2="118"></line><line marker-end="url(#arrow)" stroke="#1f2937" stroke-width="2" x1="350" x2="392" y1="118" y2="118"></line><text font-size="18" x="538" y="125">0</text><text fill="#334155" font-size="15" x="80" y="178">節點資料可包含 coef 與 exp，不一定只有單一值。</text></svg><p class="stepExplain" style="margin:8px 2px;color:#075985;font-weight:700">正確：linked list 適合表示項數不固定的 polynomial。</p></div><div class="stepitem" style="display:none"><svg aria-label="Step 2：依照 exp 由大到小串接" class="svgbox" role="img" viewbox="0 0 980 230"><defs><marker id="arrow" markerheight="10" markerwidth="10" orient="auto" refx="8" refy="3"><path d="M0,0 L0,6 L9,3 z" fill="#1f2937"></path></marker><marker id="arrowRed" markerheight="10" markerwidth="10" orient="auto" refx="8" refy="3"><path d="M0,0 L0,6 L9,3 z" fill="#dc2626"></path></marker></defs><text class="svgtitle" x="20" y="30">Step 2：依照 exp 排列節點</text><text font-size="16" x="24" y="123">first</text><line marker-end="url(#arrow)" stroke="#1f2937" stroke-width="2" x1="65" x2="92" y1="118" y2="118"></line><rect fill="#fde68a" height="52" rx="10" stroke="#1f2937" width="100" x="100" y="92"></rect><line stroke="#64748b" x1="172" x2="172" y1="92" y2="144"></line><text font-size="18" font-weight="700" text-anchor="middle" x="136" y="125">3x^4</text><text font-size="14" text-anchor="middle" x="186" y="125">link</text><rect fill="#fde68a" height="52" rx="10" stroke="#1f2937" width="100" x="250" y="92"></rect><line stroke="#64748b" x1="322" x2="322" y1="92" y2="144"></line><text font-size="18" font-weight="700" text-anchor="middle" x="286" y="125">2x^2</text><text font-size="14" text-anchor="middle" x="336" y="125">link</text><rect fill="#fde68a" height="52" rx="10" stroke="#1f2937" width="100" x="400" y="92"></rect><line stroke="#64748b" x1="472" x2="472" y1="92" y2="144"></line><text font-size="18" font-weight="700" text-anchor="middle" x="436" y="125">7x^0</text><text font-size="14" text-anchor="middle" x="486" y="125">link</text><line marker-end="url(#arrow)" stroke="#1f2937" stroke-width="2" x1="200" x2="242" y1="118" y2="118"></line><line marker-end="url(#arrow)" stroke="#1f2937" stroke-width="2" x1="350" x2="392" y1="118" y2="118"></line><text font-size="18" x="538" y="125">0</text><text fill="#334155" font-size="15" x="80" y="178">P(x)=3x^4+2x^2+7。</text></svg><p class="stepExplain" style="margin:8px 2px;color:#075985;font-weight:700">正確：節點資料是 coefficient 與 exponent。</p></div><div class="stepitem" style="display:none"><svg aria-label="Step 3：若插入 5x^3，只要改鄰近 link" class="svgbox" role="img" viewbox="0 0 980 230"><defs><marker id="arrow" markerheight="10" markerwidth="10" orient="auto" refx="8" refy="3"><path d="M0,0 L0,6 L9,3 z" fill="#1f2937"></path></marker><marker id="arrowRed" markerheight="10" markerwidth="10" orient="auto" refx="8" refy="3"><path d="M0,0 L0,6 L9,3 z" fill="#dc2626"></path></marker></defs><text class="svgtitle" x="20" y="30">Step 3：同次方項相加 coef</text><text font-size="16" x="24" y="123">first</text><line marker-end="url(#arrow)" stroke="#1f2937" stroke-width="2" x1="65" x2="92" y1="118" y2="118"></line><rect fill="#dbeafe" height="52" rx="10" stroke="#1f2937" width="100" x="100" y="92"></rect><line stroke="#64748b" x1="172" x2="172" y1="92" y2="144"></line><text font-size="18" font-weight="700" text-anchor="middle" x="136" y="125">3x^4</text><text font-size="14" text-anchor="middle" x="186" y="125">link</text><rect fill="#fde68a" height="52" rx="10" stroke="#1f2937" width="100" x="250" y="92"></rect><line stroke="#64748b" x1="322" x2="322" y1="92" y2="144"></line><text font-size="18" font-weight="700" text-anchor="middle" x="286" y="125">5x^3</text><text font-size="14" text-anchor="middle" x="336" y="125">link</text><rect fill="#dbeafe" height="52" rx="10" stroke="#1f2937" width="100" x="400" y="92"></rect><line stroke="#64748b" x1="472" x2="472" y1="92" y2="144"></line><text font-size="18" font-weight="700" text-anchor="middle" x="436" y="125">2x^2</text><text font-size="14" text-anchor="middle" x="486" y="125">link</text><rect fill="#dbeafe" height="52" rx="10" stroke="#1f2937" width="100" x="550" y="92"></rect><line stroke="#64748b" x1="622" x2="622" y1="92" y2="144"></line><text font-size="18" font-weight="700" text-anchor="middle" x="586" y="125">7x^0</text><text font-size="14" text-anchor="middle" x="636" y="125">link</text><line marker-end="url(#arrow)" stroke="#1f2937" stroke-width="2" x1="200" x2="242" y1="118" y2="118"></line><line marker-end="url(#arrow)" stroke="#1f2937" stroke-width="2" x1="350" x2="392" y1="118" y2="118"></line><line marker-end="url(#arrow)" stroke="#1f2937" stroke-width="2" x1="500" x2="542" y1="118" y2="118"></line><text font-size="18" x="688" y="125">0</text><text fill="#334155" font-size="15" x="80" y="178">有序串列的插入位置要先搜尋，但接上後不需搬移所有項。</text></svg><p class="stepExplain" style="margin:8px 2px;color:#075985;font-weight:700">正確：加法核心是比較 exponent。</p></div></div>
+<h3>程式範例：可編輯 C++</h3>
+<div class="codebox"><button onclick="copyCode('code5')">Copy Code 複製程式</button><textarea id="code5" spellcheck="false">#include &lt;iostream&gt;
+using namespace std;
+
+// 多項式項目：coef 代表係數，exp 代表次方，link 指向下一項
+class PolyNode {
+public:
+    int coef;
+    int exp;
+    PolyNode* link;
+    PolyNode(int c, int e, PolyNode* l = nullptr) : coef(c), exp(e), link(l) {}
+};
+
+// 輸出多項式串列：依照 exp 由大到小排列
+void Print(PolyNode* first) {
+    for (PolyNode* p = first; p; p = p-&gt;link) {
+        cout &lt;&lt; p-&gt;coef &lt;&lt; "x^" &lt;&lt; p-&gt;exp;
+        if (p-&gt;link) cout &lt;&lt; " + ";
+    }
+    cout &lt;&lt; "\n";
+}
+
+int main() {
+    PolyNode* p = new PolyNode(3, 4);
+    p-&gt;link = new PolyNode(2, 2);
+    p-&gt;link-&gt;link = new PolyNode(7, 0);
+    cout &lt;&lt; "P(x) = ";
+    Print(p);
+    return 0;
+}</textarea></div>
+<div class="output"><b>輸出結果：</b><pre>P(x) = 3x^4 + 2x^2 + 7x^0</pre></div>
+<h3>函式與變數說明</h3>
+<table><tr><th>名稱</th><th>用途</th></tr><tr><td>first</td><td>串列入口，指向第一個節點；空串列時為 0/nullptr。</td></tr><tr><td>data / coef / exp</td><td>節點中的資料欄位，可是字串、數字或多項式項目。</td></tr><tr><td>link / llink / rlink</td><td>節點指標欄位；單向串列用 link，雙向串列用 llink 與 rlink。</td></tr><tr><td>current / p / it</td><td>走訪串列時的目前位置。</td></tr></table>
+</div>
+</details></main><script>
+function copyCode(id){const el=document.getElementById(id);el.select();document.execCommand('copy');alert('已複製程式碼');}
+function showStep(btn,idx){const box=btn.closest('.stepbox');box.querySelectorAll('.stepitem').forEach((e,i)=>e.style.display=i===idx?'block':'none');box.querySelectorAll('.stepbtn').forEach((b,i)=>b.classList.toggle('active',i===idx));}
+document.querySelectorAll('.stepbox').forEach(b=>{const first=b.querySelector('.stepbtn');if(first)first.classList.add('active');});
+</script></body></html>

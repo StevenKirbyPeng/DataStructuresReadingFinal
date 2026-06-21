@@ -1,0 +1,2 @@
+Postfix = ab+c*
+Infix expression = ((a+b)*c)

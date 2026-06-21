@@ -1,0 +1,22 @@
+lec5b 動畫檢查報告
+
+檢查結果：原版本動畫有問題。
+1. 多數主題使用同一種 generic node-link 圖，只是換文字。
+2. Frame 之間變化太小，無法看出 Heap Push、Heap Pop、BST Search、Union-Find、Winner Tree 等主題的實際操作。
+3. 動畫說明也是通用文字，沒有逐步對應各主題的資料結構狀態。
+
+已修正：
+- 16 個主題全部改成主題專屬 SVG 動畫。
+- Heap 類主題加入樹狀結構與陣列表示。
+- BST 類主題加入搜尋路徑、插入、刪除、rank trace。
+- Forest 加入 left-child right-sibling 轉換。
+- Selection/Winner/Loser Tree 加入 tournament tree 比較流程。
+- Disjoint Set 加入 parent array、union、find。
+- Weighting/Collapsing 加入小樹接大樹與 path compression。
+- Floorplanning 加入 B*-Tree 與 block placement。
+
+其他內容：保留投影片圖片、HTML 下拉格式、播放控制、原本說明區塊與版面風格。
+
+
+[動畫說明強化修正版]
+本版只強化每個下拉式主題內的動畫內容詳細說明，使 16 個主題的逐格說明更符合各自的演算法與資料結構。原本 SVG、投影片圖片、C++ 程式碼、中文註解、輸出結果、函式說明、變數說明、CSS 與 JavaScript 皆未重新改動。

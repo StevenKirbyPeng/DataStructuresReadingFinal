@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+
+<html lang="zh-Hant"><head><meta charset="utf-8"/><title>lec6b Graphs Part II 詳細說明版</title><style>body{font-family:"Microsoft JhengHei",Arial,sans-serif;background:#f4f7fb;margin:0;color:#1f2937}.wrap{max-width:1180px;margin:auto;padding:24px}h1{background:#1f3763;color:white;padding:24px;border-radius:16px}.topic{background:white;margin:18px 0;border-radius:14px;box-shadow:0 4px 16px #0001;overflow:hidden}summary{cursor:pointer;font-size:24px;font-weight:800;padding:20px;background:#e9f2ff}.content{padding:22px}.viewer{border:1px solid #cbd5e1;border-radius:12px;padding:12px;background:#fff}.viewer img{width:100%;max-height:620px;object-fit:contain}.controls button{margin:6px;padding:8px 14px;border:0;border-radius:8px;background:#1f6fbf;color:white}.detail,.animdetail{background:#fbfdff;border-left:6px solid #1f6fbf;padding:16px;margin:18px 0;border-radius:10px;line-height:1.85}pre{background:#0f172a;color:#e2e8f0;padding:16px;border-radius:12px;overflow:auto}.copy{float:right;background:#d35400!important}a.btn{display:inline-block;background:#16a34a;color:#fff;padding:8px 12px;border-radius:8px;text-decoration:none;margin:5px}table{border-collapse:collapse;width:100%;background:white}td,th{border:1px solid #cbd5e1;padding:8px}th{background:#e9f2ff}
+.editor-toolbar{margin:18px 0 6px;padding:16px 18px;border-radius:18px;background:linear-gradient(135deg,#0f2f57,#1f6fbf);box-shadow:0 8px 22px rgba(15,47,87,.22);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.editor-toolbar .editor-title{color:#fff;font-weight:900;margin-right:4px;letter-spacing:.5px}
+.editor-toolbar .editor-btn{display:inline-flex;align-items:center;gap:7px;background:#ffffff;color:#12335a;padding:10px 16px;border-radius:999px;text-decoration:none;font-weight:800;box-shadow:0 4px 12px rgba(0,0,0,.18);transition:.2s ease;border:1px solid rgba(255,255,255,.65)}
+.editor-toolbar .editor-btn:hover{transform:translateY(-2px);background:#eaf4ff;color:#0f2f57}
+.copy{float:right!important;background:linear-gradient(135deg,#f97316,#d35400)!important;color:white!important;border:0!important;border-radius:999px!important;padding:9px 16px!important;font-weight:900!important;cursor:pointer!important;box-shadow:0 5px 14px rgba(211,84,0,.28)!important;transition:.2s ease!important}
+.copy:hover{transform:translateY(-2px);filter:brightness(1.06)}
+.copy.copied{background:linear-gradient(135deg,#16a34a,#15803d)!important}
+pre{clear:both}
+</style></head><body><div class="wrap"><h1>lec6b Graphs Part II：主題動畫詳細說明版</h1><div class="editor-toolbar">
+<span class="editor-title">C++ 線上編輯器：</span>
+<a class="editor-btn" href="https://www.onlinegdb.com/online_c++_compiler" target="_blank">🚀 OnlineGDB</a>
+<a class="editor-btn" href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank">💻 Programiz</a>
+<a class="editor-btn" href="https://cpp.sh/" target="_blank">⚡ cpp.sh</a>
+</div><p>格式依照 lec5a_HTML_主題動畫詳細說明版：每個下拉主題包含 SVG 動畫、主題詳細說明、動畫詳細說明、表格、程式碼與連結。</p>
+<details class="topic" open=""><summary>1. Shortest Paths</summary><div class="content"><div class="viewer"><img data-base="output/01_shortest_paths_steps" data-n="1" id="img_1" src="output/01_shortest_paths_steps/step_01.svg"/><div class="controls"><button onclick="prevFrame(1,7)">上一張</button><button onclick="nextFrame(1,7)">下一張</button><span id="cap_1">Frame 1 / 7</span></div></div><section class="detail"><h3>📖 主題詳細說明</h3>
+<ul>
+<li><b>主題背景：</b>Shortest Paths 是 Graphs Part II 的核心單元，主要處理有向圖、權重、路徑、可達性與排程限制。這類問題不是只問兩個頂點是否相鄰，而是進一步問「能不能到」、「怎麼到最短」、「哪些步驟必須先做」、「哪條路徑決定整體完成時間」。</li>
+<li><b>資料結構定義：</b>圖 G=(V,E) 由 vertex 與 edge 組成；若 edge 帶方向稱為 digraph；若 edge 有數值稱為 weighted graph。演算法常搭配 adjacency matrix、adjacency list、dist 陣列、predecessor 陣列、indegree 陣列、queue 或 stack。</li>
+<li><b>核心概念：</b>本主題重點是把圖的結構轉換成可計算的狀態。最短路徑用 dist 表示目前最佳估計；拓撲排序用 indegree 表示一個活動還剩多少前置條件；critical path 用 earliest time、latest time 與 slack 判斷瓶頸。</li>
+<li><b>設計目的：</b>這些演算法的共同目的是降低複雜圖問題的處理難度，讓程式能系統性地更新表格、選擇下一個節點、檢查條件並輸出答案。</li>
+<li><b>運作原理：</b>演算法通常會先初始化輔助陣列，再依照某種規則反覆更新。Dijkstra 以 greedy 方式選取目前 dist 最小的頂點；Bellman-Ford 反覆 relax 所有邊；Floyd 逐步允許中繼點；Topological Sort 每次取 zero-indegree；Critical Path 則先正向算最早時間，再反向算最晚時間。</li>
+<li><b>時間複雜度：</b>若使用 adjacency matrix，許多動態規劃或全點對問題是 O(n³)；Dijkstra textbook matrix 版本常見 O(n²)，min-heap 搭配 adjacency list 可達 O(E log V)；Topological Sort 為 O(V+E)。</li>
+<li><b>空間複雜度：</b>matrix 通常 O(n²)，list 通常 O(V+E)，額外 dist、parent、indegree、queue 多為 O(V)。</li>
+<li><b>優點：</b>可以將複雜的路徑、排程、相依關係轉成清楚表格；適合考試 trace；也能延伸到 routing、EDA timing、project scheduling、compiler dependency analysis。</li>
+<li><b>缺點：</b>不同演算法有不同限制，例如 Dijkstra 不能處理負權重；Topological Sort 只能用在 DAG；Critical Path 需要沒有 cycle 的 AOE network。</li>
+<li><b>老師上課重點：</b>請特別注意「演算法適用條件」、「每一步陣列怎麼更新」、「輸出結果代表什麼」、「是否能從圖畫出表格」。</li>
+<li><b>考試重點：</b>常考 trace dist 表、判斷負邊能否使用 Dijkstra、Floyd 矩陣更新、Transitive Closure 布林更新、Topological Sort 輸出順序與 Critical Activity 判斷。</li>
+</ul></section>
+<section class="animdetail"><h3>🎬 動畫詳細說明</h3>
+<h4>動畫目的</h4>
+<p>這個動畫對應 lec6b「Shortest Paths」主題，重點不是直接執行某一個固定演算法，而是先建立最短路徑問題的基本觀念：給定 directed weighted graph、source、destination 與 edge weight，路徑長度等於路徑上所有邊權重總和。動畫用 0 到 5 的有向加權圖，展示 single-source、single-destination、single-source all destinations 與 all-pairs 之間的差別。</p>
+<h4>動畫步驟分析</h4>
+<ul>
+<li><b>Frame 1：建立 directed weighted graph。</b>畫面先放出 vertex 0~5 與多條有方向、帶權重的 edge，例如 0→1、0→3、3→4、4→5 等。這一步的重點是確認 shortest path 的輸入不是單純點集合，而是 G=(V,E) 加上每條 edge 的 length/cost/weight。</li>
+<li><b>Frame 2：從 source 出發。</b>動畫開始標示 source vertex，代表所有路徑計算都從同一個起點出發。此時還沒有確定最短路徑，只是在說明最短路徑問題要先指定起點，才能比較不同走法的 cost。</li>
+<li><b>Frame 3：比較不同 path。</b>畫面開始出現 δ 值，表示目前已知的最短距離估計。例如 source 0 的 δ=0，其他點會依照可到達的路徑逐步更新。這一步主要說明「同一個目的地可能有多條路」，必須比較總權重，而不是比較邊數。</li>
+<li><b>Frame 4：累加 edge weight。</b>動畫展示 path length 的定義：一條路徑的成本是沿路 edge weight 的總和。例如 0→3→4 的成本是 10+15=25。這一格用來避免把最短路徑誤解成「最少邊數」；只有 unweighted graph 才可以用邊數代表距離。</li>
+<li><b>Frame 5：找 cost 最小路徑。</b>動畫強調在候選路徑中選擇 total cost 最小者。若一條直接邊很貴，而另一條繞路較便宜，最短路徑會選擇繞路。這正是 weighted graph 和一般 BFS 層次搜尋不同的地方。</li>
+<li><b>Frame 6：形成 shortest path tree。</b>當從同一個 source 到多個目的地的最短距離都確定後，前驅關係 predecessor 可以組成 shortest path tree。這棵樹不是原圖全部邊，而是保留能構成最短路徑的邊。</li>
+<li><b>Frame 7：輸出路徑與距離。</b>最後輸出每個 vertex 的 δ 值與 predecessor。考試常要求根據圖形 trace 出 dist table，或畫出 shortest path tree，因此這一格是整個動畫的結果檢查點。</li>
+</ul>
+<h4>演算法分析</h4>
+<p>Shortest Paths 是問題類型，不等於單一演算法。若是 unweighted graph，可用 BFS，時間複雜度 O(V+E)。若是 nonnegative edge weights，通常用 Dijkstra；若允許負邊但沒有負 cycle，可用 Bellman-Ford；若要 all-pairs shortest paths，可用 Floyd-Warshall。動畫中的每一步都在說明 dist 值、path cost 與 predecessor 如何支撐後續演算法。</p>
+<h4>動畫總結</h4>
+<p>本動畫符合 Shortest Paths 主題，因為它先建立加權有向圖，再逐步展示 source、candidate path、edge weight 累加、最小 cost 選擇與 shortest path tree。這不是 Dijkstra 的完整執行細節，而是最短路徑問題的總覽。</p></section>
+<h3>表格模擬</h3><table><tr><th>項目</th><th>內容</th></tr><tr><td>主題</td><td>Shortest Paths</td></tr><tr><td>核心資料</td><td>Graph、Edge、Array、Queue / Matrix</td></tr><tr><td>考試方向</td><td>Trace、填表、畫結果圖、複雜度</td></tr></table><h3>C++ 程式範例</h3><button class="copy" onclick="copyCode(\'code1\', this)">複製程式碼</button><pre id="code1">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;limits&gt;
+using namespace std;
+const int INF = 1000000000;
+class Graph { public: vector&lt;vector&lt;int&gt;&gt; length; vector&lt;int&gt; dist; vector&lt;bool&gt; s; int Choose(int n){int u=-1,b=INF;for(int i=0;i&lt;n;i++)if(!s[i]&amp;&amp;dist[i]&lt;b){b=dist[i];u=i;}return u;} void ShortestPath(const int n,const int v){ dist.assign(n,INF); s.assign(n,false); for(int i=0;i&lt;n;i++){s[i]=false; dist[i]=length[v][i];} s[v]=true; dist[v]=0; for(int i=0;i&lt;n-2;i++){ int u=Choose(n); if(u&lt;0) break; s[u]=true; for(int w=0;w&lt;n;w++) if((!s[w])&amp;&amp;(dist[u]+length[u][w]&lt;dist[w])) dist[w]=dist[u]+length[u][w]; } } };
+int main(){ Graph g; g.length={{0,50,45,10,INF,INF},{INF,0,10,15,INF,INF},{INF,INF,0,INF,30,INF},{INF,INF,INF,0,15,INF},{INF,20,35,INF,0,3},{INF,INF,INF,INF,INF,0}}; g.ShortestPath(6,0); for(int d:g.dist) cout&lt;&lt;d&lt;&lt;' '; }
+</pre><a class="btn" href="https://www.onlinegdb.com/online_c++_compiler" target="_blank">OnlineGDB</a><a class="btn" href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank">Programiz</a><a class="btn" href="https://cpp.sh/" target="_blank">cpp.sh</a></div></details>
+<details class="topic" open=""><summary>2. Dijkstra Algorithm</summary><div class="content"><div class="viewer"><img data-base="output/02_dijkstra_steps" data-n="1" id="img_2" src="output/02_dijkstra_steps/step_01.svg"/><div class="controls"><button onclick="prevFrame(2,7)">上一張</button><button onclick="nextFrame(2,7)">下一張</button><span id="cap_2">Frame 1 / 7</span></div></div><section class="detail"><h3>📖 主題詳細說明</h3>
+<ul>
+<li><b>主題背景：</b>Dijkstra Algorithm 是 Graphs Part II 的核心單元，主要處理有向圖、權重、路徑、可達性與排程限制。這類問題不是只問兩個頂點是否相鄰，而是進一步問「能不能到」、「怎麼到最短」、「哪些步驟必須先做」、「哪條路徑決定整體完成時間」。</li>
+<li><b>資料結構定義：</b>圖 G=(V,E) 由 vertex 與 edge 組成；若 edge 帶方向稱為 digraph；若 edge 有數值稱為 weighted graph。演算法常搭配 adjacency matrix、adjacency list、dist 陣列、predecessor 陣列、indegree 陣列、queue 或 stack。</li>
+<li><b>核心概念：</b>本主題重點是把圖的結構轉換成可計算的狀態。最短路徑用 dist 表示目前最佳估計；拓撲排序用 indegree 表示一個活動還剩多少前置條件；critical path 用 earliest time、latest time 與 slack 判斷瓶頸。</li>
+<li><b>設計目的：</b>這些演算法的共同目的是降低複雜圖問題的處理難度，讓程式能系統性地更新表格、選擇下一個節點、檢查條件並輸出答案。</li>
+<li><b>運作原理：</b>演算法通常會先初始化輔助陣列，再依照某種規則反覆更新。Dijkstra 以 greedy 方式選取目前 dist 最小的頂點；Bellman-Ford 反覆 relax 所有邊；Floyd 逐步允許中繼點；Topological Sort 每次取 zero-indegree；Critical Path 則先正向算最早時間，再反向算最晚時間。</li>
+<li><b>時間複雜度：</b>若使用 adjacency matrix，許多動態規劃或全點對問題是 O(n³)；Dijkstra textbook matrix 版本常見 O(n²)，min-heap 搭配 adjacency list 可達 O(E log V)；Topological Sort 為 O(V+E)。</li>
+<li><b>空間複雜度：</b>matrix 通常 O(n²)，list 通常 O(V+E)，額外 dist、parent、indegree、queue 多為 O(V)。</li>
+<li><b>優點：</b>可以將複雜的路徑、排程、相依關係轉成清楚表格；適合考試 trace；也能延伸到 routing、EDA timing、project scheduling、compiler dependency analysis。</li>
+<li><b>缺點：</b>不同演算法有不同限制，例如 Dijkstra 不能處理負權重；Topological Sort 只能用在 DAG；Critical Path 需要沒有 cycle 的 AOE network。</li>
+<li><b>老師上課重點：</b>請特別注意「演算法適用條件」、「每一步陣列怎麼更新」、「輸出結果代表什麼」、「是否能從圖畫出表格」。</li>
+<li><b>考試重點：</b>常考 trace dist 表、判斷負邊能否使用 Dijkstra、Floyd 矩陣更新、Transitive Closure 布林更新、Topological Sort 輸出順序與 Critical Activity 判斷。</li>
+</ul></section>
+<section class="animdetail"><h3>🎬 動畫詳細說明</h3>
+<h4>動畫目的</h4>
+<p>這個動畫對應 lec6b「Dijkstra Algorithm」。投影片強調 Dijkstra 適用於 nonnegative edge weights，核心動作是以 greedy 方法反覆 ExtractMin，並對被選取 vertex 的鄰點做 relax。動畫中的每個 frame 都在說明 dist 陣列如何從初始無限大逐步變成最短距離。</p>
+<h4>動畫步驟分析</h4>
+<ul>
+<li><b>Frame 1：初始化 dist[source]=0。</b>所有 vertex 的距離估計 δ 先設為 ∞，source 0 設為 0，predecessor 設為 NIL。這是 Dijkstra 的起點，也對應程式中的 dist[s]=0 與 priority queue push source。</li>
+<li><b>Frame 2：ExtractMin 選 0。</b>從尚未固定的 vertex 中選出目前 δ 最小者。因為 source 的 δ=0，一定先被取出。此步驟代表 vertex 0 的最短距離已固定，不會再被其他路徑改善。</li>
+<li><b>Frame 3：Relax 0 的鄰點。</b>檢查 0 的 outgoing edges，例如 0→1、0→2、0→3。若 dist[0]+w(0,v) 小於 dist[v]，就更新 dist[v] 與 predecessor[v]。畫面上開始出現 δ=45、δ=10 等距離值。</li>
+<li><b>Frame 4：ExtractMin 選距離最小者。</b>在尚未固定的 vertex 中選擇目前 δ 最小者，例如 δ=10 的 vertex 3。這一步展示 greedy 性質：每次都相信目前最小的估計已經是答案。</li>
+<li><b>Frame 5：繼續 relax。</b>從新選到的 vertex 出發，繼續檢查其 outgoing edges，可能更新其他 vertex 的 dist。若 0→3→4 比原本到 4 的路徑更短，就會把 predecessor[4] 設成 3。</li>
+<li><b>Frame 6：所有 dist 固定。</b>priority queue 中的節點陸續取出後，每個可達 vertex 的最短距離都被固定。這一步要注意：Dijkstra 只有在所有 edge weight 非負時，ExtractMin 後的距離才保證不再變小。</li>
+<li><b>Frame 7：輸出 shortest path tree。</b>根據 predecessor 陣列回推可得到 shortest path tree。動畫最後呈現的是「從 source 到所有可達目的地」的最短路徑結構，而不是原圖所有邊。</li>
+</ul>
+<h4>演算法分析</h4>
+<p>每次 ExtractMin 決定一個 vertex 的最短距離；每條 edge 最多被 relax 一次。若使用 min-heap priority queue，時間複雜度通常為 O(E log V)；若用 adjacency matrix 和線性找最小值，為 O(V²)。空間主要是 adjacency list、dist、predecessor、visited 與 priority queue。</p>
+<h4>動畫總結</h4>
+<p>動畫內容符合 Dijkstra 主題，因為它明確呈現初始化、ExtractMin、Relax、dist 固定與 shortest path tree。考試最常考的是給一張圖，要求逐輪寫出 dist[] 與 predecessor[]。</p></section>
+<h3>表格模擬</h3><table><tr><th>項目</th><th>內容</th></tr><tr><td>主題</td><td>Dijkstra Algorithm</td></tr><tr><td>核心資料</td><td>Graph、Edge、Array、Queue / Matrix</td></tr><tr><td>考試方向</td><td>Trace、填表、畫結果圖、複雜度</td></tr></table><h3>C++ 程式範例</h3><button class="copy" onclick="copyCode(\'code2\', this)">複製程式碼</button><pre id="code2">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+using namespace std;
+const int INF = 1000000000;
+class Graph{ public: vector&lt;vector&lt;int&gt;&gt; length; vector&lt;int&gt; dist; void BellmanFord(const int n,const int v){ dist.assign(n,INF); for(int i=0;i&lt;n;i++) dist[i]=length[v][i]; dist[v]=0; for(int k=2;k&lt;=n-1;k++) for(int u=0;u&lt;n;u++) if(u!=v) for(int i=0;i&lt;n;i++) if(length[i][u]&lt;INF &amp;&amp; dist[i]&lt;INF &amp;&amp; dist[u] &gt; dist[i]+length[i][u]) dist[u]=dist[i]+length[i][u]; }};
+int main(){ Graph g; g.length={{0,6,5,5,INF,INF,INF},{INF,0,INF,INF,-1,INF,INF},{INF,-2,0,INF,1,INF,INF},{INF,INF,-2,0,INF,-1,INF},{INF,INF,INF,INF,0,INF,3},{INF,INF,INF,INF,INF,0,3},{INF,INF,INF,INF,INF,INF,0}}; g.BellmanFord(7,0); for(int d:g.dist) cout&lt;&lt;d&lt;&lt;' '; }
+</pre><a class="btn" href="https://www.onlinegdb.com/online_c++_compiler" target="_blank">OnlineGDB</a><a class="btn" href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank">Programiz</a><a class="btn" href="https://cpp.sh/" target="_blank">cpp.sh</a></div></details>
+<details class="topic" open=""><summary>3. Bellman-Ford Algorithm</summary><div class="content"><div class="viewer"><img data-base="output/03_bellman_ford_steps" data-n="1" id="img_3" src="output/03_bellman_ford_steps/step_01.svg"/><div class="controls"><button onclick="prevFrame(3,7)">上一張</button><button onclick="nextFrame(3,7)">下一張</button><span id="cap_3">Frame 1 / 7</span></div></div><section class="detail"><h3>📖 主題詳細說明</h3>
+<ul>
+<li><b>主題背景：</b>Bellman-Ford Algorithm 是 Graphs Part II 的核心單元，主要處理有向圖、權重、路徑、可達性與排程限制。這類問題不是只問兩個頂點是否相鄰，而是進一步問「能不能到」、「怎麼到最短」、「哪些步驟必須先做」、「哪條路徑決定整體完成時間」。</li>
+<li><b>資料結構定義：</b>圖 G=(V,E) 由 vertex 與 edge 組成；若 edge 帶方向稱為 digraph；若 edge 有數值稱為 weighted graph。演算法常搭配 adjacency matrix、adjacency list、dist 陣列、predecessor 陣列、indegree 陣列、queue 或 stack。</li>
+<li><b>核心概念：</b>本主題重點是把圖的結構轉換成可計算的狀態。最短路徑用 dist 表示目前最佳估計；拓撲排序用 indegree 表示一個活動還剩多少前置條件；critical path 用 earliest time、latest time 與 slack 判斷瓶頸。</li>
+<li><b>設計目的：</b>這些演算法的共同目的是降低複雜圖問題的處理難度，讓程式能系統性地更新表格、選擇下一個節點、檢查條件並輸出答案。</li>
+<li><b>運作原理：</b>演算法通常會先初始化輔助陣列，再依照某種規則反覆更新。Dijkstra 以 greedy 方式選取目前 dist 最小的頂點；Bellman-Ford 反覆 relax 所有邊；Floyd 逐步允許中繼點；Topological Sort 每次取 zero-indegree；Critical Path 則先正向算最早時間，再反向算最晚時間。</li>
+<li><b>時間複雜度：</b>若使用 adjacency matrix，許多動態規劃或全點對問題是 O(n³)；Dijkstra textbook matrix 版本常見 O(n²)，min-heap 搭配 adjacency list 可達 O(E log V)；Topological Sort 為 O(V+E)。</li>
+<li><b>空間複雜度：</b>matrix 通常 O(n²)，list 通常 O(V+E)，額外 dist、parent、indegree、queue 多為 O(V)。</li>
+<li><b>優點：</b>可以將複雜的路徑、排程、相依關係轉成清楚表格；適合考試 trace；也能延伸到 routing、EDA timing、project scheduling、compiler dependency analysis。</li>
+<li><b>缺點：</b>不同演算法有不同限制，例如 Dijkstra 不能處理負權重；Topological Sort 只能用在 DAG；Critical Path 需要沒有 cycle 的 AOE network。</li>
+<li><b>老師上課重點：</b>請特別注意「演算法適用條件」、「每一步陣列怎麼更新」、「輸出結果代表什麼」、「是否能從圖畫出表格」。</li>
+<li><b>考試重點：</b>常考 trace dist 表、判斷負邊能否使用 Dijkstra、Floyd 矩陣更新、Transitive Closure 布林更新、Topological Sort 輸出順序與 Critical Activity 判斷。</li>
+</ul></section>
+<section class="animdetail"><h3>🎬 動畫詳細說明</h3>
+<h4>動畫目的</h4>
+<p>這個動畫對應 lec6b「Bellman-Ford Algorithm」。Bellman-Ford 與 Dijkstra 最大差異是可以處理 negative edge weight，但不能有 reachable negative cycle。動畫使用含負邊的有向圖，逐輪展示 edge relaxation 如何讓 dist 值下降。</p>
+<h4>動畫步驟分析</h4>
+<ul>
+<li><b>Frame 1：允許負邊。</b>畫面出現包含 -2、-1 等負權重的 edge，說明此時不能直接使用 Dijkstra。因為負邊可能讓原本已看似最短的路徑在後面被改善。</li>
+<li><b>Frame 2：第 1 輪 relax。</b>從 source 出發，掃過所有 edge 一次。若 dist[u]+w(u,v) 小於 dist[v]，就更新 dist[v]。第一輪最多只能保證找到使用一條 edge 的最佳距離。</li>
+<li><b>Frame 3：第 2 輪 relax。</b>再次掃過所有 edge，允許最短路徑使用兩條 edge。這一輪可能透過中繼點改善更多 vertex 的距離，動畫中的 dist table 逐步變小。</li>
+<li><b>Frame 4：重複 n-1 輪。</b>對 V 個 vertex 的圖，沒有 cycle 的 simple shortest path 最多包含 V-1 條 edge，因此 Bellman-Ford 需要重複 relax V-1 輪。</li>
+<li><b>Frame 5：距離逐步下降。</b>動畫強調 Bellman-Ford 不是一次選定一個 vertex，而是透過全圖邊掃描逐步傳播更短距離。dist 值可能在多輪後才穩定。</li>
+<li><b>Frame 6：檢查負 cycle。</b>完成 V-1 輪後，再額外掃過所有 edge。若仍能 relax，代表存在 reachable negative cycle，最短距離會無限制下降，因此沒有 well-defined shortest path。</li>
+<li><b>Frame 7：輸出結果。</b>若沒有偵測到負 cycle，就輸出 dist 與 predecessor。此結果可回推 shortest path；若有負 cycle，應回報錯誤而不是輸出路徑。</li>
+</ul>
+<h4>演算法分析</h4>
+<p>Bellman-Ford 的時間複雜度是 O(VE)，因為要做 V-1 輪，每輪掃 E 條 edge，再加一次負 cycle 檢查。空間複雜度為 O(V)，主要用於 dist 與 predecessor。它比 Dijkstra 慢，但能處理負邊。</p>
+<h4>動畫總結</h4>
+<p>動畫符合 Bellman-Ford 主題，因為它突出「多輪 relax」、「允許負邊」、「V-1 輪」與「負 cycle 檢查」。考試常考逐輪 dist table 與負 cycle 判斷。</p></section>
+<h3>表格模擬</h3><table><tr><th>項目</th><th>內容</th></tr><tr><td>主題</td><td>Bellman-Ford Algorithm</td></tr><tr><td>核心資料</td><td>Graph、Edge、Array、Queue / Matrix</td></tr><tr><td>考試方向</td><td>Trace、填表、畫結果圖、複雜度</td></tr></table><h3>C++ 程式範例</h3><button class="copy" onclick="copyCode(\'code3\', this)">複製程式碼</button><pre id="code3">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+using namespace std;
+const int INF=1000000000;
+class Graph{ public: vector&lt;vector&lt;int&gt;&gt; length,a; void AllLengths(const int n){ a=length; for(int k=0;k&lt;n;k++) for(int i=0;i&lt;n;i++) for(int j=0;j&lt;n;j++) if(a[i][k]&lt;INF&amp;&amp;a[k][j]&lt;INF&amp;&amp;a[i][j]&gt;a[i][k]+a[k][j]) a[i][j]=a[i][k]+a[k][j]; }};
+int main(){ Graph g; g.length={{0,4,11},{6,0,2},{3,INF,0}}; g.AllLengths(3); for(auto&amp;r:g.a){for(int x:r)cout&lt;&lt;x&lt;&lt;' ';cout&lt;&lt;'\n';} }
+</pre><a class="btn" href="https://www.onlinegdb.com/online_c++_compiler" target="_blank">OnlineGDB</a><a class="btn" href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank">Programiz</a><a class="btn" href="https://cpp.sh/" target="_blank">cpp.sh</a></div></details>
+<details class="topic" open=""><summary>4. All-Pairs Shortest Paths</summary><div class="content"><div class="viewer"><img data-base="output/04_floyd_all_pairs_steps" data-n="1" id="img_4" src="output/04_floyd_all_pairs_steps/step_01.svg"/><div class="controls"><button onclick="prevFrame(4,7)">上一張</button><button onclick="nextFrame(4,7)">下一張</button><span id="cap_4">Frame 1 / 7</span></div></div><section class="detail"><h3>📖 主題詳細說明</h3>
+<ul>
+<li><b>主題背景：</b>All-Pairs Shortest Paths 是 Graphs Part II 的核心單元，主要處理有向圖、權重、路徑、可達性與排程限制。這類問題不是只問兩個頂點是否相鄰，而是進一步問「能不能到」、「怎麼到最短」、「哪些步驟必須先做」、「哪條路徑決定整體完成時間」。</li>
+<li><b>資料結構定義：</b>圖 G=(V,E) 由 vertex 與 edge 組成；若 edge 帶方向稱為 digraph；若 edge 有數值稱為 weighted graph。演算法常搭配 adjacency matrix、adjacency list、dist 陣列、predecessor 陣列、indegree 陣列、queue 或 stack。</li>
+<li><b>核心概念：</b>本主題重點是把圖的結構轉換成可計算的狀態。最短路徑用 dist 表示目前最佳估計；拓撲排序用 indegree 表示一個活動還剩多少前置條件；critical path 用 earliest time、latest time 與 slack 判斷瓶頸。</li>
+<li><b>設計目的：</b>這些演算法的共同目的是降低複雜圖問題的處理難度，讓程式能系統性地更新表格、選擇下一個節點、檢查條件並輸出答案。</li>
+<li><b>運作原理：</b>演算法通常會先初始化輔助陣列，再依照某種規則反覆更新。Dijkstra 以 greedy 方式選取目前 dist 最小的頂點；Bellman-Ford 反覆 relax 所有邊；Floyd 逐步允許中繼點；Topological Sort 每次取 zero-indegree；Critical Path 則先正向算最早時間，再反向算最晚時間。</li>
+<li><b>時間複雜度：</b>若使用 adjacency matrix，許多動態規劃或全點對問題是 O(n³)；Dijkstra textbook matrix 版本常見 O(n²)，min-heap 搭配 adjacency list 可達 O(E log V)；Topological Sort 為 O(V+E)。</li>
+<li><b>空間複雜度：</b>matrix 通常 O(n²)，list 通常 O(V+E)，額外 dist、parent、indegree、queue 多為 O(V)。</li>
+<li><b>優點：</b>可以將複雜的路徑、排程、相依關係轉成清楚表格；適合考試 trace；也能延伸到 routing、EDA timing、project scheduling、compiler dependency analysis。</li>
+<li><b>缺點：</b>不同演算法有不同限制，例如 Dijkstra 不能處理負權重；Topological Sort 只能用在 DAG；Critical Path 需要沒有 cycle 的 AOE network。</li>
+<li><b>老師上課重點：</b>請特別注意「演算法適用條件」、「每一步陣列怎麼更新」、「輸出結果代表什麼」、「是否能從圖畫出表格」。</li>
+<li><b>考試重點：</b>常考 trace dist 表、判斷負邊能否使用 Dijkstra、Floyd 矩陣更新、Transitive Closure 布林更新、Topological Sort 輸出順序與 Critical Activity 判斷。</li>
+</ul></section>
+<section class="animdetail"><h3>🎬 動畫詳細說明</h3>
+<h4>動畫目的</h4>
+<p>這個動畫對應 lec6b「All-Pairs Shortest Paths」，主要展示 Floyd-Warshall 動態規劃。與 single-source 不同，all-pairs 要同時計算任意 i 到任意 j 的最短距離，因此用距離矩陣 A 逐步更新。</p>
+<h4>動畫步驟分析</h4>
+<ul>
+<li><b>Frame 1：初始化 A[-1]=length。</b>矩陣一開始填入直接邊長度；若 i=j，距離為 0；若沒有直接邊，距離為 ∞。這代表不允許任何中繼點時的最短距離。</li>
+<li><b>Frame 2：允許中繼點 k=0。</b>開始考慮 vertex 0 是否能作為 i 到 j 的中繼點。若 A[i][0]+A[0][j] 小於 A[i][j]，就更新矩陣。</li>
+<li><b>Frame 3：更新 a[i][j]。</b>動畫標示 old、a[i][k]、a[k][j]，對應公式 a[i][j]=min(a[i][j], a[i][k]+a[k][j])。這是 Floyd 的核心。</li>
+<li><b>Frame 4：允許 k=1。</b>中繼點集合擴大，代表允許使用 {0,1} 作為中繼。矩陣可能再次被改善。</li>
+<li><b>Frame 5：三層迴圈 DP。</b>動畫呈現 k、i、j 三層迴圈的概念。外層 k 控制目前允許的中繼點，內層 i、j 檢查所有起點與終點。</li>
+<li><b>Frame 6：完成 all pairs。</b>所有 k 都處理完後，矩陣中的每個 A[i][j] 都是 i 到 j 的最短距離。</li>
+<li><b>Frame 7：輸出距離矩陣。</b>最後輸出完整 distance matrix。考試常要求寫出某一輪 k 後的矩陣，或判斷某個 A[i][j] 是否被更新。</li>
+</ul>
+<h4>演算法分析</h4>
+<p>Floyd-Warshall 的時間複雜度為 O(V³)，因為有 k、i、j 三層迴圈。空間可用 O(V²) 原地更新距離矩陣。它適合頂點數不大、需要 all-pairs 結果的情況。</p>
+<h4>動畫總結</h4>
+<p>動畫符合 All-Pairs Shortest Paths 主題，因為它以矩陣形式呈現初始化、逐步加入中繼點與 DP 更新公式。此動畫不同於 Transitive Closure，因為這裡更新的是距離數值，不是布林可達性。</p></section>
+<h3>表格模擬</h3><table><tr><th>項目</th><th>內容</th></tr><tr><td>主題</td><td>All-Pairs Shortest Paths</td></tr><tr><td>核心資料</td><td>Graph、Edge、Array、Queue / Matrix</td></tr><tr><td>考試方向</td><td>Trace、填表、畫結果圖、複雜度</td></tr></table><h3>C++ 程式範例</h3><button class="copy" onclick="copyCode(\'code4\', this)">複製程式碼</button><pre id="code4">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+using namespace std;
+class Graph{ public: vector&lt;vector&lt;int&gt;&gt; length,a; void TransitiveClosure(const int n){ a=length; for(int k=0;k&lt;n;k++) for(int i=0;i&lt;n;i++) for(int j=0;j&lt;n;j++) a[i][j]=a[i][j] || (a[i][k] &amp;&amp; a[k][j]); }};
+int main(){ Graph g; g.length={{0,0,1},{0,0,0},{0,1,0}}; g.TransitiveClosure(3); for(auto&amp;r:g.a){for(int x:r)cout&lt;&lt;x&lt;&lt;' ';cout&lt;&lt;'\n';} }
+</pre><a class="btn" href="https://www.onlinegdb.com/online_c++_compiler" target="_blank">OnlineGDB</a><a class="btn" href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank">Programiz</a><a class="btn" href="https://cpp.sh/" target="_blank">cpp.sh</a></div></details>
+<details class="topic" open=""><summary>5. Transitive Closure</summary><div class="content"><div class="viewer"><img data-base="output/05_transitive_closure_steps" data-n="1" id="img_5" src="output/05_transitive_closure_steps/step_01.svg"/><div class="controls"><button onclick="prevFrame(5,7)">上一張</button><button onclick="nextFrame(5,7)">下一張</button><span id="cap_5">Frame 1 / 7</span></div></div><section class="detail"><h3>📖 主題詳細說明</h3>
+<ul>
+<li><b>主題背景：</b>Transitive Closure 是 Graphs Part II 的核心單元，主要處理有向圖、權重、路徑、可達性與排程限制。這類問題不是只問兩個頂點是否相鄰，而是進一步問「能不能到」、「怎麼到最短」、「哪些步驟必須先做」、「哪條路徑決定整體完成時間」。</li>
+<li><b>資料結構定義：</b>圖 G=(V,E) 由 vertex 與 edge 組成；若 edge 帶方向稱為 digraph；若 edge 有數值稱為 weighted graph。演算法常搭配 adjacency matrix、adjacency list、dist 陣列、predecessor 陣列、indegree 陣列、queue 或 stack。</li>
+<li><b>核心概念：</b>本主題重點是把圖的結構轉換成可計算的狀態。最短路徑用 dist 表示目前最佳估計；拓撲排序用 indegree 表示一個活動還剩多少前置條件；critical path 用 earliest time、latest time 與 slack 判斷瓶頸。</li>
+<li><b>設計目的：</b>這些演算法的共同目的是降低複雜圖問題的處理難度，讓程式能系統性地更新表格、選擇下一個節點、檢查條件並輸出答案。</li>
+<li><b>運作原理：</b>演算法通常會先初始化輔助陣列，再依照某種規則反覆更新。Dijkstra 以 greedy 方式選取目前 dist 最小的頂點；Bellman-Ford 反覆 relax 所有邊；Floyd 逐步允許中繼點；Topological Sort 每次取 zero-indegree；Critical Path 則先正向算最早時間，再反向算最晚時間。</li>
+<li><b>時間複雜度：</b>若使用 adjacency matrix，許多動態規劃或全點對問題是 O(n³)；Dijkstra textbook matrix 版本常見 O(n²)，min-heap 搭配 adjacency list 可達 O(E log V)；Topological Sort 為 O(V+E)。</li>
+<li><b>空間複雜度：</b>matrix 通常 O(n²)，list 通常 O(V+E)，額外 dist、parent、indegree、queue 多為 O(V)。</li>
+<li><b>優點：</b>可以將複雜的路徑、排程、相依關係轉成清楚表格；適合考試 trace；也能延伸到 routing、EDA timing、project scheduling、compiler dependency analysis。</li>
+<li><b>缺點：</b>不同演算法有不同限制，例如 Dijkstra 不能處理負權重；Topological Sort 只能用在 DAG；Critical Path 需要沒有 cycle 的 AOE network。</li>
+<li><b>老師上課重點：</b>請特別注意「演算法適用條件」、「每一步陣列怎麼更新」、「輸出結果代表什麼」、「是否能從圖畫出表格」。</li>
+<li><b>考試重點：</b>常考 trace dist 表、判斷負邊能否使用 Dijkstra、Floyd 矩陣更新、Transitive Closure 布林更新、Topological Sort 輸出順序與 Critical Activity 判斷。</li>
+</ul></section>
+<section class="animdetail"><h3>🎬 動畫詳細說明</h3>
+<h4>動畫目的</h4>
+<p>這個動畫對應 lec6b「Transitive Closure」。它要判斷任意 i 到 j 是否存在 path，而不是距離多少。因此矩陣元素是 0/1 或 false/true，更新規則使用 OR 與 AND。</p>
+<h4>動畫步驟分析</h4>
+<ul>
+<li><b>Frame 1：鄰接矩陣初始化。</b>若圖中有直接邊 i→j，reach[i][j]=1；否則為 0。這只代表直接可達，尚未考慮中繼點。</li>
+<li><b>Frame 2：檢查能否 i→k。</b>對每個可能的中繼點 k，先檢查 i 是否能到 k。若 i 無法到 k，就不可能透過 k 到 j。</li>
+<li><b>Frame 3：檢查 k→j。</b>若 i 能到 k，接著看 k 是否能到 j。兩者都成立時，代表 i 可以透過 k 間接到達 j。</li>
+<li><b>Frame 4：用 OR 更新 reach。</b>更新公式為 reach[i][j] = reach[i][j] OR (reach[i][k] AND reach[k][j])。若原本不可達但透過 k 可達，矩陣值會由 0 變成 1。</li>
+<li><b>Frame 5：逐步擴大可達性。</b>隨著 k 增加，允許的中繼點集合變大，可達關係也會逐步擴張。這是 Warshall 演算法的核心。</li>
+<li><b>Frame 6：得到 A+ / A*。</b>若只考慮長度至少 1 的 path，可視為 A+；若把自己到自己也視為可達，則可得到 reflexive transitive closure A*。</li>
+<li><b>Frame 7：輸出 closure matrix。</b>最後矩陣中 1 表示存在 path，0 表示不可達。它回答的是 reachability，不回答 shortest distance。</li>
+</ul>
+<h4>演算法分析</h4>
+<p>Transitive Closure 的 Warshall 演算法時間複雜度為 O(V³)，空間為 O(V²)。它與 Floyd-Warshall 結構相似，但 Floyd 使用 min-plus 更新距離，而 Closure 使用 boolean OR-AND 更新可達性。</p>
+<h4>動畫總結</h4>
+<p>動畫符合 Transitive Closure 主題，因為它把重點放在 reach matrix 的 0/1 更新，不是距離矩陣。考試常考公式差異：Floyd 是 min，Closure 是 OR 和 AND。</p></section>
+<h3>表格模擬</h3><table><tr><th>項目</th><th>內容</th></tr><tr><td>主題</td><td>Transitive Closure</td></tr><tr><td>核心資料</td><td>Graph、Edge、Array、Queue / Matrix</td></tr><tr><td>考試方向</td><td>Trace、填表、畫結果圖、複雜度</td></tr></table><h3>C++ 程式範例</h3><button class="copy" onclick="copyCode(\'code5\', this)">複製程式碼</button><pre id="code5">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+using namespace std;
+int main(){ int n=6; vector&lt;vector&lt;int&gt;&gt; adj={{1,2,3},{4},{4,5},{5},{}, {4}}; vector&lt;int&gt; indeg(n); for(int u=0;u&lt;n;u++) for(int v:adj[u]) indeg[v]++; queue&lt;int&gt; q; for(int i=0;i&lt;n;i++) if(indeg[i]==0) q.push(i); while(!q.empty()){int v=q.front();q.pop(); cout&lt;&lt;v&lt;&lt;' '; for(int w:adj[v]) if(--indeg[w]==0) q.push(w);} }
+</pre><a class="btn" href="https://www.onlinegdb.com/online_c++_compiler" target="_blank">OnlineGDB</a><a class="btn" href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank">Programiz</a><a class="btn" href="https://cpp.sh/" target="_blank">cpp.sh</a></div></details>
+<details class="topic" open=""><summary>6. AOV Network</summary><div class="content"><div class="viewer"><img data-base="output/06_aov_network_steps" data-n="1" id="img_6" src="output/06_aov_network_steps/step_01.svg"/><div class="controls"><button onclick="prevFrame(6,7)">上一張</button><button onclick="nextFrame(6,7)">下一張</button><span id="cap_6">Frame 1 / 7</span></div></div><section class="detail"><h3>📖 主題詳細說明</h3>
+<ul>
+<li><b>主題背景：</b>AOV Network 是 Graphs Part II 的核心單元，主要處理有向圖、權重、路徑、可達性與排程限制。這類問題不是只問兩個頂點是否相鄰，而是進一步問「能不能到」、「怎麼到最短」、「哪些步驟必須先做」、「哪條路徑決定整體完成時間」。</li>
+<li><b>資料結構定義：</b>圖 G=(V,E) 由 vertex 與 edge 組成；若 edge 帶方向稱為 digraph；若 edge 有數值稱為 weighted graph。演算法常搭配 adjacency matrix、adjacency list、dist 陣列、predecessor 陣列、indegree 陣列、queue 或 stack。</li>
+<li><b>核心概念：</b>本主題重點是把圖的結構轉換成可計算的狀態。最短路徑用 dist 表示目前最佳估計；拓撲排序用 indegree 表示一個活動還剩多少前置條件；critical path 用 earliest time、latest time 與 slack 判斷瓶頸。</li>
+<li><b>設計目的：</b>這些演算法的共同目的是降低複雜圖問題的處理難度，讓程式能系統性地更新表格、選擇下一個節點、檢查條件並輸出答案。</li>
+<li><b>運作原理：</b>演算法通常會先初始化輔助陣列，再依照某種規則反覆更新。Dijkstra 以 greedy 方式選取目前 dist 最小的頂點；Bellman-Ford 反覆 relax 所有邊；Floyd 逐步允許中繼點；Topological Sort 每次取 zero-indegree；Critical Path 則先正向算最早時間，再反向算最晚時間。</li>
+<li><b>時間複雜度：</b>若使用 adjacency matrix，許多動態規劃或全點對問題是 O(n³)；Dijkstra textbook matrix 版本常見 O(n²)，min-heap 搭配 adjacency list 可達 O(E log V)；Topological Sort 為 O(V+E)。</li>
+<li><b>空間複雜度：</b>matrix 通常 O(n²)，list 通常 O(V+E)，額外 dist、parent、indegree、queue 多為 O(V)。</li>
+<li><b>優點：</b>可以將複雜的路徑、排程、相依關係轉成清楚表格；適合考試 trace；也能延伸到 routing、EDA timing、project scheduling、compiler dependency analysis。</li>
+<li><b>缺點：</b>不同演算法有不同限制，例如 Dijkstra 不能處理負權重；Topological Sort 只能用在 DAG；Critical Path 需要沒有 cycle 的 AOE network。</li>
+<li><b>老師上課重點：</b>請特別注意「演算法適用條件」、「每一步陣列怎麼更新」、「輸出結果代表什麼」、「是否能從圖畫出表格」。</li>
+<li><b>考試重點：</b>常考 trace dist 表、判斷負邊能否使用 Dijkstra、Floyd 矩陣更新、Transitive Closure 布林更新、Topological Sort 輸出順序與 Critical Activity 判斷。</li>
+</ul></section>
+<section class="animdetail"><h3>🎬 動畫詳細說明</h3>
+<h4>動畫目的</h4>
+<p>這個動畫對應 lec6b「AOV Network」。AOV 是 Activity-on-Vertex，意思是 vertex 代表 activity，directed edge 代表 prerequisite 或 precedence relation。動畫用課程 C1、C2、C3 等節點展示先修關係。</p>
+<h4>動畫步驟分析</h4>
+<ul>
+<li><b>Frame 1：課程作為 vertex。</b>每一個節點 C1、C2、C3、C6、C7、C8、C9、C10、C11 都是一個活動或課程。這一步先確認 AOV 與一般加權路徑圖不同，節點本身代表要完成的工作。</li>
+<li><b>Frame 2：先修關係作為 edge。</b>有向邊 u→v 表示 u 必須先完成，v 才能開始。這種方向不能反過來，否則排程意義會錯。</li>
+<li><b>Frame 3：找 predecessor。</b>對某個活動 v，所有指向 v 的節點都是 predecessor，也就是前置活動。若 predecessor 尚未完成，v 不能排入執行順序。</li>
+<li><b>Frame 4：找 successor。</b>從某個活動 u 出發，所有 u 指向的節點都是 successor，表示完成 u 之後會解除那些活動的限制。</li>
+<li><b>Frame 5：辨識 partial order。</b>AOV Network 通常只給出部分順序，不一定所有活動都可比較。若兩個活動沒有依賴關係，它們可能可以互換或平行。</li>
+<li><b>Frame 6：確認不可有 cycle。</b>若 AOV 中出現 cycle，代表 A 必須在 B 前、B 又必須在 A 前，排程不可能完成。因此 AOV 必須是 DAG。</li>
+<li><b>Frame 7：得到可排程 DAG。</b>最後確認此 AOV 可用拓撲排序轉成合法線性順序。AOV 本身描述先修限制，Topological Sort 則負責產生一種可執行順序。</li>
+</ul>
+<h4>演算法分析</h4>
+<p>AOV Network 的建模重點是 vertex、edge、predecessor、successor 與 indegree。若要檢查是否可排程，可使用 topological sort，時間複雜度 O(V+E)。</p>
+<h4>動畫總結</h4>
+<p>動畫符合 AOV 主題，因為它只強調活動與先修關係，而不是 shortest path 或 critical path。考試常考 AOV 是否有 cycle，以及如何由 AOV 進入 topological sort。</p></section>
+<h3>表格模擬</h3><table><tr><th>項目</th><th>內容</th></tr><tr><td>主題</td><td>AOV Network</td></tr><tr><td>核心資料</td><td>Graph、Edge、Array、Queue / Matrix</td></tr><tr><td>考試方向</td><td>Trace、填表、畫結果圖、複雜度</td></tr></table><h3>C++ 程式範例</h3><button class="copy" onclick="copyCode(\'code6\', this)">複製程式碼</button><pre id="code6">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+int main(){ int n=9; vector&lt;vector&lt;pair&lt;int,int&gt;&gt;&gt; adj(n); auto add=[&amp;](int u,int v,int d){adj[u].push_back({v,d});}; add(0,1,6);add(0,2,4);add(0,3,5);add(1,4,1);add(2,4,1);add(3,5,2);add(4,6,9);add(4,7,7);add(5,7,4);add(6,8,2);add(7,8,4); vector&lt;int&gt; ee(n,0); for(int u=0;u&lt;n;u++) for(auto [v,d]:adj[u]) ee[v]=max(ee[v],ee[u]+d); cout &lt;&lt; ee[8] &lt;&lt; '\n'; }
+</pre><a class="btn" href="https://www.onlinegdb.com/online_c++_compiler" target="_blank">OnlineGDB</a><a class="btn" href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank">Programiz</a><a class="btn" href="https://cpp.sh/" target="_blank">cpp.sh</a></div></details>
+<details class="topic" open=""><summary>7. Topological Sort</summary><div class="content"><div class="viewer"><img data-base="output/07_topological_sort_steps" data-n="1" id="img_7" src="output/07_topological_sort_steps/step_01.svg"/><div class="controls"><button onclick="prevFrame(7,7)">上一張</button><button onclick="nextFrame(7,7)">下一張</button><span id="cap_7">Frame 1 / 7</span></div></div><section class="detail"><h3>📖 主題詳細說明</h3>
+<ul>
+<li><b>主題背景：</b>Topological Sort 是 Graphs Part II 的核心單元，主要處理有向圖、權重、路徑、可達性與排程限制。這類問題不是只問兩個頂點是否相鄰，而是進一步問「能不能到」、「怎麼到最短」、「哪些步驟必須先做」、「哪條路徑決定整體完成時間」。</li>
+<li><b>資料結構定義：</b>圖 G=(V,E) 由 vertex 與 edge 組成；若 edge 帶方向稱為 digraph；若 edge 有數值稱為 weighted graph。演算法常搭配 adjacency matrix、adjacency list、dist 陣列、predecessor 陣列、indegree 陣列、queue 或 stack。</li>
+<li><b>核心概念：</b>本主題重點是把圖的結構轉換成可計算的狀態。最短路徑用 dist 表示目前最佳估計；拓撲排序用 indegree 表示一個活動還剩多少前置條件；critical path 用 earliest time、latest time 與 slack 判斷瓶頸。</li>
+<li><b>設計目的：</b>這些演算法的共同目的是降低複雜圖問題的處理難度，讓程式能系統性地更新表格、選擇下一個節點、檢查條件並輸出答案。</li>
+<li><b>運作原理：</b>演算法通常會先初始化輔助陣列，再依照某種規則反覆更新。Dijkstra 以 greedy 方式選取目前 dist 最小的頂點；Bellman-Ford 反覆 relax 所有邊；Floyd 逐步允許中繼點；Topological Sort 每次取 zero-indegree；Critical Path 則先正向算最早時間，再反向算最晚時間。</li>
+<li><b>時間複雜度：</b>若使用 adjacency matrix，許多動態規劃或全點對問題是 O(n³)；Dijkstra textbook matrix 版本常見 O(n²)，min-heap 搭配 adjacency list 可達 O(E log V)；Topological Sort 為 O(V+E)。</li>
+<li><b>空間複雜度：</b>matrix 通常 O(n²)，list 通常 O(V+E)，額外 dist、parent、indegree、queue 多為 O(V)。</li>
+<li><b>優點：</b>可以將複雜的路徑、排程、相依關係轉成清楚表格；適合考試 trace；也能延伸到 routing、EDA timing、project scheduling、compiler dependency analysis。</li>
+<li><b>缺點：</b>不同演算法有不同限制，例如 Dijkstra 不能處理負權重；Topological Sort 只能用在 DAG；Critical Path 需要沒有 cycle 的 AOE network。</li>
+<li><b>老師上課重點：</b>請特別注意「演算法適用條件」、「每一步陣列怎麼更新」、「輸出結果代表什麼」、「是否能從圖畫出表格」。</li>
+<li><b>考試重點：</b>常考 trace dist 表、判斷負邊能否使用 Dijkstra、Floyd 矩陣更新、Transitive Closure 布林更新、Topological Sort 輸出順序與 Critical Activity 判斷。</li>
+</ul></section>
+<section class="animdetail"><h3>🎬 動畫詳細說明</h3>
+<h4>動畫目的</h4>
+<p>這個動畫對應 lec6b「Topological Sort」。它展示如何把 DAG 中的 partial order 轉成一個合法線性序列。動畫使用 zero-indegree queue，逐步移除 vertex 與 outgoing edges。</p>
+<h4>動畫步驟分析</h4>
+<ul>
+<li><b>Frame 1：計算 indegree。</b>先統計每個 vertex 有多少 incoming edges。indegree 代表尚未完成的前置條件數量。</li>
+<li><b>Frame 2：找 zero-indegree。</b>indegree 為 0 的 vertex 沒有尚未完成的 prerequisite，可以放入 queue。這些節點可作為拓撲排序的起點。</li>
+<li><b>Frame 3：輸出第一個 vertex。</b>從 queue 取出一個 zero-indegree vertex，加入 topo order。動畫中開始出現 Topo order: C1 等結果。</li>
+<li><b>Frame 4：刪除 outgoing edges。</b>輸出某 vertex 後，等同於完成該活動，因此它指向的 successor 的 indegree 要減 1。</li>
+<li><b>Frame 5：新 zero-indegree 入 queue。</b>如果某個 successor 的 indegree 減到 0，代表它所有前置條件都已完成，可以加入 queue。</li>
+<li><b>Frame 6：重複直到空。</b>不斷取出 queue、輸出 vertex、刪除 outgoing edges、更新 indegree。這是 Kahn algorithm 的完整流程。</li>
+<li><b>Frame 7：得到 topo order。</b>若輸出的 vertex 數等於 V，表示排序成功；若 queue 空了但仍有 vertex 未輸出，代表圖中有 cycle。</li>
+</ul>
+<h4>演算法分析</h4>
+<p>Topological Sort 使用 adjacency list 與 indegree 陣列時，時間複雜度為 O(V+E)，空間複雜度為 O(V+E)。每個 vertex 進出 queue 一次，每條 edge 在 indegree 更新時處理一次。</p>
+<h4>動畫總結</h4>
+<p>動畫符合 Topological Sort 主題，因為它明確展示 indegree、zero-indegree queue、刪邊與輸出順序。此動畫與 AOV 不同：AOV 是模型，Topological Sort 是演算法。</p></section>
+<h3>表格模擬</h3><table><tr><th>項目</th><th>內容</th></tr><tr><td>主題</td><td>Topological Sort</td></tr><tr><td>核心資料</td><td>Graph、Edge、Array、Queue / Matrix</td></tr><tr><td>考試方向</td><td>Trace、填表、畫結果圖、複雜度</td></tr></table><h3>C++ 程式範例</h3><button class="copy" onclick="copyCode(\'code7\', this)">複製程式碼</button><pre id="code7">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;limits&gt;
+using namespace std;
+const int INF = 1000000000;
+class Graph { public: vector&lt;vector&lt;int&gt;&gt; length; vector&lt;int&gt; dist; vector&lt;bool&gt; s; int Choose(int n){int u=-1,b=INF;for(int i=0;i&lt;n;i++)if(!s[i]&amp;&amp;dist[i]&lt;b){b=dist[i];u=i;}return u;} void ShortestPath(const int n,const int v){ dist.assign(n,INF); s.assign(n,false); for(int i=0;i&lt;n;i++){s[i]=false; dist[i]=length[v][i];} s[v]=true; dist[v]=0; for(int i=0;i&lt;n-2;i++){ int u=Choose(n); if(u&lt;0) break; s[u]=true; for(int w=0;w&lt;n;w++) if((!s[w])&amp;&amp;(dist[u]+length[u][w]&lt;dist[w])) dist[w]=dist[u]+length[u][w]; } } };
+int main(){ Graph g; g.length={{0,50,45,10,INF,INF},{INF,0,10,15,INF,INF},{INF,INF,0,INF,30,INF},{INF,INF,INF,0,15,INF},{INF,20,35,INF,0,3},{INF,INF,INF,INF,INF,0}}; g.ShortestPath(6,0); for(int d:g.dist) cout&lt;&lt;d&lt;&lt;' '; }
+</pre><a class="btn" href="https://www.onlinegdb.com/online_c++_compiler" target="_blank">OnlineGDB</a><a class="btn" href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank">Programiz</a><a class="btn" href="https://cpp.sh/" target="_blank">cpp.sh</a></div></details>
+<details class="topic" open=""><summary>8. AOE Critical Path</summary><div class="content"><div class="viewer"><img data-base="output/08_aoe_critical_path_steps" data-n="1" id="img_8" src="output/08_aoe_critical_path_steps/step_01.svg"/><div class="controls"><button onclick="prevFrame(8,7)">上一張</button><button onclick="nextFrame(8,7)">下一張</button><span id="cap_8">Frame 1 / 7</span></div></div><section class="detail"><h3>📖 主題詳細說明</h3>
+<ul>
+<li><b>主題背景：</b>AOE Critical Path 是 Graphs Part II 的核心單元，主要處理有向圖、權重、路徑、可達性與排程限制。這類問題不是只問兩個頂點是否相鄰，而是進一步問「能不能到」、「怎麼到最短」、「哪些步驟必須先做」、「哪條路徑決定整體完成時間」。</li>
+<li><b>資料結構定義：</b>圖 G=(V,E) 由 vertex 與 edge 組成；若 edge 帶方向稱為 digraph；若 edge 有數值稱為 weighted graph。演算法常搭配 adjacency matrix、adjacency list、dist 陣列、predecessor 陣列、indegree 陣列、queue 或 stack。</li>
+<li><b>核心概念：</b>本主題重點是把圖的結構轉換成可計算的狀態。最短路徑用 dist 表示目前最佳估計；拓撲排序用 indegree 表示一個活動還剩多少前置條件；critical path 用 earliest time、latest time 與 slack 判斷瓶頸。</li>
+<li><b>設計目的：</b>這些演算法的共同目的是降低複雜圖問題的處理難度，讓程式能系統性地更新表格、選擇下一個節點、檢查條件並輸出答案。</li>
+<li><b>運作原理：</b>演算法通常會先初始化輔助陣列，再依照某種規則反覆更新。Dijkstra 以 greedy 方式選取目前 dist 最小的頂點；Bellman-Ford 反覆 relax 所有邊；Floyd 逐步允許中繼點；Topological Sort 每次取 zero-indegree；Critical Path 則先正向算最早時間，再反向算最晚時間。</li>
+<li><b>時間複雜度：</b>若使用 adjacency matrix，許多動態規劃或全點對問題是 O(n³)；Dijkstra textbook matrix 版本常見 O(n²)，min-heap 搭配 adjacency list 可達 O(E log V)；Topological Sort 為 O(V+E)。</li>
+<li><b>空間複雜度：</b>matrix 通常 O(n²)，list 通常 O(V+E)，額外 dist、parent、indegree、queue 多為 O(V)。</li>
+<li><b>優點：</b>可以將複雜的路徑、排程、相依關係轉成清楚表格；適合考試 trace；也能延伸到 routing、EDA timing、project scheduling、compiler dependency analysis。</li>
+<li><b>缺點：</b>不同演算法有不同限制，例如 Dijkstra 不能處理負權重；Topological Sort 只能用在 DAG；Critical Path 需要沒有 cycle 的 AOE network。</li>
+<li><b>老師上課重點：</b>請特別注意「演算法適用條件」、「每一步陣列怎麼更新」、「輸出結果代表什麼」、「是否能從圖畫出表格」。</li>
+<li><b>考試重點：</b>常考 trace dist 表、判斷負邊能否使用 Dijkstra、Floyd 矩陣更新、Transitive Closure 布林更新、Topological Sort 輸出順序與 Critical Activity 判斷。</li>
+</ul></section>
+<section class="animdetail"><h3>🎬 動畫詳細說明</h3>
+<h4>動畫目的</h4>
+<p>這個動畫對應 lec6b「AOE Critical Path」。AOE 是 Activity-on-Edge，edge 代表 activity 與 duration，vertex 代表事件。動畫展示如何計算 earliest event time、latest event time、slack，並找出 critical activities。</p>
+<h4>動畫步驟分析</h4>
+<ul>
+<li><b>Frame 1：事件作為 vertex。</b>節點 0、1、2、4、6、7、8 等代表事件狀態，不是活動本身。這與 AOV 的 vertex=activity 不同。</li>
+<li><b>Frame 2：活動作為 edge。</b>edge 上的 a=6、a=4、a=9 等表示活動與工期。若 edge u→v 權重為 d，代表完成 u 後花 d 時間才能到 v。</li>
+<li><b>Frame 3：拓撲順序算 ee。</b>由 source 沿拓撲順序往前推 earliest event time：ee[v]=max(ee[v], ee[u]+duration)。這會找出每個事件最早可能發生時間。</li>
+<li><b>Frame 4：反向順序算 le。</b>從終點開始反向推 latest event time：le[u]=min(le[u], le[v]-duration)。這表示不延誤整體專案時，事件 u 最晚可發生時間。</li>
+<li><b>Frame 5：計算 slack。</b>對活動 u→v，slack = le[v] - ee[u] - duration。slack 表示可延遲但不影響總工期的時間。</li>
+<li><b>Frame 6：找 critical activities。</b>slack=0 的 activity 是 critical activity，任何延誤都會延誤整個 project。這些活動連起來形成 critical path。</li>
+<li><b>Frame 7：得到 project duration。</b>終點的 earliest event time 就是 project duration。critical path 的總長度也會等於這個 duration。</li>
+</ul>
+<h4>演算法分析</h4>
+<p>AOE Critical Path 需先確認圖是 DAG，通常先做 topological sort。接著做一次 forward pass 算 ee，再做一次 backward pass 算 le，最後掃描所有 edge 算 slack。時間複雜度 O(V+E)。</p>
+<h4>動畫總結</h4>
+<p>動畫符合 AOE Critical Path 主題，因為它清楚區分事件與活動，並呈現 ee、le、slack、critical activity 與 project duration。考試常考手算 earliest/latest table。</p></section>
+<h3>表格模擬</h3><table><tr><th>項目</th><th>內容</th></tr><tr><td>主題</td><td>AOE Critical Path</td></tr><tr><td>核心資料</td><td>Graph、Edge、Array、Queue / Matrix</td></tr><tr><td>考試方向</td><td>Trace、填表、畫結果圖、複雜度</td></tr></table><h3>C++ 程式範例</h3><button class="copy" onclick="copyCode(\'code8\', this)">複製程式碼</button><pre id="code8">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+using namespace std;
+const int INF = 1000000000;
+class Graph{ public: vector&lt;vector&lt;int&gt;&gt; length; vector&lt;int&gt; dist; void BellmanFord(const int n,const int v){ dist.assign(n,INF); for(int i=0;i&lt;n;i++) dist[i]=length[v][i]; dist[v]=0; for(int k=2;k&lt;=n-1;k++) for(int u=0;u&lt;n;u++) if(u!=v) for(int i=0;i&lt;n;i++) if(length[i][u]&lt;INF &amp;&amp; dist[i]&lt;INF &amp;&amp; dist[u] &gt; dist[i]+length[i][u]) dist[u]=dist[i]+length[i][u]; }};
+int main(){ Graph g; g.length={{0,6,5,5,INF,INF,INF},{INF,0,INF,INF,-1,INF,INF},{INF,-2,0,INF,1,INF,INF},{INF,INF,-2,0,INF,-1,INF},{INF,INF,INF,INF,0,INF,3},{INF,INF,INF,INF,INF,0,3},{INF,INF,INF,INF,INF,INF,0}}; g.BellmanFord(7,0); for(int d:g.dist) cout&lt;&lt;d&lt;&lt;' '; }
+</pre><a class="btn" href="https://www.onlinegdb.com/online_c++_compiler" target="_blank">OnlineGDB</a><a class="btn" href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank">Programiz</a><a class="btn" href="https://cpp.sh/" target="_blank">cpp.sh</a></div></details>
+<details class="topic" open=""><summary>9. Static Timing Analysis</summary><div class="content"><div class="viewer"><img data-base="output/09_static_timing_steps" data-n="1" id="img_9" src="output/09_static_timing_steps/step_01.svg"/><div class="controls"><button onclick="prevFrame(9,7)">上一張</button><button onclick="nextFrame(9,7)">下一張</button><span id="cap_9">Frame 1 / 7</span></div></div><section class="detail"><h3>📖 主題詳細說明</h3>
+<ul>
+<li><b>主題背景：</b>Static Timing Analysis 是 Graphs Part II 的核心單元，主要處理有向圖、權重、路徑、可達性與排程限制。這類問題不是只問兩個頂點是否相鄰，而是進一步問「能不能到」、「怎麼到最短」、「哪些步驟必須先做」、「哪條路徑決定整體完成時間」。</li>
+<li><b>資料結構定義：</b>圖 G=(V,E) 由 vertex 與 edge 組成；若 edge 帶方向稱為 digraph；若 edge 有數值稱為 weighted graph。演算法常搭配 adjacency matrix、adjacency list、dist 陣列、predecessor 陣列、indegree 陣列、queue 或 stack。</li>
+<li><b>核心概念：</b>本主題重點是把圖的結構轉換成可計算的狀態。最短路徑用 dist 表示目前最佳估計；拓撲排序用 indegree 表示一個活動還剩多少前置條件；critical path 用 earliest time、latest time 與 slack 判斷瓶頸。</li>
+<li><b>設計目的：</b>這些演算法的共同目的是降低複雜圖問題的處理難度，讓程式能系統性地更新表格、選擇下一個節點、檢查條件並輸出答案。</li>
+<li><b>運作原理：</b>演算法通常會先初始化輔助陣列，再依照某種規則反覆更新。Dijkstra 以 greedy 方式選取目前 dist 最小的頂點；Bellman-Ford 反覆 relax 所有邊；Floyd 逐步允許中繼點；Topological Sort 每次取 zero-indegree；Critical Path 則先正向算最早時間，再反向算最晚時間。</li>
+<li><b>時間複雜度：</b>若使用 adjacency matrix，許多動態規劃或全點對問題是 O(n³)；Dijkstra textbook matrix 版本常見 O(n²)，min-heap 搭配 adjacency list 可達 O(E log V)；Topological Sort 為 O(V+E)。</li>
+<li><b>空間複雜度：</b>matrix 通常 O(n²)，list 通常 O(V+E)，額外 dist、parent、indegree、queue 多為 O(V)。</li>
+<li><b>優點：</b>可以將複雜的路徑、排程、相依關係轉成清楚表格；適合考試 trace；也能延伸到 routing、EDA timing、project scheduling、compiler dependency analysis。</li>
+<li><b>缺點：</b>不同演算法有不同限制，例如 Dijkstra 不能處理負權重；Topological Sort 只能用在 DAG；Critical Path 需要沒有 cycle 的 AOE network。</li>
+<li><b>老師上課重點：</b>請特別注意「演算法適用條件」、「每一步陣列怎麼更新」、「輸出結果代表什麼」、「是否能從圖畫出表格」。</li>
+<li><b>考試重點：</b>常考 trace dist 表、判斷負邊能否使用 Dijkstra、Floyd 矩陣更新、Transitive Closure 布林更新、Topological Sort 輸出順序與 Critical Activity 判斷。</li>
+</ul></section>
+<section class="animdetail"><h3>🎬 動畫詳細說明</h3>
+<h4>動畫目的</h4>
+<p>這個動畫對應 lec6b「Static Timing Analysis」。它把邏輯電路抽象成 DAG：vertex 表示 input、gate 或 output；edge 表示 signal flow；delay 會累積成 arrival time。這與 lec6a 中 graph abstraction 的觀念連接，但這裡重點是 timing constraint 與 slack。</p>
+<h4>動畫步驟分析</h4>
+<ul>
+<li><b>Frame 1：logic network 轉 DAG。</b>動畫先把電路中的 gate/input/output 轉成節點，訊號方向轉成 directed edge。這一步確認 timing analysis 可以視為 DAG 上的路徑問題。</li>
+<li><b>Frame 2：gate/input/output 作為 vertex。</b>每個 vertex 有自己的 delay 或 timing value。輸入端通常 arrival time 較早，gate 會累加延遲，output 則用來檢查最終時序。</li>
+<li><b>Frame 3：計算 arrival time。</b>沿拓撲順序向前傳遞 arrival：arrival[v]=max(arrival[u]+delay(u→v))。最大值代表最慢訊號到達時間，也就是 longest delay path。</li>
+<li><b>Frame 4：設定 required time。</b>根據時脈週期或輸出限制設定 required time。required time 代表訊號最晚必須到達的時間。</li>
+<li><b>Frame 5：反向傳 required。</b>從 output 反向回推 required：required[u]=min(required[v]-delay(u→v))。這可找出每個節點最晚允許時間。</li>
+<li><b>Frame 6：slack=required-arrival。</b>若 slack 為正，代表還有時間餘裕；若 slack=0，代表 critical；若 slack 為負，代表 timing violation。</li>
+<li><b>Frame 7：找 critical path delay。</b>最後找出 slack 最小或為 0 的路徑。critical path 決定電路可達到的最高時脈速度。</li>
+</ul>
+<h4>演算法分析</h4>
+<p>Static Timing Analysis 在 DAG 上通常需要一次拓撲 forward pass 與一次 reverse pass，時間複雜度 O(V+E)。資料結構包含 adjacency list、arrival、required、slack 與 topological order。</p>
+<h4>動畫總結</h4>
+<p>動畫符合 Static Timing Analysis 主題，因為它呈現電路轉 DAG、arrival、required、slack 與 critical path。它不是一般 shortest path，而是 longest-delay 與 timing margin 分析。</p></section>
+<h3>表格模擬</h3><table><tr><th>項目</th><th>內容</th></tr><tr><td>主題</td><td>Static Timing Analysis</td></tr><tr><td>核心資料</td><td>Graph、Edge、Array、Queue / Matrix</td></tr><tr><td>考試方向</td><td>Trace、填表、畫結果圖、複雜度</td></tr></table><h3>C++ 程式範例</h3><button class="copy" onclick="copyCode(\'code9\', this)">複製程式碼</button><pre id="code9">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+using namespace std;
+const int INF=1000000000;
+class Graph{ public: vector&lt;vector&lt;int&gt;&gt; length,a; void AllLengths(const int n){ a=length; for(int k=0;k&lt;n;k++) for(int i=0;i&lt;n;i++) for(int j=0;j&lt;n;j++) if(a[i][k]&lt;INF&amp;&amp;a[k][j]&lt;INF&amp;&amp;a[i][j]&gt;a[i][k]+a[k][j]) a[i][j]=a[i][k]+a[k][j]; }};
+int main(){ Graph g; g.length={{0,4,11},{6,0,2},{3,INF,0}}; g.AllLengths(3); for(auto&amp;r:g.a){for(int x:r)cout&lt;&lt;x&lt;&lt;' ';cout&lt;&lt;'\n';} }
+</pre><a class="btn" href="https://www.onlinegdb.com/online_c++_compiler" target="_blank">OnlineGDB</a><a class="btn" href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank">Programiz</a><a class="btn" href="https://cpp.sh/" target="_blank">cpp.sh</a></div></details>
+<script>function nextFrame(id,total){let im=document.getElementById('img_'+id);let n=parseInt(im.dataset.n||'1');n=n%total+1;im.dataset.n=n;im.src=im.dataset.base+'/step_'+String(n).padStart(2,'0')+'.svg';document.getElementById('cap_'+id).innerText='Frame '+n+' / '+total;}function prevFrame(id,total){let im=document.getElementById('img_'+id);let n=parseInt(im.dataset.n||'1');n=(n+total-2)%total+1;im.dataset.n=n;im.src=im.dataset.base+'/step_'+String(n).padStart(2,'0')+'.svg';document.getElementById('cap_'+id).innerText='Frame '+n+' / '+total;}function copyCode(id,btn){
+ const el=document.getElementById(id);
+ if(!el)return;
+ const text=el.innerText;
+ if(navigator.clipboard&&navigator.clipboard.writeText){
+   navigator.clipboard.writeText(text).then(()=>showCopied(btn));
+ }else{
+   const ta=document.createElement('textarea');
+   ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);showCopied(btn);
+ }
+}
+function showCopied(btn){
+ if(!btn)return;
+ const old=btn.textContent;
+ btn.textContent='已複製 ✓';
+ btn.classList.add('copied');
+ setTimeout(()=>{btn.textContent=old;btn.classList.remove('copied');},1200);
+}</script></div></body></html>

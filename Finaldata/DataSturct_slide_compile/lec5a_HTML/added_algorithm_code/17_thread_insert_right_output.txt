@@ -1,0 +1,1 @@
+After InsertRight(A, B): A B

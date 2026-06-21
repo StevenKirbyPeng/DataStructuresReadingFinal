@@ -1,0 +1,2 @@
+已更新為講義結構優先版：僅替換 HTML 內 C++ 程式碼區塊；其他文字、圖片、樣式、題目與規格未修改。
+主要對齊：template<class T>、T* array、left-child/right-sibling、ChainNode/ChainIterator、Available Space List、Threaded flags、BST class、Sets parent array、WinnerTree array。

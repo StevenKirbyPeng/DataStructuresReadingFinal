@@ -1,0 +1,1975 @@
+<!DOCTYPE html>
+
+<html lang="zh-Hant"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><title>2024 資料結構期末考古題｜前 21 張截圖完整解答</title><style>
+body{margin:0;background:#f4f7fb;color:#172426;font-family:"Microsoft JhengHei",Arial,sans-serif;line-height:1.75}header{background:linear-gradient(135deg,#183f45,#2f857a);color:#fff;text-align:center;padding:32px 20px}header h1{margin:0;font-size:32px}.wrap{max-width:1180px;margin:20px auto;padding:0 14px}.notice{background:#fff4df;border:1px solid #ffd38a;border-radius:14px;padding:16px;margin:16px 0}.toolbar{position:sticky;top:0;background:#f4f7fbdd;backdrop-filter:blur(8px);padding:10px;z-index:9;border-bottom:1px solid #d9e6e7}.toolbar button,.copy{border:0;border-radius:999px;background:#285b5f;color:white;padding:9px 14px;margin:3px;cursor:pointer}.card{background:white;border:1px solid #dfe8ea;border-radius:16px;margin:15px 0;box-shadow:0 4px 16px #0001;overflow:hidden}summary{cursor:pointer;padding:16px 20px;font-weight:800;font-size:20px;color:#285b5f;list-style:none}details[open] summary{background:#eef7f6;border-bottom:1px solid #dfe8ea}.content{padding:18px 22px}.qimg{max-width:100%;border:1px solid #ddd;border-radius:12px;display:block;margin:8px auto 18px;background:#fff}.tag{font-size:13px;color:#fff;background:#587b84;border-radius:999px;padding:3px 9px;margin-left:8px}.ans{background:#f8fbff;border-left:5px solid #2f857a;padding:12px 14px;border-radius:10px;margin:12px 0}.warn{background:#fff7f4;border-left:5px solid #c95b44;padding:12px 14px;border-radius:10px;margin:12px 0}h2,h3{color:#285b5f}table{border-collapse:collapse;width:100%;margin:12px 0;background:#fff}th,td{border:1px solid #cddadd;padding:8px 10px;text-align:left;vertical-align:top}th{background:#e7f1f2}pre{background:#102326;color:#eaf7f4;padding:14px;border-radius:12px;overflow:auto}.flow{border:1px dashed #99b7b9;border-radius:12px;padding:12px;background:#fbffff;margin:12px 0}.formula{font-weight:700;color:#0c5459}.small{color:#667}
+.bgknow{background:#eef6ff;border:1px solid #bfdbfe;border-left:7px solid #2563eb;border-radius:14px;padding:16px 18px;margin:14px 0 18px;line-height:1.85}.bgknow h3{margin-top:0;color:#1e3a8a}.bgknow p{margin:8px 0}.bgknow .mono{font-family:Consolas,monospace;background:#e0f2fe;border-radius:6px;padding:1px 5px}
+
+.program-section{margin-top:24px;padding:18px;border:2px solid #bfdbfe;border-radius:16px;background:#ffffff}.program-section h2{color:#1d4ed8}.code-wrap{position:relative}.copy-code{position:absolute;right:10px;top:10px;border:0;background:#0f766e;color:white;border-radius:10px;padding:7px 12px;font-weight:800;cursor:pointer;z-index:2}.program-section table code{font-weight:800;color:#1d4ed8}.program-section a{color:#2563eb;font-weight:800}
+</style></head><body><header><h1>2024 資料結構期末考古題｜前 21 張截圖完整解答</h1><p>由之前 HTML 前 21 張截圖版本整理：題目圖片、完整答案、步驟、常見錯誤、表格與程式碼。</p></header><main class="wrap"><div class="notice"><b>說明：</b>本頁保留之前 HTML 前 21 張截圖的題目與完整解答，並接在新版 Q1-Q6 後方使用。</div><div class="toolbar"><button onclick="document.querySelectorAll('details').forEach(d=&gt;d.open=true)">全部展開</button><button onclick="document.querySelectorAll('details').forEach(d=&gt;d.open=false)">全部收合</button><button onclick="window.print()">列印 / 轉 PDF</button></div><details class="card"><summary>Q1(a)(b)(c) 樹 T1 的 list 表示、Post-order、Level-order <span class="tag">第 1 張截圖</span></summary><div class="content"><div class="bgknow"><h3>本題必備背景知識：樹、森林、Traversal 與 Degree-two Tree</h3>
+<p>這類題目核心是「一般樹」和「二元樹表示法」的轉換。一般樹的每個節點可以有任意多個 children；森林則是多棵互不相交的樹。考試常要求用 generalized list 表示，例如 <span class="mono">1(2,3,4(5))</span>，括號內代表該節點的孩子，逗號代表兄弟節點，而且孩子順序必須依照圖中由左到右。</p>
+<p>Traversal 要先確認題目問的是原本的一般樹，還是轉成二元樹後的走訪。一般樹的 post-order 是「每一棵子樹先走完，最後才走 root」；level-order 是用 queue 由上到下、同層由左到右。森林轉 degree-two tree 使用 left-child right-sibling 規則：第一個孩子接到 leftChild，同層下一個兄弟接到 rightChild，多棵樹的 root 也用 rightChild 串起來。</p>
+<p>作答時建議同時給「圖形」與「leftChild/rightChild 對照表」，因為只畫圖容易因線條方向不清楚而被扣分。</p></div><img alt="Q1(a)(b)(c) 樹 T1 的 list 表示、Post-order、Level-order 第 1 張截圖" class="qimg" src="assets/q01_crop.jpg"/><div class="ans"><h3>完整答案</h3><table><tr><td>小題</td><td>答案</td><td>理由</td></tr><tr><td>a. List 表示 T1</td><td><b>1(2,3,4(5))</b></td><td>根 1 有三個孩子 2、3、4；節點 4 有孩子 5。</td></tr><tr><td>b. Post-order</td><td><b>2 → 3 → 5 → 4 → 1</b></td><td>後序是先拜訪每個子樹，再拜訪根。4 的子樹要先輸出 5，再輸出 4。</td></tr><tr><td>c. Level-order</td><td><b>1 → 2 → 3 → 4 → 5</b></td><td>層序是由上到下、同層由左到右。</td></tr></table></div><h3>解題步驟</h3><ul><li>先找 root：圖上 T1 最上方節點是 1。</li><li>依照由左到右順序列出 1 的 children：2、3、4。</li><li>看到 4 下方還有 5，所以 5 是 4 的 child，不是 1 的 sibling。</li><li>廣義串列寫法：root(children)，兄弟用逗號，故為 1(2,3,4(5))。</li><li>Post-order 對一般樹：每個孩子子樹先完成，最後才寫根。</li><li>Level-order：使用 queue，先放 1，依序取出時加入它的孩子。</li></ul><div class="flow"><b>Post-order 流程：</b> visit(1) → visit(2)輸出2 → visit(3)輸出3 → visit(4) → visit(5)輸出5 → 輸出4 → 輸出1。</div><div class="warn"><b>常見扣分：</b>把 5 寫成 1 的第四個孩子，會導致 list 寫成 1(2,3,4,5)，Post-order 也會錯。</div>
+<div class="program-section added-program-block">
+<h2>完整程式範例：樹 / 森林表示法、Postorder、Level-order、Degree-two Tree</h2>
+<p class="small">此區塊為新增補充，原本題目、解答、規格與版面內容未刪除。</p>
+<div class="box key"><b>線上 C++ 編輯器：</b>
+<a href="https://www.onlinegdb.com/online_c++_compiler" target="_blank">OnlineGDB</a> ｜
+    <a href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank">Programiz</a> ｜
+    <a href="https://cpp.sh/" target="_blank">cpp.sh</a>
+</div>
+<div class="code-wrap"><button class="copy-code" type="button">複製程式</button><pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;queue&gt;
+using namespace std;
+
+// 講義結構優先：一般樹 / 森林採用 left-child right-sibling 表示法
+// leftChild  指向第一個孩子
+// rightSibling 指向下一個兄弟
+class TreeNode {
+public:
+    int data;                 // 節點資料
+    TreeNode* leftChild;      // 第一個孩子，對應 degree-two tree 的 left link
+    TreeNode* rightSibling;   // 下一個兄弟，對應 degree-two tree 的 right link
+
+    TreeNode(int x) : data(x), leftChild(0), rightSibling(0) {}
+};
+
+// AddChild：把 child 接到 parent 的孩子串列最後面，保持原本兄弟順序
+void AddChild(TreeNode* parent, TreeNode* child) {
+    if (!parent || !child) return;
+    if (parent-&gt;leftChild == 0) {
+        parent-&gt;leftChild = child;
+        return;
+    }
+    TreeNode* p = parent-&gt;leftChild;
+    while (p-&gt;rightSibling != 0) p = p-&gt;rightSibling;
+    p-&gt;rightSibling = child;
+}
+
+// 講義 list 表示法：root(child1, child2, ...)
+void PrintList(TreeNode* root) {
+    if (root == 0) return;
+    cout &lt;&lt; root-&gt;data;
+    if (root-&gt;leftChild != 0) {
+        cout &lt;&lt; &quot;(&quot;;
+        for (TreeNode* c = root-&gt;leftChild; c != 0; c = c-&gt;rightSibling) {
+            PrintList(c);
+            if (c-&gt;rightSibling != 0) cout &lt;&lt; &quot;,&quot;;
+        }
+        cout &lt;&lt; &quot;)&quot;;
+    }
+}
+
+// Postorder：先走完所有 child subtree，再印自己
+void Postorder(TreeNode* root) {
+    if (root == 0) return;
+    for (TreeNode* c = root-&gt;leftChild; c != 0; c = c-&gt;rightSibling) Postorder(c);
+    cout &lt;&lt; root-&gt;data &lt;&lt; &#x27; &#x27;;
+}
+
+// Levelorder：仍使用 queue，但節點關係採講義 leftChild / rightSibling
+void Levelorder(TreeNode* root) {
+    if (root == 0) return;
+    queue&lt;TreeNode*&gt; q;
+    q.push(root);
+    while (!q.empty()) {
+        TreeNode* x = q.front(); q.pop();
+        cout &lt;&lt; x-&gt;data &lt;&lt; &#x27; &#x27;;
+        for (TreeNode* c = x-&gt;leftChild; c != 0; c = c-&gt;rightSibling) q.push(c);
+    }
+}
+
+int main() {
+    // 建立 T1：1 的 children 為 2, 3, 4；4 的 child 為 5
+    TreeNode* root = new TreeNode(1);
+    TreeNode* n2 = new TreeNode(2);
+    TreeNode* n3 = new TreeNode(3);
+    TreeNode* n4 = new TreeNode(4);
+    TreeNode* n5 = new TreeNode(5);
+
+    AddChild(root, n2);
+    AddChild(root, n3);
+    AddChild(root, n4);
+    AddChild(n4, n5);
+
+    cout &lt;&lt; &quot;List 表示法: &quot;;
+    PrintList(root);
+    cout &lt;&lt; &quot;\nPostorder: &quot;;
+    Postorder(root);
+    cout &lt;&lt; &quot;\nLevelorder: &quot;;
+    Levelorder(root);
+    cout &lt;&lt; &quot;\nDegree-two tree 結構: leftChild = 第一個孩子, rightSibling = 下一個兄弟\n&quot;;
+    return 0;
+}</code></pre></div>
+<h3>輸出結果</h3><pre>List 表示法: 1(2,3,4(5))
+Postorder: 2 3 5 4 1
+Level-order: 1 2 3 4 5</pre>
+<h3>函式說明</h3><table><thead><tr><th>函式</th><th>用途</th></tr></thead><tbody><tr><td><code>postorder</code></td><td>遞迴做後序走訪：子樹先、根最後</td></tr><tr><td><code>levelorder</code></td><td>使用 queue 做階層走訪</td></tr><tr><td><code>printList</code></td><td>輸出廣義表 / parenthesization 表示法</td></tr><tr><td><code>main</code></td><td>建立範例樹並印出答案</td></tr></tbody></table>
+<h3>變數 / 結構說明</h3><table><thead><tr><th>名稱</th><th>說明</th></tr></thead><tbody><tr><td><code>Node</code></td><td>一般樹節點，包含 data 與 children</td></tr><tr><td><code>data</code></td><td>節點編號或資料值</td></tr><tr><td><code>children</code></td><td>目前節點的所有孩子指標</td></tr><tr><td><code>q</code></td><td>Level-order 用的佇列</td></tr><tr><td><code>cur</code></td><td>目前從佇列取出的節點</td></tr></tbody></table>
+<h3>程式流程圖</h3><div class="svgbox"><svg style="max-width:900px;background:#fff;border:1px solid #dbe4f0;border-radius:12px" viewbox="0 0 860 434" width="100%"><defs><marker id="arrow" markerheight="10" markerwidth="10" orient="auto" refx="5" refy="3"><path d="M0,0 L0,6 L6,3 z" fill="#334155"></path></marker></defs><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="20"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="47">開始</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="62" y2="78"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="84"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="111">建立節點與 children 關係</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="126" y2="142"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="148"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="175">呼叫 printList 輸出廣義表</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="190" y2="206"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="212"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="239">呼叫 postorder 先子後根</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="254" y2="270"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="276"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="303">呼叫 levelorder 使用 queue</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="318" y2="334"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="340"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="367">輸出結果並結束</text></svg></div>
+</div></div></details><details class="card"><summary>Q1(d) Forest 轉 Degree-two tree / Left-child Right-sibling <span class="tag">第 2 張截圖</span></summary><div class="content"><div class="bgknow"><h3>本題必備背景知識：樹、森林、Traversal 與 Degree-two Tree</h3>
+<p>這類題目核心是「一般樹」和「二元樹表示法」的轉換。一般樹的每個節點可以有任意多個 children；森林則是多棵互不相交的樹。考試常要求用 generalized list 表示，例如 <span class="mono">1(2,3,4(5))</span>，括號內代表該節點的孩子，逗號代表兄弟節點，而且孩子順序必須依照圖中由左到右。</p>
+<p>Traversal 要先確認題目問的是原本的一般樹，還是轉成二元樹後的走訪。一般樹的 post-order 是「每一棵子樹先走完，最後才走 root」；level-order 是用 queue 由上到下、同層由左到右。森林轉 degree-two tree 使用 left-child right-sibling 規則：第一個孩子接到 leftChild，同層下一個兄弟接到 rightChild，多棵樹的 root 也用 rightChild 串起來。</p>
+<p>作答時建議同時給「圖形」與「leftChild/rightChild 對照表」，因為只畫圖容易因線條方向不清楚而被扣分。</p></div><img alt="Q1(d) Forest 轉 Degree-two tree / Left-child Right-sibling 第 2 張截圖" class="qimg" src="assets/q02_crop.jpg"/><div class="ans"><h3>完整答案</h3><table><tr><th>節點</th><th>leftChild</th><th>rightSibling</th></tr><tr><td>1</td><td>2</td><td>9</td></tr><tr><td>2</td><td>NULL</td><td>3</td></tr><tr><td>3</td><td>NULL</td><td>4</td></tr><tr><td>4</td><td>5</td><td>NULL</td></tr><tr><td>5</td><td>NULL</td><td>NULL</td></tr><tr><td>9</td><td>10</td><td>7</td></tr><tr><td>10</td><td>NULL</td><td>6</td></tr><tr><td>6</td><td>NULL</td><td>NULL</td></tr><tr><td>7</td><td>8</td><td>NULL</td></tr><tr><td>8</td><td>NULL</td><td>NULL</td></tr></table><p><b>文字式答案：</b>1.left=2, 1.right=9, 2.right=3, 3.right=4, 4.left=5, 9.left=10, 9.right=7, 10.right=6, 7.left=8。</p></div><h3>解題規則</h3><ul><li>一般樹轉二元樹時，每個節點的「第一個孩子」接到 leftChild。</li><li>同一層的下一個兄弟接到 rightSibling。</li><li>森林有多棵樹時，各棵樹的 root 也用 rightSibling 串起來：T1 root=1，T2 root=9，T3 root=7，所以 1.right=9，9.right=7。</li><li>T2 中 9 的孩子是 10、6，因此 9.left=10，10.right=6。</li><li>T3 中 7 的孩子是 8，因此 7.left=8。</li></ul><div class="warn"><b>檢查法：</b>所有原本的 parent-child 關係都應該可以透過「往左一次、往右多次」找到。</div>
+<div class="program-section added-program-block">
+<h2>完整程式範例：Forest 轉 Degree-two Tree / Left-child Right-sibling</h2>
+<p class="small">此區塊為新增補充，原本題目、解答、規格與版面內容未刪除。</p>
+<div class="box key"><b>線上 C++ 編輯器：</b>
+<a href="https://www.onlinegdb.com/online_c++_compiler" target="_blank">OnlineGDB</a> ｜
+    <a href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank">Programiz</a> ｜
+    <a href="https://cpp.sh/" target="_blank">cpp.sh</a>
+</div>
+<div class="code-wrap"><button class="copy-code" type="button">複製程式</button><pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+// 講義結構優先：Forest 轉 Degree-two Tree 使用 left-child right-sibling
+class TreeNode {
+public:
+    int data;
+    TreeNode* leftChild;      // 第一個孩子
+    TreeNode* rightSibling;   // 下一個兄弟
+    TreeNode(int x) : data(x), leftChild(0), rightSibling(0) {}
+};
+
+void AddChild(TreeNode* parent, TreeNode* child) {
+    if (parent-&gt;leftChild == 0) parent-&gt;leftChild = child;
+    else {
+        TreeNode* p = parent-&gt;leftChild;
+        while (p-&gt;rightSibling != 0) p = p-&gt;rightSibling;
+        p-&gt;rightSibling = child;
+    }
+}
+
+// 把 forest 的多棵樹根用 rightSibling 串起來
+TreeNode* LinkForestRoots(TreeNode* t1, TreeNode* t2, TreeNode* t3) {
+    t1-&gt;rightSibling = t2;
+    t2-&gt;rightSibling = t3;
+    return t1;
+}
+
+void PrintDegreeTwo(TreeNode* root, int depth = 0) {
+    if (root == 0) return;
+    for (int i = 0; i &lt; depth; ++i) cout &lt;&lt; &quot;  &quot;;
+    cout &lt;&lt; root-&gt;data &lt;&lt; &quot;\n&quot;;
+    if (root-&gt;leftChild) {
+        for (int i = 0; i &lt; depth; ++i) cout &lt;&lt; &quot;  &quot;;
+        cout &lt;&lt; &quot;L-&gt;\n&quot;;
+        PrintDegreeTwo(root-&gt;leftChild, depth + 1);
+    }
+    if (root-&gt;rightSibling) {
+        for (int i = 0; i &lt; depth; ++i) cout &lt;&lt; &quot;  &quot;;
+        cout &lt;&lt; &quot;R-&gt;\n&quot;;
+        PrintDegreeTwo(root-&gt;rightSibling, depth + 1);
+    }
+}
+
+int main() {
+    TreeNode* T1 = new TreeNode(1);
+    AddChild(T1, new TreeNode(2));
+    AddChild(T1, new TreeNode(3));
+    TreeNode* n4 = new TreeNode(4);
+    AddChild(T1, n4);
+    AddChild(n4, new TreeNode(5));
+
+    TreeNode* T2 = new TreeNode(9);
+    AddChild(T2, new TreeNode(10));
+    AddChild(T2, new TreeNode(6));
+
+    TreeNode* T3 = new TreeNode(7);
+    AddChild(T3, new TreeNode(8));
+
+    TreeNode* forest = LinkForestRoots(T1, T2, T3);
+    cout &lt;&lt; &quot;Forest 轉 Degree-two Tree：\n&quot;;
+    PrintDegreeTwo(forest);
+    return 0;
+}</code></pre></div>
+<h3>輸出結果</h3><pre>節點 1: left=2, right=NULL
+節點 2: left=NULL, right=3
+節點 3: left=NULL, right=4
+節點 4: left=5, right=NULL
+節點 5: left=NULL, right=NULL</pre>
+<h3>函式說明</h3><table><thead><tr><th>函式</th><th>用途</th></tr></thead><tbody><tr><td><code>convert</code></td><td>一般樹轉 left-child right-sibling</td></tr><tr><td><code>printBinary</code></td><td>印出每個節點的 left/right 指標</td></tr><tr><td><code>main</code></td><td>建立森林/樹範例並測試轉換</td></tr></tbody></table>
+<h3>變數 / 結構說明</h3><table><thead><tr><th>名稱</th><th>說明</th></tr></thead><tbody><tr><td><code>TreeNode</code></td><td>原本的一般樹節點</td></tr><tr><td><code>BinaryNode</code></td><td>轉換後 degree-two tree 節點</td></tr><tr><td><code>left</code></td><td>第一個孩子</td></tr><tr><td><code>right</code></td><td>下一個兄弟</td></tr><tr><td><code>prevSibling</code></td><td>目前已處理的前一個兄弟節點</td></tr></tbody></table>
+<h3>程式流程圖</h3><div class="svgbox"><svg style="max-width:900px;background:#fff;border:1px solid #dbe4f0;border-radius:12px" viewbox="0 0 860 498" width="100%"><defs><marker id="arrow" markerheight="10" markerwidth="10" orient="auto" refx="5" refy="3"><path d="M0,0 L0,6 L6,3 z" fill="#334155"></path></marker></defs><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="20"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="47">開始</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="62" y2="78"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="84"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="111">建立一般樹</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="126" y2="142"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="148"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="175">從 root 進入 convert</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="190" y2="206"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="212"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="239">第一個 child 掛到 left</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="254" y2="270"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="276"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="303">第二個以後 child 掛到前一個兄弟 right</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="318" y2="334"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="340"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="367">印出 left/right 關係</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="382" y2="398"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="404"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="431">結束</text></svg></div>
+</div></div></details><details class="card"><summary>Q2(a) MAX Heap：執行 Build Heap / MAX_Heapify 後陣列 <span class="tag">第 3 張截圖</span></summary><div class="content"><div class="bgknow"><h3>本題必備背景知識：Max Heap、Adjust 與 Heap Sort</h3>
+<p>Heap 是一棵「完全二元樹」，通常用 1-indexed array 表示：節點 <span class="mono">i</span> 的 left child 是 <span class="mono">2i</span>，right child 是 <span class="mono">2i+1</span>，parent 是 <span class="mono">⌊i/2⌋</span>。Max Heap 的性質是每個 parent 的 key 都大於或等於 children，因此最大值一定在 root，也就是 <span class="mono">a[1]</span>。</p>
+<p>Build Max Heap 時不是從 root 開始，而是從最後一個非葉節點 <span class="mono">⌊n/2⌋</span> 往前做到 1。Adjust 的概念是把 root 暫存為 <span class="mono">e</span>，每次從左右孩子中選較大的 child 往上拉，直到 <span class="mono">e</span> 可以放入正確位置。Heap Sort 則反覆把 root 最大值與 heap 尾端交換，再縮小 heap 範圍並重新 Adjust。</p>
+<p>考試最容易錯的是 index 0 是否使用、heap 範圍是否縮小、以及每一輪 sorted area 不可以再參與 Adjust。</p></div><img alt="Q2(a) MAX Heap：執行 Build Heap / MAX_Heapify 後陣列 第 3 張截圖" class="qimg" src="assets/q03_crop.jpg"/><div class="ans"><h3>完整答案</h3><p class="formula">Build Max Heap 後： [62,45,23,13,30,10,7]</p><table><tr><th>階段</th><th>動作</th><th>陣列 index 1..7</th></tr><tr><td>原始</td><td>尚未 heapify</td><td>10, 30, 7, 13, 45, 23, 62</td></tr><tr><td>i=3</td><td>節點 7 與較大孩子 62 交換</td><td>10, 30, 62, 13, 45, 23, 7</td></tr><tr><td>i=2</td><td>節點 30 與較大孩子 45 交換</td><td>10, 45, 62, 13, 30, 23, 7</td></tr><tr><td>i=1</td><td>節點 10 與 62 交換，再與 23 交換</td><td>62, 45, 23, 13, 30, 10, 7</td></tr></table></div><h3>為什麼從 n/2 開始？</h3><ul><li>容量 8、index 0 不用，實際元素 n=7。</li><li>完全二元樹中 index floor(n/2)+1 到 n 都是 leaf，不需要 Adjust。</li><li>所以從 i=floor(7/2)=3 開始，往 i=2、i=1 做 Adjust。</li><li>每次 Adjust 都讓以 i 為 root 的子樹滿足 max-heap：parent ≥ children。</li></ul><button class="copy" onclick="copyCode(this)">Copy Code</button><pre><code>// index 0 不用，a[1..n]
+for (int i = n/2; i &gt;= 1; --i) {
+    Adjust(a, i, n);   // 將 i 為根的子樹調成 max heap
+}
+// 結果：62 45 23 13 30 10 7</code></pre>
+<div class="program-section added-program-block">
+<h2>完整程式範例：Max Heap / Adjust / Build Heap / Heap Sort</h2>
+<p class="small">此區塊為新增補充，原本題目、解答、規格與版面內容未刪除。</p>
+<div class="box key"><b>線上 C++ 編輯器：</b>
+<a href="https://www.onlinegdb.com/online_c++_compiler" target="_blank">OnlineGDB</a> ｜
+    <a href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank">Programiz</a> ｜
+    <a href="https://cpp.sh/" target="_blank">cpp.sh</a>
+</div>
+<div class="code-wrap"><button class="copy-code" type="button">複製程式</button><pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+// 講義結構優先：使用 template &lt;class T&gt;、T *a、index 0 不放 heap 資料
+// Adjust 對應講義 Max Heap 的下濾動作
+// root：目前要調整的根；n：heap 最後一個位置
+template &lt;class T&gt;
+void Adjust(T* a, const int root, const int n) {
+    T e = a[root];
+    int j;
+    for (j = 2 * root; j &lt;= n; j *= 2) {
+        if (j &lt; n &amp;&amp; a[j] &lt; a[j + 1]) j++; // 選 key 較大的 child
+        if (e &gt;= a[j]) break;              // e 已經可放在目前 parent 位置
+        a[j / 2] = a[j];                   // child 往上移
+    }
+    a[j / 2] = e;
+}
+
+// HeapSort：先 Max-Heapify，再每次把最大值 a[1] 交換到最後
+template &lt;class T&gt;
+void HeapSort(T* a, const int n) {
+    for (int i = n / 2; i &gt;= 1; i--) Adjust(a, i, n);
+    cout &lt;&lt; &quot;MAX_Heapify 後: &quot;;
+    for (int i = 1; i &lt;= n; ++i) cout &lt;&lt; a[i] &lt;&lt; &#x27; &#x27;;
+    cout &lt;&lt; &quot;\n&quot;;
+
+    for (int i = n - 1; i &gt;= 1; i--) {
+        swap(a[1], a[i + 1]);
+        Adjust(a, 1, i);
+    }
+}
+
+int main() {
+    int a[9] = {0, 10, 30, 7, 13, 45, 23, 62, 0}; // a[0] empty, capacity 8
+    int n = 7;
+
+    cout &lt;&lt; &quot;原始陣列: &quot;;
+    for (int i = 1; i &lt;= n; ++i) cout &lt;&lt; a[i] &lt;&lt; &#x27; &#x27;;
+    cout &lt;&lt; &quot;\n&quot;;
+
+    // 若題目只問 lines 12-13，核心就是從 n/2 到 1 呼叫 Adjust(a,i,n)
+    for (int i = n / 2; i &gt;= 1; i--) Adjust(a, i, n);
+    cout &lt;&lt; &quot;執行 MAX_Heapify 後: &quot;;
+    for (int i = 1; i &lt;= n; ++i) cout &lt;&lt; a[i] &lt;&lt; &#x27; &#x27;;
+    cout &lt;&lt; &quot;\n&quot;;
+    return 0;
+}</code></pre></div>
+<h3>輸出結果</h3><pre>原始陣列: 10 30 7 13 45 23 62
+Build Heap 後: 62 45 23 13 30 10 7
+排序中: 45 30 23 13 7 10 62
+排序中: 30 13 23 10 7 45 62
+排序中: 23 13 7 10 30 45 62
+排序中: 13 10 7 23 30 45 62
+排序中: 10 7 13 23 30 45 62
+排序中: 7 10 13 23 30 45 62
+遞增排序結果: 7 10 13 23 30 45 62</pre>
+<h3>函式說明</h3><table><thead><tr><th>函式</th><th>用途</th></tr></thead><tbody><tr><td><code>adjust</code></td><td>把 root 的元素向下調整成 Max Heap</td></tr><tr><td><code>buildHeap</code></td><td>由 n/2 到 1 建立 Max Heap</td></tr><tr><td><code>heapSort</code></td><td>重複取出最大值完成排序</td></tr><tr><td><code>printHeap</code></td><td>印出目前陣列狀態</td></tr></tbody></table>
+<h3>變數 / 結構說明</h3><table><thead><tr><th>名稱</th><th>說明</th></tr></thead><tbody><tr><td><code>heap</code></td><td>以陣列表示的完全二元樹，index 0 不使用</td></tr><tr><td><code>n</code></td><td>heap 目前有效大小</td></tr><tr><td><code>root</code></td><td>要調整的子樹根節點位置</td></tr><tr><td><code>child</code></td><td>root 的孩子位置</td></tr><tr><td><code>e</code></td><td>暫存下沉元素</td></tr></tbody></table>
+<h3>程式流程圖</h3><div class="svgbox"><svg style="max-width:900px;background:#fff;border:1px solid #dbe4f0;border-radius:12px" viewbox="0 0 860 562" width="100%"><defs><marker id="arrow" markerheight="10" markerwidth="10" orient="auto" refx="5" refy="3"><path d="M0,0 L0,6 L6,3 z" fill="#334155"></path></marker></defs><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="20"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="47">開始</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="62" y2="78"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="84"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="111">讀入 heap 陣列</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="126" y2="142"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="148"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="175">從 n/2 到 1 執行 adjust</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="190" y2="206"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="212"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="239">最大值出現在 heap[1]</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="254" y2="270"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="276"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="303">交換 heap[1] 與最後一格</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="318" y2="334"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="340"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="367">縮小 heap 範圍再 adjust</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="382" y2="398"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="404"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="431">重複直到排序完成</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="446" y2="462"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="468"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="495">輸出結果</text></svg></div>
+</div></div></details><details class="card"><summary>Q2(b) Heap Sort 第一輪：最大值移到最後 <span class="tag">第 4 張截圖</span></summary><div class="content"><div class="bgknow"><h3>本題必備背景知識：Max Heap、Adjust 與 Heap Sort</h3>
+<p>Heap 是一棵「完全二元樹」，通常用 1-indexed array 表示：節點 <span class="mono">i</span> 的 left child 是 <span class="mono">2i</span>，right child 是 <span class="mono">2i+1</span>，parent 是 <span class="mono">⌊i/2⌋</span>。Max Heap 的性質是每個 parent 的 key 都大於或等於 children，因此最大值一定在 root，也就是 <span class="mono">a[1]</span>。</p>
+<p>Build Max Heap 時不是從 root 開始，而是從最後一個非葉節點 <span class="mono">⌊n/2⌋</span> 往前做到 1。Adjust 的概念是把 root 暫存為 <span class="mono">e</span>，每次從左右孩子中選較大的 child 往上拉，直到 <span class="mono">e</span> 可以放入正確位置。Heap Sort 則反覆把 root 最大值與 heap 尾端交換，再縮小 heap 範圍並重新 Adjust。</p>
+<p>考試最容易錯的是 index 0 是否使用、heap 範圍是否縮小、以及每一輪 sorted area 不可以再參與 Adjust。</p></div><img alt="Q2(b) Heap Sort 第一輪：最大值移到最後 第 4 張截圖" class="qimg" src="assets/q04_crop.jpg"/><div class="ans"><h3>完整答案</h3><p>由 max heap <b>[62,45,23,13,30,10,7]</b> 開始。</p><table><tr><th>步驟</th><th>陣列</th></tr><tr><td>交換 a[1] 與 a[7]</td><td>7,45,23,13,30,10,62</td></tr><tr><td>對 a[1..6] Adjust</td><td>45,30,23,13,7,10,62</td></tr></table><p class="formula">第一輪後： [45,30,23,13,7,10,62]</p></div><h3>重點</h3><ul><li>Heap sort 每一輪先把根，也就是目前最大值，交換到 heap 的最後一格。</li><li>最後一格進入 sorted area，不再參與 heapify。</li><li>剩下前 n-1 個元素重新做 Adjust，維持 max heap。</li><li>圖中往下箭頭代表 root 被移出 heap，尾端元素補到 root 後下沉。</li></ul>
+<div class="program-section added-program-block">
+<h2>完整程式範例：Max Heap / Adjust / Build Heap / Heap Sort</h2>
+<p class="small">此區塊為新增補充，原本題目、解答、規格與版面內容未刪除。</p>
+<div class="box key"><b>線上 C++ 編輯器：</b>
+<a href="https://www.onlinegdb.com/online_c++_compiler" target="_blank">OnlineGDB</a> ｜
+    <a href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank">Programiz</a> ｜
+    <a href="https://cpp.sh/" target="_blank">cpp.sh</a>
+</div>
+<div class="code-wrap"><button class="copy-code" type="button">複製程式</button><pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+// 講義結構優先：使用 template &lt;class T&gt;、T *a、index 0 不放 heap 資料
+// Adjust 對應講義 Max Heap 的下濾動作
+// root：目前要調整的根；n：heap 最後一個位置
+template &lt;class T&gt;
+void Adjust(T* a, const int root, const int n) {
+    T e = a[root];
+    int j;
+    for (j = 2 * root; j &lt;= n; j *= 2) {
+        if (j &lt; n &amp;&amp; a[j] &lt; a[j + 1]) j++; // 選 key 較大的 child
+        if (e &gt;= a[j]) break;              // e 已經可放在目前 parent 位置
+        a[j / 2] = a[j];                   // child 往上移
+    }
+    a[j / 2] = e;
+}
+
+// HeapSort：先 Max-Heapify，再每次把最大值 a[1] 交換到最後
+template &lt;class T&gt;
+void HeapSort(T* a, const int n) {
+    for (int i = n / 2; i &gt;= 1; i--) Adjust(a, i, n);
+    cout &lt;&lt; &quot;MAX_Heapify 後: &quot;;
+    for (int i = 1; i &lt;= n; ++i) cout &lt;&lt; a[i] &lt;&lt; &#x27; &#x27;;
+    cout &lt;&lt; &quot;\n&quot;;
+
+    for (int i = n - 1; i &gt;= 1; i--) {
+        swap(a[1], a[i + 1]);
+        Adjust(a, 1, i);
+    }
+}
+
+int main() {
+    int a[9] = {0, 10, 30, 7, 13, 45, 23, 62, 0}; // a[0] empty, capacity 8
+    int n = 7;
+
+    cout &lt;&lt; &quot;原始陣列: &quot;;
+    for (int i = 1; i &lt;= n; ++i) cout &lt;&lt; a[i] &lt;&lt; &#x27; &#x27;;
+    cout &lt;&lt; &quot;\n&quot;;
+
+    // 若題目只問 lines 12-13，核心就是從 n/2 到 1 呼叫 Adjust(a,i,n)
+    for (int i = n / 2; i &gt;= 1; i--) Adjust(a, i, n);
+    cout &lt;&lt; &quot;執行 MAX_Heapify 後: &quot;;
+    for (int i = 1; i &lt;= n; ++i) cout &lt;&lt; a[i] &lt;&lt; &#x27; &#x27;;
+    cout &lt;&lt; &quot;\n&quot;;
+    return 0;
+}</code></pre></div>
+<h3>輸出結果</h3><pre>原始陣列: 10 30 7 13 45 23 62
+Build Heap 後: 62 45 23 13 30 10 7
+排序中: 45 30 23 13 7 10 62
+排序中: 30 13 23 10 7 45 62
+排序中: 23 13 7 10 30 45 62
+排序中: 13 10 7 23 30 45 62
+排序中: 10 7 13 23 30 45 62
+排序中: 7 10 13 23 30 45 62
+遞增排序結果: 7 10 13 23 30 45 62</pre>
+<h3>函式說明</h3><table><thead><tr><th>函式</th><th>用途</th></tr></thead><tbody><tr><td><code>adjust</code></td><td>把 root 的元素向下調整成 Max Heap</td></tr><tr><td><code>buildHeap</code></td><td>由 n/2 到 1 建立 Max Heap</td></tr><tr><td><code>heapSort</code></td><td>重複取出最大值完成排序</td></tr><tr><td><code>printHeap</code></td><td>印出目前陣列狀態</td></tr></tbody></table>
+<h3>變數 / 結構說明</h3><table><thead><tr><th>名稱</th><th>說明</th></tr></thead><tbody><tr><td><code>heap</code></td><td>以陣列表示的完全二元樹，index 0 不使用</td></tr><tr><td><code>n</code></td><td>heap 目前有效大小</td></tr><tr><td><code>root</code></td><td>要調整的子樹根節點位置</td></tr><tr><td><code>child</code></td><td>root 的孩子位置</td></tr><tr><td><code>e</code></td><td>暫存下沉元素</td></tr></tbody></table>
+<h3>程式流程圖</h3><div class="svgbox"><svg style="max-width:900px;background:#fff;border:1px solid #dbe4f0;border-radius:12px" viewbox="0 0 860 562" width="100%"><defs><marker id="arrow" markerheight="10" markerwidth="10" orient="auto" refx="5" refy="3"><path d="M0,0 L0,6 L6,3 z" fill="#334155"></path></marker></defs><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="20"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="47">開始</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="62" y2="78"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="84"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="111">讀入 heap 陣列</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="126" y2="142"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="148"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="175">從 n/2 到 1 執行 adjust</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="190" y2="206"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="212"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="239">最大值出現在 heap[1]</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="254" y2="270"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="276"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="303">交換 heap[1] 與最後一格</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="318" y2="334"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="340"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="367">縮小 heap 範圍再 adjust</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="382" y2="398"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="404"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="431">重複直到排序完成</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="446" y2="462"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="468"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="495">輸出結果</text></svg></div>
+</div></div></details><details class="card"><summary>Q2(c) Heap Sort 完整排序結果 <span class="tag">第 5 張截圖</span></summary><div class="content"><div class="bgknow"><h3>本題必備背景知識：Max Heap、Adjust 與 Heap Sort</h3>
+<p>Heap 是一棵「完全二元樹」，通常用 1-indexed array 表示：節點 <span class="mono">i</span> 的 left child 是 <span class="mono">2i</span>，right child 是 <span class="mono">2i+1</span>，parent 是 <span class="mono">⌊i/2⌋</span>。Max Heap 的性質是每個 parent 的 key 都大於或等於 children，因此最大值一定在 root，也就是 <span class="mono">a[1]</span>。</p>
+<p>Build Max Heap 時不是從 root 開始，而是從最後一個非葉節點 <span class="mono">⌊n/2⌋</span> 往前做到 1。Adjust 的概念是把 root 暫存為 <span class="mono">e</span>，每次從左右孩子中選較大的 child 往上拉，直到 <span class="mono">e</span> 可以放入正確位置。Heap Sort 則反覆把 root 最大值與 heap 尾端交換，再縮小 heap 範圍並重新 Adjust。</p>
+<p>考試最容易錯的是 index 0 是否使用、heap 範圍是否縮小、以及每一輪 sorted area 不可以再參與 Adjust。</p></div><img alt="Q2(c) Heap Sort 完整排序結果 第 5 張截圖" class="qimg" src="assets/q05_crop.jpg"/><div class="ans"><h3>完整答案</h3><table><tr><th>輪次</th><th>heap 範圍</th><th>結果陣列</th></tr><tr><td>0</td><td>1..7</td><td>62,45,23,13,30,10,7</td></tr><tr><td>1</td><td>1..6</td><td>45,30,23,13,7,10,62</td></tr><tr><td>2</td><td>1..5</td><td>30,13,23,10,7,45,62</td></tr><tr><td>3</td><td>1..4</td><td>23,13,7,10,30,45,62</td></tr><tr><td>4</td><td>1..3</td><td>13,10,7,23,30,45,62</td></tr><tr><td>5</td><td>1..2</td><td>10,7,13,23,30,45,62</td></tr><tr><td>6</td><td>完成</td><td>7,10,13,23,30,45,62</td></tr></table><p class="formula">遞增排序結果： [7,10,13,23,30,45,62]</p></div><h3>時間複雜度</h3><ul><li>Build heap：Θ(n)。</li><li>每一輪刪除最大值並 Adjust：Θ(log n)，共 n-1 輪。</li><li>總時間：Θ(n log n)。</li><li>額外空間：in-place，Θ(1)。</li><li>Heap sort 通常不是 stable sort。</li></ul>
+<div class="program-section added-program-block">
+<h2>完整程式範例：Max Heap / Adjust / Build Heap / Heap Sort</h2>
+<p class="small">此區塊為新增補充，原本題目、解答、規格與版面內容未刪除。</p>
+<div class="box key"><b>線上 C++ 編輯器：</b>
+<a href="https://www.onlinegdb.com/online_c++_compiler" target="_blank">OnlineGDB</a> ｜
+    <a href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank">Programiz</a> ｜
+    <a href="https://cpp.sh/" target="_blank">cpp.sh</a>
+</div>
+<div class="code-wrap"><button class="copy-code" type="button">複製程式</button><pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+// 講義結構優先：使用 template &lt;class T&gt;、T *a、index 0 不放 heap 資料
+// Adjust 對應講義 Max Heap 的下濾動作
+// root：目前要調整的根；n：heap 最後一個位置
+template &lt;class T&gt;
+void Adjust(T* a, const int root, const int n) {
+    T e = a[root];
+    int j;
+    for (j = 2 * root; j &lt;= n; j *= 2) {
+        if (j &lt; n &amp;&amp; a[j] &lt; a[j + 1]) j++; // 選 key 較大的 child
+        if (e &gt;= a[j]) break;              // e 已經可放在目前 parent 位置
+        a[j / 2] = a[j];                   // child 往上移
+    }
+    a[j / 2] = e;
+}
+
+// HeapSort：先 Max-Heapify，再每次把最大值 a[1] 交換到最後
+template &lt;class T&gt;
+void HeapSort(T* a, const int n) {
+    for (int i = n / 2; i &gt;= 1; i--) Adjust(a, i, n);
+    cout &lt;&lt; &quot;MAX_Heapify 後: &quot;;
+    for (int i = 1; i &lt;= n; ++i) cout &lt;&lt; a[i] &lt;&lt; &#x27; &#x27;;
+    cout &lt;&lt; &quot;\n&quot;;
+
+    for (int i = n - 1; i &gt;= 1; i--) {
+        swap(a[1], a[i + 1]);
+        Adjust(a, 1, i);
+    }
+}
+
+int main() {
+    int a[9] = {0, 10, 30, 7, 13, 45, 23, 62, 0}; // a[0] empty, capacity 8
+    int n = 7;
+
+    cout &lt;&lt; &quot;原始陣列: &quot;;
+    for (int i = 1; i &lt;= n; ++i) cout &lt;&lt; a[i] &lt;&lt; &#x27; &#x27;;
+    cout &lt;&lt; &quot;\n&quot;;
+
+    // 若題目只問 lines 12-13，核心就是從 n/2 到 1 呼叫 Adjust(a,i,n)
+    for (int i = n / 2; i &gt;= 1; i--) Adjust(a, i, n);
+    cout &lt;&lt; &quot;執行 MAX_Heapify 後: &quot;;
+    for (int i = 1; i &lt;= n; ++i) cout &lt;&lt; a[i] &lt;&lt; &#x27; &#x27;;
+    cout &lt;&lt; &quot;\n&quot;;
+    return 0;
+}</code></pre></div>
+<h3>輸出結果</h3><pre>原始陣列: 10 30 7 13 45 23 62
+Build Heap 後: 62 45 23 13 30 10 7
+排序中: 45 30 23 13 7 10 62
+排序中: 30 13 23 10 7 45 62
+排序中: 23 13 7 10 30 45 62
+排序中: 13 10 7 23 30 45 62
+排序中: 10 7 13 23 30 45 62
+排序中: 7 10 13 23 30 45 62
+遞增排序結果: 7 10 13 23 30 45 62</pre>
+<h3>函式說明</h3><table><thead><tr><th>函式</th><th>用途</th></tr></thead><tbody><tr><td><code>adjust</code></td><td>把 root 的元素向下調整成 Max Heap</td></tr><tr><td><code>buildHeap</code></td><td>由 n/2 到 1 建立 Max Heap</td></tr><tr><td><code>heapSort</code></td><td>重複取出最大值完成排序</td></tr><tr><td><code>printHeap</code></td><td>印出目前陣列狀態</td></tr></tbody></table>
+<h3>變數 / 結構說明</h3><table><thead><tr><th>名稱</th><th>說明</th></tr></thead><tbody><tr><td><code>heap</code></td><td>以陣列表示的完全二元樹，index 0 不使用</td></tr><tr><td><code>n</code></td><td>heap 目前有效大小</td></tr><tr><td><code>root</code></td><td>要調整的子樹根節點位置</td></tr><tr><td><code>child</code></td><td>root 的孩子位置</td></tr><tr><td><code>e</code></td><td>暫存下沉元素</td></tr></tbody></table>
+<h3>程式流程圖</h3><div class="svgbox"><svg style="max-width:900px;background:#fff;border:1px solid #dbe4f0;border-radius:12px" viewbox="0 0 860 562" width="100%"><defs><marker id="arrow" markerheight="10" markerwidth="10" orient="auto" refx="5" refy="3"><path d="M0,0 L0,6 L6,3 z" fill="#334155"></path></marker></defs><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="20"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="47">開始</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="62" y2="78"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="84"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="111">讀入 heap 陣列</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="126" y2="142"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="148"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="175">從 n/2 到 1 執行 adjust</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="190" y2="206"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="212"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="239">最大值出現在 heap[1]</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="254" y2="270"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="276"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="303">交換 heap[1] 與最後一格</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="318" y2="334"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="340"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="367">縮小 heap 範圍再 adjust</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="382" y2="398"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="404"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="431">重複直到排序完成</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="446" y2="462"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="468"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="495">輸出結果</text></svg></div>
+</div></div></details><details class="card"><summary>Q3 Free / Available Space List：題目與操作觀念 <span class="tag">第 6 張截圖</span></summary><div class="content"><div class="bgknow"><h3>本題必備背景知識：Available Space List / Static Linked List</h3>
+<p>Available space list 是用陣列模擬動態記憶體配置的技術。每個陣列格子通常有 data 與 link 欄位；正在使用的節點由 first 串起來，未使用的節點由 avail 串起來。當需要新節點時，從 avail 的開頭取出；當刪除節點時，把該節點接回 avail 的開頭。</p>
+<p>配置節點的標準動作是 <span class="mono">p = avail; avail = link[p];</span>；釋放節點的標準動作是 <span class="mono">link[p] = avail; avail = p;</span>。這些操作都可以在 Θ(1) 完成，但前提是指標更新順序正確，否則會斷鏈或形成 cycle。</p>
+<p>作答時要同時畫出 first chain 與 avail chain，並用表格列出每個 index 的 link，才能完整檢查是否有節點重複使用。</p></div><img alt="Q3 Free / Available Space List：題目與操作觀念 第 6 張截圖" class="qimg" src="assets/q06_crop.jpg"/><div class="ans"><h3>完整解答架構</h3><p>這題考「靜態 linked list / available space list」。答案一定要同時交代：<b>data 欄、link 欄、first 指標、avail 指標</b>。</p><table><tr><th>操作</th><th>正確作法</th><th>會改到的欄位</th></tr><tr><td>Allocate / new node</td><td>p = avail; avail = link[avail];</td><td>avail 會往下一個空節點移動</td></tr><tr><td>Insert after x</td><td>data[p]=value; link[p]=link[x]; link[x]=p;</td><td>新節點 link 與前驅 x 的 link</td></tr><tr><td>Delete after x</td><td>p=link[x]; link[x]=link[p]; link[p]=avail; avail=p;</td><td>前驅 x 的 link、被刪節點 p 的 link、avail</td></tr></table></div><h3>考試寫法</h3><ul><li>不要只畫圖，最好再用表格列出每個 index 的 data/link。</li><li>每做一步先更新 avail，再接入主串列，否則容易形成 cycle。</li><li>刪除節點時，被刪節點不是消失，而是回收到 available list。</li><li>最後答案要畫 first → ... → 0 與 avail → ... → 0 兩條鏈。</li></ul><button class="copy" onclick="copyCode(this)">Copy Code</button><pre><code>int GetNode() {
+    if (avail == 0) throw "out of space";
+    int p = avail;
+    avail = link[avail];
+    return p;
+}
+void RetNode(int p) {
+    link[p] = avail;
+    avail = p;
+}</code></pre>
+<div class="program-section added-program-block">
+<h2>完整程式範例：Available Space List / Free List 節點配置與回收</h2>
+<p class="small">此區塊為新增補充，原本題目、解答、規格與版面內容未刪除。</p>
+<div class="box key"><b>線上 C++ 編輯器：</b>
+<a href="https://www.onlinegdb.com/online_c++_compiler" target="_blank">OnlineGDB</a> ｜
+    <a href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank">Programiz</a> ｜
+    <a href="https://cpp.sh/" target="_blank">cpp.sh</a>
+</div>
+<div class="code-wrap"><button class="copy-code" type="button">複製程式</button><pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;string&gt;
+using namespace std;
+
+// 講義結構優先：Available Space List 使用 static linked list
+// link[i] 串起所有可用節點；avail 指向第一個可用節點
+const int MAX_SIZE = 8;
+
+class Node {
+public:
+    string data;
+    int link;
+};
+
+class ChainWithAvail {
+private:
+    Node node[MAX_SIZE];
+    int first;   // chain 第一個節點 index，0 表示空
+    int avail;   // available list 第一個節點 index，0 表示沒有空間
+
+public:
+    ChainWithAvail() : first(0), avail(1) {
+        for (int i = 1; i &lt; MAX_SIZE - 1; ++i) node[i].link = i + 1;
+        node[MAX_SIZE - 1].link = 0;
+    }
+
+    int GetNode() {
+        if (avail == 0) throw &quot;No available space&quot;;
+        int x = avail;
+        avail = node[avail].link;
+        node[x].link = 0;
+        return x;
+    }
+
+    void RetNode(int x) {
+        node[x].link = avail;
+        avail = x;
+    }
+
+    void InsertFront(const string&amp; item) {
+        int x = GetNode();
+        node[x].data = item;
+        node[x].link = first;
+        first = x;
+    }
+
+    void DeleteFront() {
+        if (first == 0) return;
+        int x = first;
+        first = node[first].link;
+        RetNode(x);
+    }
+
+    void PrintChain() const {
+        cout &lt;&lt; &quot;chain: &quot;;
+        for (int p = first; p != 0; p = node[p].link) cout &lt;&lt; node[p].data &lt;&lt; &#x27; &#x27;;
+        cout &lt;&lt; &quot;\n&quot;;
+    }
+
+    void PrintAvail() const {
+        cout &lt;&lt; &quot;avail: &quot;;
+        for (int p = avail; p != 0; p = node[p].link) cout &lt;&lt; p &lt;&lt; &#x27; &#x27;;
+        cout &lt;&lt; &quot;\n&quot;;
+    }
+};
+
+int main() {
+    ChainWithAvail c;
+    c.InsertFront(&quot;HAT&quot;);
+    c.InsertFront(&quot;FAT&quot;);
+    c.InsertFront(&quot;EAT&quot;);
+    c.PrintChain();
+    c.PrintAvail();
+
+    c.DeleteFront();
+    c.PrintChain();
+    c.PrintAvail();
+    return 0;
+}</code></pre></div>
+<h3>輸出結果</h3><pre>avail list: 0 1 2 3 4
+配置節點: 0, 1
+avail list: 2 3 4
+回收節點 0 後
+avail list: 0 2 3 4</pre>
+<h3>函式說明</h3><table><thead><tr><th>函式</th><th>用途</th></tr></thead><tbody><tr><td><code>getNode</code></td><td>從 avail list 取出一個節點</td></tr><tr><td><code>freeNode</code></td><td>把節點接回 avail list 前端</td></tr><tr><td><code>printAvail</code></td><td>印出可用串列</td></tr><tr><td><code>main</code></td><td>示範配置與回收</td></tr></tbody></table>
+<h3>變數 / 結構說明</h3><table><thead><tr><th>名稱</th><th>說明</th></tr></thead><tbody><tr><td><code>pool</code></td><td>用陣列模擬記憶體池</td></tr><tr><td><code>avail</code></td><td>available list 的起點</td></tr><tr><td><code>link</code></td><td>下一個可用節點索引</td></tr><tr><td><code>p</code></td><td>目前配置或回收的節點索引</td></tr><tr><td><code>data</code></td><td>節點資料</td></tr></tbody></table>
+<h3>程式流程圖</h3><div class="svgbox"><svg style="max-width:900px;background:#fff;border:1px solid #dbe4f0;border-radius:12px" viewbox="0 0 860 562" width="100%"><defs><marker id="arrow" markerheight="10" markerwidth="10" orient="auto" refx="5" refy="3"><path d="M0,0 L0,6 L6,3 z" fill="#334155"></path></marker></defs><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="20"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="47">開始</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="62" y2="78"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="84"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="111">初始化所有節點到 avail list</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="126" y2="142"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="148"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="175">getNode 取出 avail 第一個節點</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="190" y2="206"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="212"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="239">avail 移到下一個節點</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="254" y2="270"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="276"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="303">使用完畢後 freeNode</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="318" y2="334"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="340"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="367">回收節點接回 avail 前端</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="382" y2="398"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="404"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="431">印出狀態</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="446" y2="462"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="468"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="495">結束</text></svg></div>
+</div></div></details><details class="card"><summary>Q3(a) Available list 配置後狀態 <span class="tag">第 7 張截圖</span></summary><div class="content"><div class="bgknow"><h3>本題必備背景知識：Available Space List / Static Linked List</h3>
+<p>Available space list 是用陣列模擬動態記憶體配置的技術。每個陣列格子通常有 data 與 link 欄位；正在使用的節點由 first 串起來，未使用的節點由 avail 串起來。當需要新節點時，從 avail 的開頭取出；當刪除節點時，把該節點接回 avail 的開頭。</p>
+<p>配置節點的標準動作是 <span class="mono">p = avail; avail = link[p];</span>；釋放節點的標準動作是 <span class="mono">link[p] = avail; avail = p;</span>。這些操作都可以在 Θ(1) 完成，但前提是指標更新順序正確，否則會斷鏈或形成 cycle。</p>
+<p>作答時要同時畫出 first chain 與 avail chain，並用表格列出每個 index 的 link，才能完整檢查是否有節點重複使用。</p></div><img alt="Q3(a) Available list 配置後狀態 第 7 張截圖" class="qimg" src="assets/q07_crop.jpg"/><div class="ans"><h3>完整答案寫法</h3><p>配置後應顯示新節點已從 avail 鏈移除，並接入主串列正確位置。</p><table><tr><th>檢查項目</th><th>必須成立</th></tr><tr><td>主串列</td><td>從 first 出發，沿 link 走到 0，資料順序符合題目要求</td></tr><tr><td>Available list</td><td>從 avail 出發，沿 link 走到 0，只包含未使用節點</td></tr><tr><td>節點不重複</td><td>同一個 index 不能同時出現在主串列與 avail list</td></tr><tr><td>指標方向</td><td>插入會新增指向原後繼的 link；刪除會把前驅 link 改成被刪節點的後繼</td></tr></table></div><div class="flow"><b>標準流程：</b>先列舊表 → 標出 first/avail → 做一行程式更新一個欄位 → 重畫兩條鏈 → 最後用表格驗算。</div>
+<div class="program-section added-program-block">
+<h2>完整程式範例：Available Space List / Free List 節點配置與回收</h2>
+<p class="small">此區塊為新增補充，原本題目、解答、規格與版面內容未刪除。</p>
+<div class="box key"><b>線上 C++ 編輯器：</b>
+<a href="https://www.onlinegdb.com/online_c++_compiler" target="_blank">OnlineGDB</a> ｜
+    <a href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank">Programiz</a> ｜
+    <a href="https://cpp.sh/" target="_blank">cpp.sh</a>
+</div>
+<div class="code-wrap"><button class="copy-code" type="button">複製程式</button><pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;string&gt;
+using namespace std;
+
+// 講義結構優先：Available Space List 使用 static linked list
+// link[i] 串起所有可用節點；avail 指向第一個可用節點
+const int MAX_SIZE = 8;
+
+class Node {
+public:
+    string data;
+    int link;
+};
+
+class ChainWithAvail {
+private:
+    Node node[MAX_SIZE];
+    int first;   // chain 第一個節點 index，0 表示空
+    int avail;   // available list 第一個節點 index，0 表示沒有空間
+
+public:
+    ChainWithAvail() : first(0), avail(1) {
+        for (int i = 1; i &lt; MAX_SIZE - 1; ++i) node[i].link = i + 1;
+        node[MAX_SIZE - 1].link = 0;
+    }
+
+    int GetNode() {
+        if (avail == 0) throw &quot;No available space&quot;;
+        int x = avail;
+        avail = node[avail].link;
+        node[x].link = 0;
+        return x;
+    }
+
+    void RetNode(int x) {
+        node[x].link = avail;
+        avail = x;
+    }
+
+    void InsertFront(const string&amp; item) {
+        int x = GetNode();
+        node[x].data = item;
+        node[x].link = first;
+        first = x;
+    }
+
+    void DeleteFront() {
+        if (first == 0) return;
+        int x = first;
+        first = node[first].link;
+        RetNode(x);
+    }
+
+    void PrintChain() const {
+        cout &lt;&lt; &quot;chain: &quot;;
+        for (int p = first; p != 0; p = node[p].link) cout &lt;&lt; node[p].data &lt;&lt; &#x27; &#x27;;
+        cout &lt;&lt; &quot;\n&quot;;
+    }
+
+    void PrintAvail() const {
+        cout &lt;&lt; &quot;avail: &quot;;
+        for (int p = avail; p != 0; p = node[p].link) cout &lt;&lt; p &lt;&lt; &#x27; &#x27;;
+        cout &lt;&lt; &quot;\n&quot;;
+    }
+};
+
+int main() {
+    ChainWithAvail c;
+    c.InsertFront(&quot;HAT&quot;);
+    c.InsertFront(&quot;FAT&quot;);
+    c.InsertFront(&quot;EAT&quot;);
+    c.PrintChain();
+    c.PrintAvail();
+
+    c.DeleteFront();
+    c.PrintChain();
+    c.PrintAvail();
+    return 0;
+}</code></pre></div>
+<h3>輸出結果</h3><pre>avail list: 0 1 2 3 4
+配置節點: 0, 1
+avail list: 2 3 4
+回收節點 0 後
+avail list: 0 2 3 4</pre>
+<h3>函式說明</h3><table><thead><tr><th>函式</th><th>用途</th></tr></thead><tbody><tr><td><code>getNode</code></td><td>從 avail list 取出一個節點</td></tr><tr><td><code>freeNode</code></td><td>把節點接回 avail list 前端</td></tr><tr><td><code>printAvail</code></td><td>印出可用串列</td></tr><tr><td><code>main</code></td><td>示範配置與回收</td></tr></tbody></table>
+<h3>變數 / 結構說明</h3><table><thead><tr><th>名稱</th><th>說明</th></tr></thead><tbody><tr><td><code>pool</code></td><td>用陣列模擬記憶體池</td></tr><tr><td><code>avail</code></td><td>available list 的起點</td></tr><tr><td><code>link</code></td><td>下一個可用節點索引</td></tr><tr><td><code>p</code></td><td>目前配置或回收的節點索引</td></tr><tr><td><code>data</code></td><td>節點資料</td></tr></tbody></table>
+<h3>程式流程圖</h3><div class="svgbox"><svg style="max-width:900px;background:#fff;border:1px solid #dbe4f0;border-radius:12px" viewbox="0 0 860 562" width="100%"><defs><marker id="arrow" markerheight="10" markerwidth="10" orient="auto" refx="5" refy="3"><path d="M0,0 L0,6 L6,3 z" fill="#334155"></path></marker></defs><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="20"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="47">開始</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="62" y2="78"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="84"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="111">初始化所有節點到 avail list</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="126" y2="142"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="148"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="175">getNode 取出 avail 第一個節點</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="190" y2="206"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="212"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="239">avail 移到下一個節點</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="254" y2="270"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="276"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="303">使用完畢後 freeNode</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="318" y2="334"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="340"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="367">回收節點接回 avail 前端</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="382" y2="398"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="404"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="431">印出狀態</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="446" y2="462"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="468"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="495">結束</text></svg></div>
+</div></div></details><details class="card"><summary>Q3(b) Available list 釋放 / 刪除後狀態 <span class="tag">第 8 張截圖</span></summary><div class="content"><div class="bgknow"><h3>本題必備背景知識：Available Space List / Static Linked List</h3>
+<p>Available space list 是用陣列模擬動態記憶體配置的技術。每個陣列格子通常有 data 與 link 欄位；正在使用的節點由 first 串起來，未使用的節點由 avail 串起來。當需要新節點時，從 avail 的開頭取出；當刪除節點時，把該節點接回 avail 的開頭。</p>
+<p>配置節點的標準動作是 <span class="mono">p = avail; avail = link[p];</span>；釋放節點的標準動作是 <span class="mono">link[p] = avail; avail = p;</span>。這些操作都可以在 Θ(1) 完成，但前提是指標更新順序正確，否則會斷鏈或形成 cycle。</p>
+<p>作答時要同時畫出 first chain 與 avail chain，並用表格列出每個 index 的 link，才能完整檢查是否有節點重複使用。</p></div><img alt="Q3(b) Available list 釋放 / 刪除後狀態 第 8 張截圖" class="qimg" src="assets/q08_crop.jpg"/><div class="ans"><h3>完整答案寫法</h3><p>刪除時先讓主串列前驅跳過該節點，再將該節點接到 avail 的前端。</p><table><tr><th>檢查項目</th><th>必須成立</th></tr><tr><td>主串列</td><td>從 first 出發，沿 link 走到 0，資料順序符合題目要求</td></tr><tr><td>Available list</td><td>從 avail 出發，沿 link 走到 0，只包含未使用節點</td></tr><tr><td>節點不重複</td><td>同一個 index 不能同時出現在主串列與 avail list</td></tr><tr><td>指標方向</td><td>插入會新增指向原後繼的 link；刪除會把前驅 link 改成被刪節點的後繼</td></tr></table></div><div class="flow"><b>標準流程：</b>先列舊表 → 標出 first/avail → 做一行程式更新一個欄位 → 重畫兩條鏈 → 最後用表格驗算。</div>
+<div class="program-section added-program-block">
+<h2>完整程式範例：Available Space List / Free List 節點配置與回收</h2>
+<p class="small">此區塊為新增補充，原本題目、解答、規格與版面內容未刪除。</p>
+<div class="box key"><b>線上 C++ 編輯器：</b>
+<a href="https://www.onlinegdb.com/online_c++_compiler" target="_blank">OnlineGDB</a> ｜
+    <a href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank">Programiz</a> ｜
+    <a href="https://cpp.sh/" target="_blank">cpp.sh</a>
+</div>
+<div class="code-wrap"><button class="copy-code" type="button">複製程式</button><pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;string&gt;
+using namespace std;
+
+// 講義結構優先：Available Space List 使用 static linked list
+// link[i] 串起所有可用節點；avail 指向第一個可用節點
+const int MAX_SIZE = 8;
+
+class Node {
+public:
+    string data;
+    int link;
+};
+
+class ChainWithAvail {
+private:
+    Node node[MAX_SIZE];
+    int first;   // chain 第一個節點 index，0 表示空
+    int avail;   // available list 第一個節點 index，0 表示沒有空間
+
+public:
+    ChainWithAvail() : first(0), avail(1) {
+        for (int i = 1; i &lt; MAX_SIZE - 1; ++i) node[i].link = i + 1;
+        node[MAX_SIZE - 1].link = 0;
+    }
+
+    int GetNode() {
+        if (avail == 0) throw &quot;No available space&quot;;
+        int x = avail;
+        avail = node[avail].link;
+        node[x].link = 0;
+        return x;
+    }
+
+    void RetNode(int x) {
+        node[x].link = avail;
+        avail = x;
+    }
+
+    void InsertFront(const string&amp; item) {
+        int x = GetNode();
+        node[x].data = item;
+        node[x].link = first;
+        first = x;
+    }
+
+    void DeleteFront() {
+        if (first == 0) return;
+        int x = first;
+        first = node[first].link;
+        RetNode(x);
+    }
+
+    void PrintChain() const {
+        cout &lt;&lt; &quot;chain: &quot;;
+        for (int p = first; p != 0; p = node[p].link) cout &lt;&lt; node[p].data &lt;&lt; &#x27; &#x27;;
+        cout &lt;&lt; &quot;\n&quot;;
+    }
+
+    void PrintAvail() const {
+        cout &lt;&lt; &quot;avail: &quot;;
+        for (int p = avail; p != 0; p = node[p].link) cout &lt;&lt; p &lt;&lt; &#x27; &#x27;;
+        cout &lt;&lt; &quot;\n&quot;;
+    }
+};
+
+int main() {
+    ChainWithAvail c;
+    c.InsertFront(&quot;HAT&quot;);
+    c.InsertFront(&quot;FAT&quot;);
+    c.InsertFront(&quot;EAT&quot;);
+    c.PrintChain();
+    c.PrintAvail();
+
+    c.DeleteFront();
+    c.PrintChain();
+    c.PrintAvail();
+    return 0;
+}</code></pre></div>
+<h3>輸出結果</h3><pre>avail list: 0 1 2 3 4
+配置節點: 0, 1
+avail list: 2 3 4
+回收節點 0 後
+avail list: 0 2 3 4</pre>
+<h3>函式說明</h3><table><thead><tr><th>函式</th><th>用途</th></tr></thead><tbody><tr><td><code>getNode</code></td><td>從 avail list 取出一個節點</td></tr><tr><td><code>freeNode</code></td><td>把節點接回 avail list 前端</td></tr><tr><td><code>printAvail</code></td><td>印出可用串列</td></tr><tr><td><code>main</code></td><td>示範配置與回收</td></tr></tbody></table>
+<h3>變數 / 結構說明</h3><table><thead><tr><th>名稱</th><th>說明</th></tr></thead><tbody><tr><td><code>pool</code></td><td>用陣列模擬記憶體池</td></tr><tr><td><code>avail</code></td><td>available list 的起點</td></tr><tr><td><code>link</code></td><td>下一個可用節點索引</td></tr><tr><td><code>p</code></td><td>目前配置或回收的節點索引</td></tr><tr><td><code>data</code></td><td>節點資料</td></tr></tbody></table>
+<h3>程式流程圖</h3><div class="svgbox"><svg style="max-width:900px;background:#fff;border:1px solid #dbe4f0;border-radius:12px" viewbox="0 0 860 562" width="100%"><defs><marker id="arrow" markerheight="10" markerwidth="10" orient="auto" refx="5" refy="3"><path d="M0,0 L0,6 L6,3 z" fill="#334155"></path></marker></defs><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="20"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="47">開始</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="62" y2="78"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="84"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="111">初始化所有節點到 avail list</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="126" y2="142"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="148"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="175">getNode 取出 avail 第一個節點</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="190" y2="206"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="212"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="239">avail 移到下一個節點</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="254" y2="270"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="276"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="303">使用完畢後 freeNode</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="318" y2="334"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="340"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="367">回收節點接回 avail 前端</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="382" y2="398"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="404"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="431">印出狀態</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="446" y2="462"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="468"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="495">結束</text></svg></div>
+</div></div></details><details class="card"><summary>Q3(c) 指標追蹤與最後 linked structure <span class="tag">第 9 張截圖</span></summary><div class="content"><div class="bgknow"><h3>本題必備背景知識</h3><p>作答前請先確認題目中的資料結構定義、指標或陣列索引方式，以及題目要求的是圖形、陣列狀態、程式填空還是時間複雜度。資料結構考題通常不是只要最後答案，還要能說明每一步為什麼這樣更新。</p></div><img alt="Q3(c) 指標追蹤與最後 linked structure 第 9 張截圖" class="qimg" src="assets/q09_crop.jpg"/><div class="ans"><h3>完整答案寫法</h3><p>題目若要求畫圖，建議同時標 first、avail、每個 link arrow。</p><table><tr><th>檢查項目</th><th>必須成立</th></tr><tr><td>主串列</td><td>從 first 出發，沿 link 走到 0，資料順序符合題目要求</td></tr><tr><td>Available list</td><td>從 avail 出發，沿 link 走到 0，只包含未使用節點</td></tr><tr><td>節點不重複</td><td>同一個 index 不能同時出現在主串列與 avail list</td></tr><tr><td>指標方向</td><td>插入會新增指向原後繼的 link；刪除會把前驅 link 改成被刪節點的後繼</td></tr></table></div><div class="flow"><b>標準流程：</b>先列舊表 → 標出 first/avail → 做一行程式更新一個欄位 → 重畫兩條鏈 → 最後用表格驗算。</div>
+<div class="program-section added-program-block">
+<h2>完整程式範例：樹 / 森林表示法、Postorder、Level-order、Degree-two Tree</h2>
+<p class="small">此區塊為新增補充，原本題目、解答、規格與版面內容未刪除。</p>
+<div class="box key"><b>線上 C++ 編輯器：</b>
+<a href="https://www.onlinegdb.com/online_c++_compiler" target="_blank">OnlineGDB</a> ｜
+    <a href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank">Programiz</a> ｜
+    <a href="https://cpp.sh/" target="_blank">cpp.sh</a>
+</div>
+<div class="code-wrap"><button class="copy-code" type="button">複製程式</button><pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;queue&gt;
+using namespace std;
+
+// 講義結構優先：一般樹 / 森林採用 left-child right-sibling 表示法
+// leftChild  指向第一個孩子
+// rightSibling 指向下一個兄弟
+class TreeNode {
+public:
+    int data;                 // 節點資料
+    TreeNode* leftChild;      // 第一個孩子，對應 degree-two tree 的 left link
+    TreeNode* rightSibling;   // 下一個兄弟，對應 degree-two tree 的 right link
+
+    TreeNode(int x) : data(x), leftChild(0), rightSibling(0) {}
+};
+
+// AddChild：把 child 接到 parent 的孩子串列最後面，保持原本兄弟順序
+void AddChild(TreeNode* parent, TreeNode* child) {
+    if (!parent || !child) return;
+    if (parent-&gt;leftChild == 0) {
+        parent-&gt;leftChild = child;
+        return;
+    }
+    TreeNode* p = parent-&gt;leftChild;
+    while (p-&gt;rightSibling != 0) p = p-&gt;rightSibling;
+    p-&gt;rightSibling = child;
+}
+
+// 講義 list 表示法：root(child1, child2, ...)
+void PrintList(TreeNode* root) {
+    if (root == 0) return;
+    cout &lt;&lt; root-&gt;data;
+    if (root-&gt;leftChild != 0) {
+        cout &lt;&lt; &quot;(&quot;;
+        for (TreeNode* c = root-&gt;leftChild; c != 0; c = c-&gt;rightSibling) {
+            PrintList(c);
+            if (c-&gt;rightSibling != 0) cout &lt;&lt; &quot;,&quot;;
+        }
+        cout &lt;&lt; &quot;)&quot;;
+    }
+}
+
+// Postorder：先走完所有 child subtree，再印自己
+void Postorder(TreeNode* root) {
+    if (root == 0) return;
+    for (TreeNode* c = root-&gt;leftChild; c != 0; c = c-&gt;rightSibling) Postorder(c);
+    cout &lt;&lt; root-&gt;data &lt;&lt; &#x27; &#x27;;
+}
+
+// Levelorder：仍使用 queue，但節點關係採講義 leftChild / rightSibling
+void Levelorder(TreeNode* root) {
+    if (root == 0) return;
+    queue&lt;TreeNode*&gt; q;
+    q.push(root);
+    while (!q.empty()) {
+        TreeNode* x = q.front(); q.pop();
+        cout &lt;&lt; x-&gt;data &lt;&lt; &#x27; &#x27;;
+        for (TreeNode* c = x-&gt;leftChild; c != 0; c = c-&gt;rightSibling) q.push(c);
+    }
+}
+
+int main() {
+    // 建立 T1：1 的 children 為 2, 3, 4；4 的 child 為 5
+    TreeNode* root = new TreeNode(1);
+    TreeNode* n2 = new TreeNode(2);
+    TreeNode* n3 = new TreeNode(3);
+    TreeNode* n4 = new TreeNode(4);
+    TreeNode* n5 = new TreeNode(5);
+
+    AddChild(root, n2);
+    AddChild(root, n3);
+    AddChild(root, n4);
+    AddChild(n4, n5);
+
+    cout &lt;&lt; &quot;List 表示法: &quot;;
+    PrintList(root);
+    cout &lt;&lt; &quot;\nPostorder: &quot;;
+    Postorder(root);
+    cout &lt;&lt; &quot;\nLevelorder: &quot;;
+    Levelorder(root);
+    cout &lt;&lt; &quot;\nDegree-two tree 結構: leftChild = 第一個孩子, rightSibling = 下一個兄弟\n&quot;;
+    return 0;
+}</code></pre></div>
+<h3>輸出結果</h3><pre>List 表示法: 1(2,3,4(5))
+Postorder: 2 3 5 4 1
+Level-order: 1 2 3 4 5</pre>
+<h3>函式說明</h3><table><thead><tr><th>函式</th><th>用途</th></tr></thead><tbody><tr><td><code>postorder</code></td><td>遞迴做後序走訪：子樹先、根最後</td></tr><tr><td><code>levelorder</code></td><td>使用 queue 做階層走訪</td></tr><tr><td><code>printList</code></td><td>輸出廣義表 / parenthesization 表示法</td></tr><tr><td><code>main</code></td><td>建立範例樹並印出答案</td></tr></tbody></table>
+<h3>變數 / 結構說明</h3><table><thead><tr><th>名稱</th><th>說明</th></tr></thead><tbody><tr><td><code>Node</code></td><td>一般樹節點，包含 data 與 children</td></tr><tr><td><code>data</code></td><td>節點編號或資料值</td></tr><tr><td><code>children</code></td><td>目前節點的所有孩子指標</td></tr><tr><td><code>q</code></td><td>Level-order 用的佇列</td></tr><tr><td><code>cur</code></td><td>目前從佇列取出的節點</td></tr></tbody></table>
+<h3>程式流程圖</h3><div class="svgbox"><svg style="max-width:900px;background:#fff;border:1px solid #dbe4f0;border-radius:12px" viewbox="0 0 860 434" width="100%"><defs><marker id="arrow" markerheight="10" markerwidth="10" orient="auto" refx="5" refy="3"><path d="M0,0 L0,6 L6,3 z" fill="#334155"></path></marker></defs><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="20"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="47">開始</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="62" y2="78"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="84"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="111">建立節點與 children 關係</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="126" y2="142"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="148"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="175">呼叫 printList 輸出廣義表</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="190" y2="206"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="212"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="239">呼叫 postorder 先子後根</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="254" y2="270"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="276"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="303">呼叫 levelorder 使用 queue</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="318" y2="334"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="340"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="367">輸出結果並結束</text></svg></div>
+</div></div></details><details class="card"><summary>Q3(d) 最終整理與檢查 <span class="tag">第 10 張截圖</span></summary><div class="content"><div class="bgknow"><h3>本題必備背景知識</h3><p>作答前請先確認題目中的資料結構定義、指標或陣列索引方式，以及題目要求的是圖形、陣列狀態、程式填空還是時間複雜度。資料結構考題通常不是只要最後答案，還要能說明每一步為什麼這樣更新。</p></div><img alt="Q3(d) 最終整理與檢查 第 10 張截圖" class="qimg" src="assets/q10_crop.jpg"/><div class="ans"><h3>完整答案寫法</h3><p>最後檢查主串列不應包含 available 節點，available list 也不應包含主串列節點。</p><table><tr><th>檢查項目</th><th>必須成立</th></tr><tr><td>主串列</td><td>從 first 出發，沿 link 走到 0，資料順序符合題目要求</td></tr><tr><td>Available list</td><td>從 avail 出發，沿 link 走到 0，只包含未使用節點</td></tr><tr><td>節點不重複</td><td>同一個 index 不能同時出現在主串列與 avail list</td></tr><tr><td>指標方向</td><td>插入會新增指向原後繼的 link；刪除會把前驅 link 改成被刪節點的後繼</td></tr></table></div><div class="flow"><b>標準流程：</b>先列舊表 → 標出 first/avail → 做一行程式更新一個欄位 → 重畫兩條鏈 → 最後用表格驗算。</div>
+<div class="program-section added-program-block">
+<h2>完整程式範例：樹 / 森林表示法、Postorder、Level-order、Degree-two Tree</h2>
+<p class="small">此區塊為新增補充，原本題目、解答、規格與版面內容未刪除。</p>
+<div class="box key"><b>線上 C++ 編輯器：</b>
+<a href="https://www.onlinegdb.com/online_c++_compiler" target="_blank">OnlineGDB</a> ｜
+    <a href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank">Programiz</a> ｜
+    <a href="https://cpp.sh/" target="_blank">cpp.sh</a>
+</div>
+<div class="code-wrap"><button class="copy-code" type="button">複製程式</button><pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;queue&gt;
+using namespace std;
+
+// 講義結構優先：一般樹 / 森林採用 left-child right-sibling 表示法
+// leftChild  指向第一個孩子
+// rightSibling 指向下一個兄弟
+class TreeNode {
+public:
+    int data;                 // 節點資料
+    TreeNode* leftChild;      // 第一個孩子，對應 degree-two tree 的 left link
+    TreeNode* rightSibling;   // 下一個兄弟，對應 degree-two tree 的 right link
+
+    TreeNode(int x) : data(x), leftChild(0), rightSibling(0) {}
+};
+
+// AddChild：把 child 接到 parent 的孩子串列最後面，保持原本兄弟順序
+void AddChild(TreeNode* parent, TreeNode* child) {
+    if (!parent || !child) return;
+    if (parent-&gt;leftChild == 0) {
+        parent-&gt;leftChild = child;
+        return;
+    }
+    TreeNode* p = parent-&gt;leftChild;
+    while (p-&gt;rightSibling != 0) p = p-&gt;rightSibling;
+    p-&gt;rightSibling = child;
+}
+
+// 講義 list 表示法：root(child1, child2, ...)
+void PrintList(TreeNode* root) {
+    if (root == 0) return;
+    cout &lt;&lt; root-&gt;data;
+    if (root-&gt;leftChild != 0) {
+        cout &lt;&lt; &quot;(&quot;;
+        for (TreeNode* c = root-&gt;leftChild; c != 0; c = c-&gt;rightSibling) {
+            PrintList(c);
+            if (c-&gt;rightSibling != 0) cout &lt;&lt; &quot;,&quot;;
+        }
+        cout &lt;&lt; &quot;)&quot;;
+    }
+}
+
+// Postorder：先走完所有 child subtree，再印自己
+void Postorder(TreeNode* root) {
+    if (root == 0) return;
+    for (TreeNode* c = root-&gt;leftChild; c != 0; c = c-&gt;rightSibling) Postorder(c);
+    cout &lt;&lt; root-&gt;data &lt;&lt; &#x27; &#x27;;
+}
+
+// Levelorder：仍使用 queue，但節點關係採講義 leftChild / rightSibling
+void Levelorder(TreeNode* root) {
+    if (root == 0) return;
+    queue&lt;TreeNode*&gt; q;
+    q.push(root);
+    while (!q.empty()) {
+        TreeNode* x = q.front(); q.pop();
+        cout &lt;&lt; x-&gt;data &lt;&lt; &#x27; &#x27;;
+        for (TreeNode* c = x-&gt;leftChild; c != 0; c = c-&gt;rightSibling) q.push(c);
+    }
+}
+
+int main() {
+    // 建立 T1：1 的 children 為 2, 3, 4；4 的 child 為 5
+    TreeNode* root = new TreeNode(1);
+    TreeNode* n2 = new TreeNode(2);
+    TreeNode* n3 = new TreeNode(3);
+    TreeNode* n4 = new TreeNode(4);
+    TreeNode* n5 = new TreeNode(5);
+
+    AddChild(root, n2);
+    AddChild(root, n3);
+    AddChild(root, n4);
+    AddChild(n4, n5);
+
+    cout &lt;&lt; &quot;List 表示法: &quot;;
+    PrintList(root);
+    cout &lt;&lt; &quot;\nPostorder: &quot;;
+    Postorder(root);
+    cout &lt;&lt; &quot;\nLevelorder: &quot;;
+    Levelorder(root);
+    cout &lt;&lt; &quot;\nDegree-two tree 結構: leftChild = 第一個孩子, rightSibling = 下一個兄弟\n&quot;;
+    return 0;
+}</code></pre></div>
+<h3>輸出結果</h3><pre>List 表示法: 1(2,3,4(5))
+Postorder: 2 3 5 4 1
+Level-order: 1 2 3 4 5</pre>
+<h3>函式說明</h3><table><thead><tr><th>函式</th><th>用途</th></tr></thead><tbody><tr><td><code>postorder</code></td><td>遞迴做後序走訪：子樹先、根最後</td></tr><tr><td><code>levelorder</code></td><td>使用 queue 做階層走訪</td></tr><tr><td><code>printList</code></td><td>輸出廣義表 / parenthesization 表示法</td></tr><tr><td><code>main</code></td><td>建立範例樹並印出答案</td></tr></tbody></table>
+<h3>變數 / 結構說明</h3><table><thead><tr><th>名稱</th><th>說明</th></tr></thead><tbody><tr><td><code>Node</code></td><td>一般樹節點，包含 data 與 children</td></tr><tr><td><code>data</code></td><td>節點編號或資料值</td></tr><tr><td><code>children</code></td><td>目前節點的所有孩子指標</td></tr><tr><td><code>q</code></td><td>Level-order 用的佇列</td></tr><tr><td><code>cur</code></td><td>目前從佇列取出的節點</td></tr></tbody></table>
+<h3>程式流程圖</h3><div class="svgbox"><svg style="max-width:900px;background:#fff;border:1px solid #dbe4f0;border-radius:12px" viewbox="0 0 860 434" width="100%"><defs><marker id="arrow" markerheight="10" markerwidth="10" orient="auto" refx="5" refy="3"><path d="M0,0 L0,6 L6,3 z" fill="#334155"></path></marker></defs><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="20"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="47">開始</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="62" y2="78"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="84"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="111">建立節點與 children 關係</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="126" y2="142"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="148"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="175">呼叫 printList 輸出廣義表</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="190" y2="206"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="212"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="239">呼叫 postorder 先子後根</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="254" y2="270"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="276"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="303">呼叫 levelorder 使用 queue</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="318" y2="334"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="340"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="367">輸出結果並結束</text></svg></div>
+</div></div></details><details class="card"><summary>Q4 Forest 題：List / Parenthesization <span class="tag">第 11 張截圖</span></summary><div class="content"><div class="bgknow"><h3>本題必備背景知識</h3><p>作答前請先確認題目中的資料結構定義、指標或陣列索引方式，以及題目要求的是圖形、陣列狀態、程式填空還是時間複雜度。資料結構考題通常不是只要最後答案，還要能說明每一步為什麼這樣更新。</p></div><img alt="Q4 Forest 題：List / Parenthesization 第 11 張截圖" class="qimg" src="assets/q11_crop.jpg"/><div class="ans"><h3>完整答案</h3><p>若題目仍是同一組森林 T1、T2、T3，答案如下：</p><table><tr><th>項目</th><th>答案</th></tr><tr><td>T1 list</td><td>1(2,3,4(5))</td></tr><tr><td>T1 post-order</td><td>2 → 3 → 5 → 4 → 1</td></tr><tr><td>T1 level-order</td><td>1 → 2 → 3 → 4 → 5</td></tr><tr><td>Forest roots</td><td>1 → 9 → 7</td></tr><tr><td>Degree-two tree</td><td>1.left=2, 1.right=9, 2.right=3, 3.right=4, 4.left=5, 9.left=10, 10.right=6, 9.right=7, 7.left=8</td></tr></table></div><h3>補充說明</h3><ul><li>Forest 與 binary tree 的轉換是期末常考題，務必記住 left-child right-sibling。</li><li>原樹 traversal 與轉換後二元樹 traversal 不一定相同，作答時要看題目問哪一個。</li><li>畫 degree-two tree 時，左斜線代表 child，右斜線代表 sibling。</li></ul>
+<div class="program-section added-program-block">
+<h2>完整程式範例：樹 / 森林表示法、Postorder、Level-order、Degree-two Tree</h2>
+<p class="small">此區塊為新增補充，原本題目、解答、規格與版面內容未刪除。</p>
+<div class="box key"><b>線上 C++ 編輯器：</b>
+<a href="https://www.onlinegdb.com/online_c++_compiler" target="_blank">OnlineGDB</a> ｜
+    <a href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank">Programiz</a> ｜
+    <a href="https://cpp.sh/" target="_blank">cpp.sh</a>
+</div>
+<div class="code-wrap"><button class="copy-code" type="button">複製程式</button><pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;queue&gt;
+using namespace std;
+
+// 講義結構優先：一般樹 / 森林採用 left-child right-sibling 表示法
+// leftChild  指向第一個孩子
+// rightSibling 指向下一個兄弟
+class TreeNode {
+public:
+    int data;                 // 節點資料
+    TreeNode* leftChild;      // 第一個孩子，對應 degree-two tree 的 left link
+    TreeNode* rightSibling;   // 下一個兄弟，對應 degree-two tree 的 right link
+
+    TreeNode(int x) : data(x), leftChild(0), rightSibling(0) {}
+};
+
+// AddChild：把 child 接到 parent 的孩子串列最後面，保持原本兄弟順序
+void AddChild(TreeNode* parent, TreeNode* child) {
+    if (!parent || !child) return;
+    if (parent-&gt;leftChild == 0) {
+        parent-&gt;leftChild = child;
+        return;
+    }
+    TreeNode* p = parent-&gt;leftChild;
+    while (p-&gt;rightSibling != 0) p = p-&gt;rightSibling;
+    p-&gt;rightSibling = child;
+}
+
+// 講義 list 表示法：root(child1, child2, ...)
+void PrintList(TreeNode* root) {
+    if (root == 0) return;
+    cout &lt;&lt; root-&gt;data;
+    if (root-&gt;leftChild != 0) {
+        cout &lt;&lt; &quot;(&quot;;
+        for (TreeNode* c = root-&gt;leftChild; c != 0; c = c-&gt;rightSibling) {
+            PrintList(c);
+            if (c-&gt;rightSibling != 0) cout &lt;&lt; &quot;,&quot;;
+        }
+        cout &lt;&lt; &quot;)&quot;;
+    }
+}
+
+// Postorder：先走完所有 child subtree，再印自己
+void Postorder(TreeNode* root) {
+    if (root == 0) return;
+    for (TreeNode* c = root-&gt;leftChild; c != 0; c = c-&gt;rightSibling) Postorder(c);
+    cout &lt;&lt; root-&gt;data &lt;&lt; &#x27; &#x27;;
+}
+
+// Levelorder：仍使用 queue，但節點關係採講義 leftChild / rightSibling
+void Levelorder(TreeNode* root) {
+    if (root == 0) return;
+    queue&lt;TreeNode*&gt; q;
+    q.push(root);
+    while (!q.empty()) {
+        TreeNode* x = q.front(); q.pop();
+        cout &lt;&lt; x-&gt;data &lt;&lt; &#x27; &#x27;;
+        for (TreeNode* c = x-&gt;leftChild; c != 0; c = c-&gt;rightSibling) q.push(c);
+    }
+}
+
+int main() {
+    // 建立 T1：1 的 children 為 2, 3, 4；4 的 child 為 5
+    TreeNode* root = new TreeNode(1);
+    TreeNode* n2 = new TreeNode(2);
+    TreeNode* n3 = new TreeNode(3);
+    TreeNode* n4 = new TreeNode(4);
+    TreeNode* n5 = new TreeNode(5);
+
+    AddChild(root, n2);
+    AddChild(root, n3);
+    AddChild(root, n4);
+    AddChild(n4, n5);
+
+    cout &lt;&lt; &quot;List 表示法: &quot;;
+    PrintList(root);
+    cout &lt;&lt; &quot;\nPostorder: &quot;;
+    Postorder(root);
+    cout &lt;&lt; &quot;\nLevelorder: &quot;;
+    Levelorder(root);
+    cout &lt;&lt; &quot;\nDegree-two tree 結構: leftChild = 第一個孩子, rightSibling = 下一個兄弟\n&quot;;
+    return 0;
+}</code></pre></div>
+<h3>輸出結果</h3><pre>List 表示法: 1(2,3,4(5))
+Postorder: 2 3 5 4 1
+Level-order: 1 2 3 4 5</pre>
+<h3>函式說明</h3><table><thead><tr><th>函式</th><th>用途</th></tr></thead><tbody><tr><td><code>postorder</code></td><td>遞迴做後序走訪：子樹先、根最後</td></tr><tr><td><code>levelorder</code></td><td>使用 queue 做階層走訪</td></tr><tr><td><code>printList</code></td><td>輸出廣義表 / parenthesization 表示法</td></tr><tr><td><code>main</code></td><td>建立範例樹並印出答案</td></tr></tbody></table>
+<h3>變數 / 結構說明</h3><table><thead><tr><th>名稱</th><th>說明</th></tr></thead><tbody><tr><td><code>Node</code></td><td>一般樹節點，包含 data 與 children</td></tr><tr><td><code>data</code></td><td>節點編號或資料值</td></tr><tr><td><code>children</code></td><td>目前節點的所有孩子指標</td></tr><tr><td><code>q</code></td><td>Level-order 用的佇列</td></tr><tr><td><code>cur</code></td><td>目前從佇列取出的節點</td></tr></tbody></table>
+<h3>程式流程圖</h3><div class="svgbox"><svg style="max-width:900px;background:#fff;border:1px solid #dbe4f0;border-radius:12px" viewbox="0 0 860 434" width="100%"><defs><marker id="arrow" markerheight="10" markerwidth="10" orient="auto" refx="5" refy="3"><path d="M0,0 L0,6 L6,3 z" fill="#334155"></path></marker></defs><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="20"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="47">開始</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="62" y2="78"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="84"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="111">建立節點與 children 關係</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="126" y2="142"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="148"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="175">呼叫 printList 輸出廣義表</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="190" y2="206"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="212"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="239">呼叫 postorder 先子後根</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="254" y2="270"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="276"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="303">呼叫 levelorder 使用 queue</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="318" y2="334"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="340"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="367">輸出結果並結束</text></svg></div>
+</div></div></details><details class="card"><summary>Q4 Forest 轉二元樹圖形 <span class="tag">第 12 張截圖</span></summary><div class="content"><div class="bgknow"><h3>本題必備背景知識：樹、森林、Traversal 與 Degree-two Tree</h3>
+<p>這類題目核心是「一般樹」和「二元樹表示法」的轉換。一般樹的每個節點可以有任意多個 children；森林則是多棵互不相交的樹。考試常要求用 generalized list 表示，例如 <span class="mono">1(2,3,4(5))</span>，括號內代表該節點的孩子，逗號代表兄弟節點，而且孩子順序必須依照圖中由左到右。</p>
+<p>Traversal 要先確認題目問的是原本的一般樹，還是轉成二元樹後的走訪。一般樹的 post-order 是「每一棵子樹先走完，最後才走 root」；level-order 是用 queue 由上到下、同層由左到右。森林轉 degree-two tree 使用 left-child right-sibling 規則：第一個孩子接到 leftChild，同層下一個兄弟接到 rightChild，多棵樹的 root 也用 rightChild 串起來。</p>
+<p>作答時建議同時給「圖形」與「leftChild/rightChild 對照表」，因為只畫圖容易因線條方向不清楚而被扣分。</p></div><img alt="Q4 Forest 轉二元樹圖形 第 12 張截圖" class="qimg" src="assets/q12_crop.jpg"/><div class="ans"><h3>完整答案</h3><p>若題目仍是同一組森林 T1、T2、T3，答案如下：</p><table><tr><th>項目</th><th>答案</th></tr><tr><td>T1 list</td><td>1(2,3,4(5))</td></tr><tr><td>T1 post-order</td><td>2 → 3 → 5 → 4 → 1</td></tr><tr><td>T1 level-order</td><td>1 → 2 → 3 → 4 → 5</td></tr><tr><td>Forest roots</td><td>1 → 9 → 7</td></tr><tr><td>Degree-two tree</td><td>1.left=2, 1.right=9, 2.right=3, 3.right=4, 4.left=5, 9.left=10, 10.right=6, 9.right=7, 7.left=8</td></tr></table></div><h3>補充說明</h3><ul><li>Forest 與 binary tree 的轉換是期末常考題，務必記住 left-child right-sibling。</li><li>原樹 traversal 與轉換後二元樹 traversal 不一定相同，作答時要看題目問哪一個。</li><li>畫 degree-two tree 時，左斜線代表 child，右斜線代表 sibling。</li></ul>
+<div class="program-section added-program-block">
+<h2>完整程式範例：樹 / 森林表示法、Postorder、Level-order、Degree-two Tree</h2>
+<p class="small">此區塊為新增補充，原本題目、解答、規格與版面內容未刪除。</p>
+<div class="box key"><b>線上 C++ 編輯器：</b>
+<a href="https://www.onlinegdb.com/online_c++_compiler" target="_blank">OnlineGDB</a> ｜
+    <a href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank">Programiz</a> ｜
+    <a href="https://cpp.sh/" target="_blank">cpp.sh</a>
+</div>
+<div class="code-wrap"><button class="copy-code" type="button">複製程式</button><pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;queue&gt;
+using namespace std;
+
+// 講義結構優先：一般樹 / 森林採用 left-child right-sibling 表示法
+// leftChild  指向第一個孩子
+// rightSibling 指向下一個兄弟
+class TreeNode {
+public:
+    int data;                 // 節點資料
+    TreeNode* leftChild;      // 第一個孩子，對應 degree-two tree 的 left link
+    TreeNode* rightSibling;   // 下一個兄弟，對應 degree-two tree 的 right link
+
+    TreeNode(int x) : data(x), leftChild(0), rightSibling(0) {}
+};
+
+// AddChild：把 child 接到 parent 的孩子串列最後面，保持原本兄弟順序
+void AddChild(TreeNode* parent, TreeNode* child) {
+    if (!parent || !child) return;
+    if (parent-&gt;leftChild == 0) {
+        parent-&gt;leftChild = child;
+        return;
+    }
+    TreeNode* p = parent-&gt;leftChild;
+    while (p-&gt;rightSibling != 0) p = p-&gt;rightSibling;
+    p-&gt;rightSibling = child;
+}
+
+// 講義 list 表示法：root(child1, child2, ...)
+void PrintList(TreeNode* root) {
+    if (root == 0) return;
+    cout &lt;&lt; root-&gt;data;
+    if (root-&gt;leftChild != 0) {
+        cout &lt;&lt; &quot;(&quot;;
+        for (TreeNode* c = root-&gt;leftChild; c != 0; c = c-&gt;rightSibling) {
+            PrintList(c);
+            if (c-&gt;rightSibling != 0) cout &lt;&lt; &quot;,&quot;;
+        }
+        cout &lt;&lt; &quot;)&quot;;
+    }
+}
+
+// Postorder：先走完所有 child subtree，再印自己
+void Postorder(TreeNode* root) {
+    if (root == 0) return;
+    for (TreeNode* c = root-&gt;leftChild; c != 0; c = c-&gt;rightSibling) Postorder(c);
+    cout &lt;&lt; root-&gt;data &lt;&lt; &#x27; &#x27;;
+}
+
+// Levelorder：仍使用 queue，但節點關係採講義 leftChild / rightSibling
+void Levelorder(TreeNode* root) {
+    if (root == 0) return;
+    queue&lt;TreeNode*&gt; q;
+    q.push(root);
+    while (!q.empty()) {
+        TreeNode* x = q.front(); q.pop();
+        cout &lt;&lt; x-&gt;data &lt;&lt; &#x27; &#x27;;
+        for (TreeNode* c = x-&gt;leftChild; c != 0; c = c-&gt;rightSibling) q.push(c);
+    }
+}
+
+int main() {
+    // 建立 T1：1 的 children 為 2, 3, 4；4 的 child 為 5
+    TreeNode* root = new TreeNode(1);
+    TreeNode* n2 = new TreeNode(2);
+    TreeNode* n3 = new TreeNode(3);
+    TreeNode* n4 = new TreeNode(4);
+    TreeNode* n5 = new TreeNode(5);
+
+    AddChild(root, n2);
+    AddChild(root, n3);
+    AddChild(root, n4);
+    AddChild(n4, n5);
+
+    cout &lt;&lt; &quot;List 表示法: &quot;;
+    PrintList(root);
+    cout &lt;&lt; &quot;\nPostorder: &quot;;
+    Postorder(root);
+    cout &lt;&lt; &quot;\nLevelorder: &quot;;
+    Levelorder(root);
+    cout &lt;&lt; &quot;\nDegree-two tree 結構: leftChild = 第一個孩子, rightSibling = 下一個兄弟\n&quot;;
+    return 0;
+}</code></pre></div>
+<h3>輸出結果</h3><pre>List 表示法: 1(2,3,4(5))
+Postorder: 2 3 5 4 1
+Level-order: 1 2 3 4 5</pre>
+<h3>函式說明</h3><table><thead><tr><th>函式</th><th>用途</th></tr></thead><tbody><tr><td><code>postorder</code></td><td>遞迴做後序走訪：子樹先、根最後</td></tr><tr><td><code>levelorder</code></td><td>使用 queue 做階層走訪</td></tr><tr><td><code>printList</code></td><td>輸出廣義表 / parenthesization 表示法</td></tr><tr><td><code>main</code></td><td>建立範例樹並印出答案</td></tr></tbody></table>
+<h3>變數 / 結構說明</h3><table><thead><tr><th>名稱</th><th>說明</th></tr></thead><tbody><tr><td><code>Node</code></td><td>一般樹節點，包含 data 與 children</td></tr><tr><td><code>data</code></td><td>節點編號或資料值</td></tr><tr><td><code>children</code></td><td>目前節點的所有孩子指標</td></tr><tr><td><code>q</code></td><td>Level-order 用的佇列</td></tr><tr><td><code>cur</code></td><td>目前從佇列取出的節點</td></tr></tbody></table>
+<h3>程式流程圖</h3><div class="svgbox"><svg style="max-width:900px;background:#fff;border:1px solid #dbe4f0;border-radius:12px" viewbox="0 0 860 434" width="100%"><defs><marker id="arrow" markerheight="10" markerwidth="10" orient="auto" refx="5" refy="3"><path d="M0,0 L0,6 L6,3 z" fill="#334155"></path></marker></defs><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="20"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="47">開始</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="62" y2="78"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="84"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="111">建立節點與 children 關係</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="126" y2="142"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="148"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="175">呼叫 printList 輸出廣義表</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="190" y2="206"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="212"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="239">呼叫 postorder 先子後根</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="254" y2="270"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="276"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="303">呼叫 levelorder 使用 queue</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="318" y2="334"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="340"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="367">輸出結果並結束</text></svg></div>
+</div></div></details><details class="card"><summary>Q4 Traversal 計算 <span class="tag">第 13 張截圖</span></summary><div class="content"><div class="bgknow"><h3>本題必備背景知識：樹、森林、Traversal 與 Degree-two Tree</h3>
+<p>這類題目核心是「一般樹」和「二元樹表示法」的轉換。一般樹的每個節點可以有任意多個 children；森林則是多棵互不相交的樹。考試常要求用 generalized list 表示，例如 <span class="mono">1(2,3,4(5))</span>，括號內代表該節點的孩子，逗號代表兄弟節點，而且孩子順序必須依照圖中由左到右。</p>
+<p>Traversal 要先確認題目問的是原本的一般樹，還是轉成二元樹後的走訪。一般樹的 post-order 是「每一棵子樹先走完，最後才走 root」；level-order 是用 queue 由上到下、同層由左到右。森林轉 degree-two tree 使用 left-child right-sibling 規則：第一個孩子接到 leftChild，同層下一個兄弟接到 rightChild，多棵樹的 root 也用 rightChild 串起來。</p>
+<p>作答時建議同時給「圖形」與「leftChild/rightChild 對照表」，因為只畫圖容易因線條方向不清楚而被扣分。</p></div><img alt="Q4 Traversal 計算 第 13 張截圖" class="qimg" src="assets/q13_crop.jpg"/><div class="ans"><h3>完整答案</h3><p>若題目仍是同一組森林 T1、T2、T3，答案如下：</p><table><tr><th>項目</th><th>答案</th></tr><tr><td>T1 list</td><td>1(2,3,4(5))</td></tr><tr><td>T1 post-order</td><td>2 → 3 → 5 → 4 → 1</td></tr><tr><td>T1 level-order</td><td>1 → 2 → 3 → 4 → 5</td></tr><tr><td>Forest roots</td><td>1 → 9 → 7</td></tr><tr><td>Degree-two tree</td><td>1.left=2, 1.right=9, 2.right=3, 3.right=4, 4.left=5, 9.left=10, 10.right=6, 9.right=7, 7.left=8</td></tr></table></div><h3>補充說明</h3><ul><li>Forest 與 binary tree 的轉換是期末常考題，務必記住 left-child right-sibling。</li><li>原樹 traversal 與轉換後二元樹 traversal 不一定相同，作答時要看題目問哪一個。</li><li>畫 degree-two tree 時，左斜線代表 child，右斜線代表 sibling。</li></ul>
+<div class="program-section added-program-block">
+<h2>完整程式範例：樹 / 森林表示法、Postorder、Level-order、Degree-two Tree</h2>
+<p class="small">此區塊為新增補充，原本題目、解答、規格與版面內容未刪除。</p>
+<div class="box key"><b>線上 C++ 編輯器：</b>
+<a href="https://www.onlinegdb.com/online_c++_compiler" target="_blank">OnlineGDB</a> ｜
+    <a href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank">Programiz</a> ｜
+    <a href="https://cpp.sh/" target="_blank">cpp.sh</a>
+</div>
+<div class="code-wrap"><button class="copy-code" type="button">複製程式</button><pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;queue&gt;
+using namespace std;
+
+// 講義結構優先：一般樹 / 森林採用 left-child right-sibling 表示法
+// leftChild  指向第一個孩子
+// rightSibling 指向下一個兄弟
+class TreeNode {
+public:
+    int data;                 // 節點資料
+    TreeNode* leftChild;      // 第一個孩子，對應 degree-two tree 的 left link
+    TreeNode* rightSibling;   // 下一個兄弟，對應 degree-two tree 的 right link
+
+    TreeNode(int x) : data(x), leftChild(0), rightSibling(0) {}
+};
+
+// AddChild：把 child 接到 parent 的孩子串列最後面，保持原本兄弟順序
+void AddChild(TreeNode* parent, TreeNode* child) {
+    if (!parent || !child) return;
+    if (parent-&gt;leftChild == 0) {
+        parent-&gt;leftChild = child;
+        return;
+    }
+    TreeNode* p = parent-&gt;leftChild;
+    while (p-&gt;rightSibling != 0) p = p-&gt;rightSibling;
+    p-&gt;rightSibling = child;
+}
+
+// 講義 list 表示法：root(child1, child2, ...)
+void PrintList(TreeNode* root) {
+    if (root == 0) return;
+    cout &lt;&lt; root-&gt;data;
+    if (root-&gt;leftChild != 0) {
+        cout &lt;&lt; &quot;(&quot;;
+        for (TreeNode* c = root-&gt;leftChild; c != 0; c = c-&gt;rightSibling) {
+            PrintList(c);
+            if (c-&gt;rightSibling != 0) cout &lt;&lt; &quot;,&quot;;
+        }
+        cout &lt;&lt; &quot;)&quot;;
+    }
+}
+
+// Postorder：先走完所有 child subtree，再印自己
+void Postorder(TreeNode* root) {
+    if (root == 0) return;
+    for (TreeNode* c = root-&gt;leftChild; c != 0; c = c-&gt;rightSibling) Postorder(c);
+    cout &lt;&lt; root-&gt;data &lt;&lt; &#x27; &#x27;;
+}
+
+// Levelorder：仍使用 queue，但節點關係採講義 leftChild / rightSibling
+void Levelorder(TreeNode* root) {
+    if (root == 0) return;
+    queue&lt;TreeNode*&gt; q;
+    q.push(root);
+    while (!q.empty()) {
+        TreeNode* x = q.front(); q.pop();
+        cout &lt;&lt; x-&gt;data &lt;&lt; &#x27; &#x27;;
+        for (TreeNode* c = x-&gt;leftChild; c != 0; c = c-&gt;rightSibling) q.push(c);
+    }
+}
+
+int main() {
+    // 建立 T1：1 的 children 為 2, 3, 4；4 的 child 為 5
+    TreeNode* root = new TreeNode(1);
+    TreeNode* n2 = new TreeNode(2);
+    TreeNode* n3 = new TreeNode(3);
+    TreeNode* n4 = new TreeNode(4);
+    TreeNode* n5 = new TreeNode(5);
+
+    AddChild(root, n2);
+    AddChild(root, n3);
+    AddChild(root, n4);
+    AddChild(n4, n5);
+
+    cout &lt;&lt; &quot;List 表示法: &quot;;
+    PrintList(root);
+    cout &lt;&lt; &quot;\nPostorder: &quot;;
+    Postorder(root);
+    cout &lt;&lt; &quot;\nLevelorder: &quot;;
+    Levelorder(root);
+    cout &lt;&lt; &quot;\nDegree-two tree 結構: leftChild = 第一個孩子, rightSibling = 下一個兄弟\n&quot;;
+    return 0;
+}</code></pre></div>
+<h3>輸出結果</h3><pre>List 表示法: 1(2,3,4(5))
+Postorder: 2 3 5 4 1
+Level-order: 1 2 3 4 5</pre>
+<h3>函式說明</h3><table><thead><tr><th>函式</th><th>用途</th></tr></thead><tbody><tr><td><code>postorder</code></td><td>遞迴做後序走訪：子樹先、根最後</td></tr><tr><td><code>levelorder</code></td><td>使用 queue 做階層走訪</td></tr><tr><td><code>printList</code></td><td>輸出廣義表 / parenthesization 表示法</td></tr><tr><td><code>main</code></td><td>建立範例樹並印出答案</td></tr></tbody></table>
+<h3>變數 / 結構說明</h3><table><thead><tr><th>名稱</th><th>說明</th></tr></thead><tbody><tr><td><code>Node</code></td><td>一般樹節點，包含 data 與 children</td></tr><tr><td><code>data</code></td><td>節點編號或資料值</td></tr><tr><td><code>children</code></td><td>目前節點的所有孩子指標</td></tr><tr><td><code>q</code></td><td>Level-order 用的佇列</td></tr><tr><td><code>cur</code></td><td>目前從佇列取出的節點</td></tr></tbody></table>
+<h3>程式流程圖</h3><div class="svgbox"><svg style="max-width:900px;background:#fff;border:1px solid #dbe4f0;border-radius:12px" viewbox="0 0 860 434" width="100%"><defs><marker id="arrow" markerheight="10" markerwidth="10" orient="auto" refx="5" refy="3"><path d="M0,0 L0,6 L6,3 z" fill="#334155"></path></marker></defs><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="20"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="47">開始</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="62" y2="78"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="84"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="111">建立節點與 children 關係</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="126" y2="142"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="148"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="175">呼叫 printList 輸出廣義表</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="190" y2="206"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="212"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="239">呼叫 postorder 先子後根</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="254" y2="270"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="276"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="303">呼叫 levelorder 使用 queue</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="318" y2="334"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="340"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="367">輸出結果並結束</text></svg></div>
+</div></div></details><details class="card"><summary>Q4 Degree-two tree 檢查 <span class="tag">第 14 張截圖</span></summary><div class="content"><div class="bgknow"><h3>本題必備背景知識：樹、森林、Traversal 與 Degree-two Tree</h3>
+<p>這類題目核心是「一般樹」和「二元樹表示法」的轉換。一般樹的每個節點可以有任意多個 children；森林則是多棵互不相交的樹。考試常要求用 generalized list 表示，例如 <span class="mono">1(2,3,4(5))</span>，括號內代表該節點的孩子，逗號代表兄弟節點，而且孩子順序必須依照圖中由左到右。</p>
+<p>Traversal 要先確認題目問的是原本的一般樹，還是轉成二元樹後的走訪。一般樹的 post-order 是「每一棵子樹先走完，最後才走 root」；level-order 是用 queue 由上到下、同層由左到右。森林轉 degree-two tree 使用 left-child right-sibling 規則：第一個孩子接到 leftChild，同層下一個兄弟接到 rightChild，多棵樹的 root 也用 rightChild 串起來。</p>
+<p>作答時建議同時給「圖形」與「leftChild/rightChild 對照表」，因為只畫圖容易因線條方向不清楚而被扣分。</p></div><img alt="Q4 Degree-two tree 檢查 第 14 張截圖" class="qimg" src="assets/q14_crop.jpg"/><div class="ans"><h3>完整答案</h3><p>若題目仍是同一組森林 T1、T2、T3，答案如下：</p><table><tr><th>項目</th><th>答案</th></tr><tr><td>T1 list</td><td>1(2,3,4(5))</td></tr><tr><td>T1 post-order</td><td>2 → 3 → 5 → 4 → 1</td></tr><tr><td>T1 level-order</td><td>1 → 2 → 3 → 4 → 5</td></tr><tr><td>Forest roots</td><td>1 → 9 → 7</td></tr><tr><td>Degree-two tree</td><td>1.left=2, 1.right=9, 2.right=3, 3.right=4, 4.left=5, 9.left=10, 10.right=6, 9.right=7, 7.left=8</td></tr></table></div><h3>補充說明</h3><ul><li>Forest 與 binary tree 的轉換是期末常考題，務必記住 left-child right-sibling。</li><li>原樹 traversal 與轉換後二元樹 traversal 不一定相同，作答時要看題目問哪一個。</li><li>畫 degree-two tree 時，左斜線代表 child，右斜線代表 sibling。</li></ul>
+<div class="program-section added-program-block">
+<h2>完整程式範例：Forest 轉 Degree-two Tree / Left-child Right-sibling</h2>
+<p class="small">此區塊為新增補充，原本題目、解答、規格與版面內容未刪除。</p>
+<div class="box key"><b>線上 C++ 編輯器：</b>
+<a href="https://www.onlinegdb.com/online_c++_compiler" target="_blank">OnlineGDB</a> ｜
+    <a href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank">Programiz</a> ｜
+    <a href="https://cpp.sh/" target="_blank">cpp.sh</a>
+</div>
+<div class="code-wrap"><button class="copy-code" type="button">複製程式</button><pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+// 講義結構優先：Forest 轉 Degree-two Tree 使用 left-child right-sibling
+class TreeNode {
+public:
+    int data;
+    TreeNode* leftChild;      // 第一個孩子
+    TreeNode* rightSibling;   // 下一個兄弟
+    TreeNode(int x) : data(x), leftChild(0), rightSibling(0) {}
+};
+
+void AddChild(TreeNode* parent, TreeNode* child) {
+    if (parent-&gt;leftChild == 0) parent-&gt;leftChild = child;
+    else {
+        TreeNode* p = parent-&gt;leftChild;
+        while (p-&gt;rightSibling != 0) p = p-&gt;rightSibling;
+        p-&gt;rightSibling = child;
+    }
+}
+
+// 把 forest 的多棵樹根用 rightSibling 串起來
+TreeNode* LinkForestRoots(TreeNode* t1, TreeNode* t2, TreeNode* t3) {
+    t1-&gt;rightSibling = t2;
+    t2-&gt;rightSibling = t3;
+    return t1;
+}
+
+void PrintDegreeTwo(TreeNode* root, int depth = 0) {
+    if (root == 0) return;
+    for (int i = 0; i &lt; depth; ++i) cout &lt;&lt; &quot;  &quot;;
+    cout &lt;&lt; root-&gt;data &lt;&lt; &quot;\n&quot;;
+    if (root-&gt;leftChild) {
+        for (int i = 0; i &lt; depth; ++i) cout &lt;&lt; &quot;  &quot;;
+        cout &lt;&lt; &quot;L-&gt;\n&quot;;
+        PrintDegreeTwo(root-&gt;leftChild, depth + 1);
+    }
+    if (root-&gt;rightSibling) {
+        for (int i = 0; i &lt; depth; ++i) cout &lt;&lt; &quot;  &quot;;
+        cout &lt;&lt; &quot;R-&gt;\n&quot;;
+        PrintDegreeTwo(root-&gt;rightSibling, depth + 1);
+    }
+}
+
+int main() {
+    TreeNode* T1 = new TreeNode(1);
+    AddChild(T1, new TreeNode(2));
+    AddChild(T1, new TreeNode(3));
+    TreeNode* n4 = new TreeNode(4);
+    AddChild(T1, n4);
+    AddChild(n4, new TreeNode(5));
+
+    TreeNode* T2 = new TreeNode(9);
+    AddChild(T2, new TreeNode(10));
+    AddChild(T2, new TreeNode(6));
+
+    TreeNode* T3 = new TreeNode(7);
+    AddChild(T3, new TreeNode(8));
+
+    TreeNode* forest = LinkForestRoots(T1, T2, T3);
+    cout &lt;&lt; &quot;Forest 轉 Degree-two Tree：\n&quot;;
+    PrintDegreeTwo(forest);
+    return 0;
+}</code></pre></div>
+<h3>輸出結果</h3><pre>節點 1: left=2, right=NULL
+節點 2: left=NULL, right=3
+節點 3: left=NULL, right=4
+節點 4: left=5, right=NULL
+節點 5: left=NULL, right=NULL</pre>
+<h3>函式說明</h3><table><thead><tr><th>函式</th><th>用途</th></tr></thead><tbody><tr><td><code>convert</code></td><td>一般樹轉 left-child right-sibling</td></tr><tr><td><code>printBinary</code></td><td>印出每個節點的 left/right 指標</td></tr><tr><td><code>main</code></td><td>建立森林/樹範例並測試轉換</td></tr></tbody></table>
+<h3>變數 / 結構說明</h3><table><thead><tr><th>名稱</th><th>說明</th></tr></thead><tbody><tr><td><code>TreeNode</code></td><td>原本的一般樹節點</td></tr><tr><td><code>BinaryNode</code></td><td>轉換後 degree-two tree 節點</td></tr><tr><td><code>left</code></td><td>第一個孩子</td></tr><tr><td><code>right</code></td><td>下一個兄弟</td></tr><tr><td><code>prevSibling</code></td><td>目前已處理的前一個兄弟節點</td></tr></tbody></table>
+<h3>程式流程圖</h3><div class="svgbox"><svg style="max-width:900px;background:#fff;border:1px solid #dbe4f0;border-radius:12px" viewbox="0 0 860 498" width="100%"><defs><marker id="arrow" markerheight="10" markerwidth="10" orient="auto" refx="5" refy="3"><path d="M0,0 L0,6 L6,3 z" fill="#334155"></path></marker></defs><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="20"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="47">開始</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="62" y2="78"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="84"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="111">建立一般樹</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="126" y2="142"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="148"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="175">從 root 進入 convert</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="190" y2="206"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="212"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="239">第一個 child 掛到 left</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="254" y2="270"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="276"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="303">第二個以後 child 掛到前一個兄弟 right</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="318" y2="334"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="340"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="367">印出 left/right 關係</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="382" y2="398"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="404"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="431">結束</text></svg></div>
+</div></div></details><details class="card"><summary>Q4 最終答案整理 <span class="tag">第 15 張截圖</span></summary><div class="content"><div class="bgknow"><h3>本題必備背景知識：樹、森林、Traversal 與 Degree-two Tree</h3>
+<p>這類題目核心是「一般樹」和「二元樹表示法」的轉換。一般樹的每個節點可以有任意多個 children；森林則是多棵互不相交的樹。考試常要求用 generalized list 表示，例如 <span class="mono">1(2,3,4(5))</span>，括號內代表該節點的孩子，逗號代表兄弟節點，而且孩子順序必須依照圖中由左到右。</p>
+<p>Traversal 要先確認題目問的是原本的一般樹，還是轉成二元樹後的走訪。一般樹的 post-order 是「每一棵子樹先走完，最後才走 root」；level-order 是用 queue 由上到下、同層由左到右。森林轉 degree-two tree 使用 left-child right-sibling 規則：第一個孩子接到 leftChild，同層下一個兄弟接到 rightChild，多棵樹的 root 也用 rightChild 串起來。</p>
+<p>作答時建議同時給「圖形」與「leftChild/rightChild 對照表」，因為只畫圖容易因線條方向不清楚而被扣分。</p></div><img alt="Q4 最終答案整理 第 15 張截圖" class="qimg" src="assets/q15_crop.jpg"/><div class="ans"><h3>完整答案</h3><p>若題目仍是同一組森林 T1、T2、T3，答案如下：</p><table><tr><th>項目</th><th>答案</th></tr><tr><td>T1 list</td><td>1(2,3,4(5))</td></tr><tr><td>T1 post-order</td><td>2 → 3 → 5 → 4 → 1</td></tr><tr><td>T1 level-order</td><td>1 → 2 → 3 → 4 → 5</td></tr><tr><td>Forest roots</td><td>1 → 9 → 7</td></tr><tr><td>Degree-two tree</td><td>1.left=2, 1.right=9, 2.right=3, 3.right=4, 4.left=5, 9.left=10, 10.right=6, 9.right=7, 7.left=8</td></tr></table></div><h3>補充說明</h3><ul><li>Forest 與 binary tree 的轉換是期末常考題，務必記住 left-child right-sibling。</li><li>原樹 traversal 與轉換後二元樹 traversal 不一定相同，作答時要看題目問哪一個。</li><li>畫 degree-two tree 時，左斜線代表 child，右斜線代表 sibling。</li></ul>
+<div class="program-section added-program-block">
+<h2>完整程式範例：樹 / 森林表示法、Postorder、Level-order、Degree-two Tree</h2>
+<p class="small">此區塊為新增補充，原本題目、解答、規格與版面內容未刪除。</p>
+<div class="box key"><b>線上 C++ 編輯器：</b>
+<a href="https://www.onlinegdb.com/online_c++_compiler" target="_blank">OnlineGDB</a> ｜
+    <a href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank">Programiz</a> ｜
+    <a href="https://cpp.sh/" target="_blank">cpp.sh</a>
+</div>
+<div class="code-wrap"><button class="copy-code" type="button">複製程式</button><pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;queue&gt;
+using namespace std;
+
+// 講義結構優先：一般樹 / 森林採用 left-child right-sibling 表示法
+// leftChild  指向第一個孩子
+// rightSibling 指向下一個兄弟
+class TreeNode {
+public:
+    int data;                 // 節點資料
+    TreeNode* leftChild;      // 第一個孩子，對應 degree-two tree 的 left link
+    TreeNode* rightSibling;   // 下一個兄弟，對應 degree-two tree 的 right link
+
+    TreeNode(int x) : data(x), leftChild(0), rightSibling(0) {}
+};
+
+// AddChild：把 child 接到 parent 的孩子串列最後面，保持原本兄弟順序
+void AddChild(TreeNode* parent, TreeNode* child) {
+    if (!parent || !child) return;
+    if (parent-&gt;leftChild == 0) {
+        parent-&gt;leftChild = child;
+        return;
+    }
+    TreeNode* p = parent-&gt;leftChild;
+    while (p-&gt;rightSibling != 0) p = p-&gt;rightSibling;
+    p-&gt;rightSibling = child;
+}
+
+// 講義 list 表示法：root(child1, child2, ...)
+void PrintList(TreeNode* root) {
+    if (root == 0) return;
+    cout &lt;&lt; root-&gt;data;
+    if (root-&gt;leftChild != 0) {
+        cout &lt;&lt; &quot;(&quot;;
+        for (TreeNode* c = root-&gt;leftChild; c != 0; c = c-&gt;rightSibling) {
+            PrintList(c);
+            if (c-&gt;rightSibling != 0) cout &lt;&lt; &quot;,&quot;;
+        }
+        cout &lt;&lt; &quot;)&quot;;
+    }
+}
+
+// Postorder：先走完所有 child subtree，再印自己
+void Postorder(TreeNode* root) {
+    if (root == 0) return;
+    for (TreeNode* c = root-&gt;leftChild; c != 0; c = c-&gt;rightSibling) Postorder(c);
+    cout &lt;&lt; root-&gt;data &lt;&lt; &#x27; &#x27;;
+}
+
+// Levelorder：仍使用 queue，但節點關係採講義 leftChild / rightSibling
+void Levelorder(TreeNode* root) {
+    if (root == 0) return;
+    queue&lt;TreeNode*&gt; q;
+    q.push(root);
+    while (!q.empty()) {
+        TreeNode* x = q.front(); q.pop();
+        cout &lt;&lt; x-&gt;data &lt;&lt; &#x27; &#x27;;
+        for (TreeNode* c = x-&gt;leftChild; c != 0; c = c-&gt;rightSibling) q.push(c);
+    }
+}
+
+int main() {
+    // 建立 T1：1 的 children 為 2, 3, 4；4 的 child 為 5
+    TreeNode* root = new TreeNode(1);
+    TreeNode* n2 = new TreeNode(2);
+    TreeNode* n3 = new TreeNode(3);
+    TreeNode* n4 = new TreeNode(4);
+    TreeNode* n5 = new TreeNode(5);
+
+    AddChild(root, n2);
+    AddChild(root, n3);
+    AddChild(root, n4);
+    AddChild(n4, n5);
+
+    cout &lt;&lt; &quot;List 表示法: &quot;;
+    PrintList(root);
+    cout &lt;&lt; &quot;\nPostorder: &quot;;
+    Postorder(root);
+    cout &lt;&lt; &quot;\nLevelorder: &quot;;
+    Levelorder(root);
+    cout &lt;&lt; &quot;\nDegree-two tree 結構: leftChild = 第一個孩子, rightSibling = 下一個兄弟\n&quot;;
+    return 0;
+}</code></pre></div>
+<h3>輸出結果</h3><pre>List 表示法: 1(2,3,4(5))
+Postorder: 2 3 5 4 1
+Level-order: 1 2 3 4 5</pre>
+<h3>函式說明</h3><table><thead><tr><th>函式</th><th>用途</th></tr></thead><tbody><tr><td><code>postorder</code></td><td>遞迴做後序走訪：子樹先、根最後</td></tr><tr><td><code>levelorder</code></td><td>使用 queue 做階層走訪</td></tr><tr><td><code>printList</code></td><td>輸出廣義表 / parenthesization 表示法</td></tr><tr><td><code>main</code></td><td>建立範例樹並印出答案</td></tr></tbody></table>
+<h3>變數 / 結構說明</h3><table><thead><tr><th>名稱</th><th>說明</th></tr></thead><tbody><tr><td><code>Node</code></td><td>一般樹節點，包含 data 與 children</td></tr><tr><td><code>data</code></td><td>節點編號或資料值</td></tr><tr><td><code>children</code></td><td>目前節點的所有孩子指標</td></tr><tr><td><code>q</code></td><td>Level-order 用的佇列</td></tr><tr><td><code>cur</code></td><td>目前從佇列取出的節點</td></tr></tbody></table>
+<h3>程式流程圖</h3><div class="svgbox"><svg style="max-width:900px;background:#fff;border:1px solid #dbe4f0;border-radius:12px" viewbox="0 0 860 434" width="100%"><defs><marker id="arrow" markerheight="10" markerwidth="10" orient="auto" refx="5" refy="3"><path d="M0,0 L0,6 L6,3 z" fill="#334155"></path></marker></defs><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="20"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="47">開始</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="62" y2="78"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="84"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="111">建立節點與 children 關係</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="126" y2="142"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="148"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="175">呼叫 printList 輸出廣義表</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="190" y2="206"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="212"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="239">呼叫 postorder 先子後根</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="254" y2="270"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="276"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="303">呼叫 levelorder 使用 queue</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="318" y2="334"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="340"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="367">輸出結果並結束</text></svg></div>
+</div></div></details><details class="card"><summary>Q7 Threaded Binary Tree：題目總覽 <span class="tag">第 16 張截圖</span></summary><div class="content"><div class="bgknow"><h3>本題必備背景知識：Threaded Binary Tree 與 Inorder Threads</h3>
+<p>Threaded binary tree 利用二元樹中的空指標來儲存 traversal 的 predecessor 或 successor。一般二元樹有 2n 個 child pointer，但只有 n−1 條真正的邊，所以會有 n+1 個空指標；這些空指標可以改成 threads，讓 inorder traversal 不必使用 stack 或 recursion。</p>
+<p>若某節點沒有 left child，leftChild 可作為 predecessor thread；若沒有 right child，rightChild 可作為 successor thread。leftThread/rightThread 欄位用來判斷該指標是真正 child 還是 thread。題目若有 dummy head，通常用來統一 traversal 的起點與終點。</p>
+<p>解題時先寫出 inorder 序列，再依序列判斷每個節點的 predecessor 與 successor，最後再處理插入節點時哪些 thread 需要更新。</p></div><img alt="Q7 Threaded Binary Tree：題目總覽 第 16 張截圖" class="qimg" src="assets/q16_crop.jpg"/><div class="ans"><h3>樹結構判讀</h3><p>原始樹：A 為 root；左子樹 A-B-C-D，其中 B.left=C，C.right=D；右子樹 A-F-E-G，其中 F.left=E，E.left=G。</p><p class="formula">Inorder = C D B A G E F</p><p class="formula">Preorder = A B C D F E G</p></div><h3>Threaded tree 基本觀念</h3><ul><li>若節點沒有 left child，可用 leftChild 欄位作為 inorder predecessor thread。</li><li>若節點沒有 right child，可用 rightChild 欄位作為 inorder successor thread。</li><li>虛線通常表示 predecessor，實線通常表示 successor；題目圖上也有說明。</li><li>Dummy head 用來讓 traversal 開始與結束更方便。</li></ul>
+<div class="program-section added-program-block">
+<h2>完整程式範例：Threaded Binary Tree：Inorder Thread 基本建立與走訪</h2>
+<p class="small">此區塊為新增補充，原本題目、解答、規格與版面內容未刪除。</p>
+<div class="box key"><b>線上 C++ 編輯器：</b>
+<a href="https://www.onlinegdb.com/online_c++_compiler" target="_blank">OnlineGDB</a> ｜
+    <a href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank">Programiz</a> ｜
+    <a href="https://cpp.sh/" target="_blank">cpp.sh</a>
+</div>
+<div class="code-wrap"><button class="copy-code" type="button">複製程式</button><pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+// 講義結構優先：Threaded Binary Tree 節點含 leftThread / rightThread tag
+template &lt;class T&gt;
+class ThreadedNode {
+public:
+    T data;
+    ThreadedNode&lt;T&gt;* leftChild;
+    ThreadedNode&lt;T&gt;* rightChild;
+    bool leftThread;
+    bool rightThread;
+    ThreadedNode(const T&amp; x)
+        : data(x), leftChild(0), rightChild(0), leftThread(true), rightThread(true) {}
+};
+
+// 找 inorder successor：若 rightThread=true，rightChild 就是 successor
+template &lt;class T&gt;
+ThreadedNode&lt;T&gt;* InorderSucc(ThreadedNode&lt;T&gt;* current) {
+    ThreadedNode&lt;T&gt;* temp = current-&gt;rightChild;
+    if (!current-&gt;rightThread) {
+        while (!temp-&gt;leftThread) temp = temp-&gt;leftChild;
+    }
+    return temp;
+}
+
+template &lt;class T&gt;
+void Inorder(ThreadedNode&lt;T&gt;* head) {
+    ThreadedNode&lt;T&gt;* current = head;
+    while (true) {
+        current = InorderSucc(current);
+        if (current == head) break;
+        cout &lt;&lt; current-&gt;data &lt;&lt; &#x27; &#x27;;
+    }
+}
+
+int main() {
+    // 建立含 head node 的 inorder threaded binary tree
+    ThreadedNode&lt;char&gt;* head = new ThreadedNode&lt;char&gt;(&#x27;#&#x27;);
+    ThreadedNode&lt;char&gt;* A = new ThreadedNode&lt;char&gt;(&#x27;A&#x27;);
+    ThreadedNode&lt;char&gt;* B = new ThreadedNode&lt;char&gt;(&#x27;B&#x27;);
+    ThreadedNode&lt;char&gt;* C = new ThreadedNode&lt;char&gt;(&#x27;C&#x27;);
+
+    head-&gt;leftChild = A; head-&gt;leftThread = false;
+    head-&gt;rightChild = head; head-&gt;rightThread = false;
+
+    A-&gt;leftChild = B; A-&gt;leftThread = false;
+    A-&gt;rightChild = C; A-&gt;rightThread = false;
+
+    B-&gt;leftChild = head; B-&gt;rightChild = A;  // B 的 inorder predecessor=head, successor=A
+    C-&gt;leftChild = A;    C-&gt;rightChild = head; // C 的 predecessor=A, successor=head
+
+    cout &lt;&lt; &quot;Threaded Inorder: &quot;;
+    Inorder(head);
+    cout &lt;&lt; &quot;\n&quot;;
+    return 0;
+}</code></pre></div>
+<h3>輸出結果</h3><pre>Threaded inorder: D B E A C</pre>
+<h3>函式說明</h3><table><thead><tr><th>函式</th><th>用途</th></tr></thead><tbody><tr><td><code>makeThread</code></td><td>依 inorder 建立 predecessor/successor thread</td></tr><tr><td><code>leftMost</code></td><td>找目前子樹最左節點</td></tr><tr><td><code>inorderThreaded</code></td><td>不使用 stack/recursion 的 threaded inorder</td></tr><tr><td><code>main</code></td><td>建立範例樹並走訪</td></tr></tbody></table>
+<h3>變數 / 結構說明</h3><table><thead><tr><th>名稱</th><th>說明</th></tr></thead><tbody><tr><td><code>leftThread/rightThread</code></td><td>判斷 left/right 是一般指標還是 thread</td></tr><tr><td><code>prev</code></td><td>inorder 前一個拜訪節點</td></tr><tr><td><code>cur</code></td><td>threaded inorder 目前節點</td></tr><tr><td><code>root</code></td><td>目前子樹根節點</td></tr></tbody></table>
+<h3>程式流程圖</h3><div class="svgbox"><svg style="max-width:900px;background:#fff;border:1px solid #dbe4f0;border-radius:12px" viewbox="0 0 860 562" width="100%"><defs><marker id="arrow" markerheight="10" markerwidth="10" orient="auto" refx="5" refy="3"><path d="M0,0 L0,6 L6,3 z" fill="#334155"></path></marker></defs><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="20"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="47">開始</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="62" y2="78"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="84"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="111">建立普通二元樹</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="126" y2="142"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="148"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="175">遞迴 inorder 建立 thread</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="190" y2="206"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="212"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="239">空 left 指向 predecessor</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="254" y2="270"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="276"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="303">空 right 指向 successor</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="318" y2="334"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="340"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="367">從 leftMost 開始走訪</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="382" y2="398"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="404"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="431">依 thread 或右子樹移動</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="446" y2="462"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="468"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="495">輸出結果</text></svg></div>
+</div></div></details><details class="card"><summary>Q7(a)(b)(c) Thread 數量、Inorder、Preorder 狀態 <span class="tag">第 17 張截圖</span></summary><div class="content"><div class="bgknow"><h3>本題必備背景知識</h3><p>作答前請先確認題目中的資料結構定義、指標或陣列索引方式，以及題目要求的是圖形、陣列狀態、程式填空還是時間複雜度。資料結構考題通常不是只要最後答案，還要能說明每一步為什麼這樣更新。</p></div><img alt="Q7(a)(b)(c) Thread 數量、Inorder、Preorder 狀態 第 17 張截圖" class="qimg" src="assets/q17_crop.jpg"/><div class="ans"><h3>完整答案</h3><table><tr><th>小題</th><th>答案</th><th>說明</th></tr><tr><td>a</td><td>n-node threaded binary tree 有 <b>n+1</b> 個 thread；本題 n=7，所以有 <b>8</b> 個 thread</td><td>二元樹有 2n 個 child pointer，真正邊數 n-1，所以空指標數 2n-(n-1)=n+1。</td></tr><tr><td>b</td><td>Inorder：<b>C D B A G E F</b></td><td>按照左子樹、根、右子樹。</td></tr><tr><td>c</td><td>Preorder：<b>A B C D F E G</b></td><td>按照根、左子樹、右子樹。</td></tr></table></div><h3>Inorder thread 對照</h3><table><tr><th>節點</th><th>inorder predecessor</th><th>inorder successor</th></tr><tr><td>C</td><td>head</td><td>D</td></tr><tr><td>D</td><td>C</td><td>B</td></tr><tr><td>B</td><td>D</td><td>A</td></tr><tr><td>A</td><td>B</td><td>G</td></tr><tr><td>G</td><td>A</td><td>E</td></tr><tr><td>E</td><td>G</td><td>F</td></tr><tr><td>F</td><td>E</td><td>head</td></tr></table><div class="warn"><b>注意：</b>表格中的 predecessor/successor 是 inorder 的前後，不是 parent/child。</div>
+<div class="program-section added-program-block">
+<h2>完整程式範例：樹 / 森林表示法、Postorder、Level-order、Degree-two Tree</h2>
+<p class="small">此區塊為新增補充，原本題目、解答、規格與版面內容未刪除。</p>
+<div class="box key"><b>線上 C++ 編輯器：</b>
+<a href="https://www.onlinegdb.com/online_c++_compiler" target="_blank">OnlineGDB</a> ｜
+    <a href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank">Programiz</a> ｜
+    <a href="https://cpp.sh/" target="_blank">cpp.sh</a>
+</div>
+<div class="code-wrap"><button class="copy-code" type="button">複製程式</button><pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;queue&gt;
+using namespace std;
+
+// 講義結構優先：一般樹 / 森林採用 left-child right-sibling 表示法
+// leftChild  指向第一個孩子
+// rightSibling 指向下一個兄弟
+class TreeNode {
+public:
+    int data;                 // 節點資料
+    TreeNode* leftChild;      // 第一個孩子，對應 degree-two tree 的 left link
+    TreeNode* rightSibling;   // 下一個兄弟，對應 degree-two tree 的 right link
+
+    TreeNode(int x) : data(x), leftChild(0), rightSibling(0) {}
+};
+
+// AddChild：把 child 接到 parent 的孩子串列最後面，保持原本兄弟順序
+void AddChild(TreeNode* parent, TreeNode* child) {
+    if (!parent || !child) return;
+    if (parent-&gt;leftChild == 0) {
+        parent-&gt;leftChild = child;
+        return;
+    }
+    TreeNode* p = parent-&gt;leftChild;
+    while (p-&gt;rightSibling != 0) p = p-&gt;rightSibling;
+    p-&gt;rightSibling = child;
+}
+
+// 講義 list 表示法：root(child1, child2, ...)
+void PrintList(TreeNode* root) {
+    if (root == 0) return;
+    cout &lt;&lt; root-&gt;data;
+    if (root-&gt;leftChild != 0) {
+        cout &lt;&lt; &quot;(&quot;;
+        for (TreeNode* c = root-&gt;leftChild; c != 0; c = c-&gt;rightSibling) {
+            PrintList(c);
+            if (c-&gt;rightSibling != 0) cout &lt;&lt; &quot;,&quot;;
+        }
+        cout &lt;&lt; &quot;)&quot;;
+    }
+}
+
+// Postorder：先走完所有 child subtree，再印自己
+void Postorder(TreeNode* root) {
+    if (root == 0) return;
+    for (TreeNode* c = root-&gt;leftChild; c != 0; c = c-&gt;rightSibling) Postorder(c);
+    cout &lt;&lt; root-&gt;data &lt;&lt; &#x27; &#x27;;
+}
+
+// Levelorder：仍使用 queue，但節點關係採講義 leftChild / rightSibling
+void Levelorder(TreeNode* root) {
+    if (root == 0) return;
+    queue&lt;TreeNode*&gt; q;
+    q.push(root);
+    while (!q.empty()) {
+        TreeNode* x = q.front(); q.pop();
+        cout &lt;&lt; x-&gt;data &lt;&lt; &#x27; &#x27;;
+        for (TreeNode* c = x-&gt;leftChild; c != 0; c = c-&gt;rightSibling) q.push(c);
+    }
+}
+
+int main() {
+    // 建立 T1：1 的 children 為 2, 3, 4；4 的 child 為 5
+    TreeNode* root = new TreeNode(1);
+    TreeNode* n2 = new TreeNode(2);
+    TreeNode* n3 = new TreeNode(3);
+    TreeNode* n4 = new TreeNode(4);
+    TreeNode* n5 = new TreeNode(5);
+
+    AddChild(root, n2);
+    AddChild(root, n3);
+    AddChild(root, n4);
+    AddChild(n4, n5);
+
+    cout &lt;&lt; &quot;List 表示法: &quot;;
+    PrintList(root);
+    cout &lt;&lt; &quot;\nPostorder: &quot;;
+    Postorder(root);
+    cout &lt;&lt; &quot;\nLevelorder: &quot;;
+    Levelorder(root);
+    cout &lt;&lt; &quot;\nDegree-two tree 結構: leftChild = 第一個孩子, rightSibling = 下一個兄弟\n&quot;;
+    return 0;
+}</code></pre></div>
+<h3>輸出結果</h3><pre>List 表示法: 1(2,3,4(5))
+Postorder: 2 3 5 4 1
+Level-order: 1 2 3 4 5</pre>
+<h3>函式說明</h3><table><thead><tr><th>函式</th><th>用途</th></tr></thead><tbody><tr><td><code>postorder</code></td><td>遞迴做後序走訪：子樹先、根最後</td></tr><tr><td><code>levelorder</code></td><td>使用 queue 做階層走訪</td></tr><tr><td><code>printList</code></td><td>輸出廣義表 / parenthesization 表示法</td></tr><tr><td><code>main</code></td><td>建立範例樹並印出答案</td></tr></tbody></table>
+<h3>變數 / 結構說明</h3><table><thead><tr><th>名稱</th><th>說明</th></tr></thead><tbody><tr><td><code>Node</code></td><td>一般樹節點，包含 data 與 children</td></tr><tr><td><code>data</code></td><td>節點編號或資料值</td></tr><tr><td><code>children</code></td><td>目前節點的所有孩子指標</td></tr><tr><td><code>q</code></td><td>Level-order 用的佇列</td></tr><tr><td><code>cur</code></td><td>目前從佇列取出的節點</td></tr></tbody></table>
+<h3>程式流程圖</h3><div class="svgbox"><svg style="max-width:900px;background:#fff;border:1px solid #dbe4f0;border-radius:12px" viewbox="0 0 860 434" width="100%"><defs><marker id="arrow" markerheight="10" markerwidth="10" orient="auto" refx="5" refy="3"><path d="M0,0 L0,6 L6,3 z" fill="#334155"></path></marker></defs><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="20"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="47">開始</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="62" y2="78"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="84"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="111">建立節點與 children 關係</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="126" y2="142"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="148"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="175">呼叫 printList 輸出廣義表</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="190" y2="206"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="212"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="239">呼叫 postorder 先子後根</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="254" y2="270"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="276"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="303">呼叫 levelorder 使用 queue</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="318" y2="334"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="340"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="367">輸出結果並結束</text></svg></div>
+</div></div></details><details class="card"><summary>Q7(d) 插入 H 到 A 的右子節點後 <span class="tag">第 18 張截圖</span></summary><div class="content"><div class="bgknow"><h3>本題必備背景知識</h3><p>作答前請先確認題目中的資料結構定義、指標或陣列索引方式，以及題目要求的是圖形、陣列狀態、程式填空還是時間複雜度。資料結構考題通常不是只要最後答案，還要能說明每一步為什麼這樣更新。</p></div><img alt="Q7(d) 插入 H 到 A 的右子節點後 第 18 張截圖" class="qimg" src="assets/q18_crop.jpg"/><div class="ans"><h3>完整答案</h3><p>將 H 插入為 A 的 right child，原本 A 的右子樹 F 變成 H 的 right child；H 沒有 left child，所以 H 的左 thread 指向 A。</p><p class="formula">插入後 Inorder = C D B A H G E F</p><table><tr><th>節點</th><th>left child / thread</th><th>right child / thread</th></tr><tr><td>A</td><td>left child = B</td><td>right child = H</td></tr><tr><td>H</td><td>leftThread → A</td><td>right child = F</td></tr><tr><td>F</td><td>left child = E</td><td>rightThread → head</td></tr><tr><td>E</td><td>left child = G</td><td>rightThread → F</td></tr><tr><td>G</td><td>leftThread → H</td><td>rightThread → E</td></tr></table></div><h3>為什麼是 CDBAHGEF？</h3><ul><li>A 的左子樹 inorder 仍為 C D B。</li><li>拜訪 A 後，進入 A 的新右子樹 H。</li><li>H 沒有左子樹，所以先拜訪 H。</li><li>H 的右子樹是原本的 F 子樹，其 inorder 為 G E F。</li><li>合併得到 C D B A H G E F。</li></ul>
+<div class="program-section added-program-block">
+<h2>完整程式範例：樹 / 森林表示法、Postorder、Level-order、Degree-two Tree</h2>
+<p class="small">此區塊為新增補充，原本題目、解答、規格與版面內容未刪除。</p>
+<div class="box key"><b>線上 C++ 編輯器：</b>
+<a href="https://www.onlinegdb.com/online_c++_compiler" target="_blank">OnlineGDB</a> ｜
+    <a href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank">Programiz</a> ｜
+    <a href="https://cpp.sh/" target="_blank">cpp.sh</a>
+</div>
+<div class="code-wrap"><button class="copy-code" type="button">複製程式</button><pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;queue&gt;
+using namespace std;
+
+// 講義結構優先：一般樹 / 森林採用 left-child right-sibling 表示法
+// leftChild  指向第一個孩子
+// rightSibling 指向下一個兄弟
+class TreeNode {
+public:
+    int data;                 // 節點資料
+    TreeNode* leftChild;      // 第一個孩子，對應 degree-two tree 的 left link
+    TreeNode* rightSibling;   // 下一個兄弟，對應 degree-two tree 的 right link
+
+    TreeNode(int x) : data(x), leftChild(0), rightSibling(0) {}
+};
+
+// AddChild：把 child 接到 parent 的孩子串列最後面，保持原本兄弟順序
+void AddChild(TreeNode* parent, TreeNode* child) {
+    if (!parent || !child) return;
+    if (parent-&gt;leftChild == 0) {
+        parent-&gt;leftChild = child;
+        return;
+    }
+    TreeNode* p = parent-&gt;leftChild;
+    while (p-&gt;rightSibling != 0) p = p-&gt;rightSibling;
+    p-&gt;rightSibling = child;
+}
+
+// 講義 list 表示法：root(child1, child2, ...)
+void PrintList(TreeNode* root) {
+    if (root == 0) return;
+    cout &lt;&lt; root-&gt;data;
+    if (root-&gt;leftChild != 0) {
+        cout &lt;&lt; &quot;(&quot;;
+        for (TreeNode* c = root-&gt;leftChild; c != 0; c = c-&gt;rightSibling) {
+            PrintList(c);
+            if (c-&gt;rightSibling != 0) cout &lt;&lt; &quot;,&quot;;
+        }
+        cout &lt;&lt; &quot;)&quot;;
+    }
+}
+
+// Postorder：先走完所有 child subtree，再印自己
+void Postorder(TreeNode* root) {
+    if (root == 0) return;
+    for (TreeNode* c = root-&gt;leftChild; c != 0; c = c-&gt;rightSibling) Postorder(c);
+    cout &lt;&lt; root-&gt;data &lt;&lt; &#x27; &#x27;;
+}
+
+// Levelorder：仍使用 queue，但節點關係採講義 leftChild / rightSibling
+void Levelorder(TreeNode* root) {
+    if (root == 0) return;
+    queue&lt;TreeNode*&gt; q;
+    q.push(root);
+    while (!q.empty()) {
+        TreeNode* x = q.front(); q.pop();
+        cout &lt;&lt; x-&gt;data &lt;&lt; &#x27; &#x27;;
+        for (TreeNode* c = x-&gt;leftChild; c != 0; c = c-&gt;rightSibling) q.push(c);
+    }
+}
+
+int main() {
+    // 建立 T1：1 的 children 為 2, 3, 4；4 的 child 為 5
+    TreeNode* root = new TreeNode(1);
+    TreeNode* n2 = new TreeNode(2);
+    TreeNode* n3 = new TreeNode(3);
+    TreeNode* n4 = new TreeNode(4);
+    TreeNode* n5 = new TreeNode(5);
+
+    AddChild(root, n2);
+    AddChild(root, n3);
+    AddChild(root, n4);
+    AddChild(n4, n5);
+
+    cout &lt;&lt; &quot;List 表示法: &quot;;
+    PrintList(root);
+    cout &lt;&lt; &quot;\nPostorder: &quot;;
+    Postorder(root);
+    cout &lt;&lt; &quot;\nLevelorder: &quot;;
+    Levelorder(root);
+    cout &lt;&lt; &quot;\nDegree-two tree 結構: leftChild = 第一個孩子, rightSibling = 下一個兄弟\n&quot;;
+    return 0;
+}</code></pre></div>
+<h3>輸出結果</h3><pre>List 表示法: 1(2,3,4(5))
+Postorder: 2 3 5 4 1
+Level-order: 1 2 3 4 5</pre>
+<h3>函式說明</h3><table><thead><tr><th>函式</th><th>用途</th></tr></thead><tbody><tr><td><code>postorder</code></td><td>遞迴做後序走訪：子樹先、根最後</td></tr><tr><td><code>levelorder</code></td><td>使用 queue 做階層走訪</td></tr><tr><td><code>printList</code></td><td>輸出廣義表 / parenthesization 表示法</td></tr><tr><td><code>main</code></td><td>建立範例樹並印出答案</td></tr></tbody></table>
+<h3>變數 / 結構說明</h3><table><thead><tr><th>名稱</th><th>說明</th></tr></thead><tbody><tr><td><code>Node</code></td><td>一般樹節點，包含 data 與 children</td></tr><tr><td><code>data</code></td><td>節點編號或資料值</td></tr><tr><td><code>children</code></td><td>目前節點的所有孩子指標</td></tr><tr><td><code>q</code></td><td>Level-order 用的佇列</td></tr><tr><td><code>cur</code></td><td>目前從佇列取出的節點</td></tr></tbody></table>
+<h3>程式流程圖</h3><div class="svgbox"><svg style="max-width:900px;background:#fff;border:1px solid #dbe4f0;border-radius:12px" viewbox="0 0 860 434" width="100%"><defs><marker id="arrow" markerheight="10" markerwidth="10" orient="auto" refx="5" refy="3"><path d="M0,0 L0,6 L6,3 z" fill="#334155"></path></marker></defs><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="20"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="47">開始</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="62" y2="78"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="84"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="111">建立節點與 children 關係</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="126" y2="142"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="148"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="175">呼叫 printList 輸出廣義表</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="190" y2="206"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="212"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="239">呼叫 postorder 先子後根</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="254" y2="270"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="276"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="303">呼叫 levelorder 使用 queue</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="318" y2="334"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="340"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="367">輸出結果並結束</text></svg></div>
+</div></div></details><details class="card"><summary>Q8 ChainIterator：postdecrement / predecrement <span class="tag">第 19 張截圖</span></summary><div class="content"><div class="bgknow"><h3>本題必備背景知識：Linked List、Iterator 與 Circular List</h3>
+<p>Singly linked list 的每個節點只有 data 與 link，link 指向下一個節點。因為沒有 prev 指標，所以 iterator 若要做 <span class="mono">--</span> 往前移動，通常必須從 first 開始掃描，找到目前 current 的前一個節點，時間複雜度是 Θ(n)。</p>
+<p>Postdecrement <span class="mono">it--</span> 的語意是「先回傳舊 iterator，再把 iterator 往前移」；predecrement <span class="mono">--it</span> 則是「先移動，再回傳自己」。Circular list 的尾端插入要特別注意 last 的定義：若 last 指向最後一個節點，插入時通常先讓 newNode 接到原本第一個節點，再讓原 last 接到 newNode，最後更新 last。</p>
+<p>填空題一定要注意更新順序，先保存舊指標再改 link，避免失去原本的節點鏈。</p></div><img alt="Q8 ChainIterator：postdecrement / predecrement 第 19 張截圖" class="qimg" src="assets/q19_crop.jpg"/><div class="ans"><h3>完整填空答案</h3><table><tr><th>空格</th><th>答案</th><th>理由</th></tr><tr><td>[A]</td><td>current == first 或 current == 0</td><td>若 iterator 在開頭或空位置，不能再往前。實際類別可能用 current==nullptr。</td></tr><tr><td>[B]</td><td>p-&gt;link != current</td><td>找 current 的前一個節點。</td></tr><tr><td>[C]</td><td>p = p-&gt;link</td><td>沿 linked list 往後掃。</td></tr><tr><td>[D]</td><td>old</td><td>後置遞減要回傳遞減前的 iterator。</td></tr><tr><td>[E]</td><td>current = p</td><td>真正把目前 iterator 移到前一個節點。</td></tr></table></div><button class="copy" onclick="copyCode(this)">Copy Code</button><pre><code>ChainIterator operator--(int) {      // postdecrement
+    if (current == nullptr) throw "empty iterator";
+    ChainIterator old = *this;      // 保留舊值，因為後置--要回傳舊狀態
+    ChainNode&lt;T&gt;* p = first;
+    while (p != nullptr &amp;&amp; p-&gt;link != current) {
+        p = p-&gt;link;
+    }
+    current = p;                    // 移到前一個節點
+    return old;
+}</code></pre><h3>重點</h3><ul><li>Postdecrement：先保留 this，移動 current，最後回傳舊值。</li><li>Predecrement：移動 current 後回傳 *this，因此回傳型態通常是 reference。</li><li>Singly linked list 沒有 prev pointer，所以 -- 需要從 first 開始找前驅，時間 Θ(n)。</li></ul>
+<div class="program-section added-program-block">
+<h2>完整程式範例：Linked List / ChainIterator / 尾端插入</h2>
+<p class="small">此區塊為新增補充，原本題目、解答、規格與版面內容未刪除。</p>
+<div class="box key"><b>線上 C++ 編輯器：</b>
+<a href="https://www.onlinegdb.com/online_c++_compiler" target="_blank">OnlineGDB</a> ｜
+    <a href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank">Programiz</a> ｜
+    <a href="https://cpp.sh/" target="_blank">cpp.sh</a>
+</div>
+<div class="code-wrap"><button class="copy-code" type="button">複製程式</button><pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+// 講義結構優先：ChainNode + Chain + ChainIterator，並用 friend 存取 private link/data
+template &lt;class T&gt; class Chain;
+template &lt;class T&gt; class ChainIterator;
+
+template &lt;class T&gt;
+class ChainNode {
+    friend class Chain&lt;T&gt;;
+    friend class ChainIterator&lt;T&gt;;
+private:
+    T data;
+    ChainNode&lt;T&gt;* link;
+};
+
+template &lt;class T&gt;
+class Chain {
+    friend class ChainIterator&lt;T&gt;;
+private:
+    ChainNode&lt;T&gt;* first;
+public:
+    Chain() : first(0) {}
+
+    void InsertBack(const T&amp; e) {
+        ChainNode&lt;T&gt;* x = new ChainNode&lt;T&gt;;
+        x-&gt;data = e;
+        x-&gt;link = 0;
+        if (first == 0) first = x;
+        else {
+            ChainNode&lt;T&gt;* p = first;
+            while (p-&gt;link != 0) p = p-&gt;link;
+            p-&gt;link = x;
+        }
+    }
+
+    void Print() const {
+        for (ChainNode&lt;T&gt;* p = first; p != 0; p = p-&gt;link) cout &lt;&lt; p-&gt;data &lt;&lt; &#x27; &#x27;;
+        cout &lt;&lt; &quot;\n&quot;;
+    }
+};
+
+template &lt;class T&gt;
+class ChainIterator {
+private:
+    ChainNode&lt;T&gt;* current;
+public:
+    ChainIterator(Chain&lt;T&gt;&amp; c) : current(c.first) {}
+    bool NotNull() const { return current != 0; }
+    T&amp; operator*() const { return current-&gt;data; }
+    ChainIterator&lt;T&gt;&amp; operator++() {
+        current = current-&gt;link;
+        return *this;
+    }
+};
+
+int main() {
+    Chain&lt;int&gt; c;
+    c.InsertBack(10);
+    c.InsertBack(20);
+    c.InsertBack(30);
+
+    cout &lt;&lt; &quot;Chain 內容: &quot;;
+    c.Print();
+
+    cout &lt;&lt; &quot;Iterator 走訪: &quot;;
+    for (ChainIterator&lt;int&gt; it(c); it.NotNull(); ++it) cout &lt;&lt; *it &lt;&lt; &#x27; &#x27;;
+    cout &lt;&lt; &quot;\n&quot;;
+    return 0;
+}</code></pre></div>
+<h3>輸出結果</h3><pre>尾端插入後串列: 10 20 30</pre>
+<h3>函式說明</h3><table><thead><tr><th>函式</th><th>用途</th></tr></thead><tbody><tr><td><code>pushBack</code></td><td>將資料插入串列尾端</td></tr><tr><td><code>print</code></td><td>由 first 開始逐一輸出節點</td></tr><tr><td><code>main</code></td><td>建立串列並測試尾端插入</td></tr></tbody></table>
+<h3>變數 / 結構說明</h3><table><thead><tr><th>名稱</th><th>說明</th></tr></thead><tbody><tr><td><code>first</code></td><td>串列第一個節點</td></tr><tr><td><code>last</code></td><td>串列最後一個節點，方便 O(1) 尾端插入</td></tr><tr><td><code>newNode</code></td><td>新配置的節點</td></tr><tr><td><code>link</code></td><td>指向下一個節點的指標</td></tr><tr><td><code>p</code></td><td>走訪串列用指標</td></tr></tbody></table>
+<h3>程式流程圖</h3><div class="svgbox"><svg style="max-width:900px;background:#fff;border:1px solid #dbe4f0;border-radius:12px" viewbox="0 0 860 562" width="100%"><defs><marker id="arrow" markerheight="10" markerwidth="10" orient="auto" refx="5" refy="3"><path d="M0,0 L0,6 L6,3 z" fill="#334155"></path></marker></defs><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="20"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="47">開始</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="62" y2="78"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="84"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="111">建立空 Chain</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="126" y2="142"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="148"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="175">配置 newNode</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="190" y2="206"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="212"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="239">若串列空則 first=last=newNode</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="254" y2="270"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="276"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="303">否則 last-&gt;link=newNode</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="318" y2="334"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="340"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="367">更新 last</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="382" y2="398"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="404"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="431">印出串列</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="446" y2="462"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="468"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="495">結束</text></svg></div>
+</div></div></details><details class="card"><summary>Q9 Linked List 尾端插入：newNode-&gt;link、last-&gt;link、last 更新 <span class="tag">第 20 張截圖</span></summary><div class="content"><div class="bgknow"><h3>本題必備背景知識：Linked List、Iterator 與 Circular List</h3>
+<p>Singly linked list 的每個節點只有 data 與 link，link 指向下一個節點。因為沒有 prev 指標，所以 iterator 若要做 <span class="mono">--</span> 往前移動，通常必須從 first 開始掃描，找到目前 current 的前一個節點，時間複雜度是 Θ(n)。</p>
+<p>Postdecrement <span class="mono">it--</span> 的語意是「先回傳舊 iterator，再把 iterator 往前移」；predecrement <span class="mono">--it</span> 則是「先移動，再回傳自己」。Circular list 的尾端插入要特別注意 last 的定義：若 last 指向最後一個節點，插入時通常先讓 newNode 接到原本第一個節點，再讓原 last 接到 newNode，最後更新 last。</p>
+<p>填空題一定要注意更新順序，先保存舊指標再改 link，避免失去原本的節點鏈。</p></div><img alt="Q9 Linked List 尾端插入：newNode-&gt;link、last-&gt;link、last 更新 第 20 張截圖" class="qimg" src="assets/q20_crop.jpg"/><div class="ans"><h3>完整填空答案</h3><table><tr><th>空格</th><th>答案</th></tr><tr><td>[F]</td><td>newNode-&gt;link = last;</td></tr><tr><td>[G]</td><td>last-&gt;link = newNode;</td></tr><tr><td>[H]</td><td>last = newNode;</td></tr></table><p>此題圖形顯示 last 指向尾節點，而尾節點 link 會回到第一個節點或 header/data 節點，屬於 circular list 的尾端插入概念。</p></div><h3>步驟說明</h3><ul><li>newNode 先接到原本 last 後面應該接的節點，避免斷鏈。</li><li>再令原本 last-&gt;link 指向 newNode。</li><li>最後更新 last，使 last 指向新尾節點。</li><li>順序不能顛倒；若先改 last，會失去原本尾節點。</li></ul><button class="copy" onclick="copyCode(this)">Copy Code</button><pre><code>// 尾端插入 newNode
+newNode-&gt;link = last-&gt;link;  // 若圖中 last-&gt;link 指回 first/header，則先接回去
+last-&gt;link = newNode;
+last = newNode;</code></pre><div class="warn">依照截圖右側投影片標示，[F] 寫成 newNode-&gt;link = last；若你的原始題目採 header circular list，程式實作常見寫法會是 newNode-&gt;link = last-&gt;link。考試時要以題目圖上 last 的定義為準。</div>
+<div class="program-section added-program-block">
+<h2>完整程式範例：Linked List / ChainIterator / 尾端插入</h2>
+<p class="small">此區塊為新增補充，原本題目、解答、規格與版面內容未刪除。</p>
+<div class="box key"><b>線上 C++ 編輯器：</b>
+<a href="https://www.onlinegdb.com/online_c++_compiler" target="_blank">OnlineGDB</a> ｜
+    <a href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank">Programiz</a> ｜
+    <a href="https://cpp.sh/" target="_blank">cpp.sh</a>
+</div>
+<div class="code-wrap"><button class="copy-code" type="button">複製程式</button><pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+// 講義結構優先：ChainNode + Chain + ChainIterator，並用 friend 存取 private link/data
+template &lt;class T&gt; class Chain;
+template &lt;class T&gt; class ChainIterator;
+
+template &lt;class T&gt;
+class ChainNode {
+    friend class Chain&lt;T&gt;;
+    friend class ChainIterator&lt;T&gt;;
+private:
+    T data;
+    ChainNode&lt;T&gt;* link;
+};
+
+template &lt;class T&gt;
+class Chain {
+    friend class ChainIterator&lt;T&gt;;
+private:
+    ChainNode&lt;T&gt;* first;
+public:
+    Chain() : first(0) {}
+
+    void InsertBack(const T&amp; e) {
+        ChainNode&lt;T&gt;* x = new ChainNode&lt;T&gt;;
+        x-&gt;data = e;
+        x-&gt;link = 0;
+        if (first == 0) first = x;
+        else {
+            ChainNode&lt;T&gt;* p = first;
+            while (p-&gt;link != 0) p = p-&gt;link;
+            p-&gt;link = x;
+        }
+    }
+
+    void Print() const {
+        for (ChainNode&lt;T&gt;* p = first; p != 0; p = p-&gt;link) cout &lt;&lt; p-&gt;data &lt;&lt; &#x27; &#x27;;
+        cout &lt;&lt; &quot;\n&quot;;
+    }
+};
+
+template &lt;class T&gt;
+class ChainIterator {
+private:
+    ChainNode&lt;T&gt;* current;
+public:
+    ChainIterator(Chain&lt;T&gt;&amp; c) : current(c.first) {}
+    bool NotNull() const { return current != 0; }
+    T&amp; operator*() const { return current-&gt;data; }
+    ChainIterator&lt;T&gt;&amp; operator++() {
+        current = current-&gt;link;
+        return *this;
+    }
+};
+
+int main() {
+    Chain&lt;int&gt; c;
+    c.InsertBack(10);
+    c.InsertBack(20);
+    c.InsertBack(30);
+
+    cout &lt;&lt; &quot;Chain 內容: &quot;;
+    c.Print();
+
+    cout &lt;&lt; &quot;Iterator 走訪: &quot;;
+    for (ChainIterator&lt;int&gt; it(c); it.NotNull(); ++it) cout &lt;&lt; *it &lt;&lt; &#x27; &#x27;;
+    cout &lt;&lt; &quot;\n&quot;;
+    return 0;
+}</code></pre></div>
+<h3>輸出結果</h3><pre>尾端插入後串列: 10 20 30</pre>
+<h3>函式說明</h3><table><thead><tr><th>函式</th><th>用途</th></tr></thead><tbody><tr><td><code>pushBack</code></td><td>將資料插入串列尾端</td></tr><tr><td><code>print</code></td><td>由 first 開始逐一輸出節點</td></tr><tr><td><code>main</code></td><td>建立串列並測試尾端插入</td></tr></tbody></table>
+<h3>變數 / 結構說明</h3><table><thead><tr><th>名稱</th><th>說明</th></tr></thead><tbody><tr><td><code>first</code></td><td>串列第一個節點</td></tr><tr><td><code>last</code></td><td>串列最後一個節點，方便 O(1) 尾端插入</td></tr><tr><td><code>newNode</code></td><td>新配置的節點</td></tr><tr><td><code>link</code></td><td>指向下一個節點的指標</td></tr><tr><td><code>p</code></td><td>走訪串列用指標</td></tr></tbody></table>
+<h3>程式流程圖</h3><div class="svgbox"><svg style="max-width:900px;background:#fff;border:1px solid #dbe4f0;border-radius:12px" viewbox="0 0 860 562" width="100%"><defs><marker id="arrow" markerheight="10" markerwidth="10" orient="auto" refx="5" refy="3"><path d="M0,0 L0,6 L6,3 z" fill="#334155"></path></marker></defs><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="20"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="47">開始</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="62" y2="78"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="84"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="111">建立空 Chain</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="126" y2="142"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="148"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="175">配置 newNode</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="190" y2="206"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="212"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="239">若串列空則 first=last=newNode</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="254" y2="270"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="276"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="303">否則 last-&gt;link=newNode</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="318" y2="334"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="340"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="367">更新 last</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="382" y2="398"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="404"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="431">印出串列</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="446" y2="462"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="468"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="495">結束</text></svg></div>
+</div></div></details><details class="card"><summary>Q10 Available Space Lists：回收節點與配置節點 <span class="tag">第 21 張截圖</span></summary><div class="content"><div class="bgknow"><h3>本題必備背景知識：Available Space List / Static Linked List</h3>
+<p>Available space list 是用陣列模擬動態記憶體配置的技術。每個陣列格子通常有 data 與 link 欄位；正在使用的節點由 first 串起來，未使用的節點由 avail 串起來。當需要新節點時，從 avail 的開頭取出；當刪除節點時，把該節點接回 avail 的開頭。</p>
+<p>配置節點的標準動作是 <span class="mono">p = avail; avail = link[p];</span>；釋放節點的標準動作是 <span class="mono">link[p] = avail; avail = p;</span>。這些操作都可以在 Θ(1) 完成，但前提是指標更新順序正確，否則會斷鏈或形成 cycle。</p>
+<p>作答時要同時畫出 first chain 與 avail chain，並用表格列出每個 index 的 link，才能完整檢查是否有節點重複使用。</p></div><img alt="Q10 Available Space Lists：回收節點與配置節點 第 21 張截圖" class="qimg" src="assets/q21_crop.jpg"/><div class="ans"><h3>完整答案</h3><table><tr><th>動作</th><th>指標更新</th><th>意義</th></tr><tr><td>配置節點</td><td>p = avail; avail = link[p];</td><td>從 available list 拿出第一個空節點。</td></tr><tr><td>釋放節點</td><td>link[p] = avail; avail = p;</td><td>把 p 接到 available list 的最前面。</td></tr><tr><td>檢查</td><td>主串列與 avail list 不重疊</td><td>避免同一節點被使用兩次。</td></tr></table></div><h3>考試重點</h3><ul><li>Available list 是把未使用陣列格子用 link 串起來。</li><li>這是用陣列模擬動態記憶體配置的方法。</li><li>配置與釋放都可以做到 Θ(1)。</li><li>若 avail=0 代表沒有空節點。</li></ul><button class="copy" onclick="copyCode(this)">Copy Code</button><pre><code>// static linked list 的 free list
+int avail;      // 第一個可用節點
+int link[MAX];  // link[i] 指向下一個節點
+
+int allocateNode(){
+    if(avail == 0) throw "No available node";
+    int p = avail;
+    avail = link[p];
+    return p;
+}
+
+void freeNode(int p){
+    link[p] = avail;
+    avail = p;
+}</code></pre>
+<div class="program-section added-program-block">
+<h2>完整程式範例：Available Space List / Free List 節點配置與回收</h2>
+<p class="small">此區塊為新增補充，原本題目、解答、規格與版面內容未刪除。</p>
+<div class="box key"><b>線上 C++ 編輯器：</b>
+<a href="https://www.onlinegdb.com/online_c++_compiler" target="_blank">OnlineGDB</a> ｜
+    <a href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank">Programiz</a> ｜
+    <a href="https://cpp.sh/" target="_blank">cpp.sh</a>
+</div>
+<div class="code-wrap"><button class="copy-code" type="button">複製程式</button><pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;string&gt;
+using namespace std;
+
+// 講義結構優先：Available Space List 使用 static linked list
+// link[i] 串起所有可用節點；avail 指向第一個可用節點
+const int MAX_SIZE = 8;
+
+class Node {
+public:
+    string data;
+    int link;
+};
+
+class ChainWithAvail {
+private:
+    Node node[MAX_SIZE];
+    int first;   // chain 第一個節點 index，0 表示空
+    int avail;   // available list 第一個節點 index，0 表示沒有空間
+
+public:
+    ChainWithAvail() : first(0), avail(1) {
+        for (int i = 1; i &lt; MAX_SIZE - 1; ++i) node[i].link = i + 1;
+        node[MAX_SIZE - 1].link = 0;
+    }
+
+    int GetNode() {
+        if (avail == 0) throw &quot;No available space&quot;;
+        int x = avail;
+        avail = node[avail].link;
+        node[x].link = 0;
+        return x;
+    }
+
+    void RetNode(int x) {
+        node[x].link = avail;
+        avail = x;
+    }
+
+    void InsertFront(const string&amp; item) {
+        int x = GetNode();
+        node[x].data = item;
+        node[x].link = first;
+        first = x;
+    }
+
+    void DeleteFront() {
+        if (first == 0) return;
+        int x = first;
+        first = node[first].link;
+        RetNode(x);
+    }
+
+    void PrintChain() const {
+        cout &lt;&lt; &quot;chain: &quot;;
+        for (int p = first; p != 0; p = node[p].link) cout &lt;&lt; node[p].data &lt;&lt; &#x27; &#x27;;
+        cout &lt;&lt; &quot;\n&quot;;
+    }
+
+    void PrintAvail() const {
+        cout &lt;&lt; &quot;avail: &quot;;
+        for (int p = avail; p != 0; p = node[p].link) cout &lt;&lt; p &lt;&lt; &#x27; &#x27;;
+        cout &lt;&lt; &quot;\n&quot;;
+    }
+};
+
+int main() {
+    ChainWithAvail c;
+    c.InsertFront(&quot;HAT&quot;);
+    c.InsertFront(&quot;FAT&quot;);
+    c.InsertFront(&quot;EAT&quot;);
+    c.PrintChain();
+    c.PrintAvail();
+
+    c.DeleteFront();
+    c.PrintChain();
+    c.PrintAvail();
+    return 0;
+}</code></pre></div>
+<h3>輸出結果</h3><pre>avail list: 0 1 2 3 4
+配置節點: 0, 1
+avail list: 2 3 4
+回收節點 0 後
+avail list: 0 2 3 4</pre>
+<h3>函式說明</h3><table><thead><tr><th>函式</th><th>用途</th></tr></thead><tbody><tr><td><code>getNode</code></td><td>從 avail list 取出一個節點</td></tr><tr><td><code>freeNode</code></td><td>把節點接回 avail list 前端</td></tr><tr><td><code>printAvail</code></td><td>印出可用串列</td></tr><tr><td><code>main</code></td><td>示範配置與回收</td></tr></tbody></table>
+<h3>變數 / 結構說明</h3><table><thead><tr><th>名稱</th><th>說明</th></tr></thead><tbody><tr><td><code>pool</code></td><td>用陣列模擬記憶體池</td></tr><tr><td><code>avail</code></td><td>available list 的起點</td></tr><tr><td><code>link</code></td><td>下一個可用節點索引</td></tr><tr><td><code>p</code></td><td>目前配置或回收的節點索引</td></tr><tr><td><code>data</code></td><td>節點資料</td></tr></tbody></table>
+<h3>程式流程圖</h3><div class="svgbox"><svg style="max-width:900px;background:#fff;border:1px solid #dbe4f0;border-radius:12px" viewbox="0 0 860 562" width="100%"><defs><marker id="arrow" markerheight="10" markerwidth="10" orient="auto" refx="5" refy="3"><path d="M0,0 L0,6 L6,3 z" fill="#334155"></path></marker></defs><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="20"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="47">開始</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="62" y2="78"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="84"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="111">初始化所有節點到 avail list</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="126" y2="142"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="148"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="175">getNode 取出 avail 第一個節點</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="190" y2="206"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="212"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="239">avail 移到下一個節點</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="254" y2="270"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="276"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="303">使用完畢後 freeNode</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="318" y2="334"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="340"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="367">回收節點接回 avail 前端</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="382" y2="398"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="404"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="431">印出狀態</text><line marker-end="url(#arrow)" stroke="#334155" stroke-width="2" x1="430.0" x2="430.0" y1="446" y2="462"></line><rect fill="#eff6ff" height="42" rx="12" stroke="#2563eb" stroke-width="2" width="340" x="260" y="468"></rect><text fill="#1f2937" font-family="Microsoft JhengHei,Arial" font-size="16" text-anchor="middle" x="430.0" y="495">結束</text></svg></div>
+</div></div></details></main><script>function copyCode(btn){const code=btn.nextElementSibling.innerText;navigator.clipboard.writeText(code);btn.innerText='Copied';setTimeout(()=>btn.innerText='Copy Code',900);}</script>
+<script>
+document.addEventListener('click', function(e){
+  if(e.target.classList && e.target.classList.contains('copy-code')){
+    const code=e.target.parentElement.querySelector('code').innerText;
+    navigator.clipboard.writeText(code).then(()=>{const old=e.target.innerText;e.target.innerText='已複製';setTimeout(()=>e.target.innerText=old,1200);});
+  }
+});
+</script>
+</body></html>

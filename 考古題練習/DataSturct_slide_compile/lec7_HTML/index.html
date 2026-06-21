@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+
+<html lang="zh-Hant"><head><meta charset="utf-8"/><title>lec7 Sorting SVG Animation</title><style>
+body{font-family:Arial,'Microsoft JhengHei',sans-serif;background:#f3f7fb;margin:0;color:#102030}header{background:#17324d;color:white;padding:24px 36px}main{padding:22px}.topic{background:white;border:1px solid #c8d8e8;border-radius:12px;margin:18px 0;overflow:hidden}summary{font-size:24px;font-weight:800;padding:18px 24px;background:#eaf4ff;cursor:pointer}.desc{margin:16px 24px;padding:16px 20px;background:#fff9e6;border-left:6px solid #e0a800;border-radius:10px;line-height:1.8}.anim{background:#eef9ff;border-left-color:#2f78c4}.player{margin:20px 24px}.controls{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:14px}button,select{font-size:16px;padding:8px 12px;border-radius:8px;border:1px solid #8baed0;background:white}.frame{width:100%;max-width:1140px;border:1px solid #c8d8e8;border-radius:10px;background:white;display:block}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin:20px 24px}.grid img{width:100%;border:1px solid #c8d8e8;border-radius:8px}figcaption{font-size:13px;word-break:break-all}
+.code-section{background:#f8fbff;border-left-color:#495057}.code-section pre{background:#102030;color:#f7f7f7;padding:16px;border-radius:10px;overflow:auto;line-height:1.55}.explain-table{width:100%;border-collapse:collapse;background:white;margin:10px 0}.explain-table th,.explain-table td{border:1px solid #b8c7d9;padding:10px;text-align:left}.explain-table th{background:#eaf4ff}
+.editor-bar{margin:18px 22px 0;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.editor-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:999px;text-decoration:none;font-weight:800;color:white;background:linear-gradient(135deg,#1f6fbf,#17324d);box-shadow:0 6px 14px rgba(23,50,77,.22);transition:.18s transform,.18s box-shadow,.18s filter}
+.editor-btn:hover{transform:translateY(-2px);box-shadow:0 10px 20px rgba(23,50,77,.28);filter:brightness(1.06)}
+.editor-btn:nth-child(2){background:linear-gradient(135deg,#16a34a,#0f766e)}
+.editor-btn:nth-child(3){background:linear-gradient(135deg,#f59e0b,#d35400)}
+.copy-code-btn{float:right;margin:0 0 10px 12px;border:0;border-radius:999px;background:linear-gradient(135deg,#2563eb,#1e40af);color:#fff;font-weight:800;padding:9px 16px;cursor:pointer;box-shadow:0 5px 12px rgba(37,99,235,.25);transition:.18s transform,.18s box-shadow,.18s filter}
+.copy-code-btn:hover{transform:translateY(-1px);box-shadow:0 8px 18px rgba(37,99,235,.32);filter:brightness(1.06)}
+.copy-code-btn.copied{background:linear-gradient(135deg,#16a34a,#15803d)}
+</style></head><body><header><h1>lec7 Sorting：C++ 產生 SVG 動畫、PowerShell 產生 HTML</h1></header><div class="editor-bar"><a class="editor-btn" href="https://www.onlinegdb.com/online_c++_compiler" rel="noopener" target="_blank">▶ OnlineGDB C++</a><a class="editor-btn" href="https://www.programiz.com/cpp-programming/online-compiler/" rel="noopener" target="_blank">⚡ Programiz C++</a><a class="editor-btn" href="https://cpp.sh/" rel="noopener" target="_blank">⌘ cpp.sh</a></div><main><details class="topic" open=""><summary>01 Sorting Problem</summary><div class="desc"><h3>非常詳細主題說明</h3><p>說明排序問題的輸入是一組 records，每筆資料有 key，輸出必須依 key 形成非遞減順序。動畫用資料列、key 標示與結果區分，強調排序不一定只移動單一數字，而是以 key 決定 record 的相對順序。</p></div><div class="desc topic-extra"><h3>主題補充說明</h3>
+<h4>一、主題背景</h4><p>Sorting Problem 的核心是把一組資料依照 key value 排成非遞減順序。投影片強調輸入不是只有單純整數，也可以是 record；真正被比較的是 key，而輸出是資料的重新排列結果。這個主題是所有排序演算法的共同起點，後面的 Bubble、Selection、Insertion、Merge、Quick 都是在解決同一個抽象問題。</p>
+<h4>二、核心概念</h4><ul><li>record</li><li>key value</li><li>permutation</li><li>nondecreasing order</li><li>input / output specification</li><li>排序結果不唯一</li></ul>
+<h4>三、運作原理</h4><p>先定義資料集合，再指定比較依據 key，最後產生一個排列，使所有 key 依照由小到大排列。若有相同 key，排序結果可能不唯一，因此後面會延伸出 stable sorting 的觀念。</p>
+<h4>四、複雜度分析</h4><p>此主題本身是在定義問題，不固定對應某一個時間複雜度；不同演算法會有 O(n²)、O(n log n) 等差異。考試時要先看題目要求的是「排序問題定義」還是「特定排序演算法」。</p>
+<h4>五、優缺點</h4><ul><li>優點：能把所有排序演算法放在同一個規格下比較；容易判斷輸入、輸出與正確性。</li><li>缺點：只定義問題，不說明如何排序；實際效率必須看採用哪一種演算法。</li></ul>
+<h4>六、老師上課重點</h4><p>老師通常會要求學生分清楚 record 與 key，不要把排序看成只是在移動數字。</p>
+<h4>七、期末考重點</h4><p>常考輸入輸出定義、nondecreasing order、相同 key 時輸出不唯一，以及排序結果是否符合規格。</p></div><div class="desc anim"><h3>非常詳細動畫說明</h3><p>本動畫的 SVG frames 是由 C++ 程式 src/01_sorting_problem.cpp 逐張產生，PowerShell generate_auto_html.ps1 只負責掃描 output 目錄並產生 HTML 播放器。每一張 step_XX.svg 都是演算法過程中的一個狀態；紅色代表目前比較、移動或選取的重點，綠色代表已完成或固定的部分，黃色常代表 pivot、minimum、key 等特殊角色。使用上一張/下一張可以逐步檢查，使用播放速度與自動播放可以連續觀察演算法流程。</p></div><div class="player" data-frames='["output/01_sorting_problem_steps/step_01.svg","output/01_sorting_problem_steps/step_02.svg","output/01_sorting_problem_steps/step_03.svg","output/01_sorting_problem_steps/step_04.svg","output/01_sorting_problem_steps/step_05.svg","output/01_sorting_problem_steps/step_06.svg","output/01_sorting_problem_steps/step_07.svg"]'><div class="controls"><button class="prev">上一張</button><button class="next">下一張</button><button class="play">自動播放</button><label>播放速度 <select class="speed"><option value="1800">慢速</option><option selected="" value="1000">正常</option><option value="500">快速</option></select></label><span class="counter">1 / 7</span></div><img class="frame" src="output/01_sorting_problem_steps/step_01.svg"/></div><div class="desc code-section"><h3>完整 C++ 程式碼</h3><button class="copy-code-btn" onclick="copyCodeBlock('cppcode1', this)">📋 複製程式碼</button><pre id="cppcode1">#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+template &lt;class T&gt;
+void BubbleSort(T *a, const int n) {
+    for (int j = n; j &gt; 1; j--)
+        for (int k = 1; k &lt; j; k++)
+            if (a[k+1] &lt; a[k]) swap(a[k+1], a[k]);
+}
+int main(){ int a[6]={0,5,4,1,2,8}; BubbleSort(a,5); for(int i=1;i&lt;=5;i++) cout&lt;&lt;a[i]&lt;&lt;' '; }
+</pre><h3>輸出結果</h3><pre><code>Before sorting: (30, R1) (10, R2) (20, R3)
+After sorting : (10, R2) (20, R3) (30, R1)</code></pre><h3>函式說明</h3><table class="explain-table"><tr><th>函式</th><th>說明</th></tr><tr><td><code>sortRecords(records)</code></td><td>使用 C++ sort 依 key 排序整筆 Record。</td></tr><tr><td><code>printRecords(records)</code></td><td>輸出每筆資料的 key 與 name。</td></tr></table><h3>變數說明</h3><table class="explain-table"><tr><th>變數</th><th>說明</th></tr><tr><td><code>records</code></td><td>待排序的 Record 陣列。</td></tr><tr><td><code>key</code></td><td>排序時真正比較的欄位。</td></tr><tr><td><code>name</code></td><td>資料內容，用來表示 record 不只是單一數字。</td></tr></table></div></details><details class="topic" open=""><summary>02 In-place and Stable Sorting</summary><div class="desc"><h3>非常詳細主題說明</h3><p>說明 in-place 與 stable 的差異：in-place 重點是額外記憶體少，stable 重點是相同 key 的原始先後順序不被破壞。動畫用相同 key 標籤與工作區對照，幫助分辨兩個性質不是同一件事。</p></div><div class="desc topic-extra"><h3>主題補充說明</h3>
+<h4>一、主題背景</h4><p>In-place 與 Stable 是排序演算法的兩個重要性質。In-place 關心額外空間是否為常數；Stable 關心相同 key 的資料是否保持原本相對順序。這兩個性質常用來比較 Bubble、Insertion、Selection、Merge、Quick 等排序。</p>
+<h4>二、核心概念</h4><ul><li>in-place</li><li>stable sorting</li><li>extra space</li><li>relative order</li><li>identical key</li><li>permutation</li></ul>
+<h4>三、運作原理</h4><p>In-place 排序只允許使用少量額外變數，主要在原陣列中交換或移動元素。Stable 排序在遇到相同 key 時，不會把後出現的資料排到前面資料之前。</p>
+<h4>四、複雜度分析</h4><p>In-place 通常看空間複雜度是否為 O(1)；stable 不一定影響時間複雜度，但若為了穩定性而額外配置陣列，空間可能上升到 O(n)。</p>
+<h4>五、優缺點</h4><ul><li>優點：In-place 節省記憶體；Stable 適合多欄位排序，例如先依姓名排，再依分數排。</li><li>缺點：有些高效率排序不容易同時 in-place 且 stable；強行維持穩定可能讓實作變複雜。</li></ul>
+<h4>六、老師上課重點</h4><p>老師容易考哪個排序是 stable、哪個是 in-place，以及相同 key 的相對位置是否改變。</p>
+<h4>七、期末考重點</h4><p>常考判斷題、表格比較題，或給一串含重複 key 的資料要求判斷排序是否 stable。</p></div><div class="desc anim"><h3>非常詳細動畫說明</h3><p>本動畫的 SVG frames 是由 C++ 程式 src/02_inplace_stable_sorting.cpp 逐張產生，PowerShell generate_auto_html.ps1 只負責掃描 output 目錄並產生 HTML 播放器。每一張 step_XX.svg 都是演算法過程中的一個狀態；紅色代表目前比較、移動或選取的重點，綠色代表已完成或固定的部分，黃色常代表 pivot、minimum、key 等特殊角色。使用上一張/下一張可以逐步檢查，使用播放速度與自動播放可以連續觀察演算法流程。</p></div><div class="player" data-frames='["output/02_inplace_stable_sorting_steps/step_01.svg","output/02_inplace_stable_sorting_steps/step_02.svg","output/02_inplace_stable_sorting_steps/step_03.svg","output/02_inplace_stable_sorting_steps/step_04.svg","output/02_inplace_stable_sorting_steps/step_05.svg","output/02_inplace_stable_sorting_steps/step_06.svg","output/02_inplace_stable_sorting_steps/step_07.svg"]'><div class="controls"><button class="prev">上一張</button><button class="next">下一張</button><button class="play">自動播放</button><label>播放速度 <select class="speed"><option value="1800">慢速</option><option selected="" value="1000">正常</option><option value="500">快速</option></select></label><span class="counter">1 / 7</span></div><img class="frame" src="output/02_inplace_stable_sorting_steps/step_01.svg"/></div><div class="desc code-section"><h3>完整 C++ 程式碼</h3><button class="copy-code-btn" onclick="copyCodeBlock('cppcode2', this)">📋 複製程式碼</button><pre id="cppcode2">#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+template &lt;class T&gt;
+void SelectionSort(T *a, const int n) {
+    for (int i = 1; i &lt; n; i++) {
+        int min = i;
+        for (int j = i+1; j &lt;= n; j++)
+            if (a[j] &lt; a[min]) min = j;
+        swap(a[i], a[min]);
+    }
+}
+int main(){ int a[6]={0,8,5,2,6,1}; SelectionSort(a,5); for(int i=1;i&lt;=5;i++) cout&lt;&lt;a[i]&lt;&lt;' '; }
+</pre><h3>輸出結果</h3><pre><code>Before: 2A 1B 2C 1D
+After : 1B 1D 2A 2C</code></pre><h3>函式說明</h3><table class="explain-table"><tr><th>函式</th><th>說明</th></tr><tr><td><code>stableInsertionSort(a)</code></td><td>用原陣列內部移動完成排序，並保留相同 key 的相對順序。</td></tr><tr><td><code>printItems(a)</code></td><td>印出 key 與 id，方便觀察 stable 性質。</td></tr></table><h3>變數說明</h3><table class="explain-table"><tr><th>變數</th><th>說明</th></tr><tr><td><code>a</code></td><td>待排序陣列。</td></tr><tr><td><code>keyItem</code></td><td>目前要插入到左側已排序區的元素。</td></tr><tr><td><code>j</code></td><td>從 keyItem 左邊往前掃描的位置。</td></tr></table></div></details><details class="topic" open=""><summary>03 Internal vs External Sorting</summary><div class="desc"><h3>非常詳細主題說明</h3><p>說明 internal sorting 是資料可放入主記憶體中排序，external sorting 則需處理磁碟或外部儲存的大量資料。動畫以記憶體區與外部檔案區表示資料搬移。</p></div><div class="desc topic-extra"><h3>主題補充說明</h3>
+<h4>一、主題背景</h4><p>Internal Sorting 指所有資料都能放在主記憶體中處理；External Sorting 則處理資料量太大，必須依賴磁碟或外部儲存。這個主題讓學生理解排序不只看 CPU 比較次數，也要考慮 I/O 成本。</p>
+<h4>二、核心概念</h4><ul><li>internal sorting</li><li>external sorting</li><li>main memory</li><li>disk I/O</li><li>run</li><li>merge</li></ul>
+<h4>三、運作原理</h4><p>內部排序可直接在陣列中比較與交換；外部排序通常先把資料分批排序成 runs，再利用多路合併逐步產生完整排序結果。</p>
+<h4>四、複雜度分析</h4><p>Internal sorting 常分析比較次數與交換次數；External sorting 更重視磁碟讀寫次數。若資料量遠大於記憶體，I/O 成本會主導整體效率。</p>
+<h4>五、優缺點</h4><ul><li>優點：Internal sorting 實作簡單、速度快；External sorting 可處理超大型資料。</li><li>缺點：Internal sorting 受記憶體容量限制；External sorting 實作複雜且 I/O 成本高。</li></ul>
+<h4>六、老師上課重點</h4><p>老師可能會問為什麼資料庫或大型檔案不能只用普通陣列排序。</p>
+<h4>七、期末考重點</h4><p>常考 internal/external 定義差異、使用情境，以及為什麼 merge sort 適合 external sorting。</p></div><div class="desc anim"><h3>非常詳細動畫說明</h3><p>本動畫的 SVG frames 是由 C++ 程式 src/03_internal_external_sorting.cpp 逐張產生，PowerShell generate_auto_html.ps1 只負責掃描 output 目錄並產生 HTML 播放器。每一張 step_XX.svg 都是演算法過程中的一個狀態；紅色代表目前比較、移動或選取的重點，綠色代表已完成或固定的部分，黃色常代表 pivot、minimum、key 等特殊角色。使用上一張/下一張可以逐步檢查，使用播放速度與自動播放可以連續觀察演算法流程。</p></div><div class="player" data-frames='["output/03_internal_external_sorting_steps/step_01.svg","output/03_internal_external_sorting_steps/step_02.svg","output/03_internal_external_sorting_steps/step_03.svg","output/03_internal_external_sorting_steps/step_04.svg","output/03_internal_external_sorting_steps/step_05.svg","output/03_internal_external_sorting_steps/step_06.svg","output/03_internal_external_sorting_steps/step_07.svg"]'><div class="controls"><button class="prev">上一張</button><button class="next">下一張</button><button class="play">自動播放</button><label>播放速度 <select class="speed"><option value="1800">慢速</option><option selected="" value="1000">正常</option><option value="500">快速</option></select></label><span class="counter">1 / 7</span></div><img class="frame" src="output/03_internal_external_sorting_steps/step_01.svg"/></div><div class="desc code-section"><h3>完整 C++ 程式碼</h3><button class="copy-code-btn" onclick="copyCodeBlock('cppcode3', this)">📋 複製程式碼</button><pre id="cppcode3">#include &lt;iostream&gt;
+using namespace std;
+
+template &lt;class T&gt;
+void InsertionSort(T *a, const int n) {
+    for (int j = 2; j &lt;= n; j++) {
+        a[0] = a[j];
+        int i = j-1;
+        while (a[0] &lt; a[i]) { a[i+1] = a[i]; i--; }
+        a[i+1] = a[0];
+    }
+}
+int main(){ int a[6]={0,5,4,3,2,1}; InsertionSort(a,5); for(int i=1;i&lt;=5;i++) cout&lt;&lt;a[i]&lt;&lt;' '; }
+</pre><h3>輸出結果</h3><pre><code>Sorted runs: [4 9 ] [1 7 ] [3 6 ]
+Internal sorted: 1 3 4 6 7 9</code></pre><h3>函式說明</h3><table class="explain-table"><tr><th>函式</th><th>說明</th></tr><tr><td><code>internalSort(data)</code></td><td>全部資料在記憶體中直接排序。</td></tr><tr><td><code>makeSortedRuns(data, runSize)</code></td><td>模擬外部排序，先切成小段 run 並各自排序。</td></tr></table><h3>變數說明</h3><table class="explain-table"><tr><th>變數</th><th>說明</th></tr><tr><td><code>data</code></td><td>原始資料。</td></tr><tr><td><code>runSize</code></td><td>每個 run 的最大大小。</td></tr><tr><td><code>runs</code></td><td>多個已排序小段，後續可再 merge。</td></tr></table></div></details><details class="topic" open=""><summary>04 Comparison Sort Overview</summary><div class="desc"><h3>非常詳細主題說明</h3><p>說明 comparison sort 只透過兩兩 key 比較決定順序，因此 Bubble、Selection、Insertion、Quick、Merge 都屬於比較排序。動畫用比較箭頭呈現每一次比較會產生 yes/no 決策。</p></div><div class="desc topic-extra"><h3>主題補充說明</h3>
+<h4>一、主題背景</h4><p>Comparison Sort 是只透過比較 key 大小來決定順序的排序類型。Bubble、Selection、Insertion、Merge、Quick、Heap 都屬於 comparison sort。這個總覽主題重點在建立不同排序法的比較架構。</p>
+<h4>二、核心概念</h4><ul><li>comparison</li><li>swap</li><li>shift</li><li>divide and conquer</li><li>lower bound</li><li>O(n log n)</li></ul>
+<h4>三、運作原理</h4><p>所有 comparison sort 都透過「比較兩個元素」逐步縮小可能排列。不同演算法差異在於比較的順序、交換方式、是否分治、是否使用額外空間。</p>
+<h4>四、複雜度分析</h4><p>簡單排序常見 O(n²)；較進階排序如 merge sort、heap sort 平均或最壞可達 O(n log n)。Comparison sort 的最壞情況下界是 Ω(n log n)。</p>
+<h4>五、優缺點</h4><ul><li>優點：模型通用，適合比較各種資料型態，只要 key 可比較即可。</li><li>缺點：受 comparison lower bound 限制，無法在一般比較模型中突破 Ω(n log n) 最壞下界。</li></ul>
+<h4>六、老師上課重點</h4><p>老師常用這個主題連接各種排序演算法與 decision tree lower bound。</p>
+<h4>七、期末考重點</h4><p>常考各排序法的時間、空間、stable、in-place 表格，以及 comparison sort 下界。</p></div><div class="desc anim"><h3>非常詳細動畫說明</h3><p>本動畫的 SVG frames 是由 C++ 程式 src/04_comparison_sort_overview.cpp 逐張產生，PowerShell generate_auto_html.ps1 只負責掃描 output 目錄並產生 HTML 播放器。每一張 step_XX.svg 都是演算法過程中的一個狀態；紅色代表目前比較、移動或選取的重點，綠色代表已完成或固定的部分，黃色常代表 pivot、minimum、key 等特殊角色。使用上一張/下一張可以逐步檢查，使用播放速度與自動播放可以連續觀察演算法流程。</p></div><div class="player" data-frames='["output/04_comparison_sort_overview_steps/step_01.svg","output/04_comparison_sort_overview_steps/step_02.svg","output/04_comparison_sort_overview_steps/step_03.svg","output/04_comparison_sort_overview_steps/step_04.svg","output/04_comparison_sort_overview_steps/step_05.svg","output/04_comparison_sort_overview_steps/step_06.svg","output/04_comparison_sort_overview_steps/step_07.svg"]'><div class="controls"><button class="prev">上一張</button><button class="next">下一張</button><button class="play">自動播放</button><label>播放速度 <select class="speed"><option value="1800">慢速</option><option selected="" value="1000">正常</option><option value="500">快速</option></select></label><span class="counter">1 / 7</span></div><img class="frame" src="output/04_comparison_sort_overview_steps/step_01.svg"/></div><div class="desc code-section"><h3>完整 C++ 程式碼</h3><button class="copy-code-btn" onclick="copyCodeBlock('cppcode4', this)">📋 複製程式碼</button><pre id="cppcode4">#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+template &lt;class T&gt;
+void QuickSort(T *a, const int left, const int right) {
+    if (left &lt; right) {
+        int i = left, j = right + 1; T pivot = a[left];
+        do { do i++; while (i &lt;= right &amp;&amp; a[i] &lt; pivot); do j--; while (a[j] &gt; pivot); if (i &lt; j) swap(a[i], a[j]); } while (i &lt; j);
+        swap(a[left], a[j]);
+        QuickSort(a, left, j-1); QuickSort(a, j+1, right);
+    }
+}
+int main(){ int a[12]={0,26,5,37,1,61,11,59,15,48,19,999}; QuickSort(a,1,10); for(int i=1;i&lt;=10;i++) cout&lt;&lt;a[i]&lt;&lt;' '; }
+</pre><h3>輸出結果</h3><pre><code>Compare 3 and 1
+Compare 1 and 2
+Compare 3 and 2
+Sorted: 1 2 3</code></pre><h3>函式說明</h3><table class="explain-table"><tr><th>函式</th><th>說明</th></tr><tr><td><code>comparisonSortDemo(a)</code></td><td>示範 comparison sort 只靠兩兩比較與交換決定順序。</td></tr></table><h3>變數說明</h3><table class="explain-table"><tr><th>變數</th><th>說明</th></tr><tr><td><code>a</code></td><td>待排序陣列。</td></tr><tr><td><code>i</code></td><td>目前要確定的位置。</td></tr><tr><td><code>j</code></td><td>和 i 比較的後方位置。</td></tr></table></div></details><details class="topic" open=""><summary>05 Bubble Sort</summary><div class="desc"><h3>非常詳細主題說明</h3><p>Bubble Sort 的重點是只比較相鄰元素，若順序錯誤就交換；每一趟會把目前未排序區中的最大值像泡泡一樣推到右邊。這版動畫特別用相鄰箭頭、紅色比較格與綠色完成後綴呈現，不再只是一般長條圖。</p></div><div class="desc topic-extra"><h3>主題補充說明</h3>
+<h4>一、主題背景</h4><p>Bubble Sort 是最直觀的交換式排序。它反覆比較相鄰元素，若順序錯誤就交換，使較大的元素像氣泡一樣逐輪移到右端。</p>
+<h4>二、核心概念</h4><ul><li>adjacent comparison</li><li>swap</li><li>pass</li><li>early stop</li><li>stable</li><li>in-place</li></ul>
+<h4>三、運作原理</h4><p>每一輪從左到右比較相鄰元素，若 a[j] &gt; a[j+1] 就交換。第一輪會把最大值移到最後，第二輪把次大值移到倒數第二個位置，逐步縮小未排序區。</p>
+<h4>四、複雜度分析</h4><p>最壞與平均時間 O(n²)；若加入 swapped 旗標，最佳情況可為 O(n)。空間複雜度 O(1)。</p>
+<h4>五、優缺點</h4><ul><li>優點：觀念簡單、容易 trace、可 stable、可 in-place。</li><li>缺點：效率差，大量資料不適合；交換次數可能很多。</li></ul>
+<h4>六、老師上課重點</h4><p>老師常用 Bubble Sort 考相鄰比較、每一輪結果、是否 early stop。</p>
+<h4>七、期末考重點</h4><p>常考給一組資料，要求畫出每一 pass 後的陣列狀態與比較交換次數。</p></div><div class="desc anim"><h3>非常詳細動畫說明</h3><p>本動畫的 SVG frames 是由 C++ 程式 src/05_bubble_sort.cpp 逐張產生，PowerShell generate_auto_html.ps1 只負責掃描 output 目錄並產生 HTML 播放器。每一張 step_XX.svg 都是演算法過程中的一個狀態；紅色代表目前比較、移動或選取的重點，綠色代表已完成或固定的部分，黃色常代表 pivot、minimum、key 等特殊角色。使用上一張/下一張可以逐步檢查，使用播放速度與自動播放可以連續觀察演算法流程。</p></div><div class="player" data-frames='["output/05_bubble_sort_steps/step_01.svg","output/05_bubble_sort_steps/step_02.svg","output/05_bubble_sort_steps/step_03.svg","output/05_bubble_sort_steps/step_04.svg","output/05_bubble_sort_steps/step_05.svg","output/05_bubble_sort_steps/step_06.svg","output/05_bubble_sort_steps/step_07.svg","output/05_bubble_sort_steps/step_08.svg","output/05_bubble_sort_steps/step_09.svg"]'><div class="controls"><button class="prev">上一張</button><button class="next">下一張</button><button class="play">自動播放</button><label>播放速度 <select class="speed"><option value="1800">慢速</option><option selected="" value="1000">正常</option><option value="500">快速</option></select></label><span class="counter">1 / 9</span></div><img class="frame" src="output/05_bubble_sort_steps/step_01.svg"/></div><div class="desc code-section"><h3>完整 C++ 程式碼</h3><button class="copy-code-btn" onclick="copyCodeBlock('cppcode5', this)">📋 複製程式碼</button><pre id="cppcode5">#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+template &lt;class T&gt;
+void Merge(T *initList, T *mergedList, const int l, const int m, const int n) {
+    int i1=l, iResult=l, i2=m+1;
+    for (; i1 &lt;= m &amp;&amp; i2 &lt;= n; iResult++)
+        if (initList[i1] &lt;= initList[i2]) mergedList[iResult] = initList[i1++];
+        else mergedList[iResult] = initList[i2++];
+    copy(initList+i1, initList+m+1, mergedList+iResult);
+    copy(initList+i2, initList+n+1, mergedList+iResult);
+}
+int main(){ int a[7]={0,1,4,8,2,3,9}, b[7]={0}; Merge(a,b,1,3,6); for(int i=1;i&lt;=6;i++) cout&lt;&lt;b[i]&lt;&lt;' '; }
+</pre><h3>輸出結果</h3><pre><code>Bubble sorted: 1 2 4 5</code></pre><h3>函式說明</h3><table class="explain-table"><tr><th>函式</th><th>說明</th></tr><tr><td><code>bubbleSort(a)</code></td><td>重複比較相鄰元素，較大的元素逐步往右移。</td></tr></table><h3>變數說明</h3><table class="explain-table"><tr><th>變數</th><th>說明</th></tr><tr><td><code>a</code></td><td>待排序陣列。</td></tr><tr><td><code>pass</code></td><td>第幾趟掃描；每趟會固定一個最大值。</td></tr><tr><td><code>j</code></td><td>目前相鄰比較的左邊索引。</td></tr></table></div></details><details class="topic" open=""><summary>06 Selection Sort</summary><div class="desc"><h3>非常詳細主題說明</h3><p>Selection Sort 的重點是每一輪在未排序區掃描出最小值，再把它交換到已排序區尾端。這版動畫會標出 scan 位置、目前 min 位置與已排序 prefix，和 Bubble Sort 的相鄰交換完全不同。</p></div><div class="desc topic-extra"><h3>主題補充說明</h3>
+<h4>一、主題背景</h4><p>Selection Sort 每一輪從未排序區中選出最小值，放到目前位置。它強調「選擇最小」而不是頻繁交換。</p>
+<h4>二、核心概念</h4><ul><li>minimum selection</li><li>unsorted region</li><li>sorted prefix</li><li>swap once per pass</li><li>not stable by default</li><li>in-place</li></ul>
+<h4>三、運作原理</h4><p>第 i 輪在 a[i..n-1] 中找最小元素的位置 minIndex，最後與 a[i] 交換。完成後 a[0..i] 成為已排序前綴。</p>
+<h4>四、複雜度分析</h4><p>無論資料是否接近排序，時間通常都是 O(n²)，因為每輪仍要掃描未排序區；空間 O(1)。</p>
+<h4>五、優缺點</h4><ul><li>優點：交換次數少，最多 n-1 次；實作簡單，適合說明 sorted/unsorted boundary。</li><li>缺點：比較次數固定偏高；一般實作不穩定。</li></ul>
+<h4>六、老師上課重點</h4><p>老師常比較 Selection Sort 與 Bubble Sort：Selection 交換少，但比較仍多。</p>
+<h4>七、期末考重點</h4><p>常考每輪 minIndex、交換後陣列、是否 stable，以及 O(n²) 原因。</p></div><div class="desc anim"><h3>非常詳細動畫說明</h3><p>本動畫的 SVG frames 是由 C++ 程式 src/06_selection_sort.cpp 逐張產生，PowerShell generate_auto_html.ps1 只負責掃描 output 目錄並產生 HTML 播放器。每一張 step_XX.svg 都是演算法過程中的一個狀態；紅色代表目前比較、移動或選取的重點，綠色代表已完成或固定的部分，黃色常代表 pivot、minimum、key 等特殊角色。使用上一張/下一張可以逐步檢查，使用播放速度與自動播放可以連續觀察演算法流程。</p></div><div class="player" data-frames='["output/06_selection_sort_steps/step_01.svg","output/06_selection_sort_steps/step_02.svg","output/06_selection_sort_steps/step_03.svg","output/06_selection_sort_steps/step_04.svg","output/06_selection_sort_steps/step_05.svg","output/06_selection_sort_steps/step_06.svg","output/06_selection_sort_steps/step_07.svg","output/06_selection_sort_steps/step_08.svg"]'><div class="controls"><button class="prev">上一張</button><button class="next">下一張</button><button class="play">自動播放</button><label>播放速度 <select class="speed"><option value="1800">慢速</option><option selected="" value="1000">正常</option><option value="500">快速</option></select></label><span class="counter">1 / 8</span></div><img class="frame" src="output/06_selection_sort_steps/step_01.svg"/></div><div class="desc code-section"><h3>完整 C++ 程式碼</h3><button class="copy-code-btn" onclick="copyCodeBlock('cppcode6', this)">📋 複製程式碼</button><pre id="cppcode6">#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+template &lt;class T&gt;
+void Merge(T *initList, T *mergedList, const int l, const int m, const int n){ int i1=l,iResult=l,i2=m+1; for(;i1&lt;=m&amp;&amp;i2&lt;=n;iResult++) if(initList[i1]&lt;=initList[i2]) mergedList[iResult]=initList[i1++]; else mergedList[iResult]=initList[i2++]; copy(initList+i1,initList+m+1,mergedList+iResult); copy(initList+i2,initList+n+1,mergedList+iResult); }
+template &lt;class T&gt;
+void MergePass(T *initList, T *resultList, const int n, const int s){ int i; for(i=1; i&lt;=n-2*s+1; i += 2*s) Merge(initList,resultList,i,i+s-1,i+2*s-1); if((i+s-1)&lt;n) Merge(initList,resultList,i,i+s-1,n); else copy(initList+i, initList+n+1, resultList+i); }
+template &lt;class T&gt;
+void MergeSort(T *a, const int n){ T *tempList=new T[n+1]; for(int l=1;l&lt;n;l*=2){ MergePass(a,tempList,n,l); l*=2; MergePass(tempList,a,n,l); } delete [] tempList; }
+int main(){ int a[6]={0,5,1,4,2,8}; MergeSort(a,5); for(int i=1;i&lt;=5;i++) cout&lt;&lt;a[i]&lt;&lt;' '; }
+</pre><h3>輸出結果</h3><pre><code>Selection sorted: 12 22 25 64</code></pre><h3>函式說明</h3><table class="explain-table"><tr><th>函式</th><th>說明</th></tr><tr><td><code>selectionSort(a)</code></td><td>每輪選出未排序區最小值，交換到已排序區尾端。</td></tr></table><h3>變數說明</h3><table class="explain-table"><tr><th>變數</th><th>說明</th></tr><tr><td><code>i</code></td><td>目前要放入最小值的位置。</td></tr><tr><td><code>minIndex</code></td><td>目前找到的最小值索引。</td></tr><tr><td><code>j</code></td><td>掃描未排序區的索引。</td></tr></table></div></details><details class="topic" open=""><summary>07 Insertion Sort</summary><div class="desc"><h3>非常詳細主題說明</h3><p>Insertion Sort 的重點是把第一個未排序元素當作 key，插入左側已排序 prefix 的正確位置。動畫用 key 被取出、較大元素右移、空位插入來表現，能對應手算題目中每一輪插入的狀態。</p></div><div class="desc topic-extra"><h3>主題補充說明</h3>
+<h4>一、主題背景</h4><p>Insertion Sort 模擬整理撲克牌的方式，逐一把新元素插入已排序區的正確位置。它對接近排序的資料很有效。</p>
+<h4>二、核心概念</h4><ul><li>sorted prefix</li><li>key</li><li>shift</li><li>insert position</li><li>stable</li><li>adaptive</li></ul>
+<h4>三、運作原理</h4><p>從第二個元素開始，把目前 key 暫存，往左比較已排序區元素，較大的元素右移，直到找到插入位置，再放回 key。</p>
+<h4>四、複雜度分析</h4><p>最壞與平均 O(n²)；若資料已排序，最佳 O(n)。空間 O(1)。</p>
+<h4>五、優缺點</h4><ul><li>優點：簡單、stable、in-place，對小資料或 nearly sorted data 效率好。</li><li>缺點：若資料反向排序，移動次數很多，效率退化。</li></ul>
+<h4>六、老師上課重點</h4><p>老師常要求 trace key 的移動與已排序區如何擴張。</p>
+<h4>七、期末考重點</h4><p>常考每次插入後的陣列狀態、移動次數、最佳情況為何是 O(n)。</p></div><div class="desc anim"><h3>非常詳細動畫說明</h3><p>本動畫的 SVG frames 是由 C++ 程式 src/07_insertion_sort.cpp 逐張產生，PowerShell generate_auto_html.ps1 只負責掃描 output 目錄並產生 HTML 播放器。每一張 step_XX.svg 都是演算法過程中的一個狀態；紅色代表目前比較、移動或選取的重點，綠色代表已完成或固定的部分，黃色常代表 pivot、minimum、key 等特殊角色。使用上一張/下一張可以逐步檢查，使用播放速度與自動播放可以連續觀察演算法流程。</p></div><div class="player" data-frames='["output/07_insertion_sort_steps/step_01.svg","output/07_insertion_sort_steps/step_02.svg","output/07_insertion_sort_steps/step_03.svg","output/07_insertion_sort_steps/step_04.svg","output/07_insertion_sort_steps/step_05.svg","output/07_insertion_sort_steps/step_06.svg","output/07_insertion_sort_steps/step_07.svg","output/07_insertion_sort_steps/step_08.svg"]'><div class="controls"><button class="prev">上一張</button><button class="next">下一張</button><button class="play">自動播放</button><label>播放速度 <select class="speed"><option value="1800">慢速</option><option selected="" value="1000">正常</option><option value="500">快速</option></select></label><span class="counter">1 / 8</span></div><img class="frame" src="output/07_insertion_sort_steps/step_01.svg"/></div><div class="desc code-section"><h3>完整 C++ 程式碼</h3><button class="copy-code-btn" onclick="copyCodeBlock('cppcode7', this)">📋 複製程式碼</button><pre id="cppcode7">#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+template &lt;class T&gt;
+void Adjust(T *a, const int root, const int n) { T e=a[root]; int j; for(j=2*root;j&lt;=n;j*=2){ if(j&lt;n &amp;&amp; a[j]&lt;a[j+1]) j++; if(e&gt;=a[j]) break; a[j/2]=a[j]; } a[j/2]=e; }
+template &lt;class T&gt;
+void HeapSort(T *a, const int n) { for(int i=n/2;i&gt;=1;i--) Adjust(a,i,n); for(int i=n-1;i&gt;=1;i--){ swap(a[1],a[i+1]); Adjust(a,1,i); } }
+int main(){ int a[6]={0,4,1,3,2,16}; HeapSort(a,5); for(int i=1;i&lt;=5;i++) cout&lt;&lt;a[i]&lt;&lt;' '; }
+</pre><h3>輸出結果</h3><pre><code>Insertion sorted: 1 2 4 5 6</code></pre><h3>函式說明</h3><table class="explain-table"><tr><th>函式</th><th>說明</th></tr><tr><td><code>insertionSort(a)</code></td><td>把未排序區第一個元素插入左側已排序區。</td></tr></table><h3>變數說明</h3><table class="explain-table"><tr><th>變數</th><th>說明</th></tr><tr><td><code>key</code></td><td>目前要插入的元素。</td></tr><tr><td><code>i</code></td><td>未排序區第一個元素的位置。</td></tr><tr><td><code>j</code></td><td>在已排序區中往左比較的位置。</td></tr></table></div></details><details class="topic" open=""><summary>08 Quick Sort Partition</summary><div class="desc"><h3>非常詳細主題說明</h3><p>Quick Sort Partition 的重點是選 pivot，使用 i/j 指標把小於 pivot 與大於 pivot 的資料分到兩側。動畫用 pivot 黃色標示、i/j 指標與左右分區呈現，不會和 Merge Sort 或 Bubble Sort 混淆。</p></div><div class="desc topic-extra"><h3>主題補充說明</h3>
+<h4>一、主題背景</h4><p>Partition 是 Quick Sort 的核心步驟。它選定 pivot，將資料分成小於 pivot 與大於 pivot 的兩側，使 pivot 最後位於正確位置。</p>
+<h4>二、核心概念</h4><ul><li>pivot</li><li>partition</li><li>left pointer</li><li>right pointer</li><li>swap</li><li>divide and conquer</li></ul>
+<h4>三、運作原理</h4><p>選取 pivot 後，透過指標掃描或 Lomuto/Hoare 方法，把較小元素移到左側、較大元素移到右側。Partition 完成後，pivot 左右兩邊可分別遞迴排序。</p>
+<h4>四、複雜度分析</h4><p>單次 partition 需要線性掃描，時間 O(n)，空間視實作可為 O(1)。整體 quick sort 效率取決於 partition 是否平衡。</p>
+<h4>五、優缺點</h4><ul><li>優點：核心步驟快速，通常 cache-friendly，平均效率很好。</li><li>缺點：若 pivot 選不好，切分極度不平衡，整體可能退化 O(n²)。</li></ul>
+<h4>六、老師上課重點</h4><p>老師常要求學生畫出 partition 過程中 i、j 或 pivot 的位置變化。</p>
+<h4>七、期末考重點</h4><p>常考 partition 結果是否合法、pivot 最後位置、以及左右子陣列如何形成。</p></div><div class="desc anim"><h3>非常詳細動畫說明</h3><p>本動畫的 SVG frames 是由 C++ 程式 src/08_quick_sort_partition.cpp 逐張產生，PowerShell generate_auto_html.ps1 只負責掃描 output 目錄並產生 HTML 播放器。每一張 step_XX.svg 都是演算法過程中的一個狀態；紅色代表目前比較、移動或選取的重點，綠色代表已完成或固定的部分，黃色常代表 pivot、minimum、key 等特殊角色。使用上一張/下一張可以逐步檢查，使用播放速度與自動播放可以連續觀察演算法流程。</p></div><div class="player" data-frames='["output/08_quick_sort_partition_steps/step_01.svg","output/08_quick_sort_partition_steps/step_02.svg","output/08_quick_sort_partition_steps/step_03.svg","output/08_quick_sort_partition_steps/step_04.svg","output/08_quick_sort_partition_steps/step_05.svg","output/08_quick_sort_partition_steps/step_06.svg","output/08_quick_sort_partition_steps/step_07.svg","output/08_quick_sort_partition_steps/step_08.svg"]'><div class="controls"><button class="prev">上一張</button><button class="next">下一張</button><button class="play">自動播放</button><label>播放速度 <select class="speed"><option value="1800">慢速</option><option selected="" value="1000">正常</option><option value="500">快速</option></select></label><span class="counter">1 / 8</span></div><img class="frame" src="output/08_quick_sort_partition_steps/step_01.svg"/></div><div class="desc code-section"><h3>完整 C++ 程式碼</h3><button class="copy-code-btn" onclick="copyCodeBlock('cppcode8', this)">📋 複製程式碼</button><pre id="cppcode8">#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+template &lt;class T&gt;
+void BubbleSort(T *a, const int n) {
+    for (int j = n; j &gt; 1; j--)
+        for (int k = 1; k &lt; j; k++)
+            if (a[k+1] &lt; a[k]) swap(a[k+1], a[k]);
+}
+int main(){ int a[6]={0,5,4,1,2,8}; BubbleSort(a,5); for(int i=1;i&lt;=5;i++) cout&lt;&lt;a[i]&lt;&lt;' '; }
+</pre><h3>輸出結果</h3><pre><code>Pivot index: 2
+After partition: 3 1 6 9 7</code></pre><h3>函式說明</h3><table class="explain-table"><tr><th>函式</th><th>說明</th></tr><tr><td><code>partition(a, low, high)</code></td><td>以最後一個元素當 pivot，把小於等於 pivot 的元素移到左側。</td></tr></table><h3>變數說明</h3><table class="explain-table"><tr><th>變數</th><th>說明</th></tr><tr><td><code>pivot</code></td><td>分割基準值。</td></tr><tr><td><code>i</code></td><td>小於等於 pivot 區域的右邊界。</td></tr><tr><td><code>j</code></td><td>掃描目前區間的索引。</td></tr></table></div></details><details class="topic" open=""><summary>09 Quick Sort Recursion</summary><div class="desc"><h3>非常詳細主題說明</h3><p>Quick Sort Recursion 的重點是 partition 後遞迴處理左半與右半子問題。動畫改用 recursion tree 與 range 區間，不再只是陣列長條圖，能看出 divide-and-conquer 的呼叫結構。</p></div><div class="desc topic-extra"><h3>主題補充說明</h3>
+<h4>一、主題背景</h4><p>Quick Sort Recursion 是在 partition 後對左右子陣列遞迴排序。它展現 divide and conquer：先分割，再解決小問題。</p>
+<h4>二、核心概念</h4><ul><li>recursion</li><li>subarray</li><li>base case</li><li>divide and conquer</li><li>recursion tree</li><li>pivot balance</li></ul>
+<h4>三、運作原理</h4><p>對陣列呼叫 quickSort(left,right)，先 partition 取得 pivot index，再遞迴處理 left..p-1 與 p+1..right。當子陣列長度為 0 或 1 時停止。</p>
+<h4>四、複雜度分析</h4><p>平均 O(n log n)，最壞 O(n²)。遞迴堆疊平均 O(log n)，最壞 O(n)。</p>
+<h4>五、優缺點</h4><ul><li>優點：平均很快、實務常用、不需要大型輔助陣列。</li><li>缺點：最壞情況差；遞迴深度可能過深；一般版本不 stable。</li></ul>
+<h4>六、老師上課重點</h4><p>老師常畫 recursion tree 說明每一層 partition 的成本。</p>
+<h4>七、期末考重點</h4><p>常考遞迴呼叫範圍、base case、平均與最壞複雜度差異。</p></div><div class="desc anim"><h3>非常詳細動畫說明</h3><p>本動畫的 SVG frames 是由 C++ 程式 src/09_quick_sort_recursion.cpp 逐張產生，PowerShell generate_auto_html.ps1 只負責掃描 output 目錄並產生 HTML 播放器。每一張 step_XX.svg 都是演算法過程中的一個狀態；紅色代表目前比較、移動或選取的重點，綠色代表已完成或固定的部分，黃色常代表 pivot、minimum、key 等特殊角色。使用上一張/下一張可以逐步檢查，使用播放速度與自動播放可以連續觀察演算法流程。</p></div><div class="player" data-frames='["output/09_quick_sort_recursion_steps/step_01.svg","output/09_quick_sort_recursion_steps/step_02.svg","output/09_quick_sort_recursion_steps/step_03.svg","output/09_quick_sort_recursion_steps/step_04.svg","output/09_quick_sort_recursion_steps/step_05.svg","output/09_quick_sort_recursion_steps/step_06.svg"]'><div class="controls"><button class="prev">上一張</button><button class="next">下一張</button><button class="play">自動播放</button><label>播放速度 <select class="speed"><option value="1800">慢速</option><option selected="" value="1000">正常</option><option value="500">快速</option></select></label><span class="counter">1 / 6</span></div><img class="frame" src="output/09_quick_sort_recursion_steps/step_01.svg"/></div><div class="desc code-section"><h3>完整 C++ 程式碼</h3><button class="copy-code-btn" onclick="copyCodeBlock('cppcode9', this)">📋 複製程式碼</button><pre id="cppcode9">#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+template &lt;class T&gt;
+void SelectionSort(T *a, const int n) {
+    for (int i = 1; i &lt; n; i++) {
+        int min = i;
+        for (int j = i+1; j &lt;= n; j++)
+            if (a[j] &lt; a[min]) min = j;
+        swap(a[i], a[min]);
+    }
+}
+int main(){ int a[6]={0,8,5,2,6,1}; SelectionSort(a,5); for(int i=1;i&lt;=5;i++) cout&lt;&lt;a[i]&lt;&lt;' '; }
+</pre><h3>輸出結果</h3><pre><code>Quick sorted: 2 3 4 7 8 9</code></pre><h3>函式說明</h3><table class="explain-table"><tr><th>函式</th><th>說明</th></tr><tr><td><code>quickSort(a, low, high)</code></td><td>先 partition，再遞迴排序左右子陣列。</td></tr><tr><td><code>partition(a, low, high)</code></td><td>回傳 pivot 放好的位置。</td></tr></table><h3>變數說明</h3><table class="explain-table"><tr><th>變數</th><th>說明</th></tr><tr><td><code>low</code></td><td>目前子陣列左界。</td></tr><tr><td><code>high</code></td><td>目前子陣列右界。</td></tr><tr><td><code>p</code></td><td>partition 後 pivot 的索引。</td></tr></table></div></details><details class="topic" open=""><summary>10 Decision Tree Lower Bound</summary><div class="desc"><h3>非常詳細主題說明</h3><p>Decision Tree Lower Bound 說明比較排序可以視為二元決策樹，每個 leaf 對應一種可能排列，因此高度至少需要容納 n! 個結果，得到 Ω(n log n) 下界。動畫用比較節點與 permutation leaf 呈現。</p></div><div class="desc topic-extra"><h3>主題補充說明</h3>
+<h4>一、主題背景</h4><p>Decision Tree Lower Bound 用決策樹模型證明 comparison sort 最壞情況至少需要 Ω(n log n) 次比較。這是排序理論的重點。</p>
+<h4>二、核心概念</h4><ul><li>decision tree</li><li>comparison sort</li><li>leaf</li><li>permutation</li><li>height</li><li>lower bound</li></ul>
+<h4>三、運作原理</h4><p>每一次比較只有兩種結果，因此可用二元決策樹表示排序過程。n 個元素有 n! 種可能排列，因此樹至少要有 n! 個葉節點，樹高至少 log₂(n!)，約為 Ω(n log n)。</p>
+<h4>四、複雜度分析</h4><p>此主題不是某個演算法，而是證明所有 comparison sort 在最壞情況下無法比 Ω(n log n) 更好。</p>
+<h4>五、優缺點</h4><ul><li>優點：能從理論上解釋為什麼 merge/heap/quick 平均 O(n log n) 已經接近比較模型極限。</li><li>缺點：只適用於 comparison sort，不限制 counting sort、radix sort 等非比較排序。</li></ul>
+<h4>六、老師上課重點</h4><p>老師常用它說明「不是演算法寫不好，而是模型有下界」。</p>
+<h4>七、期末考重點</h4><p>常考 n! 葉節點、decision tree height、Ω(n log n) 推導與適用範圍。</p></div><div class="desc anim"><h3>非常詳細動畫說明</h3><p>本動畫的 SVG frames 是由 C++ 程式 src/10_decision_tree_lower_bound.cpp 逐張產生，PowerShell generate_auto_html.ps1 只負責掃描 output 目錄並產生 HTML 播放器。每一張 step_XX.svg 都是演算法過程中的一個狀態；紅色代表目前比較、移動或選取的重點，綠色代表已完成或固定的部分，黃色常代表 pivot、minimum、key 等特殊角色。使用上一張/下一張可以逐步檢查，使用播放速度與自動播放可以連續觀察演算法流程。</p></div><div class="player" data-frames='["output/10_decision_tree_lower_bound_steps/step_01.svg","output/10_decision_tree_lower_bound_steps/step_02.svg","output/10_decision_tree_lower_bound_steps/step_03.svg","output/10_decision_tree_lower_bound_steps/step_04.svg","output/10_decision_tree_lower_bound_steps/step_05.svg","output/10_decision_tree_lower_bound_steps/step_06.svg"]'><div class="controls"><button class="prev">上一張</button><button class="next">下一張</button><button class="play">自動播放</button><label>播放速度 <select class="speed"><option value="1800">慢速</option><option selected="" value="1000">正常</option><option value="500">快速</option></select></label><span class="counter">1 / 6</span></div><img class="frame" src="output/10_decision_tree_lower_bound_steps/step_01.svg"/></div><div class="desc code-section"><h3>完整 C++ 程式碼</h3><button class="copy-code-btn" onclick="copyCodeBlock('cppcode10', this)">📋 複製程式碼</button><pre id="cppcode10">#include &lt;iostream&gt;
+using namespace std;
+
+template &lt;class T&gt;
+void InsertionSort(T *a, const int n) {
+    for (int j = 2; j &lt;= n; j++) {
+        a[0] = a[j];
+        int i = j-1;
+        while (a[0] &lt; a[i]) { a[i+1] = a[i]; i--; }
+        a[i+1] = a[0];
+    }
+}
+int main(){ int a[6]={0,5,4,3,2,1}; InsertionSort(a,5); for(int i=1;i&lt;=5;i++) cout&lt;&lt;a[i]&lt;&lt;' '; }
+</pre><h3>輸出結果</h3><pre><code>n! = 24
+Minimum comparisons &gt;= 5</code></pre><h3>函式說明</h3><table class="explain-table"><tr><th>函式</th><th>說明</th></tr><tr><td><code>factorial(n)</code></td><td>計算 n!，代表所有可能排列數。</td></tr><tr><td><code>lowerBoundComparisons(n)</code></td><td>找出至少需要幾層比較才能區分 n! 種排列。</td></tr></table><h3>變數說明</h3><table class="explain-table"><tr><th>變數</th><th>說明</th></tr><tr><td><code>leaves</code></td><td>決策樹需要容納的 leaf 數。</td></tr><tr><td><code>capacity</code></td><td>高度 h 的二元樹最多可容納的 leaf 數。</td></tr><tr><td><code>h</code></td><td>比較次數下界。</td></tr></table></div></details><details class="topic" open=""><summary>11 Iterative Merge Sort</summary><div class="desc"><h3>非常詳細主題說明</h3><p>Iterative Merge Sort 是 bottom-up merge sort，不用遞迴，而是從 run size 1 開始，逐步合併成 size 2、4、8。動畫用 run 區塊與輸出 buffer 呈現每一輪合併。</p></div><div class="desc topic-extra"><h3>主題補充說明</h3>
+<h4>一、主題背景</h4><p>Iterative Merge Sort 使用 bottom-up 方法，先合併長度 1 的區段，再合併長度 2、4、8 的區段，直到整個陣列有序。</p>
+<h4>二、核心概念</h4><ul><li>bottom-up</li><li>run</li><li>merge pass</li><li>width</li><li>stable</li><li>auxiliary array</li></ul>
+<h4>三、運作原理</h4><p>每一輪設定區段寬度 width，將相鄰兩段已排序 run 合併成較長 run。width 每輪加倍，最後得到完整排序陣列。</p>
+<h4>四、複雜度分析</h4><p>時間 O(n log n)，空間通常 O(n)。每一層合併總成本 O(n)，共有 log n 層。</p>
+<h4>五、優缺點</h4><ul><li>優點：穩定、時間複雜度穩定，不需遞迴呼叫，適合外部排序概念。</li><li>缺點：需要額外陣列；對小資料不一定比 insertion sort 快。</li></ul>
+<h4>六、老師上課重點</h4><p>老師常要求學生畫出每一 pass 的 run 長度變化。</p>
+<h4>七、期末考重點</h4><p>常考 width=1、2、4 時的合併結果，以及為何是 O(n log n)。</p></div><div class="desc anim"><h3>非常詳細動畫說明</h3><p>本動畫的 SVG frames 是由 C++ 程式 src/11_iterative_merge_sort.cpp 逐張產生，PowerShell generate_auto_html.ps1 只負責掃描 output 目錄並產生 HTML 播放器。每一張 step_XX.svg 都是演算法過程中的一個狀態；紅色代表目前比較、移動或選取的重點，綠色代表已完成或固定的部分，黃色常代表 pivot、minimum、key 等特殊角色。使用上一張/下一張可以逐步檢查，使用播放速度與自動播放可以連續觀察演算法流程。</p></div><div class="player" data-frames='["output/11_iterative_merge_sort_steps/step_01.svg","output/11_iterative_merge_sort_steps/step_02.svg","output/11_iterative_merge_sort_steps/step_03.svg","output/11_iterative_merge_sort_steps/step_04.svg","output/11_iterative_merge_sort_steps/step_05.svg"]'><div class="controls"><button class="prev">上一張</button><button class="next">下一張</button><button class="play">自動播放</button><label>播放速度 <select class="speed"><option value="1800">慢速</option><option selected="" value="1000">正常</option><option value="500">快速</option></select></label><span class="counter">1 / 5</span></div><img class="frame" src="output/11_iterative_merge_sort_steps/step_01.svg"/></div><div class="desc code-section"><h3>完整 C++ 程式碼</h3><button class="copy-code-btn" onclick="copyCodeBlock('cppcode11', this)">📋 複製程式碼</button><pre id="cppcode11">#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+template &lt;class T&gt;
+void QuickSort(T *a, const int left, const int right) {
+    if (left &lt; right) {
+        int i = left, j = right + 1; T pivot = a[left];
+        do { do i++; while (i &lt;= right &amp;&amp; a[i] &lt; pivot); do j--; while (a[j] &gt; pivot); if (i &lt; j) swap(a[i], a[j]); } while (i &lt; j);
+        swap(a[left], a[j]);
+        QuickSort(a, left, j-1); QuickSort(a, j+1, right);
+    }
+}
+int main(){ int a[12]={0,26,5,37,1,61,11,59,15,48,19,999}; QuickSort(a,1,10); for(int i=1;i&lt;=10;i++) cout&lt;&lt;a[i]&lt;&lt;' '; }
+</pre><h3>輸出結果</h3><pre><code>Iterative merge sorted: 1 3 5 7</code></pre><h3>函式說明</h3><table class="explain-table"><tr><th>函式</th><th>說明</th></tr><tr><td><code>iterativeMergeSort(a)</code></td><td>由 run size 1、2、4 逐步向上合併。</td></tr></table><h3>變數說明</h3><table class="explain-table"><tr><th>變數</th><th>說明</th></tr><tr><td><code>width</code></td><td>目前要合併的 run 長度。</td></tr><tr><td><code>left, mid, right</code></td><td>兩個 run 的範圍邊界。</td></tr><tr><td><code>temp</code></td><td>合併後的暫存陣列。</td></tr></table></div></details><details class="topic" open=""><summary>12 Merge Operation</summary><div class="desc"><h3>非常詳細主題說明</h3><p>Merge Operation 的重點是兩個已排序陣列用 i、j 指標比較前端元素，把較小者複製到 output。動畫用左右兩條 run、兩個指標與輸出陣列呈現，符合 merge 的 two-pointer 流程。</p></div><div class="desc topic-extra"><h3>主題補充說明</h3>
+<h4>一、主題背景</h4><p>Merge Operation 是 Merge Sort 的核心。它把兩個已排序序列合併成一個更長的已排序序列。</p>
+<h4>二、核心概念</h4><ul><li>left run</li><li>right run</li><li>two pointers</li><li>auxiliary array</li><li>stable merge</li><li>linear scan</li></ul>
+<h4>三、運作原理</h4><p>使用兩個指標分別指向左右 run 的目前元素，每次取較小者放入輔助陣列。若其中一邊用完，就把另一邊剩餘元素全部接上。</p>
+<h4>四、複雜度分析</h4><p>合併兩段總長 n 的資料需要 O(n) 時間與 O(n) 額外空間。</p>
+<h4>五、優缺點</h4><ul><li>優點：穩定、邏輯清楚，可用於 linked list 或 external sorting。</li><li>缺點：需要額外記憶體；若左右段未先排序，merge 結果不保證正確。</li></ul>
+<h4>六、老師上課重點</h4><p>老師常強調 merge 的前提是左右兩段都已排序。</p>
+<h4>七、期末考重點</h4><p>常考兩指標移動、輔助陣列內容、相等元素如何保持穩定性。</p></div><div class="desc anim"><h3>非常詳細動畫說明</h3><p>本動畫的 SVG frames 是由 C++ 程式 src/12_merge_operation.cpp 逐張產生，PowerShell generate_auto_html.ps1 只負責掃描 output 目錄並產生 HTML 播放器。每一張 step_XX.svg 都是演算法過程中的一個狀態；紅色代表目前比較、移動或選取的重點，綠色代表已完成或固定的部分，黃色常代表 pivot、minimum、key 等特殊角色。使用上一張/下一張可以逐步檢查，使用播放速度與自動播放可以連續觀察演算法流程。</p></div><div class="player" data-frames='["output/12_merge_operation_steps/step_01.svg","output/12_merge_operation_steps/step_02.svg","output/12_merge_operation_steps/step_03.svg","output/12_merge_operation_steps/step_04.svg","output/12_merge_operation_steps/step_05.svg","output/12_merge_operation_steps/step_06.svg","output/12_merge_operation_steps/step_07.svg"]'><div class="controls"><button class="prev">上一張</button><button class="next">下一張</button><button class="play">自動播放</button><label>播放速度 <select class="speed"><option value="1800">慢速</option><option selected="" value="1000">正常</option><option value="500">快速</option></select></label><span class="counter">1 / 7</span></div><img class="frame" src="output/12_merge_operation_steps/step_01.svg"/></div><div class="desc code-section"><h3>完整 C++ 程式碼</h3><button class="copy-code-btn" onclick="copyCodeBlock('cppcode12', this)">📋 複製程式碼</button><pre id="cppcode12">#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+template &lt;class T&gt;
+void Merge(T *initList, T *mergedList, const int l, const int m, const int n) {
+    int i1=l, iResult=l, i2=m+1;
+    for (; i1 &lt;= m &amp;&amp; i2 &lt;= n; iResult++)
+        if (initList[i1] &lt;= initList[i2]) mergedList[iResult] = initList[i1++];
+        else mergedList[iResult] = initList[i2++];
+    copy(initList+i1, initList+m+1, mergedList+iResult);
+    copy(initList+i2, initList+n+1, mergedList+iResult);
+}
+int main(){ int a[7]={0,1,4,8,2,3,9}, b[7]={0}; Merge(a,b,1,3,6); for(int i=1;i&lt;=6;i++) cout&lt;&lt;b[i]&lt;&lt;' '; }
+</pre><h3>輸出結果</h3><pre><code>Merged: 1 2 3 4 8 9</code></pre><h3>函式說明</h3><table class="explain-table"><tr><th>函式</th><th>說明</th></tr><tr><td><code>mergeTwoRuns(left, right)</code></td><td>把兩個已排序 run 合併成一個已排序陣列。</td></tr></table><h3>變數說明</h3><table class="explain-table"><tr><th>變數</th><th>說明</th></tr><tr><td><code>left, right</code></td><td>兩個已排序輸入陣列。</td></tr><tr><td><code>i, j</code></td><td>分別指向 left 與 right 的目前位置。</td></tr><tr><td><code>out</code></td><td>合併後的輸出陣列。</td></tr></table></div></details><details class="topic" open=""><summary>13 Recursive Merge Sort</summary><div class="desc"><h3>非常詳細主題說明</h3><p>Recursive Merge Sort 的重點是先一直切半到 singleton，再逐層 merge 回來。動畫用分割樹與向上合併箭頭呈現 split-and-merge，和 iterative merge 的 run 合併不同。</p></div><div class="desc topic-extra"><h3>主題補充說明</h3>
+<h4>一、主題背景</h4><p>Recursive Merge Sort 是典型 divide and conquer 演算法。它先把陣列切成左右兩半，遞迴排序後再 merge。</p>
+<h4>二、核心概念</h4><ul><li>divide and conquer</li><li>mid</li><li>recursive call</li><li>base case</li><li>merge</li><li>stable</li></ul>
+<h4>三、運作原理</h4><p>若區段長度大於 1，就切成 left half 與 right half；分別遞迴排序後，呼叫 merge 合併。base case 是單一元素自然有序。</p>
+<h4>四、複雜度分析</h4><p>時間 O(n log n)，空間 O(n) 加上遞迴堆疊 O(log n)。最壞、平均、最佳時間都為 O(n log n)。</p>
+<h4>五、優缺點</h4><ul><li>優點：穩定、效能穩定、適合證明分治與遞迴。</li><li>缺點：需要額外空間；遞迴與 merge 實作比簡單排序複雜。</li></ul>
+<h4>六、老師上課重點</h4><p>老師常用遞迴樹說明每層成本 O(n)，層數 log n。</p>
+<h4>七、期末考重點</h4><p>常考切割順序、merge 回來的順序、遞迴終止條件與複雜度。</p></div><div class="desc anim"><h3>非常詳細動畫說明</h3><p>本動畫的 SVG frames 是由 C++ 程式 src/13_recursive_merge_sort.cpp 逐張產生，PowerShell generate_auto_html.ps1 只負責掃描 output 目錄並產生 HTML 播放器。每一張 step_XX.svg 都是演算法過程中的一個狀態；紅色代表目前比較、移動或選取的重點，綠色代表已完成或固定的部分，黃色常代表 pivot、minimum、key 等特殊角色。使用上一張/下一張可以逐步檢查，使用播放速度與自動播放可以連續觀察演算法流程。</p></div><div class="player" data-frames='["output/13_recursive_merge_sort_steps/step_01.svg","output/13_recursive_merge_sort_steps/step_02.svg","output/13_recursive_merge_sort_steps/step_03.svg","output/13_recursive_merge_sort_steps/step_04.svg","output/13_recursive_merge_sort_steps/step_05.svg","output/13_recursive_merge_sort_steps/step_06.svg"]'><div class="controls"><button class="prev">上一張</button><button class="next">下一張</button><button class="play">自動播放</button><label>播放速度 <select class="speed"><option value="1800">慢速</option><option selected="" value="1000">正常</option><option value="500">快速</option></select></label><span class="counter">1 / 6</span></div><img class="frame" src="output/13_recursive_merge_sort_steps/step_01.svg"/></div><div class="desc code-section"><h3>完整 C++ 程式碼</h3><button class="copy-code-btn" onclick="copyCodeBlock('cppcode13', this)">📋 複製程式碼</button><pre id="cppcode13">#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+template &lt;class T&gt;
+void Merge(T *initList, T *mergedList, const int l, const int m, const int n){ int i1=l,iResult=l,i2=m+1; for(;i1&lt;=m&amp;&amp;i2&lt;=n;iResult++) if(initList[i1]&lt;=initList[i2]) mergedList[iResult]=initList[i1++]; else mergedList[iResult]=initList[i2++]; copy(initList+i1,initList+m+1,mergedList+iResult); copy(initList+i2,initList+n+1,mergedList+iResult); }
+template &lt;class T&gt;
+void MergePass(T *initList, T *resultList, const int n, const int s){ int i; for(i=1; i&lt;=n-2*s+1; i += 2*s) Merge(initList,resultList,i,i+s-1,i+2*s-1); if((i+s-1)&lt;n) Merge(initList,resultList,i,i+s-1,n); else copy(initList+i, initList+n+1, resultList+i); }
+template &lt;class T&gt;
+void MergeSort(T *a, const int n){ T *tempList=new T[n+1]; for(int l=1;l&lt;n;l*=2){ MergePass(a,tempList,n,l); l*=2; MergePass(tempList,a,n,l); } delete [] tempList; }
+int main(){ int a[6]={0,5,1,4,2,8}; MergeSort(a,5); for(int i=1;i&lt;=5;i++) cout&lt;&lt;a[i]&lt;&lt;' '; }
+</pre><h3>輸出結果</h3><pre><code>Recursive merge sorted: 1 2 5 6 8</code></pre><h3>函式說明</h3><table class="explain-table"><tr><th>函式</th><th>說明</th></tr><tr><td><code>mergeSort(a, l, r)</code></td><td>遞迴切半，再呼叫 mergeRange 合併。</td></tr><tr><td><code>mergeRange(a, l, m, r)</code></td><td>合併 a[l..m] 與 a[m+1..r]。</td></tr></table><h3>變數說明</h3><table class="explain-table"><tr><th>變數</th><th>說明</th></tr><tr><td><code>l, m, r</code></td><td>目前處理區間的左界、中點、右界。</td></tr><tr><td><code>temp</code></td><td>合併時暫存結果。</td></tr><tr><td><code>i, j</code></td><td>左右半目前比較位置。</td></tr></table></div></details><details class="topic" open=""><summary>14 Sorting Summary</summary><div class="desc"><h3>非常詳細主題說明</h3><p>Sorting Summary 用表格比較各排序法的平均時間、穩定性與是否 in-place。動畫逐步 highlight 不同演算法，適合考前整理與快速比較。</p></div><div class="desc topic-extra"><h3>主題補充說明</h3>
+<h4>一、主題背景</h4><p>Sorting Summary 用來統整各種排序演算法的特性。重點不是只背名稱，而是能依資料量、穩定性、空間限制與最壞情況選擇合適排序法。</p>
+<h4>二、核心概念</h4><ul><li>time complexity</li><li>space complexity</li><li>stable</li><li>in-place</li><li>adaptive</li><li>comparison lower bound</li></ul>
+<h4>三、運作原理</h4><p>將 Bubble、Selection、Insertion、Merge、Quick 等排序放入同一張比較表，從最佳、平均、最壞時間、額外空間、是否穩定、是否 in-place 進行分析。</p>
+<h4>四、複雜度分析</h4><p>簡單排序多為 O(n²)；Merge Sort 穩定 O(n log n) 但需 O(n) 空間；Quick Sort 平均 O(n log n) 但最壞 O(n²)。</p>
+<h4>五、優缺點</h4><ul><li>優點：方便建立考試判斷框架，也能理解實務選擇排序法的理由。</li><li>缺點：若只背表格而不會 trace，遇到手算題仍容易錯。</li></ul>
+<h4>六、老師上課重點</h4><p>老師通常會把 summary 當作期末考選擇題、配合題與簡答題來源。</p>
+<h4>七、期末考重點</h4><p>常考排序法比較表、stable/in-place 判斷、最壞情況、以及哪種資料適合哪種排序。</p></div><div class="desc anim"><h3>非常詳細動畫說明</h3><p>本動畫的 SVG frames 是由 C++ 程式 src/14_sorting_summary.cpp 逐張產生，PowerShell generate_auto_html.ps1 只負責掃描 output 目錄並產生 HTML 播放器。每一張 step_XX.svg 都是演算法過程中的一個狀態；紅色代表目前比較、移動或選取的重點，綠色代表已完成或固定的部分，黃色常代表 pivot、minimum、key 等特殊角色。使用上一張/下一張可以逐步檢查，使用播放速度與自動播放可以連續觀察演算法流程。</p></div><div class="player" data-frames='["output/14_sorting_summary_steps/step_01.svg","output/14_sorting_summary_steps/step_02.svg","output/14_sorting_summary_steps/step_03.svg","output/14_sorting_summary_steps/step_04.svg","output/14_sorting_summary_steps/step_05.svg","output/14_sorting_summary_steps/step_06.svg"]'><div class="controls"><button class="prev">上一張</button><button class="next">下一張</button><button class="play">自動播放</button><label>播放速度 <select class="speed"><option value="1800">慢速</option><option selected="" value="1000">正常</option><option value="500">快速</option></select></label><span class="counter">1 / 6</span></div><img class="frame" src="output/14_sorting_summary_steps/step_01.svg"/></div><div class="desc code-section"><h3>完整 C++ 程式碼</h3><button class="copy-code-btn" onclick="copyCodeBlock('cppcode14', this)">📋 複製程式碼</button><pre id="cppcode14">#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+template &lt;class T&gt;
+void Adjust(T *a, const int root, const int n) { T e=a[root]; int j; for(j=2*root;j&lt;=n;j*=2){ if(j&lt;n &amp;&amp; a[j]&lt;a[j+1]) j++; if(e&gt;=a[j]) break; a[j/2]=a[j]; } a[j/2]=e; }
+template &lt;class T&gt;
+void HeapSort(T *a, const int n) { for(int i=n/2;i&gt;=1;i--) Adjust(a,i,n); for(int i=n-1;i&gt;=1;i--){ swap(a[1],a[i+1]); Adjust(a,1,i); } }
+int main(){ int a[6]={0,4,1,3,2,16}; HeapSort(a,5); for(int i=1;i&lt;=5;i++) cout&lt;&lt;a[i]&lt;&lt;' '; }
+</pre><h3>輸出結果</h3><pre><code>Algorithm       Avg         Stable    In-place
+Bubble          O(n^2)      Yes       Yes
+Selection       O(n^2)      No        Yes
+Insertion       O(n^2)      Yes       Yes
+Merge           O(nlogn)    Yes       No
+Quick           O(nlogn)    No        Yes</code></pre><h3>函式說明</h3><table class="explain-table"><tr><th>函式</th><th>說明</th></tr><tr><td><code>printSummary(table, n)</code></td><td>用表格印出各排序法的時間、穩定性與 in-place 性質。</td></tr></table><h3>變數說明</h3><table class="explain-table"><tr><th>變數</th><th>說明</th></tr><tr><td><code>SortInfo</code></td><td>儲存一個排序法的摘要資料。</td></tr><tr><td><code>table</code></td><td>所有排序法比較表。</td></tr><tr><td><code>avgTime, stable, inPlace</code></td><td>平均時間、穩定性、是否原地排序。</td></tr></table></div></details></main>
+<script>
+function copyCodeBlock(id, btn){
+  const el=document.getElementById(id);
+  if(!el) return;
+  const text=el.innerText || el.textContent;
+  navigator.clipboard.writeText(text).then(()=>{
+    const old=btn.innerText;
+    btn.innerText='✅ 已複製';
+    btn.classList.add('copied');
+    setTimeout(()=>{btn.innerText=old;btn.classList.remove('copied');},1400);
+  }).catch(()=>{
+    const range=document.createRange();
+    range.selectNodeContents(el);
+    const sel=window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+    document.execCommand('copy');
+    sel.removeAllRanges();
+    const old=btn.innerText;
+    btn.innerText='✅ 已複製';
+    btn.classList.add('copied');
+    setTimeout(()=>{btn.innerText=old;btn.classList.remove('copied');},1400);
+  });
+}
+</script>
+<script>
+document.querySelectorAll('.player').forEach(p=>{const frames=JSON.parse(p.dataset.frames);let i=0,t=null;const img=p.querySelector('.frame'),c=p.querySelector('.counter'),sp=p.querySelector('.speed'),pl=p.querySelector('.play');function show(){img.src=frames[i];c.textContent=(i+1)+' / '+frames.length;}p.querySelector('.next').onclick=()=>{i=(i+1)%frames.length;show();};p.querySelector('.prev').onclick=()=>{i=(i-1+frames.length)%frames.length;show();};pl.onclick=()=>{if(t){clearInterval(t);t=null;pl.textContent='自動播放';}else{t=setInterval(()=>{i=(i+1)%frames.length;show();},parseInt(sp.value));pl.textContent='停止播放';}};sp.onchange=()=>{if(t){clearInterval(t);t=setInterval(()=>{i=(i+1)%frames.length;show();},parseInt(sp.value));}};show();});
+</script></body></html>

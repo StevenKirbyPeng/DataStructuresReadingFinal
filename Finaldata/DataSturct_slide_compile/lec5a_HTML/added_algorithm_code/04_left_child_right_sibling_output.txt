@@ -1,0 +1,6 @@
+LCRS representation:
+A
+  B
+    E
+  C
+  D

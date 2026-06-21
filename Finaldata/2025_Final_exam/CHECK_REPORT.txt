@@ -1,0 +1,9 @@
+2025 Final 8Q HTML 修正版檢查報告
+
+修正項目：
+1. Q1 程式碼區塊已由 stable_sort 範例改成題目圖片中的 RadixSort(T *a, int *link, const int d, const int r, const int n) 原始程式碼。
+2. Q8 Kruskal Statement 2 已修正為 False。理由：同一 set 會形成 cycle，Kruskal 應加入不同 set 的兩端點。
+3. Q8 最終答案已修正為：a: T, F, F, T；b: T, F, T, T；c: T, T, F, T。
+4. 其餘版型、圖片、Accordion、翻譯、推導區塊皆未刻意更動。
+
+V3 更新：加入 Q1/Q5 中文註解程式、輸出結果、函式變數說明；擴充 8 題必備背景知識。

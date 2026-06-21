@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>lec5_a All SVG Frames Gallery</title><style>body{font-family:"Microsoft JhengHei",Arial,sans-serif;margin:0;background:#f4f7fb;color:#1f2937;line-height:1.75}header{background:#1f4e79;color:white;padding:28px 36px}header h1{margin:0;font-size:28px}header p{margin:8px 0 0;color:#e5eef7}main{max-width:1180px;margin:24px auto;padding:0 18px}.note{background:white;border-left:6px solid #1f4e79;border-radius:12px;padding:16px 20px;margin-bottom:18px;box-shadow:0 3px 12px rgba(0,0,0,.08)}.topic{background:white;border-radius:14px;margin:18px 0;box-shadow:0 3px 14px rgba(0,0,0,.10);overflow:hidden}summary{cursor:pointer;font-weight:800;font-size:20px;padding:18px 22px;background:#eef5fb;display:flex;justify-content:space-between;align-items:center}summary span{font-size:14px;background:#1f4e79;color:white;border-radius:999px;padding:4px 10px}.panel{padding:20px}.explain{padding:18px 20px;background:#fffdf5;border:1px solid #f3dfb8;border-left:6px solid #d97706;border-radius:12px;margin-bottom:16px}.explain h3{margin:0 0 8px;color:#92400e}.explain p{margin:0;text-align:justify}.topbtn{border:0;border-radius:9px;background:#1f4e79;color:white;padding:8px 14px;font-weight:700;cursor:pointer}.controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px}.controls button,.steps button{border:0;border-radius:9px;background:#1f4e79;color:white;padding:8px 14px;font-weight:700;cursor:pointer}.controls button:hover,.steps button:hover,.topbtn:hover{background:#15385c}.controls label{font-weight:700}.speed{padding:7px;border-radius:8px;border:1px solid #cbd5e1}.counter{font-weight:800;color:#1f4e79;background:#eaf2fb;border-radius:999px;padding:5px 12px}.viewer{border:1px solid #dbe3ef;border-radius:14px;background:#fff;min-height:420px;display:flex;align-items:center;justify-content:center;padding:14px}.mainFrame{max-width:100%;height:auto;max-height:720px}.steps{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}.steps button{background:#e6eef9;color:#1f4e79;padding:6px 10px}.steps button.activeStep{background:#1f4e79;color:white}.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}.frameCard{border:1px solid #dbe3ef;border-radius:12px;background:white;padding:10px}.frameCard h4{margin:0 0 8px;color:#1f4e79}.frameCard img{width:100%;height:auto;border:1px solid #e5e7eb;border-radius:8px}footer{text-align:center;color:#6b7280;padding:24px}</style></head><body>
+<header><h1>lec5_a All SVG Frames Gallery</h1><p>auto_generated_index.html: display all SVG images directly. No step-by-step player, no autoplay.</p><p><button class="topbtn" onclick="openAll()">全部展開</button> <button class="topbtn" onclick="closeAll()">全部收合</button></p></header><main>
+<div class="note"><strong>使用方式：</strong>此檔案會直接列出所有 step SVG 圖片，方便一次檢查全部圖片內容。它不使用一步一步動畫播放。</div>
+<details class="topic" open=""><summary>01 tree definition terminology <span>10 images</span></summary><div class="panel">
+<div class="added-topic-background" style="padding:18px 20px;background:#f0f9ff;border:1px solid #bae6fd;border-left:6px solid #0284c7;border-radius:12px;margin-bottom:16px;">
+<h3 style="margin:0 0 10px;color:#075985;">📘 主題補充說明</h3>
+<h4>一、主題背景</h4>
+<p>Tree 是用階層關係組織資料的資料結構。投影片從 root、subtree、node、degree、leaf、level 等術語開始，目的是讓學生能用同一套語言描述任何樹形。Tree 的定義本身是 recursive definition：一棵樹有一個 root，其餘節點可分成多個互不相交的 subtree，因此後續很多演算法也自然採用遞迴。</p>
+<p>本主題要用「定義 → 圖形 → 操作 → 複雜度 → 考試題型」的方式理解。學習時不要只背名詞，而要能從圖形判斷節點關係、表示法、走訪順序與程式中的變數變化。期末考常要求依照投影片的樹形畫出結果、trace 程式、判斷複雜度或說明某個指標為何要這樣更新。</p>
+<h4>二、核心概念</h4>
+<ul><li>root</li><li>node</li><li>edge</li><li>parent</li><li>child</li><li>sibling</li><li>degree</li><li>leaf</li><li>level</li><li>height</li><li>subtree</li><li>recursive definition</li></ul>
+<h4>三、運作原理</h4>
+<p>判讀一棵樹時，先找最上層且沒有 parent 的 root，再依照 edge 判斷 parent/child 關係。degree 是某節點子樹數量，leaf 是 degree 為 0 的節點，level 用來表示節點所在層級，height 則反映從 root 到最深 leaf 的長度。因為 subtree 仍然是 tree，所以計算節點數、樹高與葉節點數都可以把問題切成每個 child subtree 再合併答案。</p>
+<p>程式實作時，要特別注意 root、child、parent、left、right、link、index 或 stack/queue 等變數的意義。若是陣列表示，要確認 parent/child 公式是否和 0-based 或 1-based index 相符；若是 linked representation，要確認每一次連接是否會遺失原本子樹；若是 traversal 或 recursive algorithm，要清楚 base case 與 recursive case 的執行順序。</p>
+<h4>四、複雜度與比較</h4>
+<table style="width:100%;border-collapse:collapse;background:white;margin:10px 0;">
+<tr><th style="border:1px solid #cbd5e1;padding:8px;background:#e0f2fe;">分析項目</th><th style="border:1px solid #cbd5e1;padding:8px;background:#e0f2fe;">重點</th></tr>
+<tr><td style="border:1px solid #cbd5e1;padding:8px;">時間複雜度</td><td style="border:1px solid #cbd5e1;padding:8px;">走訪整棵樹計算節點、葉節點或高度通常為 O(n)。</td></tr><tr><td style="border:1px solid #cbd5e1;padding:8px;">空間複雜度</td><td style="border:1px solid #cbd5e1;padding:8px;">遞迴版本需要 O(h) call stack，h 是樹高。</td></tr><tr><td style="border:1px solid #cbd5e1;padding:8px;">考試判斷</td><td style="border:1px solid #cbd5e1;padding:8px;">會從圖上標出 root、leaf、degree、level，並能寫出遞迴公式。</td></tr>
+</table>
+<h4>五、優點與缺點</h4>
+<ul><li>優點：能清楚表示階層關係。</li><li>優點：recursive definition 對應 recursive algorithm，概念一致。</li><li>缺點：若術語不熟，後面 binary tree 與 traversal 很容易混淆。</li><li>缺點：樹高過高時，遞迴堆疊可能變深。</li></ul>
+<h4>六、老師上課與期末考重點</h4>
+<ul><li>會判斷 root、parent、child、sibling、leaf。</li><li>會計算 degree、level、height。</li><li>會說明 subtree 也是 tree。</li><li>會分析遞迴演算法 O(n) 與 O(h)。</li></ul>
+</div>
+<div class="explain"><h3>動畫原理說明</h3><p>這個動畫的目的，是把 Tree 的基本術語從抽象名詞變成可以在圖上判讀的結構。Step 1 通常先建立 root，讓學生知道整棵樹的起點在哪裡；接著逐步加入 child、edge 與 subtree，說明每個節點除了 root 以外都會透過一條邊連到 parent。中間步驟會標示 degree、leaf、level 與 height，這些都是期末考最常要求從圖上直接判斷的項目。最後幾張圖把整棵樹整理成完整層級，讓你練習從任一節點往下看都是一棵 subtree。觀看時要特別注意：degree 是子節點數，不是 level；leaf 是 degree 為 0 的節點；height 與 level 的定義也要依照課堂慣例判讀。</p></div>
+<div class="gallery">
+<div class="frameCard"><h4>Step 1</h4><img alt="01 tree definition terminology step 1" src="output/01_tree_definition_terminology_steps/step_01.svg"/></div>
+<div class="frameCard"><h4>Step 2</h4><img alt="01 tree definition terminology step 2" src="output/01_tree_definition_terminology_steps/step_02.svg"/></div>
+<div class="frameCard"><h4>Step 3</h4><img alt="01 tree definition terminology step 3" src="output/01_tree_definition_terminology_steps/step_03.svg"/></div>
+<div class="frameCard"><h4>Step 4</h4><img alt="01 tree definition terminology step 4" src="output/01_tree_definition_terminology_steps/step_04.svg"/></div>
+<div class="frameCard"><h4>Step 5</h4><img alt="01 tree definition terminology step 5" src="output/01_tree_definition_terminology_steps/step_05.svg"/></div>
+<div class="frameCard"><h4>Step 6</h4><img alt="01 tree definition terminology step 6" src="output/01_tree_definition_terminology_steps/step_06.svg"/></div>
+<div class="frameCard"><h4>Step 7</h4><img alt="01 tree definition terminology step 7" src="output/01_tree_definition_terminology_steps/step_07.svg"/></div>
+<div class="frameCard"><h4>Step 8</h4><img alt="01 tree definition terminology step 8" src="output/01_tree_definition_terminology_steps/step_08.svg"/></div>
+<div class="frameCard"><h4>Step 9</h4><img alt="01 tree definition terminology step 9" src="output/01_tree_definition_terminology_steps/step_09.svg"/></div>
+<div class="frameCard"><h4>Step 10</h4><img alt="01 tree definition terminology step 10" src="output/01_tree_definition_terminology_steps/step_10.svg"/></div>
+</div></div>
+<div class="code-added-section" style="margin-top:22px;padding:18px;border:1px solid #cbd5e1;border-left:6px solid #2563eb;border-radius:12px;background:#f8fbff;">
+<h3 style="margin-top:0;color:#1d4ed8;">💻 C++ 程式碼範例：01 tree definition terminology</h3>
+<p><b>說明：</b>本程式碼對應本下拉式主題的核心演算法或資料結構操作，包含中文註解、函式用途、變數用途與執行輸出。</p>
+<h4>函式說明</h4>
+<p>height(root)：計算樹高。countNodes(root)：計算全部節點。countLeaves(root)：計算葉節點。</p>
+<h4>變數說明</h4>
+<p>root：目前子樹根節點。children：子節點串列。maxChildHeight：目前找到的最大子樹高度。</p>
+<h4>完整 C++ 程式碼</h4>
+<pre style="white-space:pre-wrap;background:#0f172a;color:#e5e7eb;padding:16px;border-radius:10px;overflow:auto;"><code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+using namespace std;
+
+// 節點結構：data 是節點名稱，children 儲存所有子節點
+struct Node {
+    char data;
+    vector&lt;Node*&gt; children;
+    Node(char x) : data(x) {}
+};
+
+// 計算樹高：空樹高度為 0，只有根節點高度為 1
+int height(Node* root) {
+    if (root == nullptr) return 0;
+    int maxChildHeight = 0;
+    for (Node* child : root-&gt;children) {
+        maxChildHeight = max(maxChildHeight, height(child));
+    }
+    return maxChildHeight + 1;
+}
+
+// 計算節點數
+int countNodes(Node* root) {
+    if (root == nullptr) return 0;
+    int total = 1;
+    for (Node* child : root-&gt;children) total += countNodes(child);
+    return total;
+}
+
+// 計算葉節點數：沒有 child 的節點就是 leaf
+int countLeaves(Node* root) {
+    if (root == nullptr) return 0;
+    if (root-&gt;children.empty()) return 1;
+    int total = 0;
+    for (Node* child : root-&gt;children) total += countLeaves(child);
+    return total;
+}
+
+int main() {
+    Node* A = new Node('A');
+    Node* B = new Node('B');
+    Node* C = new Node('C');
+    Node* D = new Node('D');
+    Node* E = new Node('E');
+    A-&gt;children = {B, C, D};
+    B-&gt;children = {E};
+
+    cout &lt;&lt; "Root = " &lt;&lt; A-&gt;data &lt;&lt; '\n';
+    cout &lt;&lt; "Degree(A) = " &lt;&lt; A-&gt;children.size() &lt;&lt; '\n';
+    cout &lt;&lt; "Total nodes = " &lt;&lt; countNodes(A) &lt;&lt; '\n';
+    cout &lt;&lt; "Leaves = " &lt;&lt; countLeaves(A) &lt;&lt; '\n';
+    cout &lt;&lt; "Height = " &lt;&lt; height(A) &lt;&lt; '\n';
+    return 0;
+}</code></pre>
+<h4>輸出結果</h4>
+<pre style="white-space:pre-wrap;background:#111827;color:#fef3c7;padding:14px;border-radius:10px;overflow:auto;"><code>Root = A
+Degree(A) = 3
+Total nodes = 5
+Leaves = 3
+Height = 3</code></pre>
+</div>
+</details>
+<details class="topic" open=""><summary>02 tree list representation <span>8 images</span></summary><div class="panel">
+<div class="added-topic-background" style="padding:18px 20px;background:#f0f9ff;border:1px solid #bae6fd;border-left:6px solid #0284c7;border-radius:12px;margin-bottom:16px;">
+<h3 style="margin:0 0 10px;color:#075985;">📘 主題補充說明</h3>
+<h4>一、主題背景</h4>
+<p>Tree 的一般表示法可以允許每個節點有任意數量的 child。投影片中的 list representation 強調：當節點 degree 不固定時，不適合每個節點都配置固定數量的 child 欄位，而可以用 linked list 或 child list 表示每個節點的子節點集合。</p>
+<p>本主題要用「定義 → 圖形 → 操作 → 複雜度 → 考試題型」的方式理解。學習時不要只背名詞，而要能從圖形判斷節點關係、表示法、走訪順序與程式中的變數變化。期末考常要求依照投影片的樹形畫出結果、trace 程式、判斷複雜度或說明某個指標為何要這樣更新。</p>
+<h4>二、核心概念</h4>
+<ul><li>general tree</li><li>child list</li><li>linked list</li><li>degree</li><li>root pointer</li><li>node record</li><li>dynamic representation</li></ul>
+<h4>三、運作原理</h4>
+<p>每個節點除了存資料，也需要記錄它有哪些 child。若使用 list representation，節點可以指向一串 child list，child list 中每個項目再指向真正的 child node。這種方法能處理不規則樹，因為不同節點可以有不同長度的 child list，不必浪費固定欄位。</p>
+<p>程式實作時，要特別注意 root、child、parent、left、right、link、index 或 stack/queue 等變數的意義。若是陣列表示，要確認 parent/child 公式是否和 0-based 或 1-based index 相符；若是 linked representation，要確認每一次連接是否會遺失原本子樹；若是 traversal 或 recursive algorithm，要清楚 base case 與 recursive case 的執行順序。</p>
+<h4>四、複雜度與比較</h4>
+<table style="width:100%;border-collapse:collapse;background:white;margin:10px 0;">
+<tr><th style="border:1px solid #cbd5e1;padding:8px;background:#e0f2fe;">分析項目</th><th style="border:1px solid #cbd5e1;padding:8px;background:#e0f2fe;">重點</th></tr>
+<tr><td style="border:1px solid #cbd5e1;padding:8px;">時間複雜度</td><td style="border:1px solid #cbd5e1;padding:8px;">尋找某節點全部 child 需掃描該節點的 child list，與 degree 成正比。</td></tr><tr><td style="border:1px solid #cbd5e1;padding:8px;">空間複雜度</td><td style="border:1px solid #cbd5e1;padding:8px;">整體需要 O(n+e) 的節點與連結空間，tree 中 e=n-1。</td></tr><tr><td style="border:1px solid #cbd5e1;padding:8px;">考試判斷</td><td style="border:1px solid #cbd5e1;padding:8px;">能畫出節點資料欄位與 child list 的連接方式。</td></tr>
+</table>
+<h4>五、優點與缺點</h4>
+<ul><li>優點：適合 degree 不固定的一般樹。</li><li>優點：比固定 k 欄位節省空間。</li><li>缺點：存取第 i 個 child 需要沿 list 找。</li><li>缺點：指標多，畫圖與實作容易漏連。</li></ul>
+<h4>六、老師上課與期末考重點</h4>
+<ul><li>會比較 sequential、linked、list representation。</li><li>會說明為何一般樹不適合固定欄位。</li><li>會畫 child list。</li><li>會分析搜尋 child 的成本。</li></ul>
+</div>
+<div class="explain"><h3>動畫原理說明</h3><p>這個動畫用逐格方式說明一般樹不一定只能用固定左右子指標表示，也可以用 list representation 儲存每個節點的 children。前幾步會先畫出一般樹形，再把每個節點旁邊展開成 children list。中間步驟強調一個節點可能有 0、1 或多個子節點，因此使用 list 可以避免為每個節點預留過多空指標。後面動畫會把節點與子串列對應起來，讓你理解 parent 節點如何找到它的所有 children。考試重點是能說明這種表示法適合 degree 不固定的一般樹，但搜尋特定 child 時可能需要掃描該節點的 children list。</p></div>
+<div class="gallery">
+<div class="frameCard"><h4>Step 1</h4><img alt="02 tree list representation step 1" src="output/02_tree_list_representation_steps/step_01.svg"/></div>
+<div class="frameCard"><h4>Step 2</h4><img alt="02 tree list representation step 2" src="output/02_tree_list_representation_steps/step_02.svg"/></div>
+<div class="frameCard"><h4>Step 3</h4><img alt="02 tree list representation step 3" src="output/02_tree_list_representation_steps/step_03.svg"/></div>
+<div class="frameCard"><h4>Step 4</h4><img alt="02 tree list representation step 4" src="output/02_tree_list_representation_steps/step_04.svg"/></div>
+<div class="frameCard"><h4>Step 5</h4><img alt="02 tree list representation step 5" src="output/02_tree_list_representation_steps/step_05.svg"/></div>
+<div class="frameCard"><h4>Step 6</h4><img alt="02 tree list representation step 6" src="output/02_tree_list_representation_steps/step_06.svg"/></div>
+<div class="frameCard"><h4>Step 7</h4><img alt="02 tree list representation step 7" src="output/02_tree_list_representation_steps/step_07.svg"/></div>
+<div class="frameCard"><h4>Step 8</h4><img alt="02 tree list representation step 8" src="output/02_tree_list_representation_steps/step_08.svg"/></div>
+</div></div>
+<div class="code-added-section" style="margin-top:22px;padding:18px;border:1px solid #cbd5e1;border-left:6px solid #2563eb;border-radius:12px;background:#f8fbff;">
+<h3 style="margin-top:0;color:#1d4ed8;">💻 C++ 程式碼範例：02 tree list representation</h3>
+<p><b>說明：</b>本程式碼對應本下拉式主題的核心演算法或資料結構操作，包含中文註解、函式用途、變數用途與執行輸出。</p>
+<h4>函式說明</h4>
+<p>printTree(tree, root, level)：用縮排列印一般樹。</p>
+<h4>變數說明</h4>
+<p>tree：adjacency list。root：目前節點。level：目前深度，用來控制縮排。</p>
+<h4>完整 C++ 程式碼</h4>
+<pre style="white-space:pre-wrap;background:#0f172a;color:#e5e7eb;padding:16px;border-radius:10px;overflow:auto;"><code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+using namespace std;
+
+// 使用 adjacency list 表示一般樹：tree[i] 儲存節點 i 的所有 children
+void printTree(const vector&lt;vector&lt;int&gt;&gt;&amp; tree, int root, int level = 0) {
+    for (int i = 0; i &lt; level; ++i) cout &lt;&lt; "  ";
+    cout &lt;&lt; "Node " &lt;&lt; root &lt;&lt; '\n';
+    for (int child : tree[root]) {
+        printTree(tree, child, level + 1);
+    }
+}
+
+int main() {
+    vector&lt;vector&lt;int&gt;&gt; tree(7);
+    tree[0] = {1, 2, 3};
+    tree[1] = {4, 5};
+    tree[3] = {6};
+
+    cout &lt;&lt; "General tree using list representation:\n";
+    printTree(tree, 0);
+    return 0;
+}</code></pre>
+<h4>輸出結果</h4>
+<pre style="white-space:pre-wrap;background:#111827;color:#fef3c7;padding:14px;border-radius:10px;overflow:auto;"><code>General tree using list representation:
+Node 0
+  Node 1
+    Node 4
+    Node 5
+  Node 2
+  Node 3
+    Node 6</code></pre>
+</div>
+</details>
+<details class="topic" open=""><summary>03 kary memory waste <span>8 images</span></summary><div class="panel">
+<div class="added-topic-background" style="padding:18px 20px;background:#f0f9ff;border:1px solid #bae6fd;border-left:6px solid #0284c7;border-radius:12px;margin-bottom:16px;">
+<h3 style="margin:0 0 10px;color:#075985;">📘 主題補充說明</h3>
+<h4>一、主題背景</h4>
+<p>k-ary tree 表示法會替每個節點預留 k 個 child pointer。若每個節點真的都有接近 k 個 child，這樣很直觀；但一般樹常常 degree 差異很大，固定 k 欄位會產生大量 null pointer，造成記憶體浪費。</p>
+<p>本主題要用「定義 → 圖形 → 操作 → 複雜度 → 考試題型」的方式理解。學習時不要只背名詞，而要能從圖形判斷節點關係、表示法、走訪順序與程式中的變數變化。期末考常要求依照投影片的樹形畫出結果、trace 程式、判斷複雜度或說明某個指標為何要這樣更新。</p>
+<h4>二、核心概念</h4>
+<ul><li>k-ary tree</li><li>fixed child fields</li><li>null pointer</li><li>memory waste</li><li>degree</li><li>sparse children</li></ul>
+<h4>三、運作原理</h4>
+<p>運作方式是每個節點固定有 child[0] 到 child[k-1]。問題在於某些節點可能只有 0 或 1 個 child，剩下欄位全部為空。當 n 很大且平均 degree 遠小於 k 時，浪費的 pointer 數量會很可觀。因此這個主題重點不是操作複雜度，而是表示法設計與空間效率。</p>
+<p>程式實作時，要特別注意 root、child、parent、left、right、link、index 或 stack/queue 等變數的意義。若是陣列表示，要確認 parent/child 公式是否和 0-based 或 1-based index 相符；若是 linked representation，要確認每一次連接是否會遺失原本子樹；若是 traversal 或 recursive algorithm，要清楚 base case 與 recursive case 的執行順序。</p>
+<h4>四、複雜度與比較</h4>
+<table style="width:100%;border-collapse:collapse;background:white;margin:10px 0;">
+<tr><th style="border:1px solid #cbd5e1;padding:8px;background:#e0f2fe;">分析項目</th><th style="border:1px solid #cbd5e1;padding:8px;background:#e0f2fe;">重點</th></tr>
+<tr><td style="border:1px solid #cbd5e1;padding:8px;">時間複雜度</td><td style="border:1px solid #cbd5e1;padding:8px;">存取第 i 個 child 可 O(1)，但掃描所有可能 child 需 O(k)。</td></tr><tr><td style="border:1px solid #cbd5e1;padding:8px;">空間複雜度</td><td style="border:1px solid #cbd5e1;padding:8px;">固定需要 O(nk) pointer 欄位，若實際 child 少會浪費。</td></tr><tr><td style="border:1px solid #cbd5e1;padding:8px;">考試判斷</td><td style="border:1px solid #cbd5e1;padding:8px;">能計算總欄位數、實際邊數與 null pointer 數量。</td></tr>
+</table>
+<h4>五、優點與缺點</h4>
+<ul><li>優點：child index 明確，存取固定位置很快。</li><li>優點：適合完全或接近完全的 k 元樹。</li><li>缺點：一般樹會浪費很多 null pointer。</li><li>缺點：k 選太小無法表示高 degree 節點，k 選太大又浪費。</li></ul>
+<h4>六、老師上課與期末考重點</h4>
+<ul><li>會算 pointer 欄位總數。</li><li>會判斷 null pointer 浪費。</li><li>會比較 k-ary 與 child list。</li><li>會說明為何 left-child right-sibling 更彈性。</li></ul>
+</div>
+<div class="explain"><h3>動畫原理說明</h3><p>這個動畫主要展示 k-ary tree 使用固定 k 個 child 欄位時可能造成的記憶體浪費。Step 1 會先給出一棵實際分支數不平均的樹；接著每一步把每個節點展開成固定數量的 child slots。你會看到即使某些節點只有一個 child，仍然必須保留其他空欄位。後面步驟會用空格或淡色區域強調 null pointer 的比例，說明當最大 degree 很大但多數節點 degree 很小時，固定陣列式 child 欄位會浪費空間。這個動畫的重點不是操作演算法，而是表示法選擇：要能比較 k-ary 固定欄位與 left-child right-sibling 表示法的空間差異。</p></div>
+<div class="gallery">
+<div class="frameCard"><h4>Step 1</h4><img alt="03 kary memory waste step 1" src="output/03_kary_memory_waste_steps/step_01.svg"/></div>
+<div class="frameCard"><h4>Step 2</h4><img alt="03 kary memory waste step 2" src="output/03_kary_memory_waste_steps/step_02.svg"/></div>
+<div class="frameCard"><h4>Step 3</h4><img alt="03 kary memory waste step 3" src="output/03_kary_memory_waste_steps/step_03.svg"/></div>
+<div class="frameCard"><h4>Step 4</h4><img alt="03 kary memory waste step 4" src="output/03_kary_memory_waste_steps/step_04.svg"/></div>
+<div class="frameCard"><h4>Step 5</h4><img alt="03 kary memory waste step 5" src="output/03_kary_memory_waste_steps/step_05.svg"/></div>
+<div class="frameCard"><h4>Step 6</h4><img alt="03 kary memory waste step 6" src="output/03_kary_memory_waste_steps/step_06.svg"/></div>
+<div class="frameCard"><h4>Step 7</h4><img alt="03 kary memory waste step 7" src="output/03_kary_memory_waste_steps/step_07.svg"/></div>
+<div class="frameCard"><h4>Step 8</h4><img alt="03 kary memory waste step 8" src="output/03_kary_memory_waste_steps/step_08.svg"/></div>
+</div></div>
+<div class="code-added-section" style="margin-top:22px;padding:18px;border:1px solid #cbd5e1;border-left:6px solid #2563eb;border-radius:12px;background:#f8fbff;">
+<h3 style="margin-top:0;color:#1d4ed8;">💻 C++ 程式碼範例：03 kary memory waste</h3>
+<p><b>說明：</b>本程式碼對應本下拉式主題的核心演算法或資料結構操作，包含中文註解、函式用途、變數用途與執行輸出。</p>
+<h4>函式說明</h4>
+<p>countWastedPointers(degree, k)：計算固定 k 個 child 欄位造成的浪費。</p>
+<h4>變數說明</h4>
+<p>degree：每個節點實際 child 數。k：每個節點保留的 child 指標欄位數。wasted：未使用欄位總數。</p>
+<h4>完整 C++ 程式碼</h4>
+<pre style="white-space:pre-wrap;background:#0f172a;color:#e5e7eb;padding:16px;border-radius:10px;overflow:auto;"><code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+using namespace std;
+
+// k 元樹表示法中，每個節點固定保留 k 個 child 指標
+int countWastedPointers(const vector&lt;int&gt;&amp; degree, int k) {
+    int wasted = 0;
+    for (int d : degree) {
+        wasted += (k - d); // 沒有用到的 child 指標數量
+    }
+    return wasted;
+}
+
+int main() {
+    int k = 4;
+    vector&lt;int&gt; degree = {3, 2, 0, 1, 0, 0, 0};
+
+    cout &lt;&lt; "k = " &lt;&lt; k &lt;&lt; '\n';
+    cout &lt;&lt; "Number of nodes = " &lt;&lt; degree.size() &lt;&lt; '\n';
+    cout &lt;&lt; "Total child pointer fields = " &lt;&lt; k * degree.size() &lt;&lt; '\n';
+    cout &lt;&lt; "Wasted pointer fields = " &lt;&lt; countWastedPointers(degree, k) &lt;&lt; '\n';
+    return 0;
+}</code></pre>
+<h4>輸出結果</h4>
+<pre style="white-space:pre-wrap;background:#111827;color:#fef3c7;padding:14px;border-radius:10px;overflow:auto;"><code>k = 4
+Number of nodes = 7
+Total child pointer fields = 28
+Wasted pointer fields = 22</code></pre>
+</div>
+</details>
+<details class="topic" open=""><summary>04 left child right sibling <span>9 images</span></summary><div class="panel">
+<div class="added-topic-background" style="padding:18px 20px;background:#f0f9ff;border:1px solid #bae6fd;border-left:6px solid #0284c7;border-radius:12px;margin-bottom:16px;">
+<h3 style="margin:0 0 10px;color:#075985;">📘 主題補充說明</h3>
+<h4>一、主題背景</h4>
+<p>Left-Child Right-Sibling 表示法把一般樹轉成類似 binary tree 的結構。每個節點只保留兩個指標：leftChild 指向第一個孩子，rightSibling 指向下一個兄弟。這樣不管原本節點有多少 child，都可以用兩個 pointer 表示。</p>
+<p>本主題要用「定義 → 圖形 → 操作 → 複雜度 → 考試題型」的方式理解。學習時不要只背名詞，而要能從圖形判斷節點關係、表示法、走訪順序與程式中的變數變化。期末考常要求依照投影片的樹形畫出結果、trace 程式、判斷複雜度或說明某個指標為何要這樣更新。</p>
+<h4>二、核心概念</h4>
+<ul><li>leftChild</li><li>rightSibling</li><li>first child</li><li>next sibling</li><li>general tree</li><li>binary representation</li></ul>
+<h4>三、運作原理</h4>
+<p>對任何節點而言，第一個 child 由 leftChild 進入，其餘 child 透過 rightSibling 串接。若要走訪某節點的所有 children，先到 leftChild，再沿 rightSibling 一個一個往右走。這個表示法的關鍵是不把 rightSibling 看成右子樹的 child，而是同一層兄弟關係。</p>
+<p>程式實作時，要特別注意 root、child、parent、left、right、link、index 或 stack/queue 等變數的意義。若是陣列表示，要確認 parent/child 公式是否和 0-based 或 1-based index 相符；若是 linked representation，要確認每一次連接是否會遺失原本子樹；若是 traversal 或 recursive algorithm，要清楚 base case 與 recursive case 的執行順序。</p>
+<h4>四、複雜度與比較</h4>
+<table style="width:100%;border-collapse:collapse;background:white;margin:10px 0;">
+<tr><th style="border:1px solid #cbd5e1;padding:8px;background:#e0f2fe;">分析項目</th><th style="border:1px solid #cbd5e1;padding:8px;background:#e0f2fe;">重點</th></tr>
+<tr><td style="border:1px solid #cbd5e1;padding:8px;">時間複雜度</td><td style="border:1px solid #cbd5e1;padding:8px;">走訪某節點所有 child 需 O(degree)。</td></tr><tr><td style="border:1px solid #cbd5e1;padding:8px;">空間複雜度</td><td style="border:1px solid #cbd5e1;padding:8px;">每個節點固定兩個 pointer，總空間 O(n)。</td></tr><tr><td style="border:1px solid #cbd5e1;padding:8px;">考試判斷</td><td style="border:1px solid #cbd5e1;padding:8px;">能把一般樹改畫成 left-child right-sibling 圖。</td></tr>
+</table>
+<h4>五、優點與缺點</h4>
+<ul><li>優點：只需兩個 pointer，可表示任意 degree。</li><li>優點：容易轉為 binary tree 形式處理。</li><li>缺點：找第 k 個 child 需沿 sibling chain。</li><li>缺點：初學者容易把 rightSibling 誤解為右孩子。</li></ul>
+<h4>六、老師上課與期末考重點</h4>
+<ul><li>會畫 first child 與 next sibling。</li><li>會從一般樹轉換成二元表示。</li><li>會說明 leftChild/rightSibling 的語意。</li><li>會分析 O(n) 空間。</li></ul>
+</div>
+<div class="explain"><h3>動畫原理說明</h3><p>這個動畫說明 left-child right-sibling 表示法如何把一般樹轉成二元鏈結形式。前幾步會先顯示一般樹的 parent-child 關係；接著將每個節點的第一個 child 連到 left child 指標，再把同一層的下一個 sibling 連到 right sibling 指標。動畫中最重要的是不要把 right pointer 誤解成右子樹，它代表的是「下一個兄弟」。最後畫面會形成一個二元指標結構，但它仍然表示原本的一般樹。考試常要求依原樹畫出 left-child right-sibling 結果，或反過來由二元表示還原一般樹。</p></div>
+<div class="gallery">
+<div class="frameCard"><h4>Step 1</h4><img alt="04 left child right sibling step 1" src="output/04_left_child_right_sibling_steps/step_01.svg"/></div>
+<div class="frameCard"><h4>Step 2</h4><img alt="04 left child right sibling step 2" src="output/04_left_child_right_sibling_steps/step_02.svg"/></div>
+<div class="frameCard"><h4>Step 3</h4><img alt="04 left child right sibling step 3" src="output/04_left_child_right_sibling_steps/step_03.svg"/></div>
+<div class="frameCard"><h4>Step 4</h4><img alt="04 left child right sibling step 4" src="output/04_left_child_right_sibling_steps/step_04.svg"/></div>
+<div class="frameCard"><h4>Step 5</h4><img alt="04 left child right sibling step 5" src="output/04_left_child_right_sibling_steps/step_05.svg"/></div>
+<div class="frameCard"><h4>Step 6</h4><img alt="04 left child right sibling step 6" src="output/04_left_child_right_sibling_steps/step_06.svg"/></div>
+<div class="frameCard"><h4>Step 7</h4><img alt="04 left child right sibling step 7" src="output/04_left_child_right_sibling_steps/step_07.svg"/></div>
+<div class="frameCard"><h4>Step 8</h4><img alt="04 left child right sibling step 8" src="output/04_left_child_right_sibling_steps/step_08.svg"/></div>
+<div class="frameCard"><h4>Step 9</h4><img alt="04 left child right sibling step 9" src="output/04_left_child_right_sibling_steps/step_09.svg"/></div>
+</div></div>
+<div class="code-added-section" style="margin-top:22px;padding:18px;border:1px solid #cbd5e1;border-left:6px solid #2563eb;border-radius:12px;background:#f8fbff;">
+<h3 style="margin-top:0;color:#1d4ed8;">💻 C++ 程式碼範例：04 left child right sibling</h3>
+<p><b>說明：</b>本程式碼對應本下拉式主題的核心演算法或資料結構操作，包含中文註解、函式用途、變數用途與執行輸出。</p>
+<h4>函式說明</h4>
+<p>printLCRS(root, level)：走訪 left-child right-sibling 表示法。</p>
+<h4>變數說明</h4>
+<p>leftChild：第一個孩子。rightSibling：下一個兄弟。level：輸出層級。</p>
+<h4>完整 C++ 程式碼</h4>
+<pre style="white-space:pre-wrap;background:#0f172a;color:#e5e7eb;padding:16px;border-radius:10px;overflow:auto;"><code>#include &lt;iostream&gt;
+using namespace std;
+
+// Left-Child Right-Sibling 節點：left 指向第一個孩子，right 指向下一個兄弟
+struct Node {
+    char data;
+    Node* leftChild;
+    Node* rightSibling;
+    Node(char x) : data(x), leftChild(nullptr), rightSibling(nullptr) {}
+};
+
+void printLCRS(Node* root, int level = 0) {
+    if (!root) return;
+    for (int i = 0; i &lt; level; ++i) cout &lt;&lt; "  ";
+    cout &lt;&lt; root-&gt;data &lt;&lt; '\n';
+    printLCRS(root-&gt;leftChild, level + 1);   // 往下一層 child
+    printLCRS(root-&gt;rightSibling, level);    // 同一層 sibling
+}
+
+int main() {
+    Node* A = new Node('A');
+    Node* B = new Node('B');
+    Node* C = new Node('C');
+    Node* D = new Node('D');
+    Node* E = new Node('E');
+    A-&gt;leftChild = B;
+    B-&gt;rightSibling = C;
+    C-&gt;rightSibling = D;
+    B-&gt;leftChild = E;
+
+    cout &lt;&lt; "LCRS representation:\n";
+    printLCRS(A);
+    return 0;
+}</code></pre>
+<h4>輸出結果</h4>
+<pre style="white-space:pre-wrap;background:#111827;color:#fef3c7;padding:14px;border-radius:10px;overflow:auto;"><code>LCRS representation:
+A
+  B
+    E
+  C
+  D</code></pre>
+</div>
+</details>
+<details class="topic" open=""><summary>05 degree two binary conversion <span>9 images</span></summary><div class="panel">
+<div class="added-topic-background" style="padding:18px 20px;background:#f0f9ff;border:1px solid #bae6fd;border-left:6px solid #0284c7;border-radius:12px;margin-bottom:16px;">
+<h3 style="margin:0 0 10px;color:#075985;">📘 主題補充說明</h3>
+<h4>一、主題背景</h4>
+<p>一般樹可以透過 left-child right-sibling 規則轉成 degree two 的 binary tree-like representation。這個主題銜接一般樹與 binary tree，重點是理解「二元化」並不代表原本每個節點只有兩個孩子，而是用兩條不同意義的 link 表示第一孩子與下一兄弟。</p>
+<p>本主題要用「定義 → 圖形 → 操作 → 複雜度 → 考試題型」的方式理解。學習時不要只背名詞，而要能從圖形判斷節點關係、表示法、走訪順序與程式中的變數變化。期末考常要求依照投影片的樹形畫出結果、trace 程式、判斷複雜度或說明某個指標為何要這樣更新。</p>
+<h4>二、核心概念</h4>
+<ul><li>degree two</li><li>binary conversion</li><li>left link</li><li>right link</li><li>general tree transformation</li><li>sibling chain</li></ul>
+<h4>三、運作原理</h4>
+<p>轉換時先保留每個節點到第一個 child 的連線，作為 left link；同一層的兄弟則用 right link 串起來。原本 parent 到第二、第三個 child 的直接線不再保留，而是由第一個 child 沿 right link 找到。轉換後若要還原一般樹，要把 left link 視為 child 關係，把 right link 視為 sibling 關係。</p>
+<p>程式實作時，要特別注意 root、child、parent、left、right、link、index 或 stack/queue 等變數的意義。若是陣列表示，要確認 parent/child 公式是否和 0-based 或 1-based index 相符；若是 linked representation，要確認每一次連接是否會遺失原本子樹；若是 traversal 或 recursive algorithm，要清楚 base case 與 recursive case 的執行順序。</p>
+<h4>四、複雜度與比較</h4>
+<table style="width:100%;border-collapse:collapse;background:white;margin:10px 0;">
+<tr><th style="border:1px solid #cbd5e1;padding:8px;background:#e0f2fe;">分析項目</th><th style="border:1px solid #cbd5e1;padding:8px;background:#e0f2fe;">重點</th></tr>
+<tr><td style="border:1px solid #cbd5e1;padding:8px;">時間複雜度</td><td style="border:1px solid #cbd5e1;padding:8px;">轉換需要拜訪每個節點與 sibling 關係，通常 O(n)。</td></tr><tr><td style="border:1px solid #cbd5e1;padding:8px;">空間複雜度</td><td style="border:1px solid #cbd5e1;padding:8px;">若原地改 pointer 為 O(1) 額外空間；重新建立為 O(n)。</td></tr><tr><td style="border:1px solid #cbd5e1;padding:8px;">考試判斷</td><td style="border:1px solid #cbd5e1;padding:8px;">能說明 right link 不是原樹的 child，而是 sibling。</td></tr>
+</table>
+<h4>五、優點與缺點</h4>
+<ul><li>優點：讓一般樹可用 binary tree 方法儲存。</li><li>優點：固定兩個 pointer，空間穩定。</li><li>缺點：圖形方向改變後容易誤判 parent-child。</li><li>缺點：找所有孩子需要走 sibling chain。</li></ul>
+<h4>六、老師上課與期末考重點</h4>
+<ul><li>會依規則轉圖。</li><li>會從轉換後圖還原一般樹。</li><li>會標出 left link 與 right link 的意義。</li><li>會避免把 sibling 當成 child。</li></ul>
+</div>
+<div class="explain"><h3>動畫原理說明</h3><p>這個動畫呈現一般樹透過 left-child right-sibling 轉換後，為什麼每個節點最多只需要兩個指標。Step 1 先指出原一般樹中某些節點 degree 可能大於 2；接著動畫逐步把第一個 child 放到 left link，把兄弟串接到 right link。中間步驟會顯示原本多分支的節點如何被改寫為一條 sibling chain。最後結果看起來像 binary tree，但其語意是「左邊往下找第一個孩子，右邊往旁邊找下一個兄弟」。這個動畫用來避免學生把 conversion 後的 left/right 和原本 binary tree 的 left/right 意義混淆。</p></div>
+<div class="gallery">
+<div class="frameCard"><h4>Step 1</h4><img alt="05 degree two binary conversion step 1" src="output/05_degree_two_binary_conversion_steps/step_01.svg"/></div>
+<div class="frameCard"><h4>Step 2</h4><img alt="05 degree two binary conversion step 2" src="output/05_degree_two_binary_conversion_steps/step_02.svg"/></div>
+<div class="frameCard"><h4>Step 3</h4><img alt="05 degree two binary conversion step 3" src="output/05_degree_two_binary_conversion_steps/step_03.svg"/></div>
+<div class="frameCard"><h4>Step 4</h4><img alt="05 degree two binary conversion step 4" src="output/05_degree_two_binary_conversion_steps/step_04.svg"/></div>
+<div class="frameCard"><h4>Step 5</h4><img alt="05 degree two binary conversion step 5" src="output/05_degree_two_binary_conversion_steps/step_05.svg"/></div>
+<div class="frameCard"><h4>Step 6</h4><img alt="05 degree two binary conversion step 6" src="output/05_degree_two_binary_conversion_steps/step_06.svg"/></div>
+<div class="frameCard"><h4>Step 7</h4><img alt="05 degree two binary conversion step 7" src="output/05_degree_two_binary_conversion_steps/step_07.svg"/></div>
+<div class="frameCard"><h4>Step 8</h4><img alt="05 degree two binary conversion step 8" src="output/05_degree_two_binary_conversion_steps/step_08.svg"/></div>
+<div class="frameCard"><h4>Step 9</h4><img alt="05 degree two binary conversion step 9" src="output/05_degree_two_binary_conversion_steps/step_09.svg"/></div>
+</div></div>
+<div class="code-added-section" style="margin-top:22px;padding:18px;border:1px solid #cbd5e1;border-left:6px solid #2563eb;border-radius:12px;background:#f8fbff;">
+<h3 style="margin-top:0;color:#1d4ed8;">💻 C++ 程式碼範例：05 degree two binary conversion</h3>
+<p><b>說明：</b>本程式碼對應本下拉式主題的核心演算法或資料結構操作，包含中文註解、函式用途、變數用途與執行輸出。</p>
+<h4>函式說明</h4>
+<p>preorder(root)：以前序走訪轉換後的二元樹。</p>
+<h4>變數說明</h4>
+<p>left：first child。right：next sibling。A/B/C/D/E：示範節點。</p>
+<h4>完整 C++ 程式碼</h4>
+<pre style="white-space:pre-wrap;background:#0f172a;color:#e5e7eb;padding:16px;border-radius:10px;overflow:auto;"><code>#include &lt;iostream&gt;
+using namespace std;
+
+// 一般樹轉二元樹：firstChild 當 left，nextSibling 當 right
+struct Node {
+    char data;
+    Node* left;
+    Node* right;
+    Node(char x) : data(x), left(nullptr), right(nullptr) {}
+};
+
+void preorder(Node* root) {
+    if (!root) return;
+    cout &lt;&lt; root-&gt;data &lt;&lt; ' ';
+    preorder(root-&gt;left);
+    preorder(root-&gt;right);
+}
+
+int main() {
+    Node* A = new Node('A');
+    Node* B = new Node('B');
+    Node* C = new Node('C');
+    Node* D = new Node('D');
+    Node* E = new Node('E');
+
+    // A 的 children 為 B, C, D；B 的 child 為 E
+    A-&gt;left = B;
+    B-&gt;right = C;
+    C-&gt;right = D;
+    B-&gt;left = E;
+
+    cout &lt;&lt; "Binary representation preorder: ";
+    preorder(A);
+    cout &lt;&lt; '\n';
+    return 0;
+}</code></pre>
+<h4>輸出結果</h4>
+<pre style="white-space:pre-wrap;background:#111827;color:#fef3c7;padding:14px;border-radius:10px;overflow:auto;"><code>Binary representation preorder: A B E C D</code></pre>
+</div>
+</details>
+<details class="topic" open=""><summary>06 binary tree basic shapes <span>9 images</span></summary><div class="panel">
+<div class="added-topic-background" style="padding:18px 20px;background:#f0f9ff;border:1px solid #bae6fd;border-left:6px solid #0284c7;border-radius:12px;margin-bottom:16px;">
+<h3 style="margin:0 0 10px;color:#075985;">📘 主題補充說明</h3>
+<h4>一、主題背景</h4>
+<p>Binary Tree 是每個節點最多只有 left child 與 right child 的樹。投影片中的 skewed、complete、full 等形狀，是後面 traversal、array representation、heap 與 threaded tree 的基礎。不同形狀會影響高度、空間使用與操作效率。</p>
+<p>本主題要用「定義 → 圖形 → 操作 → 複雜度 → 考試題型」的方式理解。學習時不要只背名詞，而要能從圖形判斷節點關係、表示法、走訪順序與程式中的變數變化。期末考常要求依照投影片的樹形畫出結果、trace 程式、判斷複雜度或說明某個指標為何要這樣更新。</p>
+<h4>二、核心概念</h4>
+<ul><li>binary tree</li><li>left child</li><li>right child</li><li>skewed tree</li><li>complete binary tree</li><li>full binary tree</li><li>height</li></ul>
+<h4>三、運作原理</h4>
+<p>判斷 binary tree 時，必須注意 left/right 有方向性，即使只有一個 child，也要分清楚是左孩子還是右孩子。Skewed tree 像 linked list，高度可能接近 n；complete binary tree 由上到下、由左到右填滿，適合陣列表示；full binary tree 則要求每個 internal node 都有兩個 child。</p>
+<p>程式實作時，要特別注意 root、child、parent、left、right、link、index 或 stack/queue 等變數的意義。若是陣列表示，要確認 parent/child 公式是否和 0-based 或 1-based index 相符；若是 linked representation，要確認每一次連接是否會遺失原本子樹；若是 traversal 或 recursive algorithm，要清楚 base case 與 recursive case 的執行順序。</p>
+<h4>四、複雜度與比較</h4>
+<table style="width:100%;border-collapse:collapse;background:white;margin:10px 0;">
+<tr><th style="border:1px solid #cbd5e1;padding:8px;background:#e0f2fe;">分析項目</th><th style="border:1px solid #cbd5e1;padding:8px;background:#e0f2fe;">重點</th></tr>
+<tr><td style="border:1px solid #cbd5e1;padding:8px;">時間複雜度</td><td style="border:1px solid #cbd5e1;padding:8px;">許多操作與高度 h 有關；平衡時 O(log n)，skewed 時 O(n)。</td></tr><tr><td style="border:1px solid #cbd5e1;padding:8px;">空間複雜度</td><td style="border:1px solid #cbd5e1;padding:8px;">linked representation 為 O(n)，array 對 complete tree 較有效。</td></tr><tr><td style="border:1px solid #cbd5e1;padding:8px;">考試判斷</td><td style="border:1px solid #cbd5e1;padding:8px;">會判斷一棵樹是 skewed、complete 或 full。</td></tr>
+</table>
+<h4>五、優點與缺點</h4>
+<ul><li>優點：結構限制清楚，便於遞迴定義。</li><li>優點：complete tree 可有效用陣列存。</li><li>缺點：skewed tree 效率會退化。</li><li>缺點：full 與 complete 定義容易混淆。</li></ul>
+<h4>六、老師上課與期末考重點</h4>
+<ul><li>會判斷 tree shape。</li><li>會計算高度與節點分布。</li><li>會比較 skewed 與 complete 的效率。</li><li>會說明 left/right 方向性。</li></ul>
+</div>
+<div class="explain"><h3>動畫原理說明</h3><p>這個動畫比較 skewed、complete、full 等 binary tree 基本形狀。前幾步會先建立只有單一路徑的 skewed tree，讓你看到高度可能接近 n；接著展示 complete tree，強調除了最後一層外皆填滿，最後一層由左到右放置；後面展示 full binary tree，重點是每個 internal node 都有兩個 children。動畫最後會把幾種形狀放在一起比較。觀察重點是：complete 強調位置填補順序，full 強調每個 internal node 的孩子數，skewed 則強調樹高退化。</p></div>
+<div class="gallery">
+<div class="frameCard"><h4>Step 1</h4><img alt="06 binary tree basic shapes step 1" src="output/06_binary_tree_basic_shapes_steps/step_01.svg"/></div>
+<div class="frameCard"><h4>Step 2</h4><img alt="06 binary tree basic shapes step 2" src="output/06_binary_tree_basic_shapes_steps/step_02.svg"/></div>
+<div class="frameCard"><h4>Step 3</h4><img alt="06 binary tree basic shapes step 3" src="output/06_binary_tree_basic_shapes_steps/step_03.svg"/></div>
+<div class="frameCard"><h4>Step 4</h4><img alt="06 binary tree basic shapes step 4" src="output/06_binary_tree_basic_shapes_steps/step_04.svg"/></div>
+<div class="frameCard"><h4>Step 5</h4><img alt="06 binary tree basic shapes step 5" src="output/06_binary_tree_basic_shapes_steps/step_05.svg"/></div>
+<div class="frameCard"><h4>Step 6</h4><img alt="06 binary tree basic shapes step 6" src="output/06_binary_tree_basic_shapes_steps/step_06.svg"/></div>
+<div class="frameCard"><h4>Step 7</h4><img alt="06 binary tree basic shapes step 7" src="output/06_binary_tree_basic_shapes_steps/step_07.svg"/></div>
+<div class="frameCard"><h4>Step 8</h4><img alt="06 binary tree basic shapes step 8" src="output/06_binary_tree_basic_shapes_steps/step_08.svg"/></div>
+<div class="frameCard"><h4>Step 9</h4><img alt="06 binary tree basic shapes step 9" src="output/06_binary_tree_basic_shapes_steps/step_09.svg"/></div>
+</div></div>
+<div class="code-added-section" style="margin-top:22px;padding:18px;border:1px solid #cbd5e1;border-left:6px solid #2563eb;border-radius:12px;background:#f8fbff;">
+<h3 style="margin-top:0;color:#1d4ed8;">💻 C++ 程式碼範例：06 binary tree basic shapes</h3>
+<p><b>說明：</b>本程式碼對應本下拉式主題的核心演算法或資料結構操作，包含中文註解、函式用途、變數用途與執行輸出。</p>
+<h4>函式說明</h4>
+<p>isFull(root)：判斷是否每個節點有 0 或 2 個孩子。isComplete(root)：用 queue 判斷 complete tree。</p>
+<h4>變數說明</h4>
+<p>seenNull：是否已遇到空位置。q：level-order 檢查用佇列。</p>
+<h4>完整 C++ 程式碼</h4>
+<pre style="white-space:pre-wrap;background:#0f172a;color:#e5e7eb;padding:16px;border-radius:10px;overflow:auto;"><code>#include &lt;iostream&gt;
+#include &lt;queue&gt;
+using namespace std;
+
+struct Node {
+    int data;
+    Node* left;
+    Node* right;
+    Node(int x) : data(x), left(nullptr), right(nullptr) {}
+};
+
+bool isFull(Node* root) {
+    if (!root) return true;
+    if (!root-&gt;left &amp;&amp; !root-&gt;right) return true;
+    if (root-&gt;left &amp;&amp; root-&gt;right) return isFull(root-&gt;left) &amp;&amp; isFull(root-&gt;right);
+    return false;
+}
+
+bool isComplete(Node* root) {
+    if (!root) return true;
+    queue&lt;Node*&gt; q;
+    q.push(root);
+    bool seenNull = false;
+    while (!q.empty()) {
+        Node* cur = q.front(); q.pop();
+        if (!cur) seenNull = true;
+        else {
+            if (seenNull) return false;
+            q.push(cur-&gt;left);
+            q.push(cur-&gt;right);
+        }
+    }
+    return true;
+}
+
+int main() {
+    Node* root = new Node(1);
+    root-&gt;left = new Node(2);
+    root-&gt;right = new Node(3);
+    root-&gt;left-&gt;left = new Node(4);
+    root-&gt;left-&gt;right = new Node(5);
+
+    cout &lt;&lt; "Is full? " &lt;&lt; (isFull(root) ? "Yes" : "No") &lt;&lt; '\n';
+    cout &lt;&lt; "Is complete? " &lt;&lt; (isComplete(root) ? "Yes" : "No") &lt;&lt; '\n';
+    return 0;
+}</code></pre>
+<h4>輸出結果</h4>
+<pre style="white-space:pre-wrap;background:#111827;color:#fef3c7;padding:14px;border-radius:10px;overflow:auto;"><code>Is full? Yes
+Is complete? Yes</code></pre>
+</div>
+</details>
+<details class="topic" open=""><summary>07 binary tree node formulas <span>8 images</span></summary><div class="panel">
+<div class="added-topic-background" style="padding:18px 20px;background:#f0f9ff;border:1px solid #bae6fd;border-left:6px solid #0284c7;border-radius:12px;margin-bottom:16px;">
+<h3 style="margin:0 0 10px;color:#075985;">📘 主題補充說明</h3>
+<h4>一、主題背景</h4>
+<p>Binary Tree 節點公式用來描述高度、節點數與葉節點之間的關係。這些公式常出現在選擇題、填空題與證明題中，也能幫助判斷畫出的樹是否合理。</p>
+<p>本主題要用「定義 → 圖形 → 操作 → 複雜度 → 考試題型」的方式理解。學習時不要只背名詞，而要能從圖形判斷節點關係、表示法、走訪順序與程式中的變數變化。期末考常要求依照投影片的樹形畫出結果、trace 程式、判斷複雜度或說明某個指標為何要這樣更新。</p>
+<h4>二、核心概念</h4>
+<ul><li>maximum nodes</li><li>minimum height</li><li>leaf nodes</li><li>internal nodes</li><li>level</li><li>height</li><li>full binary tree formula</li></ul>
+<h4>三、運作原理</h4>
+<p>若高度固定，binary tree 每一層最多節點數會呈現 2 的次方成長，因此滿二元樹的節點總數可用等比級數理解。Full binary tree 中，degree 2 的節點數與 leaf 數有固定關係。考試時通常先確認題目採用的 height 定義，再代入公式，避免 level 從 0 或 1 開始造成差異。</p>
+<p>程式實作時，要特別注意 root、child、parent、left、right、link、index 或 stack/queue 等變數的意義。若是陣列表示，要確認 parent/child 公式是否和 0-based 或 1-based index 相符；若是 linked representation，要確認每一次連接是否會遺失原本子樹；若是 traversal 或 recursive algorithm，要清楚 base case 與 recursive case 的執行順序。</p>
+<h4>四、複雜度與比較</h4>
+<table style="width:100%;border-collapse:collapse;background:white;margin:10px 0;">
+<tr><th style="border:1px solid #cbd5e1;padding:8px;background:#e0f2fe;">分析項目</th><th style="border:1px solid #cbd5e1;padding:8px;background:#e0f2fe;">重點</th></tr>
+<tr><td style="border:1px solid #cbd5e1;padding:8px;">時間複雜度</td><td style="border:1px solid #cbd5e1;padding:8px;">公式計算本身 O(1)，若需要實際走訪計數則 O(n)。</td></tr><tr><td style="border:1px solid #cbd5e1;padding:8px;">空間複雜度</td><td style="border:1px solid #cbd5e1;padding:8px;">公式計算只需 O(1) 額外空間。</td></tr><tr><td style="border:1px solid #cbd5e1;padding:8px;">考試判斷</td><td style="border:1px solid #cbd5e1;padding:8px;">先確認 height/level 定義，再判斷最大節點數與 leaf 關係。</td></tr>
+</table>
+<h4>五、優點與缺點</h4>
+<ul><li>優點：可快速檢查樹形是否可能。</li><li>優點：幫助分析 complete/full binary tree。</li><li>缺點：公式依定義不同可能差一層。</li><li>缺點：不能取代實際 traversal 的結構檢查。</li></ul>
+<h4>六、老師上課與期末考重點</h4>
+<ul><li>會背並理解每層最多 2^i 個節點。</li><li>會算高度 h 的最大節點數。</li><li>會用 full binary tree 的 leaf/internal 關係。</li><li>會注意題目 height 定義。</li></ul>
+</div>
+<div class="explain"><h3>動畫原理說明</h3><p>這個動畫用逐步標示節點數、leaf 數、高度與層級，說明 binary tree 相關公式。前幾張圖會從小型樹開始計算每層最多節點數；中間步驟會標示滿二元樹或特定層級的節點數變化；後面會將 total nodes、leaf nodes 與 internal nodes 的關係整理出來。觀看時不要只背公式，要注意公式成立條件，例如 full binary tree、complete binary tree 或 perfect binary tree 的假設可能不同。期末考常考給一個條件推另一個數量，或判斷公式是否使用錯誤。</p></div>
+<div class="gallery">
+<div class="frameCard"><h4>Step 1</h4><img alt="07 binary tree node formulas step 1" src="output/07_binary_tree_node_formulas_steps/step_01.svg"/></div>
+<div class="frameCard"><h4>Step 2</h4><img alt="07 binary tree node formulas step 2" src="output/07_binary_tree_node_formulas_steps/step_02.svg"/></div>
+<div class="frameCard"><h4>Step 3</h4><img alt="07 binary tree node formulas step 3" src="output/07_binary_tree_node_formulas_steps/step_03.svg"/></div>
+<div class="frameCard"><h4>Step 4</h4><img alt="07 binary tree node formulas step 4" src="output/07_binary_tree_node_formulas_steps/step_04.svg"/></div>
+<div class="frameCard"><h4>Step 5</h4><img alt="07 binary tree node formulas step 5" src="output/07_binary_tree_node_formulas_steps/step_05.svg"/></div>
+<div class="frameCard"><h4>Step 6</h4><img alt="07 binary tree node formulas step 6" src="output/07_binary_tree_node_formulas_steps/step_06.svg"/></div>
+<div class="frameCard"><h4>Step 7</h4><img alt="07 binary tree node formulas step 7" src="output/07_binary_tree_node_formulas_steps/step_07.svg"/></div>
+<div class="frameCard"><h4>Step 8</h4><img alt="07 binary tree node formulas step 8" src="output/07_binary_tree_node_formulas_steps/step_08.svg"/></div>
+</div></div>
+<div class="code-added-section" style="margin-top:22px;padding:18px;border:1px solid #cbd5e1;border-left:6px solid #2563eb;border-radius:12px;background:#f8fbff;">
+<h3 style="margin-top:0;color:#1d4ed8;">💻 C++ 程式碼範例：07 binary tree node formulas</h3>
+<p><b>說明：</b>本程式碼對應本下拉式主題的核心演算法或資料結構操作，包含中文註解、函式用途、變數用途與執行輸出。</p>
+<h4>函式說明</h4>
+<p>countNodes、countLeaves、height：分別計算節點數、葉節點數、樹高。</p>
+<h4>變數說明</h4>
+<p>n：總節點數。leaves：葉節點數。internal：非葉節點數。</p>
+<h4>完整 C++ 程式碼</h4>
+<pre style="white-space:pre-wrap;background:#0f172a;color:#e5e7eb;padding:16px;border-radius:10px;overflow:auto;"><code>#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+struct Node {
+    int data;
+    Node* left;
+    Node* right;
+    Node(int x) : data(x), left(nullptr), right(nullptr) {}
+};
+
+int countNodes(Node* root) {
+    if (!root) return 0;
+    return 1 + countNodes(root-&gt;left) + countNodes(root-&gt;right);
+}
+
+int countLeaves(Node* root) {
+    if (!root) return 0;
+    if (!root-&gt;left &amp;&amp; !root-&gt;right) return 1;
+    return countLeaves(root-&gt;left) + countLeaves(root-&gt;right);
+}
+
+int height(Node* root) {
+    if (!root) return 0;
+    return 1 + max(height(root-&gt;left), height(root-&gt;right));
+}
+
+int main() {
+    Node* root = new Node(1);
+    root-&gt;left = new Node(2);
+    root-&gt;right = new Node(3);
+    root-&gt;left-&gt;left = new Node(4);
+    root-&gt;left-&gt;right = new Node(5);
+
+    int n = countNodes(root);
+    int leaves = countLeaves(root);
+    cout &lt;&lt; "Total nodes = " &lt;&lt; n &lt;&lt; '\n';
+    cout &lt;&lt; "Leaf nodes = " &lt;&lt; leaves &lt;&lt; '\n';
+    cout &lt;&lt; "Internal nodes = " &lt;&lt; n - leaves &lt;&lt; '\n';
+    cout &lt;&lt; "Height = " &lt;&lt; height(root) &lt;&lt; '\n';
+    return 0;
+}</code></pre>
+<h4>輸出結果</h4>
+<pre style="white-space:pre-wrap;background:#111827;color:#fef3c7;padding:14px;border-radius:10px;overflow:auto;"><code>Total nodes = 5
+Leaf nodes = 3
+Internal nodes = 2
+Height = 3</code></pre>
+</div>
+</details>
+<details class="topic" open=""><summary>08 array representation <span>10 images</span></summary><div class="panel">
+<div class="added-topic-background" style="padding:18px 20px;background:#f0f9ff;border:1px solid #bae6fd;border-left:6px solid #0284c7;border-radius:12px;margin-bottom:16px;">
+<h3 style="margin:0 0 10px;color:#075985;">📘 主題補充說明</h3>
+<h4>一、主題背景</h4>
+<p>Array Representation 利用陣列索引儲存 binary tree，尤其適合 complete binary tree。投影片重點是用 index 公式找到 parent、left child、right child，讓樹形關係不必靠 pointer，而靠位置推算。</p>
+<p>本主題要用「定義 → 圖形 → 操作 → 複雜度 → 考試題型」的方式理解。學習時不要只背名詞，而要能從圖形判斷節點關係、表示法、走訪順序與程式中的變數變化。期末考常要求依照投影片的樹形畫出結果、trace 程式、判斷複雜度或說明某個指標為何要這樣更新。</p>
+<h4>二、核心概念</h4>
+<ul><li>array representation</li><li>index</li><li>parent</li><li>left child</li><li>right child</li><li>complete binary tree</li><li>sequential mapping</li></ul>
+<h4>三、運作原理</h4>
+<p>若採 1-based index，節點 i 的 left child 通常是 2i，right child 是 2i+1，parent 是 floor(i/2)。若採 0-based index，公式會變成 left=2i+1、right=2i+2、parent=(i-1)/2。考試與程式最容易錯在 index base，所以必須先確認陣列從 0 還是 1 開始。</p>
+<p>程式實作時，要特別注意 root、child、parent、left、right、link、index 或 stack/queue 等變數的意義。若是陣列表示，要確認 parent/child 公式是否和 0-based 或 1-based index 相符；若是 linked representation，要確認每一次連接是否會遺失原本子樹；若是 traversal 或 recursive algorithm，要清楚 base case 與 recursive case 的執行順序。</p>
+<h4>四、複雜度與比較</h4>
+<table style="width:100%;border-collapse:collapse;background:white;margin:10px 0;">
+<tr><th style="border:1px solid #cbd5e1;padding:8px;background:#e0f2fe;">分析項目</th><th style="border:1px solid #cbd5e1;padding:8px;background:#e0f2fe;">重點</th></tr>
+<tr><td style="border:1px solid #cbd5e1;padding:8px;">時間複雜度</td><td style="border:1px solid #cbd5e1;padding:8px;">找 parent/child 位置為 O(1)。</td></tr><tr><td style="border:1px solid #cbd5e1;padding:8px;">空間複雜度</td><td style="border:1px solid #cbd5e1;padding:8px;">complete tree 空間 O(n) 且幾乎不浪費；稀疏樹可能浪費空格。</td></tr><tr><td style="border:1px solid #cbd5e1;padding:8px;">考試判斷</td><td style="border:1px solid #cbd5e1;padding:8px;">先判斷 index base，再套 parent/child 公式。</td></tr>
+</table>
+<h4>五、優點與缺點</h4>
+<ul><li>優點：不需要 pointer，parent/child 可 O(1) 計算。</li><li>優點：適合 complete binary tree 與 heap。</li><li>缺點：非 complete tree 可能產生空洞。</li><li>缺點：0-based 與 1-based 公式容易混淆。</li></ul>
+<h4>六、老師上課與期末考重點</h4>
+<ul><li>會寫出 parent/left/right 公式。</li><li>會依陣列畫出樹。</li><li>會依樹填入陣列。</li><li>會說明為何 complete tree 適合 array。</li></ul>
+</div>
+<div class="explain"><h3>動畫原理說明</h3><p>這個動畫說明 binary tree 的 array representation。Step 1 先畫出一棵 binary tree；接著逐步把節點依 level order 放入陣列位置。中間步驟會標示 parent、left child、right child 的 index 關係，例如 1-based 常見 left=2i、right=2i+1、parent=floor(i/2)；若使用 0-based 則公式不同。後面動畫會顯示 complete binary tree 特別適合陣列表示，因為空洞少。重點是要能從樹形找到陣列位置，也要能從陣列 index 還原 parent-child 關係。</p></div>
+<div class="gallery">
+<div class="frameCard"><h4>Step 1</h4><img alt="08 array representation step 1" src="output/08_array_representation_steps/step_01.svg"/></div>
+<div class="frameCard"><h4>Step 2</h4><img alt="08 array representation step 2" src="output/08_array_representation_steps/step_02.svg"/></div>
+<div class="frameCard"><h4>Step 3</h4><img alt="08 array representation step 3" src="output/08_array_representation_steps/step_03.svg"/></div>
+<div class="frameCard"><h4>Step 4</h4><img alt="08 array representation step 4" src="output/08_array_representation_steps/step_04.svg"/></div>
+<div class="frameCard"><h4>Step 5</h4><img alt="08 array representation step 5" src="output/08_array_representation_steps/step_05.svg"/></div>
+<div class="frameCard"><h4>Step 6</h4><img alt="08 array representation step 6" src="output/08_array_representation_steps/step_06.svg"/></div>
+<div class="frameCard"><h4>Step 7</h4><img alt="08 array representation step 7" src="output/08_array_representation_steps/step_07.svg"/></div>
+<div class="frameCard"><h4>Step 8</h4><img alt="08 array representation step 8" src="output/08_array_representation_steps/step_08.svg"/></div>
+<div class="frameCard"><h4>Step 9</h4><img alt="08 array representation step 9" src="output/08_array_representation_steps/step_09.svg"/></div>
+<div class="frameCard"><h4>Step 10</h4><img alt="08 array representation step 10" src="output/08_array_representation_steps/step_10.svg"/></div>
+</div></div>
+<div class="code-added-section" style="margin-top:22px;padding:18px;border:1px solid #cbd5e1;border-left:6px solid #2563eb;border-radius:12px;background:#f8fbff;">
+<h3 style="margin-top:0;color:#1d4ed8;">💻 C++ 程式碼範例：08 array representation</h3>
+<p><b>說明：</b>本程式碼對應本下拉式主題的核心演算法或資料結構操作，包含中文註解、函式用途、變數用途與執行輸出。</p>
+<h4>函式說明</h4>
+<p>parent(i)、leftChild(i)、rightChild(i)：計算 array representation 的索引關係。</p>
+<h4>變數說明</h4>
+<p>tree：1-based array。i：要查詢的節點索引。</p>
+<h4>完整 C++ 程式碼</h4>
+<pre style="white-space:pre-wrap;background:#0f172a;color:#e5e7eb;padding:16px;border-radius:10px;overflow:auto;"><code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+using namespace std;
+
+// 使用 1-based array 表示 complete binary tree
+int parent(int i) { return i / 2; }
+int leftChild(int i) { return 2 * i; }
+int rightChild(int i) { return 2 * i + 1; }
+
+int main() {
+    vector&lt;int&gt; tree = {0, 10, 20, 30, 40, 50, 60}; // tree[0] 不使用
+    int i = 3;
+
+    cout &lt;&lt; "Array representation of binary tree:\n";
+    for (int idx = 1; idx &lt; (int)tree.size(); ++idx) {
+        cout &lt;&lt; "index " &lt;&lt; idx &lt;&lt; " value " &lt;&lt; tree[idx] &lt;&lt; '\n';
+    }
+    cout &lt;&lt; "Node index = " &lt;&lt; i &lt;&lt; '\n';
+    cout &lt;&lt; "Parent index = " &lt;&lt; parent(i) &lt;&lt; '\n';
+    cout &lt;&lt; "Left child index = " &lt;&lt; leftChild(i) &lt;&lt; '\n';
+    cout &lt;&lt; "Right child index = " &lt;&lt; rightChild(i) &lt;&lt; '\n';
+    return 0;
+}</code></pre>
+<h4>輸出結果</h4>
+<pre style="white-space:pre-wrap;background:#111827;color:#fef3c7;padding:14px;border-radius:10px;overflow:auto;"><code>Array representation of binary tree:
+index 1 value 10
+index 2 value 20
+index 3 value 30
+index 4 value 40
+index 5 value 50
+index 6 value 60
+Node index = 3
+Parent index = 1
+Left child index = 6
+Right child index = 7</code></pre>
+</div>
+</details>
+<details class="topic" open=""><summary>09 linked representation <span>8 images</span></summary><div class="panel">
+<div class="added-topic-background" style="padding:18px 20px;background:#f0f9ff;border:1px solid #bae6fd;border-left:6px solid #0284c7;border-radius:12px;margin-bottom:16px;">
+<h3 style="margin:0 0 10px;color:#075985;">📘 主題補充說明</h3>
+<h4>一、主題背景</h4>
+<p>Linked Representation 用節點與指標儲存 binary tree。每個節點通常包含 data、left pointer、right pointer。它適合不規則的樹，因為不存在的 child 只需設為 null，不需要像陣列表示法保留空位。</p>
+<p>本主題要用「定義 → 圖形 → 操作 → 複雜度 → 考試題型」的方式理解。學習時不要只背名詞，而要能從圖形判斷節點關係、表示法、走訪順序與程式中的變數變化。期末考常要求依照投影片的樹形畫出結果、trace 程式、判斷複雜度或說明某個指標為何要這樣更新。</p>
+<h4>二、核心概念</h4>
+<ul><li>node</li><li>data</li><li>left pointer</li><li>right pointer</li><li>nullptr</li><li>linked representation</li><li>dynamic allocation</li></ul>
+<h4>三、運作原理</h4>
+<p>每個節點負責記錄自己的資料與左右子樹位置。若 left 為 null，表示沒有左子樹；right 為 null，表示沒有右子樹。插入、刪除、copy、equality 與 traversal 都依賴正確的 pointer 連接。程式中最重要的是避免遺失原本子樹或產生 dangling pointer。</p>
+<p>程式實作時，要特別注意 root、child、parent、left、right、link、index 或 stack/queue 等變數的意義。若是陣列表示，要確認 parent/child 公式是否和 0-based 或 1-based index 相符；若是 linked representation，要確認每一次連接是否會遺失原本子樹；若是 traversal 或 recursive algorithm，要清楚 base case 與 recursive case 的執行順序。</p>
+<h4>四、複雜度與比較</h4>
+<table style="width:100%;border-collapse:collapse;background:white;margin:10px 0;">
+<tr><th style="border:1px solid #cbd5e1;padding:8px;background:#e0f2fe;">分析項目</th><th style="border:1px solid #cbd5e1;padding:8px;background:#e0f2fe;">重點</th></tr>
+<tr><td style="border:1px solid #cbd5e1;padding:8px;">時間複雜度</td><td style="border:1px solid #cbd5e1;padding:8px;">走訪、複製、比較整棵樹通常 O(n)。</td></tr><tr><td style="border:1px solid #cbd5e1;padding:8px;">空間複雜度</td><td style="border:1px solid #cbd5e1;padding:8px;">每個節點兩個 pointer，總空間 O(n)。</td></tr><tr><td style="border:1px solid #cbd5e1;padding:8px;">考試判斷</td><td style="border:1px solid #cbd5e1;padding:8px;">會畫出 data/left/right 欄位與 null pointer。</td></tr>
+</table>
+<h4>五、優點與缺點</h4>
+<ul><li>優點：適合稀疏或不規則 binary tree。</li><li>優點：動態配置，節點數可彈性改變。</li><li>缺點：無法像陣列 O(1) 直接由 index 找任意節點。</li><li>缺點：pointer 更新錯誤會破壞結構。</li></ul>
+<h4>六、老師上課與期末考重點</h4>
+<ul><li>會寫 struct Node。</li><li>會判斷 left/right/null。</li><li>會追蹤 pointer 變化。</li><li>會比較 linked 與 array representation。</li></ul>
+</div>
+<div class="explain"><h3>動畫原理說明</h3><p>這個動畫說明 binary tree 的 linked representation。前幾步會把每個節點拆成 data、left child pointer、right child pointer 三個部分；接著逐步連接 root、left subtree 與 right subtree。中間步驟會用箭頭表示 left/right 指標，並用 NULL 表示沒有子節點的位置。後面動畫展示 linked representation 適合不完整或形狀不規則的 binary tree，因為不必像陣列一樣保留大量空位。考試要能畫出節點結構，並說明每個 pointer 指向哪一個 child。</p></div>
+<div class="gallery">
+<div class="frameCard"><h4>Step 1</h4><img alt="09 linked representation step 1" src="output/09_linked_representation_steps/step_01.svg"/></div>
+<div class="frameCard"><h4>Step 2</h4><img alt="09 linked representation step 2" src="output/09_linked_representation_steps/step_02.svg"/></div>
+<div class="frameCard"><h4>Step 3</h4><img alt="09 linked representation step 3" src="output/09_linked_representation_steps/step_03.svg"/></div>
+<div class="frameCard"><h4>Step 4</h4><img alt="09 linked representation step 4" src="output/09_linked_representation_steps/step_04.svg"/></div>
+<div class="frameCard"><h4>Step 5</h4><img alt="09 linked representation step 5" src="output/09_linked_representation_steps/step_05.svg"/></div>
+<div class="frameCard"><h4>Step 6</h4><img alt="09 linked representation step 6" src="output/09_linked_representation_steps/step_06.svg"/></div>
+<div class="frameCard"><h4>Step 7</h4><img alt="09 linked representation step 7" src="output/09_linked_representation_steps/step_07.svg"/></div>
+<div class="frameCard"><h4>Step 8</h4><img alt="09 linked representation step 8" src="output/09_linked_representation_steps/step_08.svg"/></div>
+</div></div>
+<div class="code-added-section" style="margin-top:22px;padding:18px;border:1px solid #cbd5e1;border-left:6px solid #2563eb;border-radius:12px;background:#f8fbff;">
+<h3 style="margin-top:0;color:#1d4ed8;">💻 C++ 程式碼範例：09 linked representation</h3>
+<p><b>說明：</b>本程式碼對應本下拉式主題的核心演算法或資料結構操作，包含中文註解、函式用途、變數用途與執行輸出。</p>
+<h4>函式說明</h4>
+<p>inorder(root)：遞迴輸出 linked binary tree 的 inorder。</p>
+<h4>變數說明</h4>
+<p>data：節點資料。left/right：左右子節點指標。</p>
+<h4>完整 C++ 程式碼</h4>
+<pre style="white-space:pre-wrap;background:#0f172a;color:#e5e7eb;padding:16px;border-radius:10px;overflow:auto;"><code>#include &lt;iostream&gt;
+using namespace std;
+
+// linked representation：每個節點有 data、left、right 三個欄位
+struct Node {
+    char data;
+    Node* left;
+    Node* right;
+    Node(char x) : data(x), left(nullptr), right(nullptr) {}
+};
+
+void inorder(Node* root) {
+    if (!root) return;
+    inorder(root-&gt;left);
+    cout &lt;&lt; root-&gt;data &lt;&lt; ' ';
+    inorder(root-&gt;right);
+}
+
+int main() {
+    Node* root = new Node('A');
+    root-&gt;left = new Node('B');
+    root-&gt;right = new Node('C');
+    root-&gt;left-&gt;left = new Node('D');
+    root-&gt;left-&gt;right = new Node('E');
+
+    cout &lt;&lt; "Inorder traversal of linked binary tree: ";
+    inorder(root);
+    cout &lt;&lt; '\n';
+    return 0;
+}</code></pre>
+<h4>輸出結果</h4>
+<pre style="white-space:pre-wrap;background:#111827;color:#fef3c7;padding:14px;border-radius:10px;overflow:auto;"><code>Inorder traversal of linked binary tree: D B E A C</code></pre>
+</div>
+</details>
+<details class="topic" open=""><summary>10 tree traversals <span>10 images</span></summary><div class="panel">
+<div class="added-topic-background" style="padding:18px 20px;background:#f0f9ff;border:1px solid #bae6fd;border-left:6px solid #0284c7;border-radius:12px;margin-bottom:16px;">
+<h3 style="margin:0 0 10px;color:#075985;">📘 主題補充說明</h3>
+<h4>一、主題背景</h4>
+<p>Tree Traversal 是依照特定順序拜訪樹中所有節點的方法。Preorder、Inorder、Postorder 是 binary tree 最重要的三種深度優先走訪順序，差異在於 root 被拜訪的時機。</p>
+<p>本主題要用「定義 → 圖形 → 操作 → 複雜度 → 考試題型」的方式理解。學習時不要只背名詞，而要能從圖形判斷節點關係、表示法、走訪順序與程式中的變數變化。期末考常要求依照投影片的樹形畫出結果、trace 程式、判斷複雜度或說明某個指標為何要這樣更新。</p>
+<h4>二、核心概念</h4>
+<ul><li>preorder</li><li>inorder</li><li>postorder</li><li>root</li><li>left subtree</li><li>right subtree</li><li>DFS</li><li>recursive traversal</li></ul>
+<h4>三、運作原理</h4>
+<p>Preorder 是 Root-Left-Right，先處理 root，常用於複製樹或輸出前序表示。Inorder 是 Left-Root-Right，若用於 BST 會得到排序結果。Postorder 是 Left-Right-Root，常用於刪除樹或計算 expression tree。三者的程式結構很像，差別只在 cout 或 process(root) 放在哪一行。</p>
+<p>程式實作時，要特別注意 root、child、parent、left、right、link、index 或 stack/queue 等變數的意義。若是陣列表示，要確認 parent/child 公式是否和 0-based 或 1-based index 相符；若是 linked representation，要確認每一次連接是否會遺失原本子樹；若是 traversal 或 recursive algorithm，要清楚 base case 與 recursive case 的執行順序。</p>
+<h4>四、複雜度與比較</h4>
+<table style="width:100%;border-collapse:collapse;background:white;margin:10px 0;">
+<tr><th style="border:1px solid #cbd5e1;padding:8px;background:#e0f2fe;">分析項目</th><th style="border:1px solid #cbd5e1;padding:8px;background:#e0f2fe;">重點</th></tr>
+<tr><td style="border:1px solid #cbd5e1;padding:8px;">時間複雜度</td><td style="border:1px solid #cbd5e1;padding:8px;">每個節點拜訪一次，因此 O(n)。</td></tr><tr><td style="border:1px solid #cbd5e1;padding:8px;">空間複雜度</td><td style="border:1px solid #cbd5e1;padding:8px;">遞迴需要 O(h) call stack；h 為樹高。</td></tr><tr><td style="border:1px solid #cbd5e1;padding:8px;">考試判斷</td><td style="border:1px solid #cbd5e1;padding:8px;">會依序寫出 preorder/inorder/postorder 結果。</td></tr>
+</table>
+<h4>五、優點與缺點</h4>
+<ul><li>優點：遞迴規則簡潔，容易對應 subtree 定義。</li><li>優點：不同順序適合不同應用。</li><li>缺點：skewed tree 可能造成深遞迴。</li><li>缺點：三種順序容易記反。</li></ul>
+<h4>六、老師上課與期末考重點</h4>
+<ul><li>會 trace 三種 traversal。</li><li>會說明 root 處理位置。</li><li>會用 traversal 還原或判斷樹形。</li><li>會分析 O(n) 與 O(h)。</li></ul>
+</div>
+<div class="explain"><h3>動畫原理說明</h3><p>這個動畫總覽 preorder、inorder、postorder 與 level-order traversal。前幾步會先標出 root、left subtree、right subtree；接著依不同走訪規則改變拜訪順序。Preorder 是 Root、Left、Right；Inorder 是 Left、Root、Right；Postorder 是 Left、Right、Root；Level-order 則使用 queue 逐層拜訪。動畫用不同顏色或編號標示節點被拜訪的時間點。觀看時要特別注意 traversal 的核心不是節點位置改變，而是拜訪順序改變。期末常考依給定樹寫出四種 traversal 序列。</p></div>
+<div class="gallery">
+<div class="frameCard"><h4>Step 1</h4><img alt="10 tree traversals step 1" src="output/10_tree_traversals_steps/step_01.svg"/></div>
+<div class="frameCard"><h4>Step 2</h4><img alt="10 tree traversals step 2" src="output/10_tree_traversals_steps/step_02.svg"/></div>
+<div class="frameCard"><h4>Step 3</h4><img alt="10 tree traversals step 3" src="output/10_tree_traversals_steps/step_03.svg"/></div>
+<div class="frameCard"><h4>Step 4</h4><img alt="10 tree traversals step 4" src="output/10_tree_traversals_steps/step_04.svg"/></div>
+<div class="frameCard"><h4>Step 5</h4><img alt="10 tree traversals step 5" src="output/10_tree_traversals_steps/step_05.svg"/></div>
+<div class="frameCard"><h4>Step 6</h4><img alt="10 tree traversals step 6" src="output/10_tree_traversals_steps/step_06.svg"/></div>
+<div class="frameCard"><h4>Step 7</h4><img alt="10 tree traversals step 7" src="output/10_tree_traversals_steps/step_07.svg"/></div>
+<div class="frameCard"><h4>Step 8</h4><img alt="10 tree traversals step 8" src="output/10_tree_traversals_steps/step_08.svg"/></div>
+<div class="frameCard"><h4>Step 9</h4><img alt="10 tree traversals step 9" src="output/10_tree_traversals_steps/step_09.svg"/></div>
+<div class="frameCard"><h4>Step 10</h4><img alt="10 tree traversals step 10" src="output/10_tree_traversals_steps/step_10.svg"/></div>
+</div></div>
+<div class="code-added-section" style="margin-top:22px;padding:18px;border:1px solid #cbd5e1;border-left:6px solid #2563eb;border-radius:12px;background:#f8fbff;">
+<h3 style="margin-top:0;color:#1d4ed8;">💻 C++ 程式碼範例：10 tree traversals</h3>
+<p><b>說明：</b>本程式碼對應本下拉式主題的核心演算法或資料結構操作，包含中文註解、函式用途、變數用途與執行輸出。</p>
+<h4>函式說明</h4>
+<p>preorder、inorder、postorder：三種 DFS 走訪順序。</p>
+<h4>變數說明</h4>
+<p>root：目前節點。left/right：左右子樹。</p>
+<h4>完整 C++ 程式碼</h4>
+<pre style="white-space:pre-wrap;background:#0f172a;color:#e5e7eb;padding:16px;border-radius:10px;overflow:auto;"><code>#include &lt;iostream&gt;
+using namespace std;
+
+struct Node {
+    char data;
+    Node* left;
+    Node* right;
+    Node(char x) : data(x), left(nullptr), right(nullptr) {}
+};
+
+void preorder(Node* root) {
+    if (!root) return;
+    cout &lt;&lt; root-&gt;data &lt;&lt; ' ';
+    preorder(root-&gt;left);
+    preorder(root-&gt;right);
+}
+
+void inorder(Node* root) {
+    if (!root) return;
+    inorder(root-&gt;left);
+    cout &lt;&lt; root-&gt;data &lt;&lt; ' ';
+    inorder(root-&gt;right);
+}
+
+void postorder(Node* root) {
+    if (!root) return;
+    postorder(root-&gt;left);
+    postorder(root-&gt;right);
+    cout &lt;&lt; root-&gt;data &lt;&lt; ' ';
+}
+
+int main() {
+    Node* A = new Node('A');
+    A-&gt;left = new Node('B');
+    A-&gt;right = new Node('C');
+    A-&gt;left-&gt;left = new Node('D');
+    A-&gt;left-&gt;right = new Node('E');
+
+    cout &lt;&lt; "Preorder: "; preorder(A); cout &lt;&lt; '\n';
+    cout &lt;&lt; "Inorder: "; inorder(A); cout &lt;&lt; '\n';
+    cout &lt;&lt; "Postorder: "; postorder(A); cout &lt;&lt; '\n';
+    return 0;
+}</code></pre>
+<h4>輸出結果</h4>
+<pre style="white-space:pre-wrap;background:#111827;color:#fef3c7;padding:14px;border-radius:10px;overflow:auto;"><code>Preorder: A B D E C 
+Inorder: D B E A C 
+Postorder: D E B C A</code></pre>
+</div>
+</details>
+<details class="topic" open=""><summary>11 expression tree <span>11 images</span></summary><div class="panel">
+<div class="added-topic-background" style="padding:18px 20px;background:#f0f9ff;border:1px solid #bae6fd;border-left:6px solid #0284c7;border-radius:12px;margin-bottom:16px;">
+<h3 style="margin:0 0 10px;color:#075985;">📘 主題補充說明</h3>
+<h4>一、主題背景</h4>
+<p>Expression Tree 用 binary tree 表示算術式或邏輯式。Internal node 通常是 operator，leaf node 通常是 operand。這個主題把 tree traversal 與 expression evaluation 連在一起，常用來考 preorder、inorder、postorder 的意義。</p>
+<p>本主題要用「定義 → 圖形 → 操作 → 複雜度 → 考試題型」的方式理解。學習時不要只背名詞，而要能從圖形判斷節點關係、表示法、走訪順序與程式中的變數變化。期末考常要求依照投影片的樹形畫出結果、trace 程式、判斷複雜度或說明某個指標為何要這樣更新。</p>
+<h4>二、核心概念</h4>
+<ul><li>expression tree</li><li>operator</li><li>operand</li><li>prefix</li><li>infix</li><li>postfix</li><li>evaluation</li><li>subexpression</li></ul>
+<h4>三、運作原理</h4>
+<p>在 expression tree 中，每個 internal node 的左右子樹代表運算元或子運算式。Preorder 會得到 prefix expression，Inorder 搭配括號可得到 infix expression，Postorder 會得到 postfix expression，也很適合用 stack 或遞迴求值。求值時先算左右子樹，再把結果帶入 root operator。</p>
+<p>程式實作時，要特別注意 root、child、parent、left、right、link、index 或 stack/queue 等變數的意義。若是陣列表示，要確認 parent/child 公式是否和 0-based 或 1-based index 相符；若是 linked representation，要確認每一次連接是否會遺失原本子樹；若是 traversal 或 recursive algorithm，要清楚 base case 與 recursive case 的執行順序。</p>
+<h4>四、複雜度與比較</h4>
+<table style="width:100%;border-collapse:collapse;background:white;margin:10px 0;">
+<tr><th style="border:1px solid #cbd5e1;padding:8px;background:#e0f2fe;">分析項目</th><th style="border:1px solid #cbd5e1;padding:8px;background:#e0f2fe;">重點</th></tr>
+<tr><td style="border:1px solid #cbd5e1;padding:8px;">時間複雜度</td><td style="border:1px solid #cbd5e1;padding:8px;">輸出或求值需拜訪所有節點，為 O(n)。</td></tr><tr><td style="border:1px solid #cbd5e1;padding:8px;">空間複雜度</td><td style="border:1px solid #cbd5e1;padding:8px;">遞迴求值需 O(h) stack。</td></tr><tr><td style="border:1px solid #cbd5e1;padding:8px;">考試判斷</td><td style="border:1px solid #cbd5e1;padding:8px;">會從 expression tree 寫出 prefix/infix/postfix。</td></tr>
+</table>
+<h4>五、優點與缺點</h4>
+<ul><li>優點：能清楚表示運算優先順序。</li><li>優點：postorder evaluation 很自然。</li><li>缺點：inorder 若不加括號可能產生歧義。</li><li>缺點：建樹時 operator/operand 位置不能放錯。</li></ul>
+<h4>六、老師上課與期末考重點</h4>
+<ul><li>會判斷 operator 與 operand。</li><li>會寫三種表示式。</li><li>會用 postorder 求值。</li><li>會說明左右子樹代表子運算式。</li></ul>
+</div>
+<div class="explain"><h3>動畫原理說明</h3><p>這個動畫說明 expression tree 如何表示運算式。前幾步會先把運算元放在 leaf，運算子放在 internal node；接著逐步組合左右子運算式。中間步驟通常會展示 inorder 對應中序表達式，postorder 對應 postfix，preorder 對應 prefix。後面動畫會把整棵 expression tree 的計算順序整理出來。重點是 internal node 代表 operator，其左右子樹是 operands 或更小的 expression。考試常考由 expression 畫樹，或由樹寫出 prefix/infix/postfix。</p></div>
+<div class="gallery">
+<div class="frameCard"><h4>Step 1</h4><img alt="11 expression tree step 1" src="output/11_expression_tree_steps/step_01.svg"/></div>
+<div class="frameCard"><h4>Step 2</h4><img alt="11 expression tree step 2" src="output/11_expression_tree_steps/step_02.svg"/></div>
+<div class="frameCard"><h4>Step 3</h4><img alt="11 expression tree step 3" src="output/11_expression_tree_steps/step_03.svg"/></div>
+<div class="frameCard"><h4>Step 4</h4><img alt="11 expression tree step 4" src="output/11_expression_tree_steps/step_04.svg"/></div>
+<div class="frameCard"><h4>Step 5</h4><img alt="11 expression tree step 5" src="output/11_expression_tree_steps/step_05.svg"/></div>
+<div class="frameCard"><h4>Step 6</h4><img alt="11 expression tree step 6" src="output/11_expression_tree_steps/step_06.svg"/></div>
+<div class="frameCard"><h4>Step 7</h4><img alt="11 expression tree step 7" src="output/11_expression_tree_steps/step_07.svg"/></div>
+<div class="frameCard"><h4>Step 8</h4><img alt="11 expression tree step 8" src="output/11_expression_tree_steps/step_08.svg"/></div>
+<div class="frameCard"><h4>Step 9</h4><img alt="11 expression tree step 9" src="output/11_expression_tree_steps/step_09.svg"/></div>
+<div class="frameCard"><h4>Step 10</h4><img alt="11 expression tree step 10" src="output/11_expression_tree_steps/step_10.svg"/></div>
+<div class="frameCard"><h4>Step 11</h4><img alt="11 expression tree step 11" src="output/11_expression_tree_steps/step_11.svg"/></div>
+</div></div>
+<div class="code-added-section" style="margin-top:22px;padding:18px;border:1px solid #cbd5e1;border-left:6px solid #2563eb;border-radius:12px;background:#f8fbff;">
+<h3 style="margin-top:0;color:#1d4ed8;">💻 C++ 程式碼範例：11 expression tree</h3>
+<p><b>說明：</b>本程式碼對應本下拉式主題的核心演算法或資料結構操作，包含中文註解、函式用途、變數用途與執行輸出。</p>
+<h4>函式說明</h4>
+<p>buildExpressionTree(postfix)：由 postfix 建立 expression tree。inorder(root)：輸出中序運算式。</p>
+<h4>變數說明</h4>
+<p>st：建立樹用 stack。postfix：後序運算式。node：新建立節點。</p>
+<h4>完整 C++ 程式碼</h4>
+<pre style="white-space:pre-wrap;background:#0f172a;color:#e5e7eb;padding:16px;border-radius:10px;overflow:auto;"><code>#include &lt;iostream&gt;
+#include &lt;stack&gt;
+#include &lt;string&gt;
+using namespace std;
+
+struct Node {
+    char data;
+    Node* left;
+    Node* right;
+    Node(char x) : data(x), left(nullptr), right(nullptr) {}
+};
+
+bool isOperator(char c) {
+    return c == '+' || c == '-' || c == '*' || c == '/';
+}
+
+Node* buildExpressionTree(const string&amp; postfix) {
+    stack&lt;Node*&gt; st;
+    for (char c : postfix) {
+        Node* node = new Node(c);
+        if (isOperator(c)) {
+            node-&gt;right = st.top(); st.pop();
+            node-&gt;left = st.top(); st.pop();
+        }
+        st.push(node);
+    }
+    return st.top();
+}
+
+void inorder(Node* root) {
+    if (!root) return;
+    if (isOperator(root-&gt;data)) cout &lt;&lt; '(';
+    inorder(root-&gt;left);
+    cout &lt;&lt; root-&gt;data;
+    inorder(root-&gt;right);
+    if (isOperator(root-&gt;data)) cout &lt;&lt; ')';
+}
+
+int main() {
+    string postfix = "ab+c*";
+    Node* root = buildExpressionTree(postfix);
+    cout &lt;&lt; "Postfix = " &lt;&lt; postfix &lt;&lt; '\n';
+    cout &lt;&lt; "Infix expression = ";
+    inorder(root);
+    cout &lt;&lt; '\n';
+    return 0;
+}</code></pre>
+<h4>輸出結果</h4>
+<pre style="white-space:pre-wrap;background:#111827;color:#fef3c7;padding:14px;border-radius:10px;overflow:auto;"><code>Postfix = ab+c*
+Infix expression = ((a+b)*c)</code></pre>
+</div>
+</details>
+<details class="topic" open=""><summary>12 iterative inorder stack <span>12 images</span></summary><div class="panel">
+<div class="added-topic-background" style="padding:18px 20px;background:#f0f9ff;border:1px solid #bae6fd;border-left:6px solid #0284c7;border-radius:12px;margin-bottom:16px;">
+<h3 style="margin:0 0 10px;color:#075985;">📘 主題補充說明</h3>
+<h4>一、主題背景</h4>
+<p>Iterative Inorder Traversal 用 stack 模擬遞迴。投影片重點是：遞迴不是唯一方法，系統呼叫堆疊可以改由程式中的 stack 明確管理，讓我們看見 traversal 過程中節點如何被暫存。</p>
+<p>本主題要用「定義 → 圖形 → 操作 → 複雜度 → 考試題型」的方式理解。學習時不要只背名詞，而要能從圖形判斷節點關係、表示法、走訪順序與程式中的變數變化。期末考常要求依照投影片的樹形畫出結果、trace 程式、判斷複雜度或說明某個指標為何要這樣更新。</p>
+<h4>二、核心概念</h4>
+<ul><li>iterative traversal</li><li>stack</li><li>inorder</li><li>current pointer</li><li>push</li><li>pop</li><li>left descent</li><li>right subtree</li></ul>
+<h4>三、運作原理</h4>
+<p>演算法從 root 開始，沿著 left pointer 一路 push 節點，直到 current 為 null。接著 pop stack top，拜訪該節點，再轉到它的 right subtree。這個過程不斷重複，剛好形成 Left-Root-Right 的順序。重點是 stack 中保存的是「左路徑上尚未拜訪 root 的節點」。</p>
+<p>程式實作時，要特別注意 root、child、parent、left、right、link、index 或 stack/queue 等變數的意義。若是陣列表示，要確認 parent/child 公式是否和 0-based 或 1-based index 相符；若是 linked representation，要確認每一次連接是否會遺失原本子樹；若是 traversal 或 recursive algorithm，要清楚 base case 與 recursive case 的執行順序。</p>
+<h4>四、複雜度與比較</h4>
+<table style="width:100%;border-collapse:collapse;background:white;margin:10px 0;">
+<tr><th style="border:1px solid #cbd5e1;padding:8px;background:#e0f2fe;">分析項目</th><th style="border:1px solid #cbd5e1;padding:8px;background:#e0f2fe;">重點</th></tr>
+<tr><td style="border:1px solid #cbd5e1;padding:8px;">時間複雜度</td><td style="border:1px solid #cbd5e1;padding:8px;">每個節點 push 一次、pop 一次，因此 O(n)。</td></tr><tr><td style="border:1px solid #cbd5e1;padding:8px;">空間複雜度</td><td style="border:1px solid #cbd5e1;padding:8px;">stack 最多存 O(h) 個節點，skewed tree 最壞 O(n)。</td></tr><tr><td style="border:1px solid #cbd5e1;padding:8px;">考試判斷</td><td style="border:1px solid #cbd5e1;padding:8px;">會追蹤 current 與 stack 內容。</td></tr>
+</table>
+<h4>五、優點與缺點</h4>
+<ul><li>優點：避免直接使用遞迴。</li><li>優點：能清楚觀察系統 stack 的概念。</li><li>缺點：程式比遞迴版長。</li><li>缺點：push/pop 順序錯會導致 traversal 錯誤。</li></ul>
+<h4>六、老師上課與期末考重點</h4>
+<ul><li>會 trace stack 變化。</li><li>會說明何時 push、何時 pop。</li><li>會輸出 inorder 序列。</li><li>會比較 recursive 與 iterative。</li></ul>
+</div>
+<div class="explain"><h3>動畫原理說明</h3><p>這個動畫展示不用遞迴，而用 stack 模擬 inorder traversal。Step 1 從 root 開始；接著不斷往 left child 移動並 push 到 stack；當走到 NULL 時 pop stack，拜訪該節點，再轉向 right child。中間每一格都代表 stack 內容或 current pointer 的改變。後面動畫會完成整個 Left、Root、Right 的順序。這個主題最容易考 trace code，學生必須同時追蹤 current、stack top、visited output 三件事。</p></div>
+<div class="gallery">
+<div class="frameCard"><h4>Step 1</h4><img alt="12 iterative inorder stack step 1" src="output/12_iterative_inorder_stack_steps/step_01.svg"/></div>
+<div class="frameCard"><h4>Step 2</h4><img alt="12 iterative inorder stack step 2" src="output/12_iterative_inorder_stack_steps/step_02.svg"/></div>
+<div class="frameCard"><h4>Step 3</h4><img alt="12 iterative inorder stack step 3" src="output/12_iterative_inorder_stack_steps/step_03.svg"/></div>
+<div class="frameCard"><h4>Step 4</h4><img alt="12 iterative inorder stack step 4" src="output/12_iterative_inorder_stack_steps/step_04.svg"/></div>
+<div class="frameCard"><h4>Step 5</h4><img alt="12 iterative inorder stack step 5" src="output/12_iterative_inorder_stack_steps/step_05.svg"/></div>
+<div class="frameCard"><h4>Step 6</h4><img alt="12 iterative inorder stack step 6" src="output/12_iterative_inorder_stack_steps/step_06.svg"/></div>
+<div class="frameCard"><h4>Step 7</h4><img alt="12 iterative inorder stack step 7" src="output/12_iterative_inorder_stack_steps/step_07.svg"/></div>
+<div class="frameCard"><h4>Step 8</h4><img alt="12 iterative inorder stack step 8" src="output/12_iterative_inorder_stack_steps/step_08.svg"/></div>
+<div class="frameCard"><h4>Step 9</h4><img alt="12 iterative inorder stack step 9" src="output/12_iterative_inorder_stack_steps/step_09.svg"/></div>
+<div class="frameCard"><h4>Step 10</h4><img alt="12 iterative inorder stack step 10" src="output/12_iterative_inorder_stack_steps/step_10.svg"/></div>
+<div class="frameCard"><h4>Step 11</h4><img alt="12 iterative inorder stack step 11" src="output/12_iterative_inorder_stack_steps/step_11.svg"/></div>
+<div class="frameCard"><h4>Step 12</h4><img alt="12 iterative inorder stack step 12" src="output/12_iterative_inorder_stack_steps/step_12.svg"/></div>
+</div></div>
+<div class="code-added-section" style="margin-top:22px;padding:18px;border:1px solid #cbd5e1;border-left:6px solid #2563eb;border-radius:12px;background:#f8fbff;">
+<h3 style="margin-top:0;color:#1d4ed8;">💻 C++ 程式碼範例：12 iterative inorder stack</h3>
+<p><b>說明：</b>本程式碼對應本下拉式主題的核心演算法或資料結構操作，包含中文註解、函式用途、變數用途與執行輸出。</p>
+<h4>函式說明</h4>
+<p>iterativeInorder(root)：用 stack 模擬遞迴 inorder。</p>
+<h4>變數說明</h4>
+<p>st：儲存尚未輸出的祖先節點。cur：目前走訪節點。</p>
+<h4>完整 C++ 程式碼</h4>
+<pre style="white-space:pre-wrap;background:#0f172a;color:#e5e7eb;padding:16px;border-radius:10px;overflow:auto;"><code>#include &lt;iostream&gt;
+#include &lt;stack&gt;
+using namespace std;
+
+struct Node {
+    char data;
+    Node* left;
+    Node* right;
+    Node(char x) : data(x), left(nullptr), right(nullptr) {}
+};
+
+void iterativeInorder(Node* root) {
+    stack&lt;Node*&gt; st;
+    Node* cur = root;
+    while (cur != nullptr || !st.empty()) {
+        while (cur != nullptr) {
+            st.push(cur);
+            cur = cur-&gt;left;
+        }
+        cur = st.top(); st.pop();
+        cout &lt;&lt; cur-&gt;data &lt;&lt; ' ';
+        cur = cur-&gt;right;
+    }
+}
+
+int main() {
+    Node* A = new Node('A');
+    A-&gt;left = new Node('B');
+    A-&gt;right = new Node('C');
+    A-&gt;left-&gt;left = new Node('D');
+    A-&gt;left-&gt;right = new Node('E');
+
+    cout &lt;&lt; "Iterative inorder: ";
+    iterativeInorder(A);
+    cout &lt;&lt; '\n';
+    return 0;
+}</code></pre>
+<h4>輸出結果</h4>
+<pre style="white-space:pre-wrap;background:#111827;color:#fef3c7;padding:14px;border-radius:10px;overflow:auto;"><code>Iterative inorder: D B E A C</code></pre>
+</div>
+</details>
+<details class="topic" open=""><summary>13 level order queue <span>9 images</span></summary><div class="panel">
+<div class="added-topic-background" style="padding:18px 20px;background:#f0f9ff;border:1px solid #bae6fd;border-left:6px solid #0284c7;border-radius:12px;margin-bottom:16px;">
+<h3 style="margin:0 0 10px;color:#075985;">📘 主題補充說明</h3>
+<h4>一、主題背景</h4>
+<p>Level-order Traversal 是一層一層由左到右拜訪 binary tree，也就是樹上的 BFS。它需要 queue 輔助，因為必須先拜訪較早進入同一層的節點，再拜訪後面的節點。</p>
+<p>本主題要用「定義 → 圖形 → 操作 → 複雜度 → 考試題型」的方式理解。學習時不要只背名詞，而要能從圖形判斷節點關係、表示法、走訪順序與程式中的變數變化。期末考常要求依照投影片的樹形畫出結果、trace 程式、判斷複雜度或說明某個指標為何要這樣更新。</p>
+<h4>二、核心概念</h4>
+<ul><li>level order</li><li>queue</li><li>BFS</li><li>enqueue</li><li>dequeue</li><li>left child</li><li>right child</li><li>level</li></ul>
+<h4>三、運作原理</h4>
+<p>演算法先把 root 放入 queue。每次取出 front 節點並拜訪，再依序把它的 left child 與 right child 放入 queue。因為 queue 是 FIFO，所以較上層、較左邊的節點會先被處理。動畫中應觀察 queue 內容如何隨著每次 dequeue/enqueue 改變。</p>
+<p>程式實作時，要特別注意 root、child、parent、left、right、link、index 或 stack/queue 等變數的意義。若是陣列表示，要確認 parent/child 公式是否和 0-based 或 1-based index 相符；若是 linked representation，要確認每一次連接是否會遺失原本子樹；若是 traversal 或 recursive algorithm，要清楚 base case 與 recursive case 的執行順序。</p>
+<h4>四、複雜度與比較</h4>
+<table style="width:100%;border-collapse:collapse;background:white;margin:10px 0;">
+<tr><th style="border:1px solid #cbd5e1;padding:8px;background:#e0f2fe;">分析項目</th><th style="border:1px solid #cbd5e1;padding:8px;background:#e0f2fe;">重點</th></tr>
+<tr><td style="border:1px solid #cbd5e1;padding:8px;">時間複雜度</td><td style="border:1px solid #cbd5e1;padding:8px;">每個節點 enqueue/dequeue 各一次，為 O(n)。</td></tr><tr><td style="border:1px solid #cbd5e1;padding:8px;">空間複雜度</td><td style="border:1px solid #cbd5e1;padding:8px;">queue 最多可能存某一層節點，最壞 O(n)。</td></tr><tr><td style="border:1px solid #cbd5e1;padding:8px;">考試判斷</td><td style="border:1px solid #cbd5e1;padding:8px;">會寫出每一層由左到右的拜訪順序。</td></tr>
+</table>
+<h4>五、優點與缺點</h4>
+<ul><li>優點：非常適合顯示樹的層級。</li><li>優點：可用於找最淺節點或逐層處理。</li><li>缺點：需要額外 queue。</li><li>缺點：若左右 child 加入順序反了，結果會不同。</li></ul>
+<h4>六、老師上課與期末考重點</h4>
+<ul><li>會追蹤 queue。</li><li>會輸出 level-order 序列。</li><li>會說明 BFS 與 DFS 差異。</li><li>會分析 O(n) 與 queue 空間。</li></ul>
+</div>
+<div class="explain"><h3>動畫原理說明</h3><p>這個動畫說明 level-order traversal 為什麼需要 queue。Step 1 先把 root enqueue；接著每一步 dequeue 一個節點並拜訪，然後把它的 left child 與 right child 依序 enqueue。中間畫面會顯示 queue front/rear 的變化，因此可以看出它是 FIFO。後面動畫會逐層輸出節點，直到 queue 為空。觀察重點是 level order 和 BFS 概念相同，拜訪順序由 queue 保證。考試常考 queue 內容變化與輸出序列。</p></div>
+<div class="gallery">
+<div class="frameCard"><h4>Step 1</h4><img alt="13 level order queue step 1" src="output/13_level_order_queue_steps/step_01.svg"/></div>
+<div class="frameCard"><h4>Step 2</h4><img alt="13 level order queue step 2" src="output/13_level_order_queue_steps/step_02.svg"/></div>
+<div class="frameCard"><h4>Step 3</h4><img alt="13 level order queue step 3" src="output/13_level_order_queue_steps/step_03.svg"/></div>
+<div class="frameCard"><h4>Step 4</h4><img alt="13 level order queue step 4" src="output/13_level_order_queue_steps/step_04.svg"/></div>
+<div class="frameCard"><h4>Step 5</h4><img alt="13 level order queue step 5" src="output/13_level_order_queue_steps/step_05.svg"/></div>
+<div class="frameCard"><h4>Step 6</h4><img alt="13 level order queue step 6" src="output/13_level_order_queue_steps/step_06.svg"/></div>
+<div class="frameCard"><h4>Step 7</h4><img alt="13 level order queue step 7" src="output/13_level_order_queue_steps/step_07.svg"/></div>
+<div class="frameCard"><h4>Step 8</h4><img alt="13 level order queue step 8" src="output/13_level_order_queue_steps/step_08.svg"/></div>
+<div class="frameCard"><h4>Step 9</h4><img alt="13 level order queue step 9" src="output/13_level_order_queue_steps/step_09.svg"/></div>
+</div></div>
+<div class="code-added-section" style="margin-top:22px;padding:18px;border:1px solid #cbd5e1;border-left:6px solid #2563eb;border-radius:12px;background:#f8fbff;">
+<h3 style="margin-top:0;color:#1d4ed8;">💻 C++ 程式碼範例：13 level order queue</h3>
+<p><b>說明：</b>本程式碼對應本下拉式主題的核心演算法或資料結構操作，包含中文註解、函式用途、變數用途與執行輸出。</p>
+<h4>函式說明</h4>
+<p>levelOrder(root)：用 queue 進行 level-order traversal。</p>
+<h4>變數說明</h4>
+<p>q：BFS 佇列。cur：目前被取出的節點。</p>
+<h4>完整 C++ 程式碼</h4>
+<pre style="white-space:pre-wrap;background:#0f172a;color:#e5e7eb;padding:16px;border-radius:10px;overflow:auto;"><code>#include &lt;iostream&gt;
+#include &lt;queue&gt;
+using namespace std;
+
+struct Node {
+    char data;
+    Node* left;
+    Node* right;
+    Node(char x) : data(x), left(nullptr), right(nullptr) {}
+};
+
+void levelOrder(Node* root) {
+    if (!root) return;
+    queue&lt;Node*&gt; q;
+    q.push(root);
+    while (!q.empty()) {
+        Node* cur = q.front(); q.pop();
+        cout &lt;&lt; cur-&gt;data &lt;&lt; ' ';
+        if (cur-&gt;left) q.push(cur-&gt;left);
+        if (cur-&gt;right) q.push(cur-&gt;right);
+    }
+}
+
+int main() {
+    Node* A = new Node('A');
+    A-&gt;left = new Node('B');
+    A-&gt;right = new Node('C');
+    A-&gt;left-&gt;left = new Node('D');
+    A-&gt;left-&gt;right = new Node('E');
+
+    cout &lt;&lt; "Level-order traversal: ";
+    levelOrder(A);
+    cout &lt;&lt; '\n';
+    return 0;
+}</code></pre>
+<h4>輸出結果</h4>
+<pre style="white-space:pre-wrap;background:#111827;color:#fef3c7;padding:14px;border-radius:10px;overflow:auto;"><code>Level-order traversal: A B C D E</code></pre>
+</div>
+</details>
+<details class="topic" open=""><summary>15 sat postorder eval <span>12 images</span></summary><div class="panel">
+<div class="added-topic-background" style="padding:18px 20px;background:#f0f9ff;border:1px solid #bae6fd;border-left:6px solid #0284c7;border-radius:12px;margin-bottom:16px;">
+<h3 style="margin:0 0 10px;color:#075985;">📘 主題補充說明</h3>
+<h4>一、主題背景</h4>
+<p>SAT 或布林表示式求值可用 expression tree 表示。投影片主題重點是利用 postorder 從下而上計算，因為一個 operator node 必須等左右子樹都得到 true/false 結果後才能求值。</p>
+<p>本主題要用「定義 → 圖形 → 操作 → 複雜度 → 考試題型」的方式理解。學習時不要只背名詞，而要能從圖形判斷節點關係、表示法、走訪順序與程式中的變數變化。期末考常要求依照投影片的樹形畫出結果、trace 程式、判斷複雜度或說明某個指標為何要這樣更新。</p>
+<h4>二、核心概念</h4>
+<ul><li>SAT</li><li>Boolean expression</li><li>AND</li><li>OR</li><li>NOT</li><li>postorder</li><li>truth value</li><li>evaluation tree</li></ul>
+<h4>三、運作原理</h4>
+<p>求值時先處理 leaf 的變數值，再往上計算 internal operator。若是 AND，左右都 true 才為 true；OR 只要一邊 true 即為 true；NOT 則反轉子結果。Postorder 的 Left-Right-Root 順序剛好保證 operator 被處理前，它需要的 operand 都已經算好。</p>
+<p>程式實作時，要特別注意 root、child、parent、left、right、link、index 或 stack/queue 等變數的意義。若是陣列表示，要確認 parent/child 公式是否和 0-based 或 1-based index 相符；若是 linked representation，要確認每一次連接是否會遺失原本子樹；若是 traversal 或 recursive algorithm，要清楚 base case 與 recursive case 的執行順序。</p>
+<h4>四、複雜度與比較</h4>
+<table style="width:100%;border-collapse:collapse;background:white;margin:10px 0;">
+<tr><th style="border:1px solid #cbd5e1;padding:8px;background:#e0f2fe;">分析項目</th><th style="border:1px solid #cbd5e1;padding:8px;background:#e0f2fe;">重點</th></tr>
+<tr><td style="border:1px solid #cbd5e1;padding:8px;">時間複雜度</td><td style="border:1px solid #cbd5e1;padding:8px;">每個節點求值一次，因此 O(n)。</td></tr><tr><td style="border:1px solid #cbd5e1;padding:8px;">空間複雜度</td><td style="border:1px solid #cbd5e1;padding:8px;">遞迴需要 O(h) call stack。</td></tr><tr><td style="border:1px solid #cbd5e1;padding:8px;">考試判斷</td><td style="border:1px solid #cbd5e1;padding:8px;">會依 postorder 順序標出每個節點的布林值。</td></tr>
+</table>
+<h4>五、優點與缺點</h4>
+<ul><li>優點：樹形能清楚表示括號與運算優先順序。</li><li>優點：postorder 求值自然且不易違反相依性。</li><li>缺點：變數值或 operator 規則錯會導致整棵樹結果錯。</li><li>缺點：含短路求值時 trace 要更小心。</li></ul>
+<h4>六、老師上課與期末考重點</h4>
+<ul><li>會畫布林 expression tree。</li><li>會用 postorder 求 true/false。</li><li>會說明 AND/OR/NOT 規則。</li><li>會追蹤每個 internal node 的結果。</li></ul>
+</div>
+<div class="explain"><h3>動畫原理說明</h3><p>這個動畫說明 SAT 或布林 expression tree 的 postorder evaluation。前幾步會先建立 expression tree，leaf 代表變數或常數，internal node 代表 AND、OR、NOT 等運算。中間步驟依 postorder 先計算左右子樹，再回到 operator 節點得到結果。後面動畫會逐步把子樹 truth value 合併成 root 的整體值。重點是為什麼要用 postorder：因為 operator 必須等 operands 的值先算完。期末可能考依指定變數值求整棵樹結果。</p></div>
+<div class="gallery">
+<div class="frameCard"><h4>Step 1</h4><img alt="15 sat postorder eval step 1" src="output/15_sat_postorder_eval_steps/step_01.svg"/></div>
+<div class="frameCard"><h4>Step 2</h4><img alt="15 sat postorder eval step 2" src="output/15_sat_postorder_eval_steps/step_02.svg"/></div>
+<div class="frameCard"><h4>Step 3</h4><img alt="15 sat postorder eval step 3" src="output/15_sat_postorder_eval_steps/step_03.svg"/></div>
+<div class="frameCard"><h4>Step 4</h4><img alt="15 sat postorder eval step 4" src="output/15_sat_postorder_eval_steps/step_04.svg"/></div>
+<div class="frameCard"><h4>Step 5</h4><img alt="15 sat postorder eval step 5" src="output/15_sat_postorder_eval_steps/step_05.svg"/></div>
+<div class="frameCard"><h4>Step 6</h4><img alt="15 sat postorder eval step 6" src="output/15_sat_postorder_eval_steps/step_06.svg"/></div>
+<div class="frameCard"><h4>Step 7</h4><img alt="15 sat postorder eval step 7" src="output/15_sat_postorder_eval_steps/step_07.svg"/></div>
+<div class="frameCard"><h4>Step 8</h4><img alt="15 sat postorder eval step 8" src="output/15_sat_postorder_eval_steps/step_08.svg"/></div>
+<div class="frameCard"><h4>Step 9</h4><img alt="15 sat postorder eval step 9" src="output/15_sat_postorder_eval_steps/step_09.svg"/></div>
+<div class="frameCard"><h4>Step 10</h4><img alt="15 sat postorder eval step 10" src="output/15_sat_postorder_eval_steps/step_10.svg"/></div>
+<div class="frameCard"><h4>Step 11</h4><img alt="15 sat postorder eval step 11" src="output/15_sat_postorder_eval_steps/step_11.svg"/></div>
+<div class="frameCard"><h4>Step 12</h4><img alt="15 sat postorder eval step 12" src="output/15_sat_postorder_eval_steps/step_12.svg"/></div>
+</div></div>
+<div class="code-added-section" style="margin-top:22px;padding:18px;border:1px solid #cbd5e1;border-left:6px solid #2563eb;border-radius:12px;background:#f8fbff;">
+<h3 style="margin-top:0;color:#1d4ed8;">💻 C++ 程式碼範例：15 sat postorder eval</h3>
+<p><b>說明：</b>本程式碼對應本下拉式主題的核心演算法或資料結構操作，包含中文註解、函式用途、變數用途與執行輸出。</p>
+<h4>函式說明</h4>
+<p>eval(root)：後序方式計算布林運算式。postorder(root)：顯示計算順序。</p>
+<h4>變數說明</h4>
+<p>L/R：左右子樹布林值。data：T、F、&amp;、|。</p>
+<h4>完整 C++ 程式碼</h4>
+<pre style="white-space:pre-wrap;background:#0f172a;color:#e5e7eb;padding:16px;border-radius:10px;overflow:auto;"><code>#include &lt;iostream&gt;
+using namespace std;
+
+struct Node {
+    char data;
+    Node* left;
+    Node* right;
+    Node(char x) : data(x), left(nullptr), right(nullptr) {}
+};
+
+bool eval(Node* root) {
+    if (!root) return false;
+    if (root-&gt;data == 'T') return true;
+    if (root-&gt;data == 'F') return false;
+
+    bool L = eval(root-&gt;left);
+    bool R = eval(root-&gt;right);
+    if (root-&gt;data == '&amp;') return L &amp;&amp; R;
+    if (root-&gt;data == '|') return L || R;
+    return false;
+}
+
+void postorder(Node* root) {
+    if (!root) return;
+    postorder(root-&gt;left);
+    postorder(root-&gt;right);
+    cout &lt;&lt; root-&gt;data &lt;&lt; ' ';
+}
+
+int main() {
+    Node* root = new Node('|');
+    root-&gt;left = new Node('&amp;');
+    root-&gt;right = new Node('F');
+    root-&gt;left-&gt;left = new Node('T');
+    root-&gt;left-&gt;right = new Node('T');
+
+    cout &lt;&lt; "Postorder evaluation order: ";
+    postorder(root);
+    cout &lt;&lt; "\nSAT result = " &lt;&lt; (eval(root) ? "True" : "False") &lt;&lt; '\n';
+    return 0;
+}</code></pre>
+<h4>輸出結果</h4>
+<pre style="white-space:pre-wrap;background:#111827;color:#fef3c7;padding:14px;border-radius:10px;overflow:auto;"><code>Postorder evaluation order: T T &amp; F | 
+SAT result = True</code></pre>
+</div>
+</details>
+<details class="topic" open=""><summary>16 threaded binary tree <span>10 images</span></summary><div class="panel">
+<div class="added-topic-background" style="padding:18px 20px;background:#f0f9ff;border:1px solid #bae6fd;border-left:6px solid #0284c7;border-radius:12px;margin-bottom:16px;">
+<h3 style="margin:0 0 10px;color:#075985;">📘 主題補充說明</h3>
+<h4>一、主題背景</h4>
+<p>Threaded Binary Tree 利用原本為 null 的 pointer 儲存 inorder predecessor 或 inorder successor，目的是在不用遞迴與 stack 的情況下進行 inorder traversal。這是 Trees Part I 後段的重要主題。</p>
+<p>本主題要用「定義 → 圖形 → 操作 → 複雜度 → 考試題型」的方式理解。學習時不要只背名詞，而要能從圖形判斷節點關係、表示法、走訪順序與程式中的變數變化。期末考常要求依照投影片的樹形畫出結果、trace 程式、判斷複雜度或說明某個指標為何要這樣更新。</p>
+<h4>二、核心概念</h4>
+<ul><li>thread</li><li>inorder predecessor</li><li>inorder successor</li><li>leftThread</li><li>rightThread</li><li>null pointer reuse</li><li>threaded traversal</li></ul>
+<h4>三、運作原理</h4>
+<p>一般 binary tree 中有許多 null left/right pointer。Threaded tree 把這些空指標改成 thread，指向走訪順序中的前驅或後繼。為了分辨 pointer 是真正 child 還是 thread，節點通常需要 leftThread/rightThread tag。Traversal 時若 rightThread 為 true，可直接跳到 successor；否則進入右子樹再找最左節點。</p>
+<p>程式實作時，要特別注意 root、child、parent、left、right、link、index 或 stack/queue 等變數的意義。若是陣列表示，要確認 parent/child 公式是否和 0-based 或 1-based index 相符；若是 linked representation，要確認每一次連接是否會遺失原本子樹；若是 traversal 或 recursive algorithm，要清楚 base case 與 recursive case 的執行順序。</p>
+<h4>四、複雜度與比較</h4>
+<table style="width:100%;border-collapse:collapse;background:white;margin:10px 0;">
+<tr><th style="border:1px solid #cbd5e1;padding:8px;background:#e0f2fe;">分析項目</th><th style="border:1px solid #cbd5e1;padding:8px;background:#e0f2fe;">重點</th></tr>
+<tr><td style="border:1px solid #cbd5e1;padding:8px;">時間複雜度</td><td style="border:1px solid #cbd5e1;padding:8px;">完整 inorder traversal 仍為 O(n)，但不需遞迴 stack。</td></tr><tr><td style="border:1px solid #cbd5e1;padding:8px;">空間複雜度</td><td style="border:1px solid #cbd5e1;padding:8px;">利用 null pointer，加少量 tag，額外空間較低。</td></tr><tr><td style="border:1px solid #cbd5e1;padding:8px;">考試判斷</td><td style="border:1px solid #cbd5e1;padding:8px;">會判斷某條線是 child link 還是 thread。</td></tr>
+</table>
+<h4>五、優點與缺點</h4>
+<ul><li>優點：可不使用 stack/recursion 完成 inorder traversal。</li><li>優點：重用 null pointer，提高連結資訊價值。</li><li>缺點：插入與刪除時 thread 維護較複雜。</li><li>缺點：需要 tag 判斷 link 型態。</li></ul>
+<h4>六、老師上課與期末考重點</h4>
+<ul><li>會標出 inorder successor。</li><li>會分辨 thread 與 child。</li><li>會追蹤 threaded inorder traversal。</li><li>會說明 tag 的必要性。</li></ul>
+</div>
+<div class="explain"><h3>動畫原理說明</h3><p>這個動畫說明 threaded binary tree 如何利用原本為 NULL 的 child pointer 儲存 inorder predecessor 或 successor。前幾步會先展示一般 binary tree 中許多 NULL pointer；接著依 inorder sequence 找出每個節點的前驅與後繼；中間步驟把部分 NULL link 改成 thread，並用 tag 區分 normal child pointer 與 thread pointer。最後動畫展示不使用 stack 或 recursion 也能沿 thread 走訪。重點是 thread 不是 child，必須靠 tag 判斷。</p></div>
+<div class="gallery">
+<div class="frameCard"><h4>Step 1</h4><img alt="16 threaded binary tree step 1" src="output/16_threaded_binary_tree_steps/step_01.svg"/></div>
+<div class="frameCard"><h4>Step 2</h4><img alt="16 threaded binary tree step 2" src="output/16_threaded_binary_tree_steps/step_02.svg"/></div>
+<div class="frameCard"><h4>Step 3</h4><img alt="16 threaded binary tree step 3" src="output/16_threaded_binary_tree_steps/step_03.svg"/></div>
+<div class="frameCard"><h4>Step 4</h4><img alt="16 threaded binary tree step 4" src="output/16_threaded_binary_tree_steps/step_04.svg"/></div>
+<div class="frameCard"><h4>Step 5</h4><img alt="16 threaded binary tree step 5" src="output/16_threaded_binary_tree_steps/step_05.svg"/></div>
+<div class="frameCard"><h4>Step 6</h4><img alt="16 threaded binary tree step 6" src="output/16_threaded_binary_tree_steps/step_06.svg"/></div>
+<div class="frameCard"><h4>Step 7</h4><img alt="16 threaded binary tree step 7" src="output/16_threaded_binary_tree_steps/step_07.svg"/></div>
+<div class="frameCard"><h4>Step 8</h4><img alt="16 threaded binary tree step 8" src="output/16_threaded_binary_tree_steps/step_08.svg"/></div>
+<div class="frameCard"><h4>Step 9</h4><img alt="16 threaded binary tree step 9" src="output/16_threaded_binary_tree_steps/step_09.svg"/></div>
+<div class="frameCard"><h4>Step 10</h4><img alt="16 threaded binary tree step 10" src="output/16_threaded_binary_tree_steps/step_10.svg"/></div>
+</div></div>
+<div class="code-added-section" style="margin-top:22px;padding:18px;border:1px solid #cbd5e1;border-left:6px solid #2563eb;border-radius:12px;background:#f8fbff;">
+<h3 style="margin-top:0;color:#1d4ed8;">💻 C++ 程式碼範例：16 threaded binary tree</h3>
+<p><b>說明：</b>本程式碼對應本下拉式主題的核心演算法或資料結構操作，包含中文註解、函式用途、變數用途與執行輸出。</p>
+<h4>函式說明</h4>
+<p>leftMost(cur)：找最左節點。threadedInorder(root)：不用遞迴完成 threaded inorder。</p>
+<h4>變數說明</h4>
+<p>rightThread：right 是否為 thread。cur：目前節點。</p>
+<h4>完整 C++ 程式碼</h4>
+<pre style="white-space:pre-wrap;background:#0f172a;color:#e5e7eb;padding:16px;border-radius:10px;overflow:auto;"><code>#include &lt;iostream&gt;
+using namespace std;
+
+struct Node {
+    char data;
+    Node* left;
+    Node* right;
+    bool rightThread; // true 代表 right 指向 inorder successor
+    Node(char x) : data(x), left(nullptr), right(nullptr), rightThread(false) {}
+};
+
+Node* leftMost(Node* cur) {
+    while (cur &amp;&amp; cur-&gt;left) cur = cur-&gt;left;
+    return cur;
+}
+
+void threadedInorder(Node* root) {
+    Node* cur = leftMost(root);
+    while (cur) {
+        cout &lt;&lt; cur-&gt;data &lt;&lt; ' ';
+        if (cur-&gt;rightThread) cur = cur-&gt;right;
+        else cur = leftMost(cur-&gt;right);
+    }
+}
+
+int main() {
+    Node* A = new Node('A');
+    Node* B = new Node('B');
+    Node* C = new Node('C');
+    A-&gt;left = B;
+    A-&gt;right = C;
+    B-&gt;right = A;       // B 的 inorder successor 是 A
+    B-&gt;rightThread = true;
+
+    cout &lt;&lt; "Threaded inorder: ";
+    threadedInorder(A);
+    cout &lt;&lt; '\n';
+    return 0;
+}</code></pre>
+<h4>輸出結果</h4>
+<pre style="white-space:pre-wrap;background:#111827;color:#fef3c7;padding:14px;border-radius:10px;overflow:auto;"><code>Threaded inorder: B A C</code></pre>
+</div>
+</details>
+<details class="topic" open=""><summary>17 thread insert right <span>10 images</span></summary><div class="panel">
+<div class="added-topic-background" style="padding:18px 20px;background:#f0f9ff;border:1px solid #bae6fd;border-left:6px solid #0284c7;border-radius:12px;margin-bottom:16px;">
+<h3 style="margin:0 0 10px;color:#075985;">📘 主題補充說明</h3>
+<h4>一、主題背景</h4>
+<p>InsertRight 是 threaded binary tree 中常見的插入操作。它不是單純把新節點接到右邊，而是必須同時維護原本的右子樹或右 thread，避免破壞 inorder successor 關係。</p>
+<p>本主題要用「定義 → 圖形 → 操作 → 複雜度 → 考試題型」的方式理解。學習時不要只背名詞，而要能從圖形判斷節點關係、表示法、走訪順序與程式中的變數變化。期末考常要求依照投影片的樹形畫出結果、trace 程式、判斷複雜度或說明某個指標為何要這樣更新。</p>
+<h4>二、核心概念</h4>
+<ul><li>InsertRight</li><li>threaded binary tree</li><li>right child</li><li>right thread</li><li>successor</li><li>pointer update</li><li>tag update</li></ul>
+<h4>三、運作原理</h4>
+<p>插入新節點時，先判斷目標節點原本的 right pointer 是真正右子樹還是 thread。若原本是 thread，新節點會接成 right child，且新節點的 right thread 指向原本 successor。若原本已有右子樹，則要把新節點插入並調整相關 child/thread，確保 inorder traversal 仍能正確找到下一個節點。</p>
+<p>程式實作時，要特別注意 root、child、parent、left、right、link、index 或 stack/queue 等變數的意義。若是陣列表示，要確認 parent/child 公式是否和 0-based 或 1-based index 相符；若是 linked representation，要確認每一次連接是否會遺失原本子樹；若是 traversal 或 recursive algorithm，要清楚 base case 與 recursive case 的執行順序。</p>
+<h4>四、複雜度與比較</h4>
+<table style="width:100%;border-collapse:collapse;background:white;margin:10px 0;">
+<tr><th style="border:1px solid #cbd5e1;padding:8px;background:#e0f2fe;">分析項目</th><th style="border:1px solid #cbd5e1;padding:8px;background:#e0f2fe;">重點</th></tr>
+<tr><td style="border:1px solid #cbd5e1;padding:8px;">時間複雜度</td><td style="border:1px solid #cbd5e1;padding:8px;">若只更新局部 pointer 為 O(1)；若需找 successor/predecessor 可能為 O(h)。</td></tr><tr><td style="border:1px solid #cbd5e1;padding:8px;">空間複雜度</td><td style="border:1px solid #cbd5e1;padding:8px;">新增一個節點為 O(1) 額外空間。</td></tr><tr><td style="border:1px solid #cbd5e1;padding:8px;">考試判斷</td><td style="border:1px solid #cbd5e1;padding:8px;">畫出插入前後 thread 與 child link 的變化。</td></tr>
+</table>
+<h4>五、優點與缺點</h4>
+<ul><li>優點：能在 threaded tree 中維持走訪效率。</li><li>優點：局部更新即可完成基本插入。</li><li>缺點：pointer/tag 更新順序錯會破壞 traversal。</li><li>缺點：比一般 binary tree 插入更難 trace。</li></ul>
+<h4>六、老師上課與期末考重點</h4>
+<ul><li>會判斷原 right 是 child 還是 thread。</li><li>會畫出新節點的 right/left thread。</li><li>會說明 successor 如何維持。</li><li>會追蹤 tag 更新。</li></ul>
+</div>
+<div class="explain"><h3>動畫原理說明</h3><p>這個動畫示範在 threaded binary tree 中執行 InsertRight。Step 1 先找出要插入的目標節點；Step 2 建立新節點；Step 3 判斷原本右指標是 thread 還是真正 right child；Step 4 到 Step 7 依情況更新 newNode 的 left/right thread 與 parent 的 right link；最後一步確認 inorder sequence 仍然正確。這個主題的重點是插入時不能破壞原本 thread 關係，也不能把 successor 或 subtree 遺失。期末常考指標更新順序。</p></div>
+<div class="gallery">
+<div class="frameCard"><h4>Step 1</h4><img alt="17 thread insert right step 1" src="output/17_thread_insert_right_steps/step_01.svg"/></div>
+<div class="frameCard"><h4>Step 2</h4><img alt="17 thread insert right step 2" src="output/17_thread_insert_right_steps/step_02.svg"/></div>
+<div class="frameCard"><h4>Step 3</h4><img alt="17 thread insert right step 3" src="output/17_thread_insert_right_steps/step_03.svg"/></div>
+<div class="frameCard"><h4>Step 4</h4><img alt="17 thread insert right step 4" src="output/17_thread_insert_right_steps/step_04.svg"/></div>
+<div class="frameCard"><h4>Step 5</h4><img alt="17 thread insert right step 5" src="output/17_thread_insert_right_steps/step_05.svg"/></div>
+<div class="frameCard"><h4>Step 6</h4><img alt="17 thread insert right step 6" src="output/17_thread_insert_right_steps/step_06.svg"/></div>
+<div class="frameCard"><h4>Step 7</h4><img alt="17 thread insert right step 7" src="output/17_thread_insert_right_steps/step_07.svg"/></div>
+<div class="frameCard"><h4>Step 8</h4><img alt="17 thread insert right step 8" src="output/17_thread_insert_right_steps/step_08.svg"/></div>
+<div class="frameCard"><h4>Step 9</h4><img alt="17 thread insert right step 9" src="output/17_thread_insert_right_steps/step_09.svg"/></div>
+<div class="frameCard"><h4>Step 10</h4><img alt="17 thread insert right step 10" src="output/17_thread_insert_right_steps/step_10.svg"/></div>
+</div></div>
+<div class="code-added-section" style="margin-top:22px;padding:18px;border:1px solid #cbd5e1;border-left:6px solid #2563eb;border-radius:12px;background:#f8fbff;">
+<h3 style="margin-top:0;color:#1d4ed8;">💻 C++ 程式碼範例：17 thread insert right</h3>
+<p><b>說明：</b>本程式碼對應本下拉式主題的核心演算法或資料結構操作，包含中文註解、函式用途、變數用途與執行輸出。</p>
+<h4>函式說明</h4>
+<p>insertRight(parent, child)：插入右子節點並維護 thread。printRightChain(root)：輸出右鏈。</p>
+<h4>變數說明</h4>
+<p>parent：插入位置。child：新節點。rightThread：是否為線索指標。</p>
+<h4>完整 C++ 程式碼</h4>
+<pre style="white-space:pre-wrap;background:#0f172a;color:#e5e7eb;padding:16px;border-radius:10px;overflow:auto;"><code>#include &lt;iostream&gt;
+using namespace std;
+
+struct Node {
+    char data;
+    Node* left;
+    Node* right;
+    bool rightThread;
+    Node(char x) : data(x), left(nullptr), right(nullptr), rightThread(false) {}
+};
+
+// 在 parent 的右邊插入 child，並維持簡化版 threaded link
+void insertRight(Node* parent, Node* child) {
+    child-&gt;right = parent-&gt;right;
+    child-&gt;rightThread = parent-&gt;rightThread;
+    parent-&gt;right = child;
+    parent-&gt;rightThread = false;
+}
+
+void printRightChain(Node* root) {
+    Node* cur = root;
+    while (cur) {
+        cout &lt;&lt; cur-&gt;data &lt;&lt; ' ';
+        cur = cur-&gt;right;
+    }
+}
+
+int main() {
+    Node* A = new Node('A');
+    Node* B = new Node('B');
+    A-&gt;right = nullptr;
+    A-&gt;rightThread = true;
+
+    insertRight(A, B);
+    cout &lt;&lt; "After InsertRight(A, B): ";
+    printRightChain(A);
+    cout &lt;&lt; '\n';
+    return 0;
+}</code></pre>
+<h4>輸出結果</h4>
+<pre style="white-space:pre-wrap;background:#111827;color:#fef3c7;padding:14px;border-radius:10px;overflow:auto;"><code>After InsertRight(A, B): A B</code></pre>
+</div>
+</details>
+</main><footer>Generated automatically.</footer><script>function openAll(){document.querySelectorAll('details.topic').forEach(d=>d.open=true)}function closeAll(){document.querySelectorAll('details.topic').forEach(d=>d.open=false)}</script></body></html>

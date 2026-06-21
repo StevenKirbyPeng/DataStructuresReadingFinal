@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>資料結構期末 3 週滿分複習網站</title>
+<style>
+:root{--bg:#f5f7fb;--card:#fff;--ink:#172033;--muted:#64748b;--main:#1d4ed8;--red:#dc2626;--green:#059669;--yellow:#d97706;--purple:#7c3aed;--line:#d8e1ee;--code:#0f172a}
+*{box-sizing:border-box}body{margin:0;font-family:"Microsoft JhengHei",Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.78}.hero{background:linear-gradient(135deg,#0f172a,#1d4ed8,#7c3aed);color:#fff;padding:44px 20px}.wrap{max-width:1220px;margin:auto}.hero h1{margin:0;font-size:36px}.hero p{font-size:18px;opacity:.94}.nav{position:sticky;top:0;background:#ffffffef;backdrop-filter:blur(8px);border-bottom:1px solid var(--line);z-index:10}.nav .wrap{display:flex;gap:8px;flex-wrap:wrap;padding:10px}.nav a{color:#1d4ed8;text-decoration:none;background:#eaf1ff;padding:8px 12px;border-radius:999px;font-weight:800}.section{margin:22px auto;padding:0 20px}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;margin:18px 0;box-shadow:0 8px 24px rgba(15,23,42,.06)}h2{border-left:8px solid var(--main);padding-left:12px;margin-top:0}h3{color:#1d4ed8;margin-bottom:6px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}.tag{display:inline-block;border-radius:999px;padding:3px 10px;font-size:13px;font-weight:800;margin:2px;background:#eef2ff;color:#3730a3}.danger{background:#fee2e2;color:#991b1b}.ok{background:#dcfce7;color:#166534}.warn{background:#fef3c7;color:#92400e}.purple{background:#ede9fe;color:#5b21b6}table{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden}th,td{border:1px solid var(--line);padding:10px;vertical-align:top}th{background:#eff6ff;color:#1e3a8a}.accordion{border:1px solid var(--line);border-radius:14px;overflow:hidden;margin:12px 0;background:#fff}.acc-head{width:100%;border:0;background:#f8fbff;color:#111827;padding:15px 18px;text-align:left;font-size:18px;font-weight:900;cursor:pointer}.acc-body{display:none;padding:18px;border-top:1px solid var(--line)}.acc-body.open{display:block}.time{font-weight:900;color:var(--red)}pre{background:var(--code);color:#e5e7eb;padding:16px;border-radius:14px;overflow:auto;position:relative}code{font-family:Consolas,monospace}.copy{float:right;margin-top:-4px;border:0;background:#2563eb;color:#fff;border-radius:8px;padding:6px 10px;cursor:pointer}.quiz{border-left:5px solid #f59e0b;padding:12px;background:#fffbeb;border-radius:12px;margin:10px 0}.answer{display:none;background:#ecfdf5;border-left:5px solid #059669;padding:10px;border-radius:12px;margin-top:8px}.btn{border:0;background:#111827;color:#fff;border-radius:10px;padding:8px 12px;cursor:pointer;font-weight:800}.small{color:var(--muted);font-size:14px}.flow{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.box{background:#e0f2fe;border:1px solid #7dd3fc;border-radius:12px;padding:10px 14px;font-weight:900}.arrow{font-weight:900;color:#334155}.check li{margin:6px 0}.footer{text-align:center;color:#64748b;padding:30px}.day{border-left:6px solid #7c3aed}.score{font-size:24px;font-weight:900;color:#dc2626}.kbd{font-family:Consolas,monospace;background:#f1f5f9;border:1px solid #cbd5e1;border-radius:6px;padding:1px 6px}.mini{font-size:14px;color:#475569}.pillrow{margin:10px 0}
+</style>
+</head>
+<body>
+<div class="hero"><div class="wrap"><h1>資料結構期末 3 週滿分複習網站</h1><p>目標：從「3 小時衝刺」升級成「3 週完整讀完、練完、會手算、會寫程式、會考古題」。主軸仍是 <b>Tree / Heap、Graph / Critical Path、Sorting、Hash</b>。</p><span class="tag danger">目標 100 分</span><span class="tag ok">21 天計畫</span><span class="tag warn">含每日任務</span><span class="tag purple">含練習題與模板</span></div></div>
+<div class="nav"><div class="wrap"><a href="#overview">總覽</a><a href="#plan21">21天計畫</a><a href="#chapters">完整章節</a><a href="#practice">分級練習</a><a href="#mock">模擬考</a><a href="#templates">程式模板</a><a href="#final">考前檢查</a></div></div>
+<main class="wrap section">
+<section id="overview" class="card"><h2>一、3 週讀書策略</h2><p>三小時版本只適合考前快速記憶；三週版本要做到四件事：<b>理解概念 → 會手算 → 會追蹤程式 → 會寫基本程式</b>。每天建議 1.5～2.5 小時，最後三天做整份模擬考。</p><div class="grid"><div class="card"><h3>第 1 週：建立骨架</h3><p>讀完 Ch4、Ch5A、Ch5B。重點是 Linked List、Tree Traversal、Forest、Heap、BST、AVL。</p></div><div class="card"><h3>第 2 週：攻 Graph 與 Sorting</h3><p>讀完 Ch6A、Ch6B、Ch7，加補 Hash。重點是 DFS/BFS、MST、Dijkstra、Topological Sort、Critical Path、排序穩定性。</p></div><div class="card"><h3>第 3 週：考古題與模擬考</h3><p>每天做題，錯題整理，最後用 3 份模擬考確認速度與正確率。</p></div></div></section>
+
+<section id="plan21" class="card"><h2>二、21 天滿分複習計畫</h2><table><tr><th>天數</th><th>主題</th><th>讀書任務</th><th>練習任務</th><th>通關標準</th></tr>
+<tr><td class="time">Day 1</td><td>Ch4 Linked List 基礎</td><td>Array vs List、Node、Pointer、Singly Linked List</td><td>手畫 insert/delete 前後指標</td><td>能說出 Array 查詢快、List 插刪快的原因</td></tr>
+<tr><td class="time">Day 2</td><td>Linked List 程式</td><td>Chain class、Iterator、Circular List</td><td>寫 insertFront、insertAfter、deleteAfter</td><td>不會斷鏈、不會 memory leak</td></tr>
+<tr><td class="time">Day 3</td><td>Doubly Linked List / Applications</td><td>Doubly list、Linked Stack、Linked Queue、Sparse Matrix</td><td>手算 doubly delete 的兩條 link</td><td>知道刪除任意節點為何比 singly 容易</td></tr>
+<tr><td class="time">Day 4</td><td>Tree 基礎</td><td>Root、Degree、Leaf、Level、Height、Parenthesization</td><td>給一棵樹，寫 degree、height、leaf</td><td>Tree 術語不混淆</td></tr>
+<tr><td class="time">Day 5</td><td>Binary Tree</td><td>Skewed、Full、Complete、Array/Linked representation</td><td>由陣列畫出 binary tree</td><td>會判斷 full / complete / skewed</td></tr>
+<tr><td class="time">Day 6</td><td>Traversal</td><td>Preorder、Inorder、Postorder、Level-order</td><td>每天 5 題 traversal</td><td>看到樹 1 分鐘內寫出四種走訪</td></tr>
+<tr><td class="time">Day 7</td><td>Forest / Threaded Tree</td><td>Forest 轉 Binary Tree、Threaded Binary Tree</td><td>做 forest 轉換題 3 題</td><td>first-child / next-sibling 觀念正確</td></tr>
+<tr><td class="time">Day 8</td><td>Heap / Priority Queue</td><td>MaxPQ、Max Heap、Min Heap、array index</td><td>手算 push 5 題</td><td>parent=i/2、left=2i、right=2i+1 熟練</td></tr>
+<tr><td class="time">Day 9</td><td>Heapify / Heap Sort</td><td>Pop、bubble down、Build Heap、Heap Sort</td><td>完整追蹤 heap sort 2 題</td><td>能從 array 建 heap</td></tr>
+<tr><td class="time">Day 10</td><td>BST / AVL</td><td>Search、Insert、Delete、AVL LL/RR/LR/RL</td><td>BST delete 三情況各 2 題</td><td>AVL 旋轉不搞錯</td></tr>
+<tr><td class="time">Day 11</td><td>Graph 基礎</td><td>Directed/Undirected、Adjacency Matrix/List/Multilist</td><td>把圖轉成 matrix/list</td><td>能比較 O(V²) 與 O(V+E)</td></tr>
+<tr><td class="time">Day 12</td><td>DFS / BFS</td><td>DFS tree、BFS tree、connected components</td><td>手跑 DFS/BFS 各 5 題</td><td>DFS 用 stack/recursion，BFS 用 queue</td></tr>
+<tr><td class="time">Day 13</td><td>Articulation / Biconnected</td><td>DFN、LOW、cut vertex</td><td>計算 dfn/low 2 題</td><td>知道 low 的回邊意義</td></tr>
+<tr><td class="time">Day 14</td><td>MST</td><td>Kruskal、Prim、Sollin/Boruvka</td><td>手算 MST 4 題</td><td>Kruskal 避免 cycle，Prim 擴張 tree</td></tr>
+<tr><td class="time">Day 15</td><td>Shortest Path</td><td>Dijkstra、Bellman-Ford、Floyd</td><td>Dijkstra 表格 3 題</td><td>知道 Dijkstra 不可負權重</td></tr>
+<tr><td class="time">Day 16</td><td>Topological / Critical Path</td><td>AOV、AOE、EST、LST、Slack</td><td>Critical Path 3 題</td><td>Slack=0 即 critical activity</td></tr>
+<tr><td class="time">Day 17</td><td>Sorting I</td><td>Bubble、Selection、Insertion、Shell</td><td>手跑小陣列排序</td><td>穩定性與 in-place 熟</td></tr>
+<tr><td class="time">Day 18</td><td>Sorting II</td><td>Merge、Quick、Heap、Radix、Introsort</td><td>Quick partition、Merge trace</td><td>會比較 best/worst/stable/in-place</td></tr>
+<tr><td class="time">Day 19</td><td>Hash</td><td>Hash function、collision、linear/quadratic probing</td><td>Quadratic probing 5 題</td><td>每一步 mod table size 不出錯</td></tr>
+<tr><td class="time">Day 20</td><td>考古題日</td><td>2024 + 2025 題型整理</td><td>限時做題</td><td>錯題能分類到章節</td></tr>
+<tr><td class="time">Day 21</td><td>總複習 + 模擬考</td><td>公式、複雜度、陷阱</td><td>完整模擬考 1 份</td><td>目標 90 分以上，錯題最後修正</td></tr>
+</table></section>
+
+<section id="chapters" class="card"><h2>三、完整章節複習內容</h2>
+<div class="accordion"><button class="acc-head">Ch4 Linked List：指標題一定要畫圖</button><div class="acc-body"><h3>核心概念</h3><ul><li>Sequential representation：記憶體連續，random access O(1)，但中間 insert/delete 需要搬移 O(n)。</li><li>Linked representation：節點不必連續，靠 pointer 串接；若已知插入位置，insert/delete 可以 O(1)。</li><li>Singly list：每個 node 只有 link 指向下一個。</li><li>Doubly list：每個 node 有 left/right，可以雙向走訪。</li><li>Circular list：最後一個 node 指回 header 或 first，常用 header node 簡化空串列特例。</li></ul><h3>常考陷阱</h3><ol><li>刪除節點前，要先保存下一個指標。</li><li>插入節點時，順序通常是 <span class="kbd">newNode->link = current->link</span> 再 <span class="kbd">current->link = newNode</span>。</li><li>Doubly delete 必改兩邊：<span class="kbd">x->left->right=x->right</span> 與 <span class="kbd">x->right->left=x->left</span>。</li></ol></div></div>
+
+<div class="accordion"><button class="acc-head">Ch5A Tree：Traversal 與 Forest 是基本盤</button><div class="acc-body"><h3>Tree 術語</h3><table><tr><th>名詞</th><th>意思</th></tr><tr><td>Root</td><td>最上層節點，沒有 parent</td></tr><tr><td>Degree</td><td>一個節點的 subtree 數量</td></tr><tr><td>Leaf</td><td>degree = 0 的節點</td></tr><tr><td>Height/Depth</td><td>最大 level</td></tr><tr><td>Sibling</td><td>同一個 parent 的節點</td></tr></table><h3>Traversal 口訣</h3><table><tr><th>Traversal</th><th>順序</th><th>考試用途</th></tr><tr><td>Preorder</td><td>Root, Left, Right</td><td>複製 tree、prefix</td></tr><tr><td>Inorder</td><td>Left, Root, Right</td><td>BST 會得到遞增序列</td></tr><tr><td>Postorder</td><td>Left, Right, Root</td><td>刪除 tree、postfix</td></tr><tr><td>Level-order</td><td>由上到下，由左到右</td><td>Queue / BFS</td></tr></table><h3>Forest 轉 Binary Tree</h3><div class="flow"><div class="box">第一個 child → left</div><div class="arrow">＋</div><div class="box">下一個 sibling → right</div><div class="arrow">＝</div><div class="box">Binary Tree</div></div></div></div>
+
+<div class="accordion"><button class="acc-head">Ch5B Heap / BST / AVL：最高機率大題</button><div class="acc-body"><h3>Heap</h3><ul><li>Heap = complete binary tree + heap order property。</li><li>Max heap：parent key ≥ child key，所以最大值在 root。</li><li>Min heap：parent key ≤ child key，所以最小值在 root。</li><li>Insert：新值放在最後一格，再往上比較交換。</li><li>Delete max：root 刪掉，最後一格補到 root，再往下交換。</li><li>Build heap：從最後一個 non-leaf node 開始 heapify。</li></ul><h3>BST Delete 三情況</h3><table><tr><th>情況</th><th>做法</th></tr><tr><td>Leaf</td><td>直接刪除</td></tr><tr><td>One child</td><td>Parent 直接接到 child</td></tr><tr><td>Two children</td><td>找 inorder successor 或 predecessor 替換</td></tr></table><h3>AVL Rotation</h3><table><tr><th>失衡型態</th><th>旋轉</th></tr><tr><td>LL</td><td>Right Rotation</td></tr><tr><td>RR</td><td>Left Rotation</td></tr><tr><td>LR</td><td>Left Rotation on left child，再 Right Rotation</td></tr><tr><td>RL</td><td>Right Rotation on right child，再 Left Rotation</td></tr></table></div></div>
+
+<div class="accordion"><button class="acc-head">Ch6A Graph：表示法、走訪、MST</button><div class="acc-body"><h3>Graph 表示法</h3><table><tr><th>表示法</th><th>空間</th><th>優點</th><th>缺點</th></tr><tr><td>Adjacency Matrix</td><td>O(V²)</td><td>查 edge O(1)</td><td>稀疏圖浪費空間</td></tr><tr><td>Adjacency List</td><td>O(V+E)</td><td>省空間，適合 sparse graph</td><td>查特定 edge 較慢</td></tr><tr><td>Adjacency Multilist</td><td>依邊數而定</td><td>適合 undirected graph，每條 edge 一個 edge node</td><td>結構較複雜</td></tr></table><h3>DFS/BFS</h3><ul><li>DFS：往深處探索，可用遞迴或 stack。</li><li>BFS：由近到遠探索，用 queue，可解 unweighted shortest path。</li><li>Connected component：從未拜訪節點開始 DFS/BFS，每開始一次代表一個 component。</li></ul><h3>MST</h3><ul><li>Kruskal：把所有邊排序，由小到大選，不可形成 cycle；常搭配 disjoint set。</li><li>Prim：從任一點出發，每次選連到目前 tree 的最小邊。</li></ul></div></div>
+
+<div class="accordion"><button class="acc-head">Ch6B Shortest Path / Topological / Critical Path</button><div class="acc-body"><h3>Dijkstra</h3><p>每次選尚未完成且距離最小的 vertex，更新它鄰居的距離。限制：edge weight 必須非負。</p><h3>Bellman-Ford</h3><p>可處理 negative edge，但可偵測 negative cycle。核心是重複 relax 所有 edges。</p><h3>Floyd-Warshall</h3><p>All-pairs shortest paths，三層迴圈，核心判斷：<span class="kbd">D[i][j] = min(D[i][j], D[i][k] + D[k][j])</span>。</p><h3>Topological Sort</h3><p>只適用 DAG。常用 indegree = 0 queue 方法。</p><h3>Critical Path</h3><ol><li>先做 topological order。</li><li>正向算 earliest start time。</li><li>反向算 latest start time。</li><li>Slack = latest - earliest。</li><li>Slack = 0 的活動在 critical path 上。</li></ol></div></div>
+
+<div class="accordion"><button class="acc-head">Ch7 Sorting + Hash：表格一定要背</button><div class="acc-body"><h3>Sorting 比較表</h3><table><tr><th>演算法</th><th>Best</th><th>Average</th><th>Worst</th><th>Stable</th><th>In-place</th></tr><tr><td>Bubble</td><td>O(n)</td><td>O(n²)</td><td>O(n²)</td><td>Yes</td><td>Yes</td></tr><tr><td>Insertion</td><td>O(n)</td><td>O(n²)</td><td>O(n²)</td><td>Yes</td><td>Yes</td></tr><tr><td>Selection</td><td>O(n²)</td><td>O(n²)</td><td>O(n²)</td><td>No</td><td>Yes</td></tr><tr><td>Merge</td><td>O(n log n)</td><td>O(n log n)</td><td>O(n log n)</td><td>Yes</td><td>No</td></tr><tr><td>Quick</td><td>O(n log n)</td><td>O(n log n)</td><td>O(n²)</td><td>No</td><td>Yes</td></tr><tr><td>Heap</td><td>O(n log n)</td><td>O(n log n)</td><td>O(n log n)</td><td>No</td><td>Yes</td></tr><tr><td>Radix</td><td>O(d(n+r))</td><td>O(d(n+r))</td><td>O(d(n+r))</td><td>Yes if stable sub-sort</td><td>No</td></tr></table><h3>Hash</h3><p>Quadratic probing：衝突時依序試 <span class="kbd">h(k)+1²</span>、<span class="kbd">h(k)+2²</span>、<span class="kbd">h(k)+3²</span>，每次都要 mod table size。</p></div></div>
+</section>
+
+<section id="practice" class="card"><h2>四、分級練習題</h2><p class="small">建議：第 1 週做 Level A，第 2 週做 Level B，第 3 週做 Level C。</p>
+<div class="accordion"><button class="acc-head">Level A：基本觀念題</button><div class="acc-body">
+<div class="quiz"><b>Q1.</b> 為什麼 linked list 在已知位置時 insert/delete 是 O(1)，但搜尋第 k 個元素是 O(n)？<br><button class="btn" onclick="toggleAns('a1')">看答案</button><div id="a1" class="answer">因為 insert/delete 只改 pointer，不需要搬移元素；但 linked list 沒有 index，只能從 first 一個一個走到第 k 個。</div></div>
+<div class="quiz"><b>Q2.</b> BST 的 inorder traversal 會得到什麼結果？<br><button class="btn" onclick="toggleAns('a2')">看答案</button><div id="a2" class="answer">會得到 key 的遞增排序，因為 BST 規則是 left < root < right。</div></div>
+<div class="quiz"><b>Q3.</b> BFS 使用哪一種資料結構？DFS 呢？<br><button class="btn" onclick="toggleAns('a3')">看答案</button><div id="a3" class="answer">BFS 使用 queue；DFS 使用 recursion 或 stack。</div></div>
+</div></div>
+<div class="accordion"><button class="acc-head">Level B：手算題</button><div class="acc-body">
+<div class="quiz"><b>Q4.</b> 依序插入 20, 15, 30, 5, 40 到 Max Heap，畫出最後 heap。<br><button class="btn" onclick="toggleAns('b1')">看答案</button><div id="b1" class="answer">最後 root 是 40。可能的 array 表示：[40,30,20,5,15]。插入 40 後一路 bubble up 到 root。</div></div>
+<div class="quiz"><b>Q5.</b> 對圖做 Topological Sort，若 indegree=0 有多個點，怎麼辦？<br><button class="btn" onclick="toggleAns('b2')">看答案</button><div id="b2" class="answer">可以任選一個，因此 topological order 可能不唯一。考試通常接受符合所有先後限制的答案。</div></div>
+<div class="quiz"><b>Q6.</b> Hash table size=11，h(k)=k mod 11，插入 22, 33, 44，用 quadratic probing。<br><button class="btn" onclick="toggleAns('b3')">看答案</button><div id="b3" class="answer">22→0；33 原本 0 衝突，0+1²=1；44 原本 0 衝突，試 1 也衝突，再試 0+2²=4，所以放 4。</div></div>
+</div></div>
+<div class="accordion"><button class="acc-head">Level C：考古題型整合</button><div class="acc-body">
+<div class="quiz"><b>Q7.</b> 給一個 AOE network，要求 EST、LST、Critical Path。解題流程？<br><button class="btn" onclick="toggleAns('c1')">看答案</button><div id="c1" class="answer">先 topological order；正向取 max 算 EST；反向取 min 算 LST；Slack = LST - EST；Slack=0 的邊組成 critical path。</div></div>
+<div class="quiz"><b>Q8.</b> Sorting 題問：「哪幾個 stable？哪幾個 in-place？」怎麼答？<br><button class="btn" onclick="toggleAns('c2')">看答案</button><div id="c2" class="answer">Stable：Bubble、Insertion、Merge、Radix（若每一位使用 stable sort）。通常不 stable：Selection、Quick、Heap。In-place：Bubble、Insertion、Selection、Quick、Heap；Merge 通常不是。</div></div>
+<div class="quiz"><b>Q9.</b> Kruskal 和 Prim 最大差異？<br><button class="btn" onclick="toggleAns('c3')">看答案</button><div id="c3" class="answer">Kruskal 從邊開始，排序所有 edges，避免 cycle；Prim 從一個 vertex 開始，逐步擴張 tree，每次選跨出去的最小 edge。</div></div>
+</div></div>
+</section>
+
+<section id="mock" class="card"><h2>五、三週版模擬考安排</h2><div class="grid"><div class="card day"><h3>模擬考 A：基礎完整卷</h3><ol><li>Traversal 10 分</li><li>Heap insert/delete 20 分</li><li>DFS/BFS 20 分</li><li>Sorting 表格 20 分</li><li>Hash probing 15 分</li><li>Linked list pointer 15 分</li></ol></div><div class="card day"><h3>模擬考 B：考古題型卷</h3><ol><li>Tree/Forest 15 分</li><li>Heapify/Heap Sort 20 分</li><li>Adjacency List/Multilist 15 分</li><li>Critical Path 25 分</li><li>Radix/Stable Sort 15 分</li><li>BST Delete 10 分</li></ol></div><div class="card day"><h3>模擬考 C：滿分挑戰卷</h3><ol><li>AVL Rotation 15 分</li><li>Dijkstra 20 分</li><li>Kruskal/Prim 20 分</li><li>Quick/Merge trace 20 分</li><li>Hash + Complexity 15 分</li><li>程式追蹤 10 分</li></ol></div></div></section>
+
+<section id="templates" class="card"><h2>六、常用 C++ 程式模板</h2>
+<h3>DFS</h3><button class="copy" onclick="copyCode('dfs')">Copy Code</button><pre><code id="dfs">void DFS(int u){
+    visited[u] = true;
+    cout << u << " ";
+    for(int v : adj[u]){
+        if(!visited[v]) DFS(v);
+    }
+}</code></pre>
+<h3>BFS</h3><button class="copy" onclick="copyCode('bfs')">Copy Code</button><pre><code id="bfs">void BFS(int s){
+    queue&lt;int&gt; q;
+    visited[s] = true;
+    q.push(s);
+    while(!q.empty()){
+        int u = q.front(); q.pop();
+        cout << u << " ";
+        for(int v : adj[u]){
+            if(!visited[v]){
+                visited[v] = true;
+                q.push(v);
+            }
+        }
+    }
+}</code></pre>
+<h3>Max Heap Push</h3><button class="copy" onclick="copyCode('heapPush')">Copy Code</button><pre><code id="heapPush">void push(int x){
+    heap.push_back(x);
+    int i = heap.size() - 1;
+    while(i > 1 && heap[i/2] < heap[i]){
+        swap(heap[i/2], heap[i]);
+        i /= 2;
+    }
+}</code></pre>
+<h3>Dijkstra</h3><button class="copy" onclick="copyCode('dijkstra')">Copy Code</button><pre><code id="dijkstra">vector&lt;int&gt; dijkstra(int s, int n){
+    const int INF = 1e9;
+    vector&lt;int&gt; dist(n, INF);
+    priority_queue&lt;pair&lt;int,int&gt;, vector&lt;pair&lt;int,int&gt;&gt;, greater&lt;pair&lt;int,int&gt;&gt;&gt; pq;
+    dist[s] = 0;
+    pq.push({0, s});
+    while(!pq.empty()){
+        auto [du, u] = pq.top(); pq.pop();
+        if(du != dist[u]) continue;
+        for(auto [v, w] : adj[u]){
+            if(dist[u] + w < dist[v]){
+                dist[v] = dist[u] + w;
+                pq.push({dist[v], v});
+            }
+        }
+    }
+    return dist;
+}</code></pre>
+<h3>Topological Sort</h3><button class="copy" onclick="copyCode('topo')">Copy Code</button><pre><code id="topo">vector&lt;int&gt; topoSort(int n){
+    queue&lt;int&gt; q;
+    for(int i=0;i&lt;n;i++) if(indeg[i]==0) q.push(i);
+    vector&lt;int&gt; order;
+    while(!q.empty()){
+        int u=q.front(); q.pop();
+        order.push_back(u);
+        for(int v: adj[u]){
+            if(--indeg[v]==0) q.push(v);
+        }
+    }
+    return order;
+}</code></pre>
+</section>
+
+<section id="final" class="card"><h2>七、考前檢查清單</h2><ul class="check"><li>我能在 1 分鐘內寫出 Pre/In/Post/Level-order。</li><li>我能手算 Max Heap insert/delete/heapify。</li><li>我能把 tree/forest 轉成 binary tree。</li><li>我能把 graph 畫成 adjacency matrix/list。</li><li>我能手跑 DFS、BFS、Kruskal、Prim、Dijkstra。</li><li>我能算 Topological Sort、EST、LST、Slack、Critical Path。</li><li>我能背 Sorting 的 stable、in-place、best/worst complexity。</li><li>我能做 quadratic probing，每一步都有 mod。</li><li>我知道 Dijkstra 不可有負權重。</li><li>我知道 BFS 可做 unweighted shortest path。</li></ul><p class="score">達成以上 10 項，目標 100 分才有機會。</p></section>
+</main>
+<div class="footer">資料結構期末 3 週滿分複習網站｜建議搭配老師投影片、考古題、AI 練習題一起使用</div>
+<script>
+document.querySelectorAll('.acc-head').forEach(btn=>{btn.addEventListener('click',()=>{btn.nextElementSibling.classList.toggle('open');});});
+function toggleAns(id){const el=document.getElementById(id);el.style.display=el.style.display==='block'?'none':'block';}
+function copyCode(id){navigator.clipboard.writeText(document.getElementById(id).innerText).then(()=>alert('已複製程式碼'));}
+</script>
+</body></html>

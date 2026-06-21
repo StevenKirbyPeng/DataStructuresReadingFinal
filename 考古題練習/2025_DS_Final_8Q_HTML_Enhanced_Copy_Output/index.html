@@ -1,0 +1,831 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>2025 資料結構期末考八題完整解答</title><style>
+*{box-sizing:border-box} body{font-family:"Noto Sans TC","Microsoft JhengHei",Arial,sans-serif;margin:0;background:#f5f7fb;color:#182230;line-height:1.75}
+header{background:linear-gradient(135deg,#1d4666,#2a778d);color:white;padding:36px 24px;text-align:center}
+header h1{margin:0;font-size:34px} header p{margin:8px 0 0;font-size:17px;opacity:.95}
+.container{max-width:1180px;margin:24px auto;padding:0 18px}
+.nav{background:white;border-radius:18px;padding:18px;box-shadow:0 6px 18px #0001;margin-bottom:22px}
+.nav a{display:inline-block;margin:6px;padding:8px 12px;border-radius:999px;background:#eef6fb;color:#1d5268;text-decoration:none;font-weight:700}
+details{background:white;border-radius:20px;margin:20px 0;box-shadow:0 8px 24px #00000012;overflow:hidden;border:1px solid #e5edf4}
+summary{cursor:pointer;padding:20px 24px;font-size:22px;font-weight:800;background:#f0f7fb;color:#173b50}
+section{padding:24px}
+.qimg{width:100%;max-width:980px;display:block;margin:14px auto;border-radius:14px;border:1px solid #ccd6df;box-shadow:0 4px 16px #0002}
+h2{border-left:7px solid #2a778d;padding-left:12px;margin-top:28px;color:#16394f}
+.card{background:#f8fbfd;border:1px solid #dce9f1;border-radius:14px;padding:16px;margin:14px 0}
+.answer{background:#fff7df;border:1px solid #f2d27b;border-radius:14px;padding:16px;font-weight:700}
+table{border-collapse:collapse;width:100%;margin:14px 0;background:white}
+th,td{border:1px solid #cad6df;padding:10px;text-align:left;vertical-align:top}
+th{background:#e9f3f8;color:#173b50}
+pre{background:#17212b;color:#e9f6ff;border-radius:14px;padding:16px;overflow:auto}
+code{font-family:Consolas,monospace;font-size:14px}
+.flow-svg{width:100%;max-width:980px;display:block;margin:16px auto;background:#fbfdff;border:1px solid #d9e7ef;border-radius:18px}
+.svg-title{font:bold 25px "Microsoft JhengHei",sans-serif;fill:#16394f}
+.flow-box{fill:#eef7fb;stroke:#2a778d;stroke-width:2;animation:pulse 2.8s infinite}
+.step1{animation-delay:.2s}.step2{animation-delay:.4s}.step3{animation-delay:.6s}.step4{animation-delay:.8s}
+.flow-text{font:700 20px "Microsoft JhengHei",sans-serif;fill:#173b50}
+.flow-arrow{stroke:#345;stroke-width:2.5}
+@keyframes pulse{0%,100%{filter:none;opacity:.92}50%{filter:drop-shadow(0 0 10px #4aa3bd88);opacity:1}}
+.badge{display:inline-block;background:#e8f3ff;color:#1b4c70;border-radius:999px;padding:4px 10px;margin:4px;font-weight:800}
+.small{color:#627386;font-size:14px}
+footer{text-align:center;color:#667;padding:30px}
+
+.editor-bar{position:sticky;top:0;z-index:50;background:#ffffffee;backdrop-filter:blur(8px);border-bottom:1px solid #d8e5ed;padding:12px 18px;text-align:center;box-shadow:0 2px 12px #0001}
+.editor-bar a{display:inline-block;margin:6px 8px;padding:10px 16px;border-radius:999px;background:linear-gradient(135deg,#2563eb,#0891b2);color:#fff;text-decoration:none;font-weight:900;box-shadow:0 4px 12px #0002}
+.editor-bar a:hover{transform:translateY(-1px)}
+.code-wrap{position:relative;margin:16px 0}
+.copy-btn{position:absolute;right:12px;top:10px;border:0;border-radius:999px;background:#ffd166;color:#1d2730;font-weight:900;padding:7px 12px;cursor:pointer;box-shadow:0 2px 8px #0002}
+.copy-btn.done{background:#8de28d}
+.output-box{background:#0f1720;color:#d7ffd7;border-radius:14px;padding:14px 16px;margin:12px 0;white-space:pre-wrap;font-family:Consolas,monospace;border:1px solid #263547}
+.func-table td:first-child{font-weight:800;color:#17465d}
+.deep-note{background:#fffdf5;border:1px solid #f2d891;border-radius:14px;padding:16px;margin:14px 0}
+.step-explain{background:#f5fbff;border-left:6px solid #2a778d;border-radius:12px;padding:14px;margin:12px 0}
+
+</style></head>
+<body>
+<header><h1>2025 資料結構期末考八題完整解答</h1>
+<p>每題下拉式介面：題目中文翻譯、核心觀念、解題思維、SVG流程圖、逐步解答、最終答案、常見錯誤、得分關鍵與必要 C++ 程式碼</p></header>
+
+<div class="editor-bar">
+  <b>線上 C++ 編譯器：</b>
+  <a href="https://www.onlinegdb.com/online_c++_compiler" target="_blank" rel="noopener">OnlineGDB C++</a>
+  <a href="https://www.programiz.com/cpp-programming/online-compiler/" target="_blank" rel="noopener">Programiz C++</a>
+  <a href="https://cpp.sh/" target="_blank" rel="noopener">cpp.sh</a>
+</div>
+
+<div class="container">
+<div class="nav"><b>快速跳題：</b><a href="#q1">Q1</a><a href="#q2">Q2</a><a href="#q3">Q3</a><a href="#q4">Q4</a><a href="#q5">Q5</a><a href="#q6">Q6</a><a href="#q7">Q7</a><a href="#q8">Q8</a></div>
+
+<details id="q1" open>
+<summary>Q1：Radix Sort：LSD 基數排序、時間複雜度與穩定性</summary>
+<section>
+<div class="card"><span class="badge">對應投影片</span> lec7 Sorting：基數排序屬排序章節補充；也需搭配穩定排序觀念。若使用 lec7_without_radix_sort，Radix Sort 可能是老師額外補充題型。</div>
+<h2>題目圖片</h2>
+<img class="qimg" src="assets/Q1.png" alt="Q1 題目截圖">
+<h2>題目中文翻譯</h2><div class="card">給定固定長度 3 的字串列表 [cat, bat, ant, car, bar, arc, cab]，使用 LSD Radix Sort 從最後一個字元開始排序。每一輪必須使用 stable sort，並列出每一輪排序後的結果；另外回答時間複雜度與穩定性為什麼重要。</div>
+<h2>一、題目在問什麼</h2><div class="card">這題不是只問最後排序結果，而是要你完整模擬 LSD Radix Sort 三個 pass：先看第 3 個字元，再看第 2 個字元，最後看第 1 個字元。還要知道 counting sort 當子程序時的複雜度，以及為什麼每一輪都一定要穩定。</div>
+<h2>二、必備背景知識</h2><div class="card">Radix Sort 的核心是「多關鍵字排序」。LSD 代表 Least Significant Digit，也就是從最不重要的位元或字元開始排。因為前一輪排序結果要被後一輪保留，所以每一輪都必須 stable。穩定排序的意思是：如果兩個元素在目前比較鍵相同，它們原本的相對順序不能被改變。</div>
+<h2>三、解題思維</h2><div class="card">看到固定長度字串與 LSD，就先標出每個字串三個位置：第 2 位是最後字元、第 1 位是中間字元、第 0 位是第一字元。每一輪只看一個字元，但同字元組內保持上一輪順序。</div>
+<h2>四、SVG 流程圖</h2>
+<svg class="flow-svg" viewBox="0 0 980 690" role="img" aria-label="Q1 解題流程">
+<defs>
+  <marker id="arrow1" markerWidth="10" markerHeight="10" refX="5" refY="3" orient="auto">
+    <path d="M0,0 L0,6 L6,3 z" fill="#345"/>
+  </marker>
+</defs>
+<text x="490.0" y="40" text-anchor="middle" class="svg-title">Q1 解題流程</text>
+<rect x="140" y="75" rx="16" ry="16" width="700" height="56" class="flow-box step0"/>
+<text x="490.0" y="110" text-anchor="middle" class="flow-text">讀入固定長度字串</text>
+<line x1="490.0" y1="137" x2="490.0" y2="165" class="flow-arrow" marker-end="url(#arrow1)"/>
+<rect x="140" y="170" rx="16" ry="16" width="700" height="56" class="flow-box step1"/>
+<text x="490.0" y="205" text-anchor="middle" class="flow-text">從最後一個字元開始</text>
+<line x1="490.0" y1="232" x2="490.0" y2="260" class="flow-arrow" marker-end="url(#arrow1)"/>
+<rect x="140" y="265" rx="16" ry="16" width="700" height="56" class="flow-box step2"/>
+<text x="490.0" y="300" text-anchor="middle" class="flow-text">每一輪做 stable sort</text>
+<line x1="490.0" y1="327" x2="490.0" y2="355" class="flow-arrow" marker-end="url(#arrow1)"/>
+<rect x="140" y="360" rx="16" ry="16" width="700" height="56" class="flow-box step3"/>
+<text x="490.0" y="395" text-anchor="middle" class="flow-text">記錄每一 pass 後結果</text>
+<line x1="490.0" y1="422" x2="490.0" y2="450" class="flow-arrow" marker-end="url(#arrow1)"/>
+<rect x="140" y="455" rx="16" ry="16" width="700" height="56" class="flow-box step4"/>
+<text x="490.0" y="490" text-anchor="middle" class="flow-text">最後得到 lexicographic order</text>
+<line x1="490.0" y1="517" x2="490.0" y2="545" class="flow-arrow" marker-end="url(#arrow1)"/>
+<rect x="140" y="550" rx="16" ry="16" width="700" height="56" class="flow-box step0"/>
+<text x="490.0" y="585" text-anchor="middle" class="flow-text">回答 O(k(n+r)) 與穩定性</text>
+</svg>
+<h2>五、逐步解答</h2><div class="card">
+<table><tr><th>階段</th><th>排序依據</th><th>結果</th></tr>
+<tr><td>初始</td><td>-</td><td>cat, bat, ant, car, bar, arc, cab</td></tr>
+<tr><td>Pass 1</td><td>第 3 字元：b,c,r,t</td><td>cab, arc, car, bar, cat, bat, ant</td></tr>
+<tr><td>Pass 2</td><td>第 2 字元</td><td>cab, car, bar, cat, bat, ant, arc</td></tr>
+<tr><td>Pass 3</td><td>第 1 字元</td><td>ant, arc, bar, bat, cab, car, cat</td></tr>
+</table>
+<p>時間複雜度：若有 n 個字串、每個長度 k、字元範圍大小 r，每一輪 counting sort 為 O(n+r)，共 k 輪，所以總時間為 <b>O(k(n+r))</b>。若 r 視為常數，則為 <b>O(kn)</b>。</p>
+<p>穩定性：LSD Radix Sort 必須穩定，因為低位排序後形成的相對順序，要在高位相同時被保留下來。若不穩定，像 car 與 cab 在第一字元同為 c 時，前面已排好的後面字元順序可能被破壞。</p>
+</div>
+<h2>六、最終答案</h2><div class="answer">最終排序結果：ant, arc, bar, bat, cab, car, cat。時間複雜度 O(k(n+r))，穩定排序是 LSD Radix Sort 正確性的必要條件。</div>
+<h2>七、常見錯誤</h2><div class="card">常見錯誤：只寫最後答案、Pass 順序從第一個字元開始、同字元時沒有維持 stable order、把 r 忽略成 O(kn) 但沒有說明 r 為常數。</div>
+<h2>八、考試得分關鍵</h2><div class="card">滿分關鍵：三個 pass 的中間結果都要寫；時間複雜度要寫 O(k(n+r))；穩定性要能舉例說明。</div>
+<div class="deep-note"><b>背景程式資料補充：</b>
+LSD Radix Sort 的程式觀念可以想成「外層迴圈控制位數、內層穩定排序控制同一位字元」。如果用 counting sort 實作，會先統計每個字元出現次數，再轉成 prefix sum，最後由右往左把資料放到輸出陣列，這樣可以維持 stable。題目裡的 r 表示字元範圍，例如 ASCII 可視為 128 或 256；k 是字串長度；n 是字串數量。</div>
+<div class="step-explain"><b>依照流程圖逐步講解：</b><br>
+1. 先確認每個字串長度都是 3，所以只需要做三輪。<br>
+2. 第一輪看最後一個字元，目的不是得到最終字典序，而是先把最低位整理好。<br>
+3. 第二輪看中間字元，同字元時必須維持上一輪順序。<br>
+4. 第三輪看第一個字元，最後才得到真正 lexicographic order。<br>
+5. 回答複雜度時，不要只寫 O(n)，因為還有 k 輪與 r 個 bucket。</div><h2>程式輸出結果</h2><div class='output-box'>Initial: cat bat ant car bar arc cab
+After pass at position 2: cab arc car bar cat bat ant
+After pass at position 1: cab car bar cat bat ant arc
+After pass at position 0: ant arc bar bat cab car cat</div><h2>相關函式與變數說明</h2><table class='func-table'><tr><th>名稱</th><th>說明</th></tr><tr><td>a</td><td>vector&lt;string&gt;，儲存所有待排序字串。</td></tr><tr><td>k</td><td>固定字串長度，本題為 3。</td></tr><tr><td>pos</td><td>目前排序的字元位置，從 2 到 0。</td></tr><tr><td>stable_sort</td><td>C++ 標準函式，保證相同鍵值的相對順序不變。</td></tr></table>
+<h2>必要 C++ 程式碼 / 驗證程式</h2>
+<div class="code-wrap"><button class="copy-btn" onclick="copyCode(this)">Copy Code</button><pre><code>#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+// LSD Radix Sort：固定長度字串，由最後一個字元排到第一個字元。
+// stable_sort 用來保證每一輪排序穩定。
+int main() {
+    vector&lt;string&gt; a = {&quot;cat&quot;,&quot;bat&quot;,&quot;ant&quot;,&quot;car&quot;,&quot;bar&quot;,&quot;arc&quot;,&quot;cab&quot;};
+    int k = 3;
+    cout &lt;&lt; &quot;Initial: &quot;;
+    for (auto &amp;s:a) cout &lt;&lt; s &lt;&lt; &quot; &quot;;
+    cout &lt;&lt; &quot;\n&quot;;
+
+    for (int pos = k - 1; pos &gt;= 0; --pos) {
+        stable_sort(a.begin(), a.end(), [pos](const string&amp; x, const string&amp; y) {
+            return x[pos] &lt; y[pos];
+        });
+        cout &lt;&lt; &quot;After pass at position &quot; &lt;&lt; pos &lt;&lt; &quot;: &quot;;
+        for (auto &amp;s:a) cout &lt;&lt; s &lt;&lt; &quot; &quot;;
+        cout &lt;&lt; &quot;\n&quot;;
+    }
+}</code></pre></div>
+</section></details>
+
+
+<details id="q2" open>
+<summary>Q2：Graph：Adjacency Multilist 與 Sequential Adjacency List</summary>
+<section>
+<div class="card"><span class="badge">對應投影片</span> lec6a Graphs Part I：約 Graph Definition、Graph Representation、Adjacency Matrix/List、Multilist 相關頁。</div>
+<h2>題目圖片</h2>
+<img class="qimg" src="assets/Q2.png" alt="Q2 題目截圖">
+<h2>題目中文翻譯</h2><div class="card">給定無向圖 V={A,B,C,D}，E={(A,B),(A,C),(B,C),(C,D)}。說明 Adjacency Multilist 對無向圖的優點，畫出或描述此圖的 Multilist 結構，以及畫出 Sequential Representation of Adjacency List。</div>
+<h2>一、題目在問什麼</h2><div class="card">這題在比較無向圖的兩種儲存方式。重點是 Adjacency Multilist 讓一條無向邊只存一次，但仍能從兩端點各自串到這條邊。</div>
+<h2>二、必備背景知識</h2><div class="card">一般 adjacency list 對無向圖會把每條邊存兩次，例如 (A,B) 會出現在 A 的串列，也會出現在 B 的串列。Adjacency Multilist 則用 edge node 記錄 ivex、jvex、ilink、jlink，因此同一個 edge node 可以同時屬於兩個 vertex 的 incident edge list。</div>
+<h2>三、解題思維</h2><div class="card">先列出所有頂點與邊，再決定每個頂點的第一條 incident edge。對 multilist 而言，要確認每條邊只建立一個 edge node；對 adjacency list 而言，要把無向邊展開成雙向鄰接。</div>
+<h2>四、SVG 流程圖</h2>
+<svg class="flow-svg" viewBox="0 0 980 595" role="img" aria-label="Q2 解題流程">
+<defs>
+  <marker id="arrow2" markerWidth="10" markerHeight="10" refX="5" refY="3" orient="auto">
+    <path d="M0,0 L0,6 L6,3 z" fill="#345"/>
+  </marker>
+</defs>
+<text x="490.0" y="40" text-anchor="middle" class="svg-title">Q2 解題流程</text>
+<rect x="140" y="75" rx="16" ry="16" width="700" height="56" class="flow-box step0"/>
+<text x="490.0" y="110" text-anchor="middle" class="flow-text">列出 V 與 E</text>
+<line x1="490.0" y1="137" x2="490.0" y2="165" class="flow-arrow" marker-end="url(#arrow2)"/>
+<rect x="140" y="170" rx="16" ry="16" width="700" height="56" class="flow-box step1"/>
+<text x="490.0" y="205" text-anchor="middle" class="flow-text">一般 adjacency list：每條無向邊存兩次</text>
+<line x1="490.0" y1="232" x2="490.0" y2="260" class="flow-arrow" marker-end="url(#arrow2)"/>
+<rect x="140" y="265" rx="16" ry="16" width="700" height="56" class="flow-box step2"/>
+<text x="490.0" y="300" text-anchor="middle" class="flow-text">Adjacency Multilist：每條邊只存一次</text>
+<line x1="490.0" y1="327" x2="490.0" y2="355" class="flow-arrow" marker-end="url(#arrow2)"/>
+<rect x="140" y="360" rx="16" ry="16" width="700" height="56" class="flow-box step3"/>
+<text x="490.0" y="395" text-anchor="middle" class="flow-text">建立 edge node：ivex jvex ilink jlink</text>
+<line x1="490.0" y1="422" x2="490.0" y2="450" class="flow-arrow" marker-end="url(#arrow2)"/>
+<rect x="140" y="455" rx="16" ry="16" width="700" height="56" class="flow-box step4"/>
+<text x="490.0" y="490" text-anchor="middle" class="flow-text">串起每個頂點 incident edge list</text>
+</svg>
+<h2>五、逐步解答</h2><div class="card">
+<p>令 e1=(A,B)、e2=(A,C)、e3=(B,C)、e4=(C,D)。</p>
+<table><tr><th>邊節點</th><th>ivex</th><th>jvex</th><th>ilink</th><th>jlink</th></tr>
+<tr><td>e1</td><td>A</td><td>B</td><td>e2</td><td>e3</td></tr>
+<tr><td>e2</td><td>A</td><td>C</td><td>NULL</td><td>e3</td></tr>
+<tr><td>e3</td><td>B</td><td>C</td><td>NULL</td><td>e4</td></tr>
+<tr><td>e4</td><td>C</td><td>D</td><td>NULL</td><td>NULL</td></tr>
+</table>
+<p>各頂點的 adjacency list：</p>
+<table><tr><th>Vertex</th><th>Neighbors</th></tr>
+<tr><td>A</td><td>B, C</td></tr>
+<tr><td>B</td><td>A, C</td></tr>
+<tr><td>C</td><td>A, B, D</td></tr>
+<tr><td>D</td><td>C</td></tr>
+</table>
+</div>
+<h2>六、最終答案</h2><div class="answer">Adjacency Multilist 的優點是無向邊只需存一次，節省空間並方便刪除邊；一般 adjacency list 則會將每條無向邊存兩份。</div>
+<h2>七、常見錯誤</h2><div class="card">常見錯誤：把 multilist 畫成一般 adjacency list；一條無向邊建立兩個 edge node；ilink 與 jlink 沒有依端點分別連接。</div>
+<h2>八、考試得分關鍵</h2><div class="card">滿分關鍵：要明確說出 edge node 欄位與「一條邊只存一次」；鄰接串列要列出 A、B、C、D 四個頂點。</div>
+<div class="deep-note"><b>背景程式資料補充：</b>
+圖形的程式表示通常會先把頂點轉成 index，例如 A=0、B=1、C=2、D=3。一般 adjacency list 對無向圖會雙向加入，因此 (A,B) 會加入 A 的 list，也會加入 B 的 list。Adjacency Multilist 則比較像「邊節點串列」，每條邊只建立一次，透過 ilink/jlink 分別接到兩個端點的 incident edge list。</div>
+<div class="step-explain"><b>依照流程圖逐步講解：</b><br>
+1. 先列出所有頂點與所有邊，避免漏邊。<br>
+2. 若是普通 adjacency list，無向邊要雙向存。<br>
+3. 若是 multilist，每條邊只建立一個 edge node。<br>
+4. 每個 vertex header 指向第一條 incident edge。<br>
+5. 回答優點時要明確講「節省重複邊儲存、刪除邊較方便」。</div><h2>程式輸出結果</h2><div class='output-box'>A: B C
+B: A C
+C: A B D
+D: C</div><h2>相關函式與變數說明</h2><table class='func-table'><tr><th>名稱</th><th>說明</th></tr><tr><td>V</td><td>頂點陣列，記錄 A、B、C、D。</td></tr><tr><td>E</td><td>邊集合，本題包含 AB、AC、BC、CD。</td></tr><tr><td>adj</td><td>一般 adjacency list，adj[i] 儲存第 i 個頂點的鄰居。</td></tr><tr><td>ivex/jvex</td><td>Multilist 邊節點中的兩個端點欄位。</td></tr><tr><td>ilink/jlink</td><td>Multilist 中分別串接兩端點 incident edge 的指標。</td></tr></table>
+<h2>必要 C++ 程式碼 / 驗證程式</h2>
+<div class="code-wrap"><button class="copy-btn" onclick="copyCode(this)">Copy Code</button><pre><code>#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int main() {
+    vector&lt;char&gt; V = {&#x27;A&#x27;,&#x27;B&#x27;,&#x27;C&#x27;,&#x27;D&#x27;};
+    vector&lt;pair&lt;int,int&gt;&gt; E = {{0,1},{0,2},{1,2},{2,3}};
+
+    vector&lt;vector&lt;int&gt;&gt; adj(4);
+    for (auto [u,v]: E) {
+        adj[u].push_back(v);
+        adj[v].push_back(u); // undirected graph stores both directions in normal adjacency list
+    }
+
+    for (int i=0;i&lt;4;i++) {
+        cout &lt;&lt; V[i] &lt;&lt; &quot;: &quot;;
+        for (int v: adj[i]) cout &lt;&lt; V[v] &lt;&lt; &quot; &quot;;
+        cout &lt;&lt; &quot;\n&quot;;
+    }
+}</code></pre></div>
+</section></details>
+
+
+<details id="q3" open>
+<summary>Q3：Biconnected Components：DFS Tree、dfn、low、BFS Tree</summary>
+<section>
+<div class="card"><span class="badge">對應投影片</span> lec6a Graphs Part I：DFS、BFS、Connected/Biconnected Components、Articulation Point、dfn/low 約後半段頁面。</div>
+<h2>題目圖片</h2>
+<img class="qimg" src="assets/Q3.png" alt="Q3 題目截圖">
+<h2>題目中文翻譯</h2><div class="card">從 node 1 開始，每次選擇未拜訪且 index 最小的節點，畫 DFS tree；找 backward edges；列出每個節點的 dfs number 與 low；找出所有 biconnected components；再用同樣選點規則畫 BFS tree 與 cross edge。</div>
+<h2>一、題目在問什麼</h2><div class="card">這題在考 DFS low value 的完整手算流程。不是只要 DFS 順序，而是要從 DFS tree 推出 back edge、dfn、low，再用 low 判斷 biconnected components。</div>
+<h2>二、必備背景知識</h2><div class="card">dfn 是 DFS 拜訪順序。low(w) 是 w 或 w 的子孫透過 tree edge 加最多一條 back edge 能回到的最小 dfn。若某子樹 low(child) >= dfn(parent)，parent 與該子樹之間可能形成 articulation/biconnected component 的切割點。</div>
+<h2>三、解題思維</h2><div class="card">先依最小 index 規則排出每個節點鄰居順序，再做 DFS。DFS tree 畫好後，非 tree edge 若連到祖先就是 back edge。接著由葉節點往回算 low。</div>
+<h2>四、SVG 流程圖</h2>
+<svg class="flow-svg" viewBox="0 0 980 785" role="img" aria-label="Q3 解題流程">
+<defs>
+  <marker id="arrow3" markerWidth="10" markerHeight="10" refX="5" refY="3" orient="auto">
+    <path d="M0,0 L0,6 L6,3 z" fill="#345"/>
+  </marker>
+</defs>
+<text x="490.0" y="40" text-anchor="middle" class="svg-title">Q3 解題流程</text>
+<rect x="140" y="75" rx="16" ry="16" width="700" height="56" class="flow-box step0"/>
+<text x="490.0" y="110" text-anchor="middle" class="flow-text">排序每個節點鄰居</text>
+<line x1="490.0" y1="137" x2="490.0" y2="165" class="flow-arrow" marker-end="url(#arrow3)"/>
+<rect x="140" y="170" rx="16" ry="16" width="700" height="56" class="flow-box step1"/>
+<text x="490.0" y="205" text-anchor="middle" class="flow-text">從 1 做 DFS</text>
+<line x1="490.0" y1="232" x2="490.0" y2="260" class="flow-arrow" marker-end="url(#arrow3)"/>
+<rect x="140" y="265" rx="16" ry="16" width="700" height="56" class="flow-box step2"/>
+<text x="490.0" y="300" text-anchor="middle" class="flow-text">標 dfn 順序</text>
+<line x1="490.0" y1="327" x2="490.0" y2="355" class="flow-arrow" marker-end="url(#arrow3)"/>
+<rect x="140" y="360" rx="16" ry="16" width="700" height="56" class="flow-box step3"/>
+<text x="490.0" y="395" text-anchor="middle" class="flow-text">找非 tree edge 作 back edge</text>
+<line x1="490.0" y1="422" x2="490.0" y2="450" class="flow-arrow" marker-end="url(#arrow3)"/>
+<rect x="140" y="455" rx="16" ry="16" width="700" height="56" class="flow-box step4"/>
+<text x="490.0" y="490" text-anchor="middle" class="flow-text">由子節點回推 low</text>
+<line x1="490.0" y1="517" x2="490.0" y2="545" class="flow-arrow" marker-end="url(#arrow3)"/>
+<rect x="140" y="550" rx="16" ry="16" width="700" height="56" class="flow-box step0"/>
+<text x="490.0" y="585" text-anchor="middle" class="flow-text">用 edge stack/切點切出 BCC</text>
+<line x1="490.0" y1="612" x2="490.0" y2="640" class="flow-arrow" marker-end="url(#arrow3)"/>
+<rect x="140" y="645" rx="16" ry="16" width="700" height="56" class="flow-box step1"/>
+<text x="490.0" y="680" text-anchor="middle" class="flow-text">再做 BFS 找 cross edge</text>
+</svg>
+<h2>五、逐步解答</h2><div class="card">
+<p>採用鄰居由小到大選擇，DFS 走訪順序：</p>
+<p><b>1 → 2 → 3 → 5 → 4 → 6 → 7 → 8</b></p>
+<p>DFS tree edges：</p>
+<p>(1,2), (2,3), (2,5), (5,4), (4,6), (6,7), (2,8)</p>
+<p>Backward edges：</p>
+<p>(3,1), (7,5)</p>
+<table><tr><th>Vertex</th><th>dfn</th><th>low</th><th>說明</th></tr>
+<tr><td>1</td><td>1</td><td>1</td><td>root</td></tr>
+<tr><td>2</td><td>2</td><td>1</td><td>透過 child 3 的 back edge 回到 1</td></tr>
+<tr><td>3</td><td>3</td><td>1</td><td>back edge 到 1</td></tr>
+<tr><td>5</td><td>4</td><td>4</td><td>子樹 cycle 只能回到 5</td></tr>
+<tr><td>4</td><td>5</td><td>4</td><td>由 6→7 back 到 5</td></tr>
+<tr><td>6</td><td>6</td><td>4</td><td>由 7 back 到 5</td></tr>
+<tr><td>7</td><td>7</td><td>4</td><td>back edge 到 5</td></tr>
+<tr><td>8</td><td>8</td><td>8</td><td>leaf</td></tr>
+</table>
+<p>Biconnected components：</p>
+<ul><li>{1,2,3}</li><li>{2,5}</li><li>{4,5,6,7}</li><li>{2,8}</li></ul>
+<p>BFS tree edges：</p>
+<p>(1,2), (1,3), (2,5), (2,8), (5,4), (5,7), (4,6)</p>
+<p>BFS cross edges：</p>
+<p>(2,3), (6,7)</p>
+</div>
+<h2>六、最終答案</h2><div class="answer">DFS dfn/low 如表；BCC 為 {1,2,3}, {2,5}, {4,5,6,7}, {2,8}；BFS cross edges 為 (2,3), (6,7)。</div>
+<h2>七、常見錯誤</h2><div class="card">常見錯誤：DFS 沒有遵守最小 index；把 undirected parent edge 當 back edge；low 值由上往下算；BFS cross edge 漏掉 (6,7)。</div>
+<h2>八、考試得分關鍵</h2><div class="card">滿分關鍵：DFS tree、back edge、dfn/low 表、BCC、BFS tree 都要一致，否則後面答案會全部連錯。</div>
+<div class="deep-note"><b>背景程式資料補充：</b>
+DFS 的 dfn/low 題通常可用遞迴函式完成。dfn[u] 是 u 第一次被拜訪的時間戳；low[u] 是 u 的子樹可以透過 back edge 回到的最小 dfn。程式裡 parent[v]=u 是為了避免把無向圖中回到父節點的邊誤判成 back edge。</div>
+<div class="step-explain"><b>依照流程圖逐步講解：</b><br>
+1. 把每個點的鄰居排序，才能符合「選最小 index」規則。<br>
+2. DFS 一進入節點就設定 dfn 和 low。<br>
+3. 遇到未拜訪節點，該邊是 tree edge。<br>
+4. 遇到已拜訪且不是 parent 的祖先節點，該邊是 back edge。<br>
+5. 遞迴回來後用 child 的 low 更新 parent 的 low。<br>
+6. 最後用 low 條件切出 biconnected components。</div><h2>程式輸出結果</h2><div class='output-box'>v=1 dfn=1 low=1
+v=2 dfn=2 low=1
+v=3 dfn=3 low=1
+v=4 dfn=5 low=4
+v=5 dfn=4 low=4
+v=6 dfn=6 low=4
+v=7 dfn=7 low=4
+v=8 dfn=8 low=8</div><h2>相關函式與變數說明</h2><table class='func-table'><tr><th>名稱</th><th>說明</th></tr><tr><td>adj</td><td>無向圖鄰接串列。</td></tr><tr><td>dfn</td><td>DFS 拜訪順序編號。</td></tr><tr><td>low</td><td>可回到的最小 dfn 值。</td></tr><tr><td>parent</td><td>DFS tree 中每個節點的父節點。</td></tr><tr><td>timer</td><td>目前 DFS 時間戳。</td></tr></table>
+<h2>必要 C++ 程式碼 / 驗證程式</h2>
+<div class="code-wrap"><button class="copy-btn" onclick="copyCode(this)">Copy Code</button><pre><code>#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+vector&lt;vector&lt;int&gt;&gt; adj;
+vector&lt;int&gt; dfn, low, parent;
+int timer = 0;
+
+void dfs(int u) {
+    dfn[u] = low[u] = ++timer;
+    for (int v : adj[u]) {
+        if (!dfn[v]) {
+            parent[v] = u;
+            dfs(v);
+            low[u] = min(low[u], low[v]);
+        } else if (v != parent[u]) {
+            low[u] = min(low[u], dfn[v]); // back edge
+        }
+    }
+}
+
+int main() {
+    int n = 8;
+    adj.assign(n+1, {});
+    vector&lt;pair&lt;int,int&gt;&gt; edges = {{1,2},{1,3},{2,3},{2,5},{2,8},{5,4},{5,7},{4,6},{6,7}};
+    for (auto [u,v] : edges) { adj[u].push_back(v); adj[v].push_back(u); }
+    for (int i=1;i&lt;=n;i++) sort(adj[i].begin(), adj[i].end());
+
+    dfn.assign(n+1,0); low.assign(n+1,0); parent.assign(n+1,-1);
+    dfs(1);
+
+    for (int i=1;i&lt;=n;i++)
+        cout &lt;&lt; &quot;v=&quot; &lt;&lt; i &lt;&lt; &quot; dfn=&quot; &lt;&lt; dfn[i] &lt;&lt; &quot; low=&quot; &lt;&lt; low[i] &lt;&lt; &quot;\n&quot;;
+}</code></pre></div>
+</section></details>
+
+
+<details id="q4" open>
+<summary>Q4：Threaded Binary Tree：Inorder 與 Preorder Thread</summary>
+<section>
+<div class="card"><span class="badge">對應投影片</span> lec5_a Trees Part I：Threaded Binary Trees、Inorder Traversal、Preorder Traversal、Thread 欄位說明約後段頁面。</div>
+<h2>題目圖片</h2>
+<img class="qimg" src="assets/Q4.png" alt="Q4 題目截圖">
+<h2>題目中文翻譯</h2><div class="card">給定一棵二元樹與 threaded binary tree 的資料結構。回答 n-node threaded binary tree 有多少 threads，並分別畫出 In-order 與 Pre-order 的 threaded binary tree 狀態。</div>
+<h2>一、題目在問什麼</h2><div class="card">這題要你理解 thread 是拿原本 NULL child pointer 來指向 traversal predecessor 或 successor。不同 traversal order，thread 指向會不同。</div>
+<h2>二、必備背景知識</h2><div class="card">一棵有 n 個節點的 binary tree 有 2n 個 child pointer，但真正的邊只有 n-1 條，所以 NULL pointer 數為 2n-(n-1)=n+1。Threaded binary tree 就是把這些 NULL pointer 改成 threads。</div>
+<h2>三、解題思維</h2><div class="card">先寫 traversal sequence，再對每個沒有 left child 或 right child 的節點補 predecessor/successor thread。Inorder 與 Preorder 必須分開做，不能混用。</div>
+<h2>四、SVG 流程圖</h2>
+<svg class="flow-svg" viewBox="0 0 980 690" role="img" aria-label="Q4 解題流程">
+<defs>
+  <marker id="arrow4" markerWidth="10" markerHeight="10" refX="5" refY="3" orient="auto">
+    <path d="M0,0 L0,6 L6,3 z" fill="#345"/>
+  </marker>
+</defs>
+<text x="490.0" y="40" text-anchor="middle" class="svg-title">Q4 解題流程</text>
+<rect x="140" y="75" rx="16" ry="16" width="700" height="56" class="flow-box step0"/>
+<text x="490.0" y="110" text-anchor="middle" class="flow-text">確認原始二元樹</text>
+<line x1="490.0" y1="137" x2="490.0" y2="165" class="flow-arrow" marker-end="url(#arrow4)"/>
+<rect x="140" y="170" rx="16" ry="16" width="700" height="56" class="flow-box step1"/>
+<text x="490.0" y="205" text-anchor="middle" class="flow-text">寫出 Inorder 序列</text>
+<line x1="490.0" y1="232" x2="490.0" y2="260" class="flow-arrow" marker-end="url(#arrow4)"/>
+<rect x="140" y="265" rx="16" ry="16" width="700" height="56" class="flow-box step2"/>
+<text x="490.0" y="300" text-anchor="middle" class="flow-text">依序補 predecessor/successor thread</text>
+<line x1="490.0" y1="327" x2="490.0" y2="355" class="flow-arrow" marker-end="url(#arrow4)"/>
+<rect x="140" y="360" rx="16" ry="16" width="700" height="56" class="flow-box step3"/>
+<text x="490.0" y="395" text-anchor="middle" class="flow-text">寫出 Preorder 序列</text>
+<line x1="490.0" y1="422" x2="490.0" y2="450" class="flow-arrow" marker-end="url(#arrow4)"/>
+<rect x="140" y="455" rx="16" ry="16" width="700" height="56" class="flow-box step4"/>
+<text x="490.0" y="490" text-anchor="middle" class="flow-text">再次補 preorder thread</text>
+<line x1="490.0" y1="517" x2="490.0" y2="545" class="flow-arrow" marker-end="url(#arrow4)"/>
+<rect x="140" y="550" rx="16" ry="16" width="700" height="56" class="flow-box step0"/>
+<text x="490.0" y="585" text-anchor="middle" class="flow-text">檢查 thread 數 n+1</text>
+</svg>
+<h2>五、逐步解答</h2><div class="card">
+<p>假設原樹結構為：A 的左子為 B、右子為 F；B 的左子為 C、右子為 E；C 的右子為 D；E 的左子為 G。</p>
+<p>Inorder sequence：</p>
+<p><b>C, D, B, G, E, A, F</b></p>
+<table><tr><th>Node</th><th>Left thread</th><th>Right thread</th></tr>
+<tr><td>C</td><td>Head</td><td>右子 D 是 real child</td></tr>
+<tr><td>D</td><td>C</td><td>B</td></tr>
+<tr><td>G</td><td>B</td><td>E</td></tr>
+<tr><td>E</td><td>左子 G 是 real child</td><td>A</td></tr>
+<tr><td>F</td><td>A</td><td>Head</td></tr>
+</table>
+<p>Preorder sequence：</p>
+<p><b>A, B, C, D, E, G, F</b></p>
+<table><tr><th>Node</th><th>Left thread</th><th>Right thread</th></tr>
+<tr><td>C</td><td>B</td><td>右子 D 是 real child</td></tr>
+<tr><td>D</td><td>C</td><td>E</td></tr>
+<tr><td>E</td><td>左子 G 是 real child</td><td>F</td></tr>
+<tr><td>G</td><td>E</td><td>F</td></tr>
+<tr><td>F</td><td>G</td><td>Head</td></tr>
+</table>
+</div>
+<h2>六、最終答案</h2><div class="answer">n-node threaded binary tree 有 n+1 個 threads。Inorder 與 Preorder 的 thread 狀態要依各自 traversal sequence 決定。</div>
+<h2>七、常見錯誤</h2><div class="card">常見錯誤：把 inorder thread 與 preorder thread 混在一起；忘記 dummy head；把 real child 也畫成 thread。</div>
+<h2>八、考試得分關鍵</h2><div class="card">滿分關鍵：先寫 traversal sequence；再對每個 NULL left/right pointer 補 predecessor/successor；寫出 n+1 的推導。</div>
+<div class="deep-note"><b>背景程式資料補充：</b>
+Threaded binary tree 的程式結構通常包含 leftChild、rightChild、leftThread、rightThread。當 leftThread=true 時，leftChild 不是真正左子，而是 predecessor thread；當 rightThread=true 時，rightChild 不是真正右子，而是 successor thread。不同 traversal order 會造成 predecessor/successor 不同。</div>
+<div class="step-explain"><b>依照流程圖逐步講解：</b><br>
+1. 先不要急著畫 thread，先寫出 traversal sequence。<br>
+2. Inorder 依 left-root-right；Preorder 依 root-left-right。<br>
+3. 找每個節點缺少的左或右 child pointer。<br>
+4. 缺左 child 就連到 predecessor；缺右 child 就連到 successor。<br>
+5. dummy head 通常用來處理最前與最後節點的 thread。</div><h2>程式輸出結果</h2><div class='output-box'>Inorder sequence:
+C D B G E A F
+
+Preorder sequence:
+A B C D E G F
+
+Number of threads in n-node threaded binary tree:
+n + 1</div><h2>相關函式與變數說明</h2><table class='func-table'><tr><th>名稱</th><th>說明</th></tr><tr><td>leftThread</td><td>true 表示 leftChild 是 thread，不是真正左子。</td></tr><tr><td>rightThread</td><td>true 表示 rightChild 是 thread，不是真正右子。</td></tr><tr><td>leftChild</td><td>可能是真左子，也可能是 predecessor thread。</td></tr><tr><td>rightChild</td><td>可能是真右子，也可能是 successor thread。</td></tr><tr><td>Dummy head</td><td>輔助節點，方便 traversal 的開始與結束。</td></tr></table>
+<h2>必要 C++ 程式碼 / 驗證程式</h2>
+<div class="code-wrap"><button class="copy-btn" onclick="copyCode(this)">Copy Code</button><pre><code>// 此題重點是圖形與 traversal sequence，C++ 可用中序/前序走訪驗證 sequence。</code></pre></div>
+</section></details>
+
+
+<details id="q5" open>
+<summary>Q5：Transitive Closure Graph：Warshall 演算法與 Reflexive Closure</summary>
+<section>
+<div class="card"><span class="badge">對應投影片</span> lec6b Graphs Part II：Shortest Paths and Transitive Closure、Warshall/Transitive Closure 約前中段頁面。</div>
+<h2>題目圖片</h2>
+<img class="qimg" src="assets/Q5.png" alt="Q5 題目截圖">
+<h2>題目中文翻譯</h2><div class="card">給定 directed graph G=(V,E)，V={A,B,C}，E={(A,B),(B,C)}。寫出 adjacency matrix A，計算 transitive closure matrix T，計算 reflexive transitive closure matrix R，並解釋 T 與 R 的差別。</div>
+<h2>一、題目在問什麼</h2><div class="card">這題在問可達性矩陣。A 是一步可達；T 是走一條以上路徑可達；R 是 T 再加上每個節點到自己的可達性。</div>
+<h2>二、必備背景知識</h2><div class="card">Transitive closure 記錄任兩點之間是否存在 path。Warshall algorithm 使用 a[i][j] = a[i][j] OR (a[i][k] AND a[k][j])，表示若 i 可到 k 且 k 可到 j，則 i 可到 j。</div>
+<h2>三、解題思維</h2><div class="card">先按照 A,B,C 的順序建立 3x3 adjacency matrix，再利用 A→B→C 推出 A→C。最後將 diagonal 設為 1 得到 reflexive transitive closure。</div>
+<h2>四、SVG 流程圖</h2>
+<svg class="flow-svg" viewBox="0 0 980 690" role="img" aria-label="Q5 解題流程">
+<defs>
+  <marker id="arrow5" markerWidth="10" markerHeight="10" refX="5" refY="3" orient="auto">
+    <path d="M0,0 L0,6 L6,3 z" fill="#345"/>
+  </marker>
+</defs>
+<text x="490.0" y="40" text-anchor="middle" class="svg-title">Q5 解題流程</text>
+<rect x="140" y="75" rx="16" ry="16" width="700" height="56" class="flow-box step0"/>
+<text x="490.0" y="110" text-anchor="middle" class="flow-text">固定頂點順序 A,B,C</text>
+<line x1="490.0" y1="137" x2="490.0" y2="165" class="flow-arrow" marker-end="url(#arrow5)"/>
+<rect x="140" y="170" rx="16" ry="16" width="700" height="56" class="flow-box step1"/>
+<text x="490.0" y="205" text-anchor="middle" class="flow-text">寫 adjacency matrix A</text>
+<line x1="490.0" y1="232" x2="490.0" y2="260" class="flow-arrow" marker-end="url(#arrow5)"/>
+<rect x="140" y="265" rx="16" ry="16" width="700" height="56" class="flow-box step2"/>
+<text x="490.0" y="300" text-anchor="middle" class="flow-text">利用 A→B 與 B→C 推出 A→C</text>
+<line x1="490.0" y1="327" x2="490.0" y2="355" class="flow-arrow" marker-end="url(#arrow5)"/>
+<rect x="140" y="360" rx="16" ry="16" width="700" height="56" class="flow-box step3"/>
+<text x="490.0" y="395" text-anchor="middle" class="flow-text">得到 transitive closure T</text>
+<line x1="490.0" y1="422" x2="490.0" y2="450" class="flow-arrow" marker-end="url(#arrow5)"/>
+<rect x="140" y="455" rx="16" ry="16" width="700" height="56" class="flow-box step4"/>
+<text x="490.0" y="490" text-anchor="middle" class="flow-text">把 diagonal 改成 1</text>
+<line x1="490.0" y1="517" x2="490.0" y2="545" class="flow-arrow" marker-end="url(#arrow5)"/>
+<rect x="140" y="550" rx="16" ry="16" width="700" height="56" class="flow-box step0"/>
+<text x="490.0" y="585" text-anchor="middle" class="flow-text">得到 reflexive transitive closure R</text>
+</svg>
+<h2>五、逐步解答</h2><div class="card">
+<p>頂點順序：A, B, C。</p>
+<p>Adjacency matrix A：</p>
+<table><tr><th></th><th>A</th><th>B</th><th>C</th></tr>
+<tr><th>A</th><td>0</td><td>1</td><td>0</td></tr>
+<tr><th>B</th><td>0</td><td>0</td><td>1</td></tr>
+<tr><th>C</th><td>0</td><td>0</td><td>0</td></tr>
+</table>
+<p>因為 A 可以到 B，B 可以到 C，所以 A 可以經由 B 到 C。</p>
+<p>Transitive closure T：</p>
+<table><tr><th></th><th>A</th><th>B</th><th>C</th></tr>
+<tr><th>A</th><td>0</td><td>1</td><td>1</td></tr>
+<tr><th>B</th><td>0</td><td>0</td><td>1</td></tr>
+<tr><th>C</th><td>0</td><td>0</td><td>0</td></tr>
+</table>
+<p>Reflexive transitive closure R：將每個節點到自己的位置設為 1。</p>
+<table><tr><th></th><th>A</th><th>B</th><th>C</th></tr>
+<tr><th>A</th><td>1</td><td>1</td><td>1</td></tr>
+<tr><th>B</th><td>0</td><td>1</td><td>1</td></tr>
+<tr><th>C</th><td>0</td><td>0</td><td>1</td></tr>
+</table>
+</div>
+<h2>六、最終答案</h2><div class="answer">A=[[0,1,0],[0,0,1],[0,0,0]]；T=[[0,1,1],[0,0,1],[0,0,0]]；R=[[1,1,1],[0,1,1],[0,0,1]]。</div>
+<h2>七、常見錯誤</h2><div class="card">常見錯誤：忘記 A→C；把 T 的 diagonal 也全部設成 1；沒有說清楚 T 與 R 的差別。</div>
+<h2>八、考試得分關鍵</h2><div class="card">滿分關鍵：頂點順序要固定；T 要包含間接可達；R 要比 T 多 reflexive diagonal。</div>
+<div class="deep-note"><b>背景程式資料補充：</b>
+Transitive closure 可以用 Warshall 演算法。程式中的三層迴圈 k、i、j 含義是：是否允許節點 k 當中繼點，若 i 可以到 k 且 k 可以到 j，則 i 可以到 j。Reflexive transitive closure 只是再加入每個節點到自己的長度 0 路徑。</div>
+<div class="step-explain"><b>依照流程圖逐步講解：</b><br>
+1. 固定頂點順序 A,B,C，矩陣才不會混亂。<br>
+2. A 矩陣只放直接邊：A→B、B→C。<br>
+3. 因為 A→B 且 B→C，所以 transitive closure 補上 A→C。<br>
+4. T 不一定包含自己到自己。<br>
+5. R 是 reflexive，所以 diagonal 全部變成 1。</div><h2>程式輸出結果</h2><div class='output-box'>Transitive closure T:
+0 1 1
+0 0 1
+0 0 0
+
+Reflexive transitive closure R:
+1 1 1
+0 1 1
+0 0 1</div><h2>相關函式與變數說明</h2><table class='func-table'><tr><th>名稱</th><th>說明</th></tr><tr><td>n</td><td>頂點數量，本題為 3。</td></tr><tr><td>T</td><td>transitive closure matrix，可達性矩陣。</td></tr><tr><td>k</td><td>中繼點 index。</td></tr><tr><td>i</td><td>起點 index。</td></tr><tr><td>j</td><td>終點 index。</td></tr></table>
+<h2>必要 C++ 程式碼 / 驗證程式</h2>
+<div class="code-wrap"><button class="copy-btn" onclick="copyCode(this)">Copy Code</button><pre><code>#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int main() {
+    // A=0, B=1, C=2
+    int n = 3;
+    vector&lt;vector&lt;int&gt;&gt; T(n, vector&lt;int&gt;(n,0));
+    T[0][1] = 1; // A -&gt; B
+    T[1][2] = 1; // B -&gt; C
+
+    for (int k=0;k&lt;n;k++)
+        for (int i=0;i&lt;n;i++)
+            for (int j=0;j&lt;n;j++)
+                T[i][j] = T[i][j] || (T[i][k] &amp;&amp; T[k][j]);
+
+    cout &lt;&lt; &quot;Transitive closure T:\n&quot;;
+    for (auto &amp;row:T) {
+        for (int x:row) cout &lt;&lt; x &lt;&lt; &quot; &quot;;
+        cout &lt;&lt; &quot;\n&quot;;
+    }
+
+    cout &lt;&lt; &quot;Reflexive transitive closure R:\n&quot;;
+    for (int i=0;i&lt;n;i++) T[i][i] = 1;
+    for (auto &amp;row:T) {
+        for (int x:row) cout &lt;&lt; x &lt;&lt; &quot; &quot;;
+        cout &lt;&lt; &quot;\n&quot;;
+    }
+}</code></pre></div>
+</section></details>
+
+
+<details id="q6" open>
+<summary>Q6：Hash Table：Quadratic Probing</summary>
+<section>
+<div class="card"><span class="badge">對應投影片</span> lec7 / Dictionary 補充題型：Hash Table、Open Addressing、Quadratic Probing。若 lec4～lec7 投影片未完整涵蓋，屬期末綜合補充。</div>
+<h2>題目圖片</h2>
+<img class="qimg" src="assets/Q6.png" alt="Q6 題目截圖">
+<h2>題目中文翻譯</h2><div class="card">雜湊表大小為 11，h(k)=k mod 11。使用 quadratic probing：h(k,i)=(h(k)+i^2) mod 11，i 從 0 開始。插入 27,18,29,28,39，寫出最後 hash table，並說明 quadratic probing 相對 linear probing 的一個優點與缺點。</div>
+<h2>一、題目在問什麼</h2><div class="card">這題要你逐一插入 key，碰撞時依 i=0,1,2... 帶入 h(k,i)。最後要列出 index 0 到 10 的表格。</div>
+<h2>二、必備背景知識</h2><div class="card">Open addressing 的碰撞處理會在同一張表中找下一個位置。Linear probing 用 h(k)+i，容易 primary clustering。Quadratic probing 用 h(k)+i^2，可減少 primary clustering，但可能產生 secondary clustering，且不一定探查所有位置。</div>
+<h2>三、解題思維</h2><div class="card">每個 key 先算 h(k)=k mod 11。如果該格已被佔用，才開始嘗試 i=1,2,...，直到找到空格。</div>
+<h2>四、SVG 流程圖</h2>
+<svg class="flow-svg" viewBox="0 0 980 690" role="img" aria-label="Q6 解題流程">
+<defs>
+  <marker id="arrow6" markerWidth="10" markerHeight="10" refX="5" refY="3" orient="auto">
+    <path d="M0,0 L0,6 L6,3 z" fill="#345"/>
+  </marker>
+</defs>
+<text x="490.0" y="40" text-anchor="middle" class="svg-title">Q6 解題流程</text>
+<rect x="140" y="75" rx="16" ry="16" width="700" height="56" class="flow-box step0"/>
+<text x="490.0" y="110" text-anchor="middle" class="flow-text">建立大小 11 的空表</text>
+<line x1="490.0" y1="137" x2="490.0" y2="165" class="flow-arrow" marker-end="url(#arrow6)"/>
+<rect x="140" y="170" rx="16" ry="16" width="700" height="56" class="flow-box step1"/>
+<text x="490.0" y="205" text-anchor="middle" class="flow-text">依序插入 key</text>
+<line x1="490.0" y1="232" x2="490.0" y2="260" class="flow-arrow" marker-end="url(#arrow6)"/>
+<rect x="140" y="265" rx="16" ry="16" width="700" height="56" class="flow-box step2"/>
+<text x="490.0" y="300" text-anchor="middle" class="flow-text">先算 h(k)=k mod 11</text>
+<line x1="490.0" y1="327" x2="490.0" y2="355" class="flow-arrow" marker-end="url(#arrow6)"/>
+<rect x="140" y="360" rx="16" ry="16" width="700" height="56" class="flow-box step3"/>
+<text x="490.0" y="395" text-anchor="middle" class="flow-text">若碰撞則試 h(k)+i²</text>
+<line x1="490.0" y1="422" x2="490.0" y2="450" class="flow-arrow" marker-end="url(#arrow6)"/>
+<rect x="140" y="455" rx="16" ry="16" width="700" height="56" class="flow-box step4"/>
+<text x="490.0" y="490" text-anchor="middle" class="flow-text">找到空位放入</text>
+<line x1="490.0" y1="517" x2="490.0" y2="545" class="flow-arrow" marker-end="url(#arrow6)"/>
+<rect x="140" y="550" rx="16" ry="16" width="700" height="56" class="flow-box step0"/>
+<text x="490.0" y="585" text-anchor="middle" class="flow-text">列出 final table</text>
+</svg>
+<h2>五、逐步解答</h2><div class="card">
+<table><tr><th>Key</th><th>h(k)</th><th>Probing</th><th>插入位置</th></tr>
+<tr><td>27</td><td>5</td><td>5 空</td><td>5</td></tr>
+<tr><td>18</td><td>7</td><td>7 空</td><td>7</td></tr>
+<tr><td>29</td><td>7</td><td>7 碰撞 → 8 空</td><td>8</td></tr>
+<tr><td>28</td><td>6</td><td>6 空</td><td>6</td></tr>
+<tr><td>39</td><td>6</td><td>6 碰撞 → 7 碰撞 → 10 空</td><td>10</td></tr>
+</table>
+<table><tr><th>Index</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th></tr>
+<tr><th>Value</th><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>27</td><td>28</td><td>18</td><td>29</td><td>-</td><td>39</td></tr>
+</table>
+<p>優點：比 linear probing 減少 primary clustering。</p>
+<p>缺點：可能發生 secondary clustering，且探查序列不一定涵蓋整張表。</p>
+</div>
+<h2>六、最終答案</h2><div class="answer">最後表格：index 5=27, 6=28, 7=18, 8=29, 10=39，其餘空。</div>
+<h2>七、常見錯誤</h2><div class="card">常見錯誤：i 從 1 開始而漏掉原 hash 位置；39 的 i=2 位置應為 (6+4)%11=10；把 quadratic probing 當 linear probing。</div>
+<h2>八、考試得分關鍵</h2><div class="card">滿分關鍵：每個 key 的 probing 過程都要寫，最後表格要完整列出 0～10。</div>
+<div class="deep-note"><b>背景程式資料補充：</b>
+Quadratic probing 是 open addressing 的一種。插入時不另外建立 linked list，而是在同一張 hash table 中探查下一個位置。公式 h(k,i)=(h(k)+i²) mod m，其中 i=0 表示先看原始 hash 位置，碰撞才試 i=1、i=2。</div>
+<div class="step-explain"><b>依照流程圖逐步講解：</b><br>
+1. 建立 11 格的空 hash table。<br>
+2. 每個 key 先算 k mod 11。<br>
+3. 空格就直接放入。<br>
+4. 發生碰撞就依序試 i=1、i=2。<br>
+5. 最後表格要列 index 0 到 10，不能只寫有放值的位置。</div><h2>程式輸出結果</h2><div class='output-box'>0: -
+1: -
+2: -
+3: -
+4: -
+5: 27
+6: 28
+7: 18
+8: 29
+9: -
+10: 39</div><h2>相關函式與變數說明</h2><table class='func-table'><tr><th>名稱</th><th>說明</th></tr><tr><td>m</td><td>hash table 大小，本題為 11。</td></tr><tr><td>table</td><td>雜湊表陣列，-1 表示空格。</td></tr><tr><td>keys</td><td>要插入的資料：27,18,29,28,39。</td></tr><tr><td>h</td><td>原始 hash 位置 k mod m。</td></tr><tr><td>i</td><td>quadratic probing 的嘗試次數。</td></tr><tr><td>pos</td><td>實際檢查的位置 (h+i*i)%m。</td></tr></table>
+<h2>必要 C++ 程式碼 / 驗證程式</h2>
+<div class="code-wrap"><button class="copy-btn" onclick="copyCode(this)">Copy Code</button><pre><code>#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int main() {
+    const int m = 11;
+    vector&lt;int&gt; table(m, -1);
+    vector&lt;int&gt; keys = {27,18,29,28,39};
+
+    for (int k: keys) {
+        int h = k % m;
+        for (int i=0; i&lt;m; i++) {
+            int pos = (h + i*i) % m;
+            if (table[pos] == -1) {
+                table[pos] = k;
+                break;
+            }
+        }
+    }
+
+    for (int i=0;i&lt;m;i++)
+        cout &lt;&lt; i &lt;&lt; &quot;: &quot; &lt;&lt; (table[i] == -1 ? string(&quot;-&quot;) : to_string(table[i])) &lt;&lt; &quot;\n&quot;;
+}</code></pre></div>
+</section></details>
+
+
+<details id="q7" open>
+<summary>Q7：AOV Network：EST、LST、Critical Path</summary>
+<section>
+<div class="card"><span class="badge">對應投影片</span> lec6b Graphs Part II：Topological Sort、AOV Network、Critical Path / Activity Network 約後段頁面。</div>
+<h2>題目圖片</h2>
+<img class="qimg" src="assets/Q7.png" alt="Q7 題目截圖">
+<h2>題目中文翻譯</h2><div class="card">給定活動與時間 A(3), B(2), C(4), D(2), E(1)，先後關係 A→B, A→C, B→D, C→D, D→E。畫 AOV network，求每個活動的 EST 與 LST，找 critical path 與 project completion time。</div>
+<h2>一、題目在問什麼</h2><div class="card">這題要做專案排程。正向推算最早開始時間，反向推算最晚開始時間，再用 slack 判斷 critical path。</div>
+<h2>二、必備背景知識</h2><div class="card">AOV network 中 vertex 表示 activity，edge 表示先後關係。EST 是所有前置活動完成後最早可開始時間。LST 是不延誤整個專案的最晚開始時間。slack = LST - EST，slack=0 的活動在 critical path 上。</div>
+<h2>三、解題思維</h2><div class="card">先畫 DAG，再做 topological order。由起點往終點算 EST/EFT；再從專案完成時間往回算 LFT/LST。</div>
+<h2>四、SVG 流程圖</h2>
+<svg class="flow-svg" viewBox="0 0 980 690" role="img" aria-label="Q7 解題流程">
+<defs>
+  <marker id="arrow7" markerWidth="10" markerHeight="10" refX="5" refY="3" orient="auto">
+    <path d="M0,0 L0,6 L6,3 z" fill="#345"/>
+  </marker>
+</defs>
+<text x="490.0" y="40" text-anchor="middle" class="svg-title">Q7 解題流程</text>
+<rect x="140" y="75" rx="16" ry="16" width="700" height="56" class="flow-box step0"/>
+<text x="490.0" y="110" text-anchor="middle" class="flow-text">建立 AOV DAG</text>
+<line x1="490.0" y1="137" x2="490.0" y2="165" class="flow-arrow" marker-end="url(#arrow7)"/>
+<rect x="140" y="170" rx="16" ry="16" width="700" height="56" class="flow-box step1"/>
+<text x="490.0" y="205" text-anchor="middle" class="flow-text">正向推算 EST/EFT</text>
+<line x1="490.0" y1="232" x2="490.0" y2="260" class="flow-arrow" marker-end="url(#arrow7)"/>
+<rect x="140" y="265" rx="16" ry="16" width="700" height="56" class="flow-box step2"/>
+<text x="490.0" y="300" text-anchor="middle" class="flow-text">得到 project completion time</text>
+<line x1="490.0" y1="327" x2="490.0" y2="355" class="flow-arrow" marker-end="url(#arrow7)"/>
+<rect x="140" y="360" rx="16" ry="16" width="700" height="56" class="flow-box step3"/>
+<text x="490.0" y="395" text-anchor="middle" class="flow-text">反向推算 LFT/LST</text>
+<line x1="490.0" y1="422" x2="490.0" y2="450" class="flow-arrow" marker-end="url(#arrow7)"/>
+<rect x="140" y="455" rx="16" ry="16" width="700" height="56" class="flow-box step4"/>
+<text x="490.0" y="490" text-anchor="middle" class="flow-text">計算 slack</text>
+<line x1="490.0" y1="517" x2="490.0" y2="545" class="flow-arrow" marker-end="url(#arrow7)"/>
+<rect x="140" y="550" rx="16" ry="16" width="700" height="56" class="flow-box step0"/>
+<text x="490.0" y="585" text-anchor="middle" class="flow-text">slack=0 即 critical path</text>
+</svg>
+<h2>五、逐步解答</h2><div class="card">
+<p>Forward pass：</p>
+<table><tr><th>Activity</th><th>Duration</th><th>EST</th><th>EFT</th></tr>
+<tr><td>A</td><td>3</td><td>0</td><td>3</td></tr>
+<tr><td>B</td><td>2</td><td>3</td><td>5</td></tr>
+<tr><td>C</td><td>4</td><td>3</td><td>7</td></tr>
+<tr><td>D</td><td>2</td><td>7</td><td>9</td></tr>
+<tr><td>E</td><td>1</td><td>9</td><td>10</td></tr>
+</table>
+<p>Backward pass：</p>
+<table><tr><th>Activity</th><th>Duration</th><th>LST</th><th>Slack</th></tr>
+<tr><td>A</td><td>3</td><td>0</td><td>0</td></tr>
+<tr><td>B</td><td>2</td><td>5</td><td>2</td></tr>
+<tr><td>C</td><td>4</td><td>3</td><td>0</td></tr>
+<tr><td>D</td><td>2</td><td>7</td><td>0</td></tr>
+<tr><td>E</td><td>1</td><td>9</td><td>0</td></tr>
+</table>
+<p>Critical path：A → C → D → E，總時間 3+4+2+1 = 10。</p>
+</div>
+<h2>六、最終答案</h2><div class="answer">EST/LST：A 0/0, B 3/5, C 3/3, D 7/7, E 9/9。Critical path = A→C→D→E，project completion time = 10。</div>
+<h2>七、常見錯誤</h2><div class="card">常見錯誤：D 的 EST 用 B 完成時間 5，而忘記 C 完成時間 7 才是最大值；把 B 放入 critical path；LST 沒有反向算。</div>
+<h2>八、考試得分關鍵</h2><div class="card">滿分關鍵：Forward pass、Backward pass、slack 表、critical path 都要寫。</div>
+<div class="deep-note"><b>背景程式資料補充：</b>
+AOV network 的程式實作通常會用 successor list 與 predecessor list。Forward pass 要看所有 predecessor 的完成時間最大值；Backward pass 要看所有 successor 的最晚開始時間最小值。Critical path 是 slack=0 的活動串接而成。</div>
+<div class="step-explain"><b>依照流程圖逐步講解：</b><br>
+1. 先畫出活動先後關係 DAG。<br>
+2. Forward pass：EST 等於所有前置活動 EFT 的最大值。<br>
+3. 專案完成時間是終點活動的最大 EFT。<br>
+4. Backward pass：LFT 等於所有後繼活動 LST 的最小值。<br>
+5. LST=LFT-duration。<br>
+6. slack=0 的節點就是 critical path 上的活動。</div><h2>程式輸出結果</h2><div class='output-box'>A: EST=0 LST=0 slack=0
+B: EST=3 LST=5 slack=2
+C: EST=3 LST=3 slack=0
+D: EST=7 LST=7 slack=0
+E: EST=9 LST=9 slack=0
+
+Critical path: A -&gt; C -&gt; D -&gt; E
+Project completion time: 10</div><h2>相關函式與變數說明</h2><table class='func-table'><tr><th>名稱</th><th>說明</th></tr><tr><td>dur</td><td>每個活動的 duration。</td></tr><tr><td>succ</td><td>successor list，記錄活動後繼。</td></tr><tr><td>pred</td><td>predecessor list，記錄活動前置。</td></tr><tr><td>EST/EFT</td><td>最早開始與最早完成時間。</td></tr><tr><td>LST/LFT</td><td>最晚開始與最晚完成時間。</td></tr><tr><td>slack</td><td>可延遲時間，LST-EST。</td></tr></table>
+<h2>必要 C++ 程式碼 / 驗證程式</h2>
+<div class="code-wrap"><button class="copy-btn" onclick="copyCode(this)">Copy Code</button><pre><code>#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int main() {
+    map&lt;char,int&gt; dur = {{&#x27;A&#x27;,3},{&#x27;B&#x27;,2},{&#x27;C&#x27;,4},{&#x27;D&#x27;,2},{&#x27;E&#x27;,1}};
+    vector&lt;pair&lt;char,char&gt;&gt; edges = {{&#x27;A&#x27;,&#x27;B&#x27;},{&#x27;A&#x27;,&#x27;C&#x27;},{&#x27;B&#x27;,&#x27;D&#x27;},{&#x27;C&#x27;,&#x27;D&#x27;},{&#x27;D&#x27;,&#x27;E&#x27;}};
+
+    map&lt;char, vector&lt;char&gt;&gt; succ, pred;
+    for (auto [u,v]: edges) { succ[u].push_back(v); pred[v].push_back(u); }
+
+    vector&lt;char&gt; topo = {&#x27;A&#x27;,&#x27;B&#x27;,&#x27;C&#x27;,&#x27;D&#x27;,&#x27;E&#x27;};
+    map&lt;char,int&gt; EST, EFT;
+    for (char u: topo) {
+        EST[u] = 0;
+        for (char p: pred[u]) EST[u] = max(EST[u], EFT[p]);
+        EFT[u] = EST[u] + dur[u];
+    }
+    int project = EFT[&#x27;E&#x27;];
+
+    map&lt;char,int&gt; LST, LFT;
+    for (auto it = topo.rbegin(); it != topo.rend(); ++it) {
+        char u = *it;
+        if (succ[u].empty()) LFT[u] = project;
+        else {
+            LFT[u] = INT_MAX;
+            for (char v: succ[u]) LFT[u] = min(LFT[u], LST[v]);
+        }
+        LST[u] = LFT[u] - dur[u];
+    }
+
+    for (char u: topo)
+        cout &lt;&lt; u &lt;&lt; &quot;: EST=&quot; &lt;&lt; EST[u] &lt;&lt; &quot; LST=&quot; &lt;&lt; LST[u]
+             &lt;&lt; &quot; slack=&quot; &lt;&lt; LST[u]-EST[u] &lt;&lt; &quot;\n&quot;;
+}</code></pre></div>
+</section></details>
+
+
+<details id="q8" open>
+<summary>Q8：True / False：Prim、Dijkstra、Kruskal、Union-Find、Dictionary、Heap</summary>
+<section>
+<div class="card"><span class="badge">對應投影片</span> 綜合題：lec6a MST/Kruskal/Prim；lec6b Dijkstra；lec5b Heap/Priority Queue；lec7 Dictionary/Hashing 補充。</div>
+<h2>題目圖片</h2>
+<img class="qimg" src="assets/Q8.png" alt="Q8 題目截圖">
+<h2>題目中文翻譯</h2><div class="card">判斷多個敘述 True 或 False。若為 False，要給簡短修正或說明。主題包含 Prim、Dijkstra、Kruskal、Union-Find、Dictionary、Heap。</div>
+<h2>一、題目在問什麼</h2><div class="card">這題在考觀念辨析。最重要是分清楚 MST 與 shortest path tree 的不同，以及 Kruskal 使用 disjoint-set 只加入連接不同集合的邊。</div>
+<h2>二、必備背景知識</h2><div class="card">Prim 解 MST；Dijkstra 解 single-source shortest path。兩者都可以用 priority queue，但 key 的意義不同：Prim 是目前連到樹的最小邊權，Dijkstra 是 source 到該點的最短距離估計。Kruskal 依邊權排序，使用 union-find 偵測 cycle。</div>
+<h2>三、解題思維</h2><div class="card">每個敘述都先判斷它屬於哪個演算法，再檢查它的輸出目標是 MST、SPT、cycle detection、heap operation 還是 dictionary average complexity。</div>
+<h2>四、SVG 流程圖</h2>
+<svg class="flow-svg" viewBox="0 0 980 595" role="img" aria-label="Q8 解題流程">
+<defs>
+  <marker id="arrow8" markerWidth="10" markerHeight="10" refX="5" refY="3" orient="auto">
+    <path d="M0,0 L0,6 L6,3 z" fill="#345"/>
+  </marker>
+</defs>
+<text x="490.0" y="40" text-anchor="middle" class="svg-title">Q8 解題流程</text>
+<rect x="140" y="75" rx="16" ry="16" width="700" height="56" class="flow-box step0"/>
+<text x="490.0" y="110" text-anchor="middle" class="flow-text">讀 statement</text>
+<line x1="490.0" y1="137" x2="490.0" y2="165" class="flow-arrow" marker-end="url(#arrow8)"/>
+<rect x="140" y="170" rx="16" ry="16" width="700" height="56" class="flow-box step1"/>
+<text x="490.0" y="205" text-anchor="middle" class="flow-text">判斷主題：MST/SPT/UF/Heap/Hash</text>
+<line x1="490.0" y1="232" x2="490.0" y2="260" class="flow-arrow" marker-end="url(#arrow8)"/>
+<rect x="140" y="265" rx="16" ry="16" width="700" height="56" class="flow-box step2"/>
+<text x="490.0" y="300" text-anchor="middle" class="flow-text">比對演算法目的</text>
+<line x1="490.0" y1="327" x2="490.0" y2="355" class="flow-arrow" marker-end="url(#arrow8)"/>
+<rect x="140" y="360" rx="16" ry="16" width="700" height="56" class="flow-box step3"/>
+<text x="490.0" y="395" text-anchor="middle" class="flow-text">若 False 寫出正確版本</text>
+<line x1="490.0" y1="422" x2="490.0" y2="450" class="flow-arrow" marker-end="url(#arrow8)"/>
+<rect x="140" y="455" rx="16" ry="16" width="700" height="56" class="flow-box step4"/>
+<text x="490.0" y="490" text-anchor="middle" class="flow-text">完成 T/F 表</text>
+</svg>
+<h2>五、逐步解答</h2><div class="card">
+<table><tr><th>Part</th><th>Statement</th><th>T/F</th><th>修正或說明</th></tr>
+<tr><td>a1</td><td>Prim 與 Dijkstra 都用 greedy 方式建 tree</td><td>True</td><td>但 tree 的目標不同</td></tr>
+<tr><td>a2</td><td>Prim always gives shortest path tree</td><td>False</td><td>Prim 給 MST，不保證 source shortest path</td></tr>
+<tr><td>a3</td><td>Dijkstra finds MST</td><td>False</td><td>Dijkstra 找 SPT，不是 MST</td></tr>
+<tr><td>a4</td><td>兩者都可維護 priority queue</td><td>True</td><td>Prim key=edge weight；Dijkstra key=distance</td></tr>
+<tr><td>b1</td><td>Kruskal 依遞增邊權處理</td><td>True</td><td>核心步驟</td></tr>
+<tr><td>b2</td><td>Kruskal 加入同一集合的兩點</td><td>False</td><td>應加入不同集合，避免 cycle</td></tr>
+<tr><td>b3</td><td>Union-Find 用 same set 偵測 cycle</td><td>True</td><td>同集合代表加邊會成環</td></tr>
+<tr><td>b4</td><td>n vertices 時加入 n-1 edges 停止</td><td>True</td><td>connected graph 的 MST 有 n-1 條邊</td></tr>
+<tr><td>c1</td><td>Dictionary 平均 O(1) insert/delete/lookup</td><td>True</td><td>hash table average case</td></tr>
+<tr><td>c2</td><td>Min-heap constant time access smallest key</td><td>True</td><td>min 在 root，Top/FindMin O(1)</td></tr>
+<tr><td>c3</td><td>Heap insert takes linear time</td><td>False</td><td>heap insert 是 O(log n)</td></tr>
+<tr><td>c4</td><td>Heap 可有效實作 Dijkstra</td><td>True</td><td>priority queue 可用 binary heap</td></tr>
+</table>
+</div>
+<h2>六、最終答案</h2><div class="answer">False 的敘述：a2、a3、b2、c3。其餘為 True。</div>
+<h2>七、常見錯誤</h2><div class="card">常見錯誤：把 Prim 與 Dijkstra 都當 MST；Kruskal b2 讀反；heap insert 誤寫 O(n)；忽略 average case dictionary。</div>
+<h2>八、考試得分關鍵</h2><div class="card">滿分關鍵：False 不只寫 F，還要給修正句，尤其是 MST vs SPT、same set vs different set。</div>
+<div class="deep-note"><b>背景程式資料補充：</b>
+這題是觀念判斷題，但背後仍有程式結構：Prim 與 Dijkstra 常用 priority_queue；Kruskal 常用 sort edges + union-find；dictionary 通常用 hash table；heap 的 Top/FindMin 是 O(1)，Insert/Delete 是 O(log n)。</div>
+<div class="step-explain"><b>依照流程圖逐步講解：</b><br>
+1. 先判斷 statement 屬於 Prim、Dijkstra、Kruskal、Union-Find、Dictionary 或 Heap。<br>
+2. Prim 的目標是 MST，不是 shortest path。<br>
+3. Dijkstra 的目標是 shortest path tree，不是 MST。<br>
+4. Kruskal 只加入連接不同集合的邊，避免 cycle。<br>
+5. Heap 可快速取得最小或最大元素，但插入不是 O(1)。</div><h2>程式輸出結果</h2><div class='output-box'>False statements:
+a2: Prim does not always give the shortest path tree.
+a3: Dijkstra does not find an MST.
+b2: Kruskal adds an edge only if it connects two different sets.
+c3: Heap insertion takes O(log n), not linear time.
+
+True statements:
+a1, a4, b1, b3, b4, c1, c2, c4</div><h2>相關函式與變數說明</h2><table class='func-table'><tr><th>名稱</th><th>說明</th></tr><tr><td>Prim</td><td>Greedy MST algorithm。</td></tr><tr><td>Dijkstra</td><td>Single-source shortest path algorithm。</td></tr><tr><td>Kruskal</td><td>Sort edges + union-find 的 MST algorithm。</td></tr><tr><td>Union-Find</td><td>用 Find/Union 判斷是否同集合。</td></tr><tr><td>Dictionary</td><td>平均 O(1) 查找、插入、刪除的抽象資料型態。</td></tr><tr><td>Heap</td><td>priority queue 常用實作。</td></tr></table>
+<h2>必要 C++ 程式碼 / 驗證程式</h2>
+<div class="code-wrap"><button class="copy-btn" onclick="copyCode(this)">Copy Code</button><pre><code>// 此題是觀念判斷題，不需要完整 C++；若要驗證 Kruskal，可用 union-find 程式檢查 same set。</code></pre></div>
+</section></details>
+
+<footer>Generated for 2025 Data Structures Final Review</footer></div>
+<script>
+function copyCode(btn){
+  const code = btn.parentElement.querySelector('code').innerText;
+  navigator.clipboard.writeText(code).then(()=>{
+    const old = btn.innerText;
+    btn.innerText = 'Copied!';
+    btn.classList.add('done');
+    setTimeout(()=>{btn.innerText=old; btn.classList.remove('done');}, 1200);
+  });
+}
+</script>
+
+</body></html>
